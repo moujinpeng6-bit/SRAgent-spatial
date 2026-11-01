@@ -1,0 +1,35 @@
+# Local credentials
+.env
+.env.*
+!.env.example
+credentials*.json
+service-account*.json
+*.pem
+*.key
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# Local data and generated files
+data/
+downloads/
+outputs/
+.cache/
+*.h5ad
+*.h5
+*.zarr/
+*.tif
+*.tiff
+*.fastq*
+*.bam
+*.log
+
+# Editors / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

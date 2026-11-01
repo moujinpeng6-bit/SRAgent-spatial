@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Spatial candidate record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["record_id", "source_database", "source_url", "retrieved_at", "platform", "observation_unit", "status", "assets", "evidence"],
+  "properties": {
+    "record_id": {"type": "string", "minLength": 1},
+    "source_database": {"type": "string", "minLength": 1},
+    "source_accession": {"type": ["string", "null"]},
+    "source_url": {"type": "string", "format": "uri"},
+    "retrieved_at": {"type": "string", "format": "date"},
+    "organism": {"type": ["string", "null"]},
+    "tissue": {"type": ["string", "null"]},
+    "disease": {"type": ["string", "null"]},
+    "platform": {"type": "string", "minLength": 1},
+    "observation_unit": {"enum": ["cell", "spot", "bin", "unknown"]},
+    "study_id": {"type": ["string", "null"]},
+    "sample_id": {"type": ["string", "null"]},
+    "section_id": {"type": ["string", "null"]},
+    "coordinate_unit": {"type": ["string", "null"]},
+    "coordinate_system": {"type": ["string", "null"]},
+    "status": {"enum": ["candidate", "metadata_reviewed", "assets_verified", "excluded"]},
+    "assets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["kind", "url"],
+        "properties": {
+          "kind": {"enum": ["expression", "coordinates", "image", "segmentation", "annotation", "transform", "other"]},
+          "url": {"type": "string", "format": "uri"},
+          "section_id": {"type": ["string", "null"]},
+          "notes": {"type": ["string", "null"]}
+        }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["field", "source_url", "description", "method"],
+        "properties": {
+          "field": {"type": "string", "minLength": 1},
+          "source_url": {"type": "string", "format": "uri"},
+          "description": {"type": "string", "minLength": 1},
+          "method": {"enum": ["source_explicit", "inferred", "manual_check"]}
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "config_version": "0.1.0",
+  "status": "planned_not_executed",
+  "pilot": {
+    "organism": "Homo sapiens",
+    "tissue": "lung",
+    "platform": "Visium",
+    "target_records": 10,
+    "initial_source": "GEO"
+  },
+  "candidate_terms": ["spatial transcriptomics", "spatial transcriptome", "Visium", "Xenium", "MERFISH"],
+  "notes": "搜索词用于形成候选，不保证完整召回或空间身份。实际查询式、数据库字段语法和筛选逻辑尚待实现并记录。"
+}
