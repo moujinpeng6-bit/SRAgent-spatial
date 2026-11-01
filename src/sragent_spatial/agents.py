@@ -114,5 +114,6 @@ async def predict_agent(packet: dict, method: str, model: str, timeout=120, recu
     result.update(method=method, model=model, elapsed_seconds=round(time.monotonic() - started, 3),
                   invocation_seconds=round(time.monotonic() - invocation_started, 3),
                   upstream_commit=UPSTREAM_COMMIT, model_call_executed=True,
+                  original_scope="upstream_ncbi_fetch_agent_component_not_complete_sragent_hierarchy",
                   comparison_scope="same_sample_ids_and_input_packets; original agent may fetch additional live public metadata")
     return result

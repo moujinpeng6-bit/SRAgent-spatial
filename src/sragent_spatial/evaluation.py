@@ -66,6 +66,8 @@ async def benchmark(dataset, methods, model=None, limit=None, timeout=120, predi
                     row.update(status="failed", failure_type=type(exc).__name__)
             rows.append(row)
     return {"reference_status": dataset["reference_status"], "case_count": len(cases),
+            "method_scopes": {"original_agent": "Pinned upstream NCBI fetch Agent component, not the complete SRAgent hierarchy",
+                              "spatial_agent": "Same upstream NCBI Agent plus upstream model factory and two sample-level tools"},
             "model": model, "results": rows,
             "summary": {method: score([r for r in rows if r["method"] == method]) for method in methods},
             "limitations": ["Development cases, selected nonrandomly; not independent gold labels or held-out generalization.",
