@@ -1,0 +1,9 @@
+default:
+  models:
+    default: "gpt-5-mini"
+  temperature:
+    default: 0.1
+  reasoning_effort:
+    default: "low"
+  service_tier:
+    default: "default"

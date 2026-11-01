@@ -2,11 +2,11 @@
 
 自动发现公开空间转录组数据、整理实验背景，并追踪表达、坐标、图像与标注之间的对应关系。
 
-## 当前状态：可运行的 v0.1
+## 当前状态：v0.2 样本核查与 Agent 扩展
 
-已实现 GEO 已知编号查询、空间候选搜索、证据与文件链接提取、CSV/JSON 导出、响应缓存、只读本地文件盘点及来源链接比较。真实来源验证和离线测试见 [验证记录](docs/validation.md)。尚未实现表达与坐标 ID、图像配准或邻居关系检查；候选结果仍需人工核查。
+已实现 GEO 查询、空间候选搜索、样本级四类筛选、引文检查、本地来源比较，以及 Visium 条码/坐标和低分辨率图像边界检查。新增 [25 条待人工复核的开发样本](evaluation/lung_spatial_development.csv) 与规则/原版 Agent/空间扩展 Agent 三路径对照。真实模型结果取决于本机凭证和依赖，未运行时明确跳过。详见 [v0.2 原理、运行和限制](docs/v02.md)。
 
-这是受 [Arc Institute SRAgent](https://github.com/ArcInstitute/SRAgent) 与 scBaseCount 启发的独立项目，不是作者官方空间版本。基础空间查询代码是本项目新增实现，没有整库复制上游。可选 Agent 入口通过固定版本依赖调用原版代码，但尚未真实调用付费模型验证，详见 [上游复用说明](docs/upstream.md)。
+这是受 [Arc Institute SRAgent](https://github.com/ArcInstitute/SRAgent) 与 scBaseCount 启发的独立项目，不是作者官方空间版本。基础查询和空间检查为本项目新增实现；Agent 路径复用固定版本上游的模型工厂、NCBI Agent 与 LangGraph，详见 [上游说明](docs/upstream.md)。尚未真实调用付费模型，不能声称 Agent 效果已验证。
 
 ## 第一阶段要做什么
 

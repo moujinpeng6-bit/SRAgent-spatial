@@ -5,6 +5,7 @@ import asyncio
 import json
 import sys
 import subprocess
+import os
 from pathlib import Path
 
 from .geo import MetadataClient, export_records, lookup, search, write_json
@@ -49,6 +50,25 @@ def main(argv=None):
     agent = sub.add_parser("agent-lookup", help="Optional upstream LLM call; may incur provider charges")
     agent.add_argument("accession")
     agent.add_argument("--out", type=Path, required=True)
+    screening = sub.add_parser("screen-samples", help="Classify frozen GSM sample packets with evidence")
+    screening.add_argument("--materials", type=Path, required=True)
+    screening.add_argument("--out", type=Path, required=True)
+    evaluation = sub.add_parser("benchmark", help="Rules/original/spatial Agent comparison on the same development cases")
+    evaluation.add_argument("--cases", type=Path, default=Path("evaluation/lung_spatial_development.json"))
+    evaluation.add_argument("--methods", nargs="+", choices=["rules", "original_agent", "spatial_agent"],
+                            default=["rules", "original_agent", "spatial_agent"])
+    evaluation.add_argument("--model", default=os.getenv("SPATIAL_MODEL"))
+    evaluation.add_argument("--limit", type=bounded_integer(1, 100))
+    evaluation.add_argument("--timeout", type=bounded_integer(10, 600), default=120)
+    evaluation.add_argument("--out", type=Path, required=True)
+    sub.add_parser("doctor", help="Report credential/dependency presence without printing secrets or calling APIs")
+    spatial = sub.add_parser("check-visium", help="Basic barcode/coordinate and optional low-resolution bounds checks")
+    spatial.add_argument("--barcodes", type=Path, required=True)
+    spatial.add_argument("--positions", type=Path, required=True)
+    spatial.add_argument("--scalefactors", type=Path)
+    spatial.add_argument("--lowres-image", type=Path)
+    spatial.add_argument("--matrix", type=Path)
+    spatial.add_argument("--out", type=Path, required=True)
     args = parser.parse_args(argv)
     try:
         if args.command in {"lookup", "search"}:
@@ -68,6 +88,40 @@ def main(argv=None):
                                      json.loads(args.inventory.read_text(encoding="utf-8")))
             write_json(args.out, report)
             print(json.dumps({"assets_with_local_match": report["assets_with_local_match"]}))
+        elif args.command == "screen-samples":
+            from .screening import screen_sample
+            packets = json.loads(args.materials.read_text(encoding="utf-8"))
+            write_json(args.out, [screen_sample(packet) for packet in packets])
+            print(json.dumps({"samples": len(packets), "out": str(args.out)}))
+        elif args.command == "benchmark":
+            from .evaluation import benchmark, load_cases
+            if os.getenv("OPENAI_API_KEY") and args.model and args.limit is None and any(m != "rules" for m in args.methods):
+                raise ValueError("For paid Agent runs, specify an explicit --limit (start with 1)")
+            if os.name == "nt" and os.getenv("OPENAI_API_KEY") and any(m != "rules" for m in args.methods):
+                try:
+                    import truststore
+                except ImportError as exc:
+                    raise RuntimeError("Install the optional agent dependencies for Windows system certificate validation") from exc
+                # Application entry point only; keep TLS verification using native trusted roots.
+                truststore.inject_into_ssl()
+            report = asyncio.run(benchmark(load_cases(args.cases), args.methods, args.model,
+                                          args.limit, args.timeout))
+            write_json(args.out, report)
+            print(json.dumps(report["summary"]))
+            if any(value["skipped"] or value["failed"] for value in report["summary"].values()):
+                return 2
+        elif args.command == "doctor":
+            from .agents import doctor
+            print(json.dumps(doctor()))
+        elif args.command == "check-visium":
+            from .spatial import validate_visium
+            if bool(args.scalefactors) != bool(args.lowres_image):
+                raise ValueError("Supply scalefactors and lowres-image together")
+            report = validate_visium(args.barcodes, args.positions, args.scalefactors, args.lowres_image, args.matrix)
+            write_json(args.out, report)
+            print(json.dumps(report))
+            if report["issues"]:
+                return 2
         else:
             from .upstream import agent_lookup
             write_json(args.out, asyncio.run(agent_lookup(args.accession)))

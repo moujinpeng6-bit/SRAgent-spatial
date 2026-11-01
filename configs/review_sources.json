@@ -1,0 +1,14 @@
+{
+  "description": "Development sample selection, not a random or held-out evaluation set",
+  "sources": [
+    {"accession": "GSE318039", "max_samples": 3},
+    {"accession": "GSE264398", "max_samples": 3},
+    {"accession": "GSE271370", "max_samples": 3},
+    {"accession": "GSE250346", "max_samples": 3},
+    {"accession": "GSE343063", "max_samples": 3},
+    {"accession": "GSE347080", "max_samples": 3},
+    {"accession": "GSE345643", "max_samples": 3},
+    {"accession": "GSE343350", "max_samples": 2},
+    {"accession": "GSE302356", "max_samples": 3}
+  ]
+}

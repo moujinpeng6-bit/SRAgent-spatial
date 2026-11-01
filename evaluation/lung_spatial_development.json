@@ -1,0 +1,1884 @@
+{
+  "dataset_id": "human_lung_spatial_development_v1",
+  "reference_status": "assistant_prepared_pending_human_review",
+  "description": "Provisional development labels after reading sample-level public metadata; not independent human gold labels",
+  "coverage_gap": "No real mixed-organ/platform sample is present in this first set; mixed handling is tested with fictional unit cases only.",
+  "label_counts": {
+    "eligible": 17,
+    "non_lung": 5,
+    "unknown": 3
+  },
+  "cases": [
+    {
+      "input": {
+        "accession": "GSM9485172",
+        "series": "GSE318039",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485172",
+        "split": "development",
+        "fields": {
+          "Sample_title": [
+            "lung, control1"
+          ],
+          "Sample_source_name_ch1": [
+            "lung"
+          ],
+          "Sample_organism_ch1": [
+            "Homo sapiens"
+          ],
+          "Sample_characteristics_ch1": [
+            "tissue: lung"
+          ],
+          "Sample_extract_protocol_ch1": [
+            "Fresh frozen lung tissues were embedded in OCT, and 10 µm frozen sections were cut with cryostat",
+            "sequencing libraries were generated using 10X Genomics Visium Spatial Gene Expression Slides & Reagent kit according to manufacturer's protocol. cDNA samples were amplified and purified using SPRIselect reagent to isolate optimal cDNA peaks (250-600 bp)"
+          ],
+          "Sample_description": [
+            "Library name: 111",
+            "Fresh Frozen spatial transcriptomics sequencing"
+          ],
+          "Sample_data_processing": [
+            "Tissue alignment was independently performed to manually select tissue areas using Loupe browser v6.1.0. Sequencing output (Fastq files), alignment json file, and H&E images were processed on Spaceranger v1.3.1 to align the reads with reference genome (GRCh38-2020-A), and to generate count matrix.",
+            "Tissue alignment was independently performed to manually select tissue areas using Loupe browser v6.1.0. Sequencing output (Fastq files), alignment json file, and H&E images were processed on Spaceranger v1.3.1 to align the reads with reference genome (GRCh38-2020-A), and to generate count matrix.",
+            "Count matrix that contains only barcodes associated with tissue areas were used for downstream analysis. Spatial output including tissue positions were loaded in Loupe Browser v9.0.0 to manually annotate spots corresponding to airway, vessel, and areas outside as parenchyma.",
+            "The Spaceranger output (gene matrix and tissue image) was loaded as a Seurat object in the R environment and all analysis steps performed in R (v4.4.1)",
+            "Data were subjected to quality control by assessing number of unique genes detected, number of UMI counts, and percentage of mitochondrial RNA. Spots with low library size (<100-150), expressed fewer than 100-150 genes, and contain more than 20% mitochondrial transcripts were excluded. To generate biologically relevant information, we subset the feature genes to retain only the protein coding genes identified from EnsDb.Hsapiens.v86 package",
+            "Assembly: GRCh38-2020-A",
+            "Supplementary files format and content: detected_tissue_image.jpg: image of tissue and spots",
+            "Supplementary files format and content: aligned_fiducials.jpg : aligned fiducials of the tissue image",
+            "Supplementary files format and content: scalefactors_json.json: scale factors in json format",
+            "Supplementary files format and content: tissue_hires_image.png: high resolution H&E image of tissue",
+            "Supplementary files format and content: tissue_lowres_image.png: low resolution H&E image of tissue",
+            "Supplementary files format and content: tissue_positions_list.csv.gz: list of spatial barcoes and the coordinates specifying spots",
+            "Supplementary files format and content: barcodes.tsv.gz: list of spatial barcodes",
+            "Supplementary files format and content: features.tsv.gz: list of gene symbols",
+            "Supplementary files format and content: matrix.mtx.gz: gene expression count data",
+            "Library strategy: Spatial Transcriptomics"
+          ],
+          "Sample_library_selection": [
+            "other"
+          ],
+          "Sample_library_source": [
+            "transcriptomic"
+          ],
+          "Sample_library_strategy": [
+            "OTHER"
+          ]
+        },
+        "fields_sha256": "939af8fd47e4264a97588dcad048847414721c5b73a22a16ca1591ba43d6ecfc"
+      },
+      "reference": {
+        "label": "eligible",
+        "reason": "Sample-level organism and tissue explicitly support human lung; its own protocol/title mentions a spatial assay. Physical assets not verified.",
+        "evidence": [
+          {
+            "field": "Sample_title",
+            "quote": "lung, control1",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485172"
+          },
+          {
+            "field": "Sample_source_name_ch1",
+            "quote": "lung",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485172"
+          },
+          {
+            "field": "Sample_organism_ch1",
+            "quote": "Homo sapiens",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485172"
+          },
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: lung",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485172"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "Fresh frozen lung tissues were embedded in OCT, and 10 µm frozen sections were cut with cryostat",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485172"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "sequencing libraries were generated using 10X Genomics Visium Spatial Gene Expression Slides & Reagent kit according to manufacturer's protocol. cDNA samples were amplified and purified using SPRIselect reagent to isolate optimal cDNA peaks (250-600 bp)",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485172"
+          }
+        ]
+      },
+      "review_status": "assistant_prepared_pending_human_review"
+    },
+    {
+      "input": {
+        "accession": "GSM9485173",
+        "series": "GSE318039",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485173",
+        "split": "development",
+        "fields": {
+          "Sample_title": [
+            "lung, control2"
+          ],
+          "Sample_source_name_ch1": [
+            "lung"
+          ],
+          "Sample_organism_ch1": [
+            "Homo sapiens"
+          ],
+          "Sample_characteristics_ch1": [
+            "tissue: lung"
+          ],
+          "Sample_extract_protocol_ch1": [
+            "Fresh frozen lung tissues were embedded in OCT, and 10 µm frozen sections were cut with cryostat",
+            "sequencing libraries were generated using 10X Genomics Visium Spatial Gene Expression Slides & Reagent kit according to manufacturer's protocol. cDNA samples were amplified and purified using SPRIselect reagent to isolate optimal cDNA peaks (250-600 bp)"
+          ],
+          "Sample_description": [
+            "Library name: 1253",
+            "Fresh Frozen spatial transcriptomics sequencing"
+          ],
+          "Sample_data_processing": [
+            "Tissue alignment was independently performed to manually select tissue areas using Loupe browser v6.1.0. Sequencing output (Fastq files), alignment json file, and H&E images were processed on Spaceranger v1.3.1 to align the reads with reference genome (GRCh38-2020-A), and to generate count matrix.",
+            "Tissue alignment was independently performed to manually select tissue areas using Loupe browser v6.1.0. Sequencing output (Fastq files), alignment json file, and H&E images were processed on Spaceranger v1.3.1 to align the reads with reference genome (GRCh38-2020-A), and to generate count matrix.",
+            "Count matrix that contains only barcodes associated with tissue areas were used for downstream analysis. Spatial output including tissue positions were loaded in Loupe Browser v9.0.0 to manually annotate spots corresponding to airway, vessel, and areas outside as parenchyma.",
+            "The Spaceranger output (gene matrix and tissue image) was loaded as a Seurat object in the R environment and all analysis steps performed in R (v4.4.1)",
+            "Data were subjected to quality control by assessing number of unique genes detected, number of UMI counts, and percentage of mitochondrial RNA. Spots with low library size (<100-150), expressed fewer than 100-150 genes, and contain more than 20% mitochondrial transcripts were excluded. To generate biologically relevant information, we subset the feature genes to retain only the protein coding genes identified from EnsDb.Hsapiens.v86 package",
+            "Assembly: GRCh38-2020-A",
+            "Supplementary files format and content: detected_tissue_image.jpg: image of tissue and spots",
+            "Supplementary files format and content: aligned_fiducials.jpg : aligned fiducials of the tissue image",
+            "Supplementary files format and content: scalefactors_json.json: scale factors in json format",
+            "Supplementary files format and content: tissue_hires_image.png: high resolution H&E image of tissue",
+            "Supplementary files format and content: tissue_lowres_image.png: low resolution H&E image of tissue",
+            "Supplementary files format and content: tissue_positions_list.csv.gz: list of spatial barcoes and the coordinates specifying spots",
+            "Supplementary files format and content: barcodes.tsv.gz: list of spatial barcodes",
+            "Supplementary files format and content: features.tsv.gz: list of gene symbols",
+            "Supplementary files format and content: matrix.mtx.gz: gene expression count data",
+            "Library strategy: Spatial Transcriptomics"
+          ],
+          "Sample_library_selection": [
+            "other"
+          ],
+          "Sample_library_source": [
+            "transcriptomic"
+          ],
+          "Sample_library_strategy": [
+            "OTHER"
+          ]
+        },
+        "fields_sha256": "5417bffac8d99fce5e178fcc1376125c3bf187496f26181177f4994930b3b4bf"
+      },
+      "reference": {
+        "label": "eligible",
+        "reason": "Sample-level organism and tissue explicitly support human lung; its own protocol/title mentions a spatial assay. Physical assets not verified.",
+        "evidence": [
+          {
+            "field": "Sample_title",
+            "quote": "lung, control2",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485173"
+          },
+          {
+            "field": "Sample_source_name_ch1",
+            "quote": "lung",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485173"
+          },
+          {
+            "field": "Sample_organism_ch1",
+            "quote": "Homo sapiens",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485173"
+          },
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: lung",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485173"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "Fresh frozen lung tissues were embedded in OCT, and 10 µm frozen sections were cut with cryostat",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485173"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "sequencing libraries were generated using 10X Genomics Visium Spatial Gene Expression Slides & Reagent kit according to manufacturer's protocol. cDNA samples were amplified and purified using SPRIselect reagent to isolate optimal cDNA peaks (250-600 bp)",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485173"
+          }
+        ]
+      },
+      "review_status": "assistant_prepared_pending_human_review"
+    },
+    {
+      "input": {
+        "accession": "GSM9485174",
+        "series": "GSE318039",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485174",
+        "split": "development",
+        "fields": {
+          "Sample_title": [
+            "lung, control3"
+          ],
+          "Sample_source_name_ch1": [
+            "lung"
+          ],
+          "Sample_organism_ch1": [
+            "Homo sapiens"
+          ],
+          "Sample_characteristics_ch1": [
+            "tissue: lung"
+          ],
+          "Sample_extract_protocol_ch1": [
+            "Fresh frozen lung tissues were embedded in OCT, and 10 µm frozen sections were cut with cryostat",
+            "sequencing libraries were generated using 10X Genomics Visium Spatial Gene Expression Slides & Reagent kit according to manufacturer's protocol. cDNA samples were amplified and purified using SPRIselect reagent to isolate optimal cDNA peaks (250-600 bp)"
+          ],
+          "Sample_description": [
+            "Library name: 301",
+            "Fresh Frozen spatial transcriptomics sequencing"
+          ],
+          "Sample_data_processing": [
+            "Tissue alignment was independently performed to manually select tissue areas using Loupe browser v6.1.0. Sequencing output (Fastq files), alignment json file, and H&E images were processed on Spaceranger v1.3.1 to align the reads with reference genome (GRCh38-2020-A), and to generate count matrix.",
+            "Tissue alignment was independently performed to manually select tissue areas using Loupe browser v6.1.0. Sequencing output (Fastq files), alignment json file, and H&E images were processed on Spaceranger v1.3.1 to align the reads with reference genome (GRCh38-2020-A), and to generate count matrix.",
+            "Count matrix that contains only barcodes associated with tissue areas were used for downstream analysis. Spatial output including tissue positions were loaded in Loupe Browser v9.0.0 to manually annotate spots corresponding to airway, vessel, and areas outside as parenchyma.",
+            "The Spaceranger output (gene matrix and tissue image) was loaded as a Seurat object in the R environment and all analysis steps performed in R (v4.4.1)",
+            "Data were subjected to quality control by assessing number of unique genes detected, number of UMI counts, and percentage of mitochondrial RNA. Spots with low library size (<100-150), expressed fewer than 100-150 genes, and contain more than 20% mitochondrial transcripts were excluded. To generate biologically relevant information, we subset the feature genes to retain only the protein coding genes identified from EnsDb.Hsapiens.v86 package",
+            "Assembly: GRCh38-2020-A",
+            "Supplementary files format and content: detected_tissue_image.jpg: image of tissue and spots",
+            "Supplementary files format and content: aligned_fiducials.jpg : aligned fiducials of the tissue image",
+            "Supplementary files format and content: scalefactors_json.json: scale factors in json format",
+            "Supplementary files format and content: tissue_hires_image.png: high resolution H&E image of tissue",
+            "Supplementary files format and content: tissue_lowres_image.png: low resolution H&E image of tissue",
+            "Supplementary files format and content: tissue_positions_list.csv.gz: list of spatial barcoes and the coordinates specifying spots",
+            "Supplementary files format and content: barcodes.tsv.gz: list of spatial barcodes",
+            "Supplementary files format and content: features.tsv.gz: list of gene symbols",
+            "Supplementary files format and content: matrix.mtx.gz: gene expression count data",
+            "Library strategy: Spatial Transcriptomics"
+          ],
+          "Sample_library_selection": [
+            "other"
+          ],
+          "Sample_library_source": [
+            "transcriptomic"
+          ],
+          "Sample_library_strategy": [
+            "OTHER"
+          ]
+        },
+        "fields_sha256": "5c226045f172021eafa5c4f17815cf9eba26804ee7d55ed333bbd14345b08e87"
+      },
+      "reference": {
+        "label": "eligible",
+        "reason": "Sample-level organism and tissue explicitly support human lung; its own protocol/title mentions a spatial assay. Physical assets not verified.",
+        "evidence": [
+          {
+            "field": "Sample_title",
+            "quote": "lung, control3",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485174"
+          },
+          {
+            "field": "Sample_source_name_ch1",
+            "quote": "lung",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485174"
+          },
+          {
+            "field": "Sample_organism_ch1",
+            "quote": "Homo sapiens",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485174"
+          },
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: lung",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485174"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "Fresh frozen lung tissues were embedded in OCT, and 10 µm frozen sections were cut with cryostat",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485174"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "sequencing libraries were generated using 10X Genomics Visium Spatial Gene Expression Slides & Reagent kit according to manufacturer's protocol. cDNA samples were amplified and purified using SPRIselect reagent to isolate optimal cDNA peaks (250-600 bp)",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485174"
+          }
+        ]
+      },
+      "review_status": "assistant_prepared_pending_human_review"
+    },
+    {
+      "input": {
+        "accession": "GSM8217624",
+        "series": "GSE264398",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8217624",
+        "split": "development",
+        "fields": {
+          "Sample_title": [
+            "FFPE archived fetal lung tissue GW15; Visium"
+          ],
+          "Sample_source_name_ch1": [
+            "Fetal lung tissue"
+          ],
+          "Sample_organism_ch1": [
+            "Homo sapiens"
+          ],
+          "Sample_characteristics_ch1": [
+            "tissue: Fetal lung tissue"
+          ],
+          "Sample_extract_protocol_ch1": [
+            "Archived FFPE fetal lung tissues were freshly sectioned (5µm).",
+            "Spatial transcriptomic library was done via manufacturer's intruction (10X Genomics FFPE Visium v2 slides and reagent kits)"
+          ],
+          "Sample_data_processing": [
+            "Raw sequencing reads were processed via spaceranger pipeline to generate FASTQ files",
+            "Sequences were aligned to GRCh38 using spaceranger",
+            "Assembly: GRCh38",
+            "Supplementary files format and content: barcodes.tsv.gz: list of spatial barcodes",
+            "Supplementary files format and content: features.tsv.gz: list of genes",
+            "Supplementary files format and content: matrix.tsv.gz: gene expression counts",
+            "Supplementary files format and content: aligned_fiducials.jpg: aligend fiducials of image",
+            "Supplementary files format and content: detected_tissue_image.jpg: image of tissue and spots",
+            "Supplementary files format and content: scalefactors_json.json: scale factors in json format",
+            "Supplementary files format and content: tissue_hires_image.png: hi-res image of tissue",
+            "Supplementary files format and content: tissue_lowres_image.png: low-res image of tissue",
+            "Supplementary files format and content: tissue_positions.csv: list of spatial barcodes and coordinates specifying spots",
+            "Library strategy: Spatial Transcriptomics"
+          ],
+          "Sample_library_selection": [
+            "other"
+          ],
+          "Sample_library_source": [
+            "transcriptomic"
+          ],
+          "Sample_library_strategy": [
+            "OTHER"
+          ]
+        },
+        "fields_sha256": "da18a4e17cbc0b5f34e6b67c57a3f7b957cdde28df5d5cd1a74dbb686b858cd3"
+      },
+      "reference": {
+        "label": "eligible",
+        "reason": "Sample-level organism and tissue explicitly support human lung; its own protocol/title mentions a spatial assay. Physical assets not verified.",
+        "evidence": [
+          {
+            "field": "Sample_title",
+            "quote": "FFPE archived fetal lung tissue GW15; Visium",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8217624"
+          },
+          {
+            "field": "Sample_source_name_ch1",
+            "quote": "Fetal lung tissue",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8217624"
+          },
+          {
+            "field": "Sample_organism_ch1",
+            "quote": "Homo sapiens",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8217624"
+          },
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: Fetal lung tissue",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8217624"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "Archived FFPE fetal lung tissues were freshly sectioned (5µm).",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8217624"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "Spatial transcriptomic library was done via manufacturer's intruction (10X Genomics FFPE Visium v2 slides and reagent kits)",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8217624"
+          }
+        ]
+      },
+      "review_status": "assistant_prepared_pending_human_review"
+    },
+    {
+      "input": {
+        "accession": "GSM8217625",
+        "series": "GSE264398",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8217625",
+        "split": "development",
+        "fields": {
+          "Sample_title": [
+            "FFPE archived fetal lung tissue GW18; Visium"
+          ],
+          "Sample_source_name_ch1": [
+            "Fetal lung tissue"
+          ],
+          "Sample_organism_ch1": [
+            "Homo sapiens"
+          ],
+          "Sample_characteristics_ch1": [
+            "tissue: Fetal lung tissue"
+          ],
+          "Sample_extract_protocol_ch1": [
+            "Archived FFPE fetal lung tissues were freshly sectioned (5µm).",
+            "Spatial transcriptomic library was done via manufacturer's intruction (10X Genomics FFPE Visium v2 slides and reagent kits)"
+          ],
+          "Sample_data_processing": [
+            "Raw sequencing reads were processed via spaceranger pipeline to generate FASTQ files",
+            "Sequences were aligned to GRCh38 using spaceranger",
+            "Assembly: GRCh38",
+            "Supplementary files format and content: barcodes.tsv.gz: list of spatial barcodes",
+            "Supplementary files format and content: features.tsv.gz: list of genes",
+            "Supplementary files format and content: matrix.tsv.gz: gene expression counts",
+            "Supplementary files format and content: aligned_fiducials.jpg: aligend fiducials of image",
+            "Supplementary files format and content: detected_tissue_image.jpg: image of tissue and spots",
+            "Supplementary files format and content: scalefactors_json.json: scale factors in json format",
+            "Supplementary files format and content: tissue_hires_image.png: hi-res image of tissue",
+            "Supplementary files format and content: tissue_lowres_image.png: low-res image of tissue",
+            "Supplementary files format and content: tissue_positions.csv: list of spatial barcodes and coordinates specifying spots",
+            "Library strategy: Spatial Transcriptomics"
+          ],
+          "Sample_library_selection": [
+            "other"
+          ],
+          "Sample_library_source": [
+            "transcriptomic"
+          ],
+          "Sample_library_strategy": [
+            "OTHER"
+          ]
+        },
+        "fields_sha256": "2a9a3f1be688c50d527375e770de823c73f22a616cc7cf872043d905477a88ac"
+      },
+      "reference": {
+        "label": "eligible",
+        "reason": "Sample-level organism and tissue explicitly support human lung; its own protocol/title mentions a spatial assay. Physical assets not verified.",
+        "evidence": [
+          {
+            "field": "Sample_title",
+            "quote": "FFPE archived fetal lung tissue GW18; Visium",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8217625"
+          },
+          {
+            "field": "Sample_source_name_ch1",
+            "quote": "Fetal lung tissue",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8217625"
+          },
+          {
+            "field": "Sample_organism_ch1",
+            "quote": "Homo sapiens",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8217625"
+          },
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: Fetal lung tissue",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8217625"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "Archived FFPE fetal lung tissues were freshly sectioned (5µm).",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8217625"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "Spatial transcriptomic library was done via manufacturer's intruction (10X Genomics FFPE Visium v2 slides and reagent kits)",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8217625"
+          }
+        ]
+      },
+      "review_status": "assistant_prepared_pending_human_review"
+    },
+    {
+      "input": {
+        "accession": "GSM8375640",
+        "series": "GSE271370",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8375640",
+        "split": "development",
+        "fields": {
+          "Sample_title": [
+            "L2P ProliferativeDAD"
+          ],
+          "Sample_source_name_ch1": [
+            "Lung"
+          ],
+          "Sample_organism_ch1": [
+            "Homo sapiens"
+          ],
+          "Sample_characteristics_ch1": [
+            "tissue: Lung"
+          ],
+          "Sample_extract_protocol_ch1": [
+            "RNA was extracted using a protocol from Qiagen (Rneasy FFPE Kit 73504), following extraction, the product was analyzed by TapeStation.  Samples with DV200 ≥ 22% were selected for experiments.",
+            "Spatial transcriptome sequencing libraries were preapred with 10xGenomics Visium Spatial Gene Expression Slides & Reagent kit according to manufacturer´s construction."
+          ],
+          "Sample_description": [
+            "FFPE Spatial transcriptome sequencing"
+          ],
+          "Sample_data_processing": [
+            "Raw sequencing data were processed using the 10x Genomics Space ranger pipeline to generate FASTQ files and sequences were aligned to GRCh38 genome using 10x Genomics default human reference genome and probe set files.",
+            "Assembly: GRCh38",
+            "Supplementary files format and content: filtered_barcodes.tsv.gz: list of spatial barcodes",
+            "Supplementary files format and content: filtered_features.tsv.gz: list of gene Ids",
+            "Supplementary files format and content: filtered_matrix.mt.gz: gene expression count data in Matrix Market Exchange Format",
+            "Supplementary files format and content: aligned_fiducials.jpg: aligned fiducials of the tissue image",
+            "Supplementary files format and content: detected_tissue_image.jpg: image of tissue and spots",
+            "Supplementary files format and content: scalefactors_json.json: scalefactors in json format",
+            "Supplementary files format and content: tissue_hires_image.png: hi-res image of tissue",
+            "Supplementary files format and content: tissue_lowres_image.png: low-res image of tissue",
+            "Supplementary files format and content: tissue_positions.csv: list of spatial barcodes and the coordinates specifying spots",
+            "Library strategy: Spatial Transcriptomics"
+          ],
+          "Sample_library_selection": [
+            "other"
+          ],
+          "Sample_library_source": [
+            "transcriptomic"
+          ],
+          "Sample_library_strategy": [
+            "OTHER"
+          ]
+        },
+        "fields_sha256": "397c7bff6e1e070df7c1554ac0c009a6842d33a3e1ff72063ff2b059cf42cea1"
+      },
+      "reference": {
+        "label": "eligible",
+        "reason": "Sample-level organism and tissue explicitly support human lung; its own protocol/title mentions a spatial assay. Physical assets not verified.",
+        "evidence": [
+          {
+            "field": "Sample_title",
+            "quote": "L2P ProliferativeDAD",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8375640"
+          },
+          {
+            "field": "Sample_source_name_ch1",
+            "quote": "Lung",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8375640"
+          },
+          {
+            "field": "Sample_organism_ch1",
+            "quote": "Homo sapiens",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8375640"
+          },
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: Lung",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8375640"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "RNA was extracted using a protocol from Qiagen (Rneasy FFPE Kit 73504), following extraction, the product was analyzed by TapeStation.  Samples with DV200 ≥ 22% were selected for experiments.",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8375640"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "Spatial transcriptome sequencing libraries were preapred with 10xGenomics Visium Spatial Gene Expression Slides & Reagent kit according to manufacturer´s construction.",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8375640"
+          }
+        ]
+      },
+      "review_status": "assistant_prepared_pending_human_review"
+    },
+    {
+      "input": {
+        "accession": "GSM8375641",
+        "series": "GSE271370",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8375641",
+        "split": "development",
+        "fields": {
+          "Sample_title": [
+            "L19P ProliferativeDAD"
+          ],
+          "Sample_source_name_ch1": [
+            "Lung"
+          ],
+          "Sample_organism_ch1": [
+            "Homo sapiens"
+          ],
+          "Sample_characteristics_ch1": [
+            "tissue: Lung"
+          ],
+          "Sample_extract_protocol_ch1": [
+            "RNA was extracted using a protocol from Qiagen (Rneasy FFPE Kit 73504), following extraction, the product was analyzed by TapeStation.  Samples with DV200 ≥ 22% were selected for experiments.",
+            "Spatial transcriptome sequencing libraries were preapred with 10xGenomics Visium Spatial Gene Expression Slides & Reagent kit according to manufacturer´s construction."
+          ],
+          "Sample_description": [
+            "FFPE Spatial transcriptome sequencing"
+          ],
+          "Sample_data_processing": [
+            "Raw sequencing data were processed using the 10x Genomics Space ranger pipeline to generate FASTQ files and sequences were aligned to GRCh38 genome using 10x Genomics default human reference genome and probe set files.",
+            "Assembly: GRCh38",
+            "Supplementary files format and content: filtered_barcodes.tsv.gz: list of spatial barcodes",
+            "Supplementary files format and content: filtered_features.tsv.gz: list of gene Ids",
+            "Supplementary files format and content: filtered_matrix.mt.gz: gene expression count data in Matrix Market Exchange Format",
+            "Supplementary files format and content: aligned_fiducials.jpg: aligned fiducials of the tissue image",
+            "Supplementary files format and content: detected_tissue_image.jpg: image of tissue and spots",
+            "Supplementary files format and content: scalefactors_json.json: scalefactors in json format",
+            "Supplementary files format and content: tissue_hires_image.png: hi-res image of tissue",
+            "Supplementary files format and content: tissue_lowres_image.png: low-res image of tissue",
+            "Supplementary files format and content: tissue_positions.csv: list of spatial barcodes and the coordinates specifying spots",
+            "Library strategy: Spatial Transcriptomics"
+          ],
+          "Sample_library_selection": [
+            "other"
+          ],
+          "Sample_library_source": [
+            "transcriptomic"
+          ],
+          "Sample_library_strategy": [
+            "OTHER"
+          ]
+        },
+        "fields_sha256": "795edda6c5a8df7fd579abde218d90166a1e87b462652081b98733227fb49e07"
+      },
+      "reference": {
+        "label": "eligible",
+        "reason": "Sample-level organism and tissue explicitly support human lung; its own protocol/title mentions a spatial assay. Physical assets not verified.",
+        "evidence": [
+          {
+            "field": "Sample_title",
+            "quote": "L19P ProliferativeDAD",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8375641"
+          },
+          {
+            "field": "Sample_source_name_ch1",
+            "quote": "Lung",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8375641"
+          },
+          {
+            "field": "Sample_organism_ch1",
+            "quote": "Homo sapiens",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8375641"
+          },
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: Lung",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8375641"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "RNA was extracted using a protocol from Qiagen (Rneasy FFPE Kit 73504), following extraction, the product was analyzed by TapeStation.  Samples with DV200 ≥ 22% were selected for experiments.",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8375641"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "Spatial transcriptome sequencing libraries were preapred with 10xGenomics Visium Spatial Gene Expression Slides & Reagent kit according to manufacturer´s construction.",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8375641"
+          }
+        ]
+      },
+      "review_status": "assistant_prepared_pending_human_review"
+    },
+    {
+      "input": {
+        "accession": "GSM8375642",
+        "series": "GSE271370",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8375642",
+        "split": "development",
+        "fields": {
+          "Sample_title": [
+            "L11P ProliferativeDAD"
+          ],
+          "Sample_source_name_ch1": [
+            "Lung"
+          ],
+          "Sample_organism_ch1": [
+            "Homo sapiens"
+          ],
+          "Sample_characteristics_ch1": [
+            "tissue: Lung"
+          ],
+          "Sample_extract_protocol_ch1": [
+            "RNA was extracted using a protocol from Qiagen (Rneasy FFPE Kit 73504), following extraction, the product was analyzed by TapeStation.  Samples with DV200 ≥ 22% were selected for experiments.",
+            "Spatial transcriptome sequencing libraries were preapred with 10xGenomics Visium Spatial Gene Expression Slides & Reagent kit according to manufacturer´s construction."
+          ],
+          "Sample_description": [
+            "FFPE Spatial transcriptome sequencing"
+          ],
+          "Sample_data_processing": [
+            "Raw sequencing data were processed using the 10x Genomics Space ranger pipeline to generate FASTQ files and sequences were aligned to GRCh38 genome using 10x Genomics default human reference genome and probe set files.",
+            "Assembly: GRCh38",
+            "Supplementary files format and content: filtered_barcodes.tsv.gz: list of spatial barcodes",
+            "Supplementary files format and content: filtered_features.tsv.gz: list of gene Ids",
+            "Supplementary files format and content: filtered_matrix.mt.gz: gene expression count data in Matrix Market Exchange Format",
+            "Supplementary files format and content: aligned_fiducials.jpg: aligned fiducials of the tissue image",
+            "Supplementary files format and content: detected_tissue_image.jpg: image of tissue and spots",
+            "Supplementary files format and content: scalefactors_json.json: scalefactors in json format",
+            "Supplementary files format and content: tissue_hires_image.png: hi-res image of tissue",
+            "Supplementary files format and content: tissue_lowres_image.png: low-res image of tissue",
+            "Supplementary files format and content: tissue_positions.csv: list of spatial barcodes and the coordinates specifying spots",
+            "Library strategy: Spatial Transcriptomics"
+          ],
+          "Sample_library_selection": [
+            "other"
+          ],
+          "Sample_library_source": [
+            "transcriptomic"
+          ],
+          "Sample_library_strategy": [
+            "OTHER"
+          ]
+        },
+        "fields_sha256": "e314b8e28963bd4bf5ff9ac12a8204d7907ff0dd2ccab448c98a0a22e5f2c973"
+      },
+      "reference": {
+        "label": "eligible",
+        "reason": "Sample-level organism and tissue explicitly support human lung; its own protocol/title mentions a spatial assay. Physical assets not verified.",
+        "evidence": [
+          {
+            "field": "Sample_title",
+            "quote": "L11P ProliferativeDAD",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8375642"
+          },
+          {
+            "field": "Sample_source_name_ch1",
+            "quote": "Lung",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8375642"
+          },
+          {
+            "field": "Sample_organism_ch1",
+            "quote": "Homo sapiens",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8375642"
+          },
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: Lung",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8375642"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "RNA was extracted using a protocol from Qiagen (Rneasy FFPE Kit 73504), following extraction, the product was analyzed by TapeStation.  Samples with DV200 ≥ 22% were selected for experiments.",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8375642"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "Spatial transcriptome sequencing libraries were preapred with 10xGenomics Visium Spatial Gene Expression Slides & Reagent kit according to manufacturer´s construction.",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8375642"
+          }
+        ]
+      },
+      "review_status": "assistant_prepared_pending_human_review"
+    },
+    {
+      "input": {
+        "accession": "GSM7990532",
+        "series": "GSE250346",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM7990532",
+        "split": "development",
+        "fields": {
+          "Sample_title": [
+            "THD0008_Control_TMA3-Run2_5mm"
+          ],
+          "Sample_source_name_ch1": [
+            "Lung, control"
+          ],
+          "Sample_organism_ch1": [
+            "Homo sapiens"
+          ],
+          "Sample_characteristics_ch1": [
+            "tissue: Lung"
+          ],
+          "Sample_extract_protocol_ch1": [
+            "Sectioning was performed at 5um on a Leica RM2135 with a water float temperature of 40°C. Sections were placed on Xenium slides (10X Genomics) and left to dry overnight. Slides were then stored in a sealed dessicator at room temperature for up to a maximum of 10 days."
+          ],
+          "Sample_data_processing": [
+            "Transcript-based niche embedding files (node_meta.csv and .npy files) were genetared using GraphSAGE.",
+            "Information about output files can be found here:",
+            "https://www.10xgenomics.com/support/in-situ-gene-expression/documentation/steps/onboard-analysis/understanding-xenium-outputs",
+            "Supplementary files format and content: HE_annotations.tar: This file contains geojson polygons of pathology annotations of regions mentioned in the paper for each sample as well as a csv assigning cells to the annotations they fall within."
+          ]
+        },
+        "fields_sha256": "373f9989ca0f0ec37b449286bea5a50d1afc1a1615b2a72f847d78dd5a4989a2"
+      },
+      "reference": {
+        "label": "eligible",
+        "reason": "Sample-level organism and tissue explicitly support human lung; its own protocol/title mentions a spatial assay. Physical assets not verified.",
+        "evidence": [
+          {
+            "field": "Sample_title",
+            "quote": "THD0008_Control_TMA3-Run2_5mm",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM7990532"
+          },
+          {
+            "field": "Sample_source_name_ch1",
+            "quote": "Lung, control",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM7990532"
+          },
+          {
+            "field": "Sample_organism_ch1",
+            "quote": "Homo sapiens",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM7990532"
+          },
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: Lung",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM7990532"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "Sectioning was performed at 5um on a Leica RM2135 with a water float temperature of 40°C. Sections were placed on Xenium slides (10X Genomics) and left to dry overnight. Slides were then stored in a sealed dessicator at room temperature for up to a maximum of 10 days.",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM7990532"
+          }
+        ]
+      },
+      "review_status": "assistant_prepared_pending_human_review"
+    },
+    {
+      "input": {
+        "accession": "GSM7990533",
+        "series": "GSE250346",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM7990533",
+        "split": "development",
+        "fields": {
+          "Sample_title": [
+            "THD0011_Control_TMA4-Run2_3mm"
+          ],
+          "Sample_source_name_ch1": [
+            "Lung, control"
+          ],
+          "Sample_organism_ch1": [
+            "Homo sapiens"
+          ],
+          "Sample_characteristics_ch1": [
+            "tissue: Lung"
+          ],
+          "Sample_extract_protocol_ch1": [
+            "Sectioning was performed at 5um on a Leica RM2135 with a water float temperature of 40°C. Sections were placed on Xenium slides (10X Genomics) and left to dry overnight. Slides were then stored in a sealed dessicator at room temperature for up to a maximum of 10 days."
+          ],
+          "Sample_data_processing": [
+            "Transcript-based niche embedding files (node_meta.csv and .npy files) were genetared using GraphSAGE.",
+            "Information about output files can be found here:",
+            "https://www.10xgenomics.com/support/in-situ-gene-expression/documentation/steps/onboard-analysis/understanding-xenium-outputs",
+            "Supplementary files format and content: HE_annotations.tar: This file contains geojson polygons of pathology annotations of regions mentioned in the paper for each sample as well as a csv assigning cells to the annotations they fall within."
+          ]
+        },
+        "fields_sha256": "7c61f52125ee2486d4b1497714b2ab8039536ada244521b9316e5f0f556208c3"
+      },
+      "reference": {
+        "label": "eligible",
+        "reason": "Sample-level organism and tissue explicitly support human lung; its own protocol/title mentions a spatial assay. Physical assets not verified.",
+        "evidence": [
+          {
+            "field": "Sample_title",
+            "quote": "THD0011_Control_TMA4-Run2_3mm",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM7990533"
+          },
+          {
+            "field": "Sample_source_name_ch1",
+            "quote": "Lung, control",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM7990533"
+          },
+          {
+            "field": "Sample_organism_ch1",
+            "quote": "Homo sapiens",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM7990533"
+          },
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: Lung",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM7990533"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "Sectioning was performed at 5um on a Leica RM2135 with a water float temperature of 40°C. Sections were placed on Xenium slides (10X Genomics) and left to dry overnight. Slides were then stored in a sealed dessicator at room temperature for up to a maximum of 10 days.",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM7990533"
+          }
+        ]
+      },
+      "review_status": "assistant_prepared_pending_human_review"
+    },
+    {
+      "input": {
+        "accession": "GSM7990534",
+        "series": "GSE250346",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM7990534",
+        "split": "development",
+        "fields": {
+          "Sample_title": [
+            "TILD117_More-affected_TMA4-Run2_3mm"
+          ],
+          "Sample_source_name_ch1": [
+            "Lung, more affected"
+          ],
+          "Sample_organism_ch1": [
+            "Homo sapiens"
+          ],
+          "Sample_characteristics_ch1": [
+            "tissue: Lung"
+          ],
+          "Sample_extract_protocol_ch1": [
+            "Sectioning was performed at 5um on a Leica RM2135 with a water float temperature of 40°C. Sections were placed on Xenium slides (10X Genomics) and left to dry overnight. Slides were then stored in a sealed dessicator at room temperature for up to a maximum of 10 days."
+          ],
+          "Sample_data_processing": [
+            "Transcript-based niche embedding files (node_meta.csv and .npy files) were genetared using GraphSAGE.",
+            "Information about output files can be found here:",
+            "https://www.10xgenomics.com/support/in-situ-gene-expression/documentation/steps/onboard-analysis/understanding-xenium-outputs",
+            "Supplementary files format and content: HE_annotations.tar: This file contains geojson polygons of pathology annotations of regions mentioned in the paper for each sample as well as a csv assigning cells to the annotations they fall within."
+          ]
+        },
+        "fields_sha256": "b3ce2ef92c8ff4d24ace07b0fa5f30b9dbf22ca508a616872c57e146472a8a5e"
+      },
+      "reference": {
+        "label": "eligible",
+        "reason": "Sample-level organism and tissue explicitly support human lung; its own protocol/title mentions a spatial assay. Physical assets not verified.",
+        "evidence": [
+          {
+            "field": "Sample_title",
+            "quote": "TILD117_More-affected_TMA4-Run2_3mm",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM7990534"
+          },
+          {
+            "field": "Sample_source_name_ch1",
+            "quote": "Lung, more affected",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM7990534"
+          },
+          {
+            "field": "Sample_organism_ch1",
+            "quote": "Homo sapiens",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM7990534"
+          },
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: Lung",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM7990534"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "Sectioning was performed at 5um on a Leica RM2135 with a water float temperature of 40°C. Sections were placed on Xenium slides (10X Genomics) and left to dry overnight. Slides were then stored in a sealed dessicator at room temperature for up to a maximum of 10 days.",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM7990534"
+          }
+        ]
+      },
+      "review_status": "assistant_prepared_pending_human_review"
+    },
+    {
+      "input": {
+        "accession": "GSM9945415",
+        "series": "GSE343063",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9945415",
+        "split": "development",
+        "fields": {
+          "Sample_title": [
+            "Primary limited-stage small cell lung cancer FFPE tissue 1"
+          ],
+          "Sample_source_name_ch1": [
+            "lung"
+          ],
+          "Sample_organism_ch1": [
+            "Homo sapiens"
+          ],
+          "Sample_characteristics_ch1": [
+            "tissue: lung"
+          ],
+          "Sample_extract_protocol_ch1": [
+            "tissue preparation protocol: FFPE tissue blocks were sectioned at 5 μm thickness and mounted onto Xenium slides. Tissue sections were baked, deparaffinized, decrosslinked, and processed according to the 10x Genomics Xenium In Situ protocol. Sections were hybridized with probes from the Xenium Human Pan Tissue & Pathways 5K panel, followed by probe ligation, rolling circle amplification, fluorescent labeling, and staining with DAPI, ATP1A1, E-cadherin, and CD45 prior to imaging."
+          ],
+          "Sample_description": [
+            "Surgically resected primary limited-stage small cell lung cancer FFPE specimen profiled using the Xenium In Situ platform."
+          ],
+          "Sample_data_processing": [
+            "Xenium output files were generated using Xenium Ranger."
+          ]
+        },
+        "fields_sha256": "bdfebeef2a863cd21afd0463e4061284a9b5f9491d091f0608a9080d85cd6d3c"
+      },
+      "reference": {
+        "label": "eligible",
+        "reason": "Sample-level organism and tissue explicitly support human lung; its own protocol/title mentions a spatial assay. Physical assets not verified.",
+        "evidence": [
+          {
+            "field": "Sample_title",
+            "quote": "Primary limited-stage small cell lung cancer FFPE tissue 1",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9945415"
+          },
+          {
+            "field": "Sample_source_name_ch1",
+            "quote": "lung",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9945415"
+          },
+          {
+            "field": "Sample_organism_ch1",
+            "quote": "Homo sapiens",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9945415"
+          },
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: lung",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9945415"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "tissue preparation protocol: FFPE tissue blocks were sectioned at 5 μm thickness and mounted onto Xenium slides. Tissue sections were baked, deparaffinized, decrosslinked, and processed according to the 10x Genomics Xenium In Situ protocol. Sections were hybridized with probes from the Xenium Human Pan Tissue & Pathways 5K panel, followed by probe ligation, rolling circle amplification, fluorescent labeling, and staining with DAPI, ATP1A1, E-cadherin, and CD45 prior to imaging.",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9945415"
+          }
+        ]
+      },
+      "review_status": "assistant_prepared_pending_human_review"
+    },
+    {
+      "input": {
+        "accession": "GSM9945416",
+        "series": "GSE343063",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9945416",
+        "split": "development",
+        "fields": {
+          "Sample_title": [
+            "Primary limited-stage small cell lung cancer FFPE tissue 2"
+          ],
+          "Sample_source_name_ch1": [
+            "lung"
+          ],
+          "Sample_organism_ch1": [
+            "Homo sapiens"
+          ],
+          "Sample_characteristics_ch1": [
+            "tissue: lung"
+          ],
+          "Sample_extract_protocol_ch1": [
+            "tissue preparation protocol: FFPE tissue blocks were sectioned at 5 μm thickness and mounted onto Xenium slides. Tissue sections were baked, deparaffinized, decrosslinked, and processed according to the 10x Genomics Xenium In Situ protocol. Sections were hybridized with probes from the Xenium Human Pan Tissue & Pathways 5K panel, followed by probe ligation, rolling circle amplification, fluorescent labeling, and staining with DAPI, ATP1A1, E-cadherin, and CD45 prior to imaging."
+          ],
+          "Sample_description": [
+            "Surgically resected primary limited-stage small cell lung cancer FFPE specimen profiled using the Xenium In Situ platform."
+          ],
+          "Sample_data_processing": [
+            "Xenium output files were generated using Xenium Ranger."
+          ]
+        },
+        "fields_sha256": "a928c69214f0eb0b1dff8f2f672c65445cc1d173f52e709e964438e5682cd2dc"
+      },
+      "reference": {
+        "label": "eligible",
+        "reason": "Sample-level organism and tissue explicitly support human lung; its own protocol/title mentions a spatial assay. Physical assets not verified.",
+        "evidence": [
+          {
+            "field": "Sample_title",
+            "quote": "Primary limited-stage small cell lung cancer FFPE tissue 2",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9945416"
+          },
+          {
+            "field": "Sample_source_name_ch1",
+            "quote": "lung",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9945416"
+          },
+          {
+            "field": "Sample_organism_ch1",
+            "quote": "Homo sapiens",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9945416"
+          },
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: lung",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9945416"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "tissue preparation protocol: FFPE tissue blocks were sectioned at 5 μm thickness and mounted onto Xenium slides. Tissue sections were baked, deparaffinized, decrosslinked, and processed according to the 10x Genomics Xenium In Situ protocol. Sections were hybridized with probes from the Xenium Human Pan Tissue & Pathways 5K panel, followed by probe ligation, rolling circle amplification, fluorescent labeling, and staining with DAPI, ATP1A1, E-cadherin, and CD45 prior to imaging.",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9945416"
+          }
+        ]
+      },
+      "review_status": "assistant_prepared_pending_human_review"
+    },
+    {
+      "input": {
+        "accession": "GSM9945417",
+        "series": "GSE343063",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9945417",
+        "split": "development",
+        "fields": {
+          "Sample_title": [
+            "Primary limited-stage small cell lung cancer FFPE tissue 3"
+          ],
+          "Sample_source_name_ch1": [
+            "lung"
+          ],
+          "Sample_organism_ch1": [
+            "Homo sapiens"
+          ],
+          "Sample_characteristics_ch1": [
+            "tissue: lung"
+          ],
+          "Sample_extract_protocol_ch1": [
+            "tissue preparation protocol: FFPE tissue blocks were sectioned at 5 μm thickness and mounted onto Xenium slides. Tissue sections were baked, deparaffinized, decrosslinked, and processed according to the 10x Genomics Xenium In Situ protocol. Sections were hybridized with probes from the Xenium Human Pan Tissue & Pathways 5K panel, followed by probe ligation, rolling circle amplification, fluorescent labeling, and staining with DAPI, ATP1A1, E-cadherin, and CD45 prior to imaging."
+          ],
+          "Sample_description": [
+            "Surgically resected primary limited-stage small cell lung cancer FFPE specimen profiled using the Xenium In Situ platform."
+          ],
+          "Sample_data_processing": [
+            "Xenium output files were generated using Xenium Ranger."
+          ]
+        },
+        "fields_sha256": "1a717370a9bb645df73ad765edd7a54fba89aa1814d2503bf1db318cf2818eff"
+      },
+      "reference": {
+        "label": "eligible",
+        "reason": "Sample-level organism and tissue explicitly support human lung; its own protocol/title mentions a spatial assay. Physical assets not verified.",
+        "evidence": [
+          {
+            "field": "Sample_title",
+            "quote": "Primary limited-stage small cell lung cancer FFPE tissue 3",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9945417"
+          },
+          {
+            "field": "Sample_source_name_ch1",
+            "quote": "lung",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9945417"
+          },
+          {
+            "field": "Sample_organism_ch1",
+            "quote": "Homo sapiens",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9945417"
+          },
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: lung",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9945417"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "tissue preparation protocol: FFPE tissue blocks were sectioned at 5 μm thickness and mounted onto Xenium slides. Tissue sections were baked, deparaffinized, decrosslinked, and processed according to the 10x Genomics Xenium In Situ protocol. Sections were hybridized with probes from the Xenium Human Pan Tissue & Pathways 5K panel, followed by probe ligation, rolling circle amplification, fluorescent labeling, and staining with DAPI, ATP1A1, E-cadherin, and CD45 prior to imaging.",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9945417"
+          }
+        ]
+      },
+      "review_status": "assistant_prepared_pending_human_review"
+    },
+    {
+      "input": {
+        "accession": "GSM10045631",
+        "series": "GSE347080",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM10045631",
+        "split": "development",
+        "fields": {
+          "Sample_title": [
+            "LK054"
+          ],
+          "Sample_source_name_ch1": [
+            "Lung"
+          ],
+          "Sample_organism_ch1": [
+            "Homo sapiens"
+          ],
+          "Sample_characteristics_ch1": [
+            "tissue: Lung"
+          ],
+          "Sample_extract_protocol_ch1": [
+            "tissue preparation protocol: From the FFPE samples, 5-μm-thick sections were prepared. These sections were trimmed to a 4 × 8 mm area containing sufficient tumor cells and stromal cells and mounted onto Xenium slides. FFPE tissues on the Xenium slides were deparaffinized and decrosslinked."
+          ],
+          "Sample_description": [
+            "Surgically resected LCNEC sample"
+          ],
+          "Sample_data_processing": [
+            "Data was analysed using software version Xenium-3.2.0.7 (10x Genomics)."
+          ]
+        },
+        "fields_sha256": "815d4733bedcc03b655ddd3df5ba1ce9262cfe686e5fceafd04ec29e1d563782"
+      },
+      "reference": {
+        "label": "eligible",
+        "reason": "Sample-level organism and tissue explicitly support human lung; its own protocol/title mentions a spatial assay. Physical assets not verified.",
+        "evidence": [
+          {
+            "field": "Sample_title",
+            "quote": "LK054",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM10045631"
+          },
+          {
+            "field": "Sample_source_name_ch1",
+            "quote": "Lung",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM10045631"
+          },
+          {
+            "field": "Sample_organism_ch1",
+            "quote": "Homo sapiens",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM10045631"
+          },
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: Lung",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM10045631"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "tissue preparation protocol: From the FFPE samples, 5-μm-thick sections were prepared. These sections were trimmed to a 4 × 8 mm area containing sufficient tumor cells and stromal cells and mounted onto Xenium slides. FFPE tissues on the Xenium slides were deparaffinized and decrosslinked.",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM10045631"
+          }
+        ]
+      },
+      "review_status": "assistant_prepared_pending_human_review"
+    },
+    {
+      "input": {
+        "accession": "GSM10045632",
+        "series": "GSE347080",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM10045632",
+        "split": "development",
+        "fields": {
+          "Sample_title": [
+            "LK063"
+          ],
+          "Sample_source_name_ch1": [
+            "Lung"
+          ],
+          "Sample_organism_ch1": [
+            "Homo sapiens"
+          ],
+          "Sample_characteristics_ch1": [
+            "tissue: Lung"
+          ],
+          "Sample_extract_protocol_ch1": [
+            "tissue preparation protocol: From the FFPE samples, 5-μm-thick sections were prepared. These sections were trimmed to a 4 × 8 mm area containing sufficient tumor cells and stromal cells and mounted onto Xenium slides. FFPE tissues on the Xenium slides were deparaffinized and decrosslinked."
+          ],
+          "Sample_description": [
+            "Surgically resected LCNEC sample"
+          ],
+          "Sample_data_processing": [
+            "Data was analysed using software version Xenium-3.2.0.7 (10x Genomics)."
+          ]
+        },
+        "fields_sha256": "ee69be5745dd153b6dbb66744650db1c753a2113b0be2d585c558aa3a66f2696"
+      },
+      "reference": {
+        "label": "eligible",
+        "reason": "Sample-level organism and tissue explicitly support human lung; its own protocol/title mentions a spatial assay. Physical assets not verified.",
+        "evidence": [
+          {
+            "field": "Sample_title",
+            "quote": "LK063",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM10045632"
+          },
+          {
+            "field": "Sample_source_name_ch1",
+            "quote": "Lung",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM10045632"
+          },
+          {
+            "field": "Sample_organism_ch1",
+            "quote": "Homo sapiens",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM10045632"
+          },
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: Lung",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM10045632"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "tissue preparation protocol: From the FFPE samples, 5-μm-thick sections were prepared. These sections were trimmed to a 4 × 8 mm area containing sufficient tumor cells and stromal cells and mounted onto Xenium slides. FFPE tissues on the Xenium slides were deparaffinized and decrosslinked.",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM10045632"
+          }
+        ]
+      },
+      "review_status": "assistant_prepared_pending_human_review"
+    },
+    {
+      "input": {
+        "accession": "GSM10045633",
+        "series": "GSE347080",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM10045633",
+        "split": "development",
+        "fields": {
+          "Sample_title": [
+            "LK137"
+          ],
+          "Sample_source_name_ch1": [
+            "Lung"
+          ],
+          "Sample_organism_ch1": [
+            "Homo sapiens"
+          ],
+          "Sample_characteristics_ch1": [
+            "tissue: Lung"
+          ],
+          "Sample_extract_protocol_ch1": [
+            "tissue preparation protocol: From the FFPE samples, 5-μm-thick sections were prepared. These sections were trimmed to a 4 × 8 mm area containing sufficient tumor cells and stromal cells and mounted onto Xenium slides. FFPE tissues on the Xenium slides were deparaffinized and decrosslinked."
+          ],
+          "Sample_description": [
+            "Surgically resected LCNEC sample"
+          ],
+          "Sample_data_processing": [
+            "Data was analysed using software version Xenium-3.2.0.7 (10x Genomics)."
+          ]
+        },
+        "fields_sha256": "94dfbcbd422f655549c1460a4dfdd3f108c5f96571b919a3e7a30f99871a6dc7"
+      },
+      "reference": {
+        "label": "eligible",
+        "reason": "Sample-level organism and tissue explicitly support human lung; its own protocol/title mentions a spatial assay. Physical assets not verified.",
+        "evidence": [
+          {
+            "field": "Sample_title",
+            "quote": "LK137",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM10045633"
+          },
+          {
+            "field": "Sample_source_name_ch1",
+            "quote": "Lung",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM10045633"
+          },
+          {
+            "field": "Sample_organism_ch1",
+            "quote": "Homo sapiens",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM10045633"
+          },
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: Lung",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM10045633"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "tissue preparation protocol: From the FFPE samples, 5-μm-thick sections were prepared. These sections were trimmed to a 4 × 8 mm area containing sufficient tumor cells and stromal cells and mounted onto Xenium slides. FFPE tissues on the Xenium slides were deparaffinized and decrosslinked.",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM10045633"
+          }
+        ]
+      },
+      "review_status": "assistant_prepared_pending_human_review"
+    },
+    {
+      "input": {
+        "accession": "GSM10012170",
+        "series": "GSE345643",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM10012170",
+        "split": "development",
+        "fields": {
+          "Sample_title": [
+            "Human right ventricle Xenium, capture region 0038213_Region1"
+          ],
+          "Sample_source_name_ch1": [
+            "right ventricle (transmural)"
+          ],
+          "Sample_organism_ch1": [
+            "Homo sapiens"
+          ],
+          "Sample_characteristics_ch1": [
+            "tissue: right ventricle (transmural)"
+          ],
+          "Sample_extract_protocol_ch1": [
+            "tissue preparation protocol: 5-um sections of FFPE right ventricular tissue were mounted onto Xenium slides (10x Genomics) and processed per the manufacturer's protocol (CG000578) using the Xenium Slides and Sample Prep Reagents kit (PN-1000460), comprising deparaffinization, decrosslinking, fixation and permeabilization. Nine RV samples (3 NF, 3 pRV, 3 RVF) were selected on RNA quality and sample geometry (typically 10 x 10 mm)."
+          ],
+          "Sample_description": [
+            "3 transmural RV section(s) from patient(s) 1697, 1691, 1618 imaged in a single capture region (154,475 cells). Per-cell section assignment, spatial coordinates and cell-type labels are in 0038213_Region1_cells_stats.csv. Counts are the 477-gene measured panel after Proseg resegmentation; SpaGE-imputed genes are not included. Two matrices are provided: 0038213_Region1_cell_feature_matrix.h5 holds the raw measured counts (all cells), and 0038213_Region1_ambient_corrected_matrix.h5 holds the same cells after ambient-RNA correction and QC filtering (non-integer values; this is the matrix analysed in Figure 3)."
+          ],
+          "Sample_data_processing": [
+            "Cells were resegmented with Proseg. Cell types were assigned by RCTD against the matched snRNA-seq reference with SPLIT correction. Ambient RNA was removed to produce the corrected matrices; those counts are non-integer. Deposited count matrices contain the 477 measured panel genes only - SpaGE-imputed genes used elsewhere in the study are excluded."
+          ]
+        },
+        "fields_sha256": "f3f9f04a975889bcf5dbb2fcd7ccfef2faaf72ce65ff4e62442af8b0fbd4b391"
+      },
+      "reference": {
+        "label": "non_lung",
+        "reason": "Sample-level tissue explicitly states right ventricle or larynx/hypopharynx, despite study appearing in a lung keyword query.",
+        "evidence": [
+          {
+            "field": "Sample_title",
+            "quote": "Human right ventricle Xenium, capture region 0038213_Region1",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM10012170"
+          },
+          {
+            "field": "Sample_source_name_ch1",
+            "quote": "right ventricle (transmural)",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM10012170"
+          },
+          {
+            "field": "Sample_organism_ch1",
+            "quote": "Homo sapiens",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM10012170"
+          },
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: right ventricle (transmural)",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM10012170"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "tissue preparation protocol: 5-um sections of FFPE right ventricular tissue were mounted onto Xenium slides (10x Genomics) and processed per the manufacturer's protocol (CG000578) using the Xenium Slides and Sample Prep Reagents kit (PN-1000460), comprising deparaffinization, decrosslinking, fixation and permeabilization. Nine RV samples (3 NF, 3 pRV, 3 RVF) were selected on RNA quality and sample geometry (typically 10 x 10 mm).",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM10012170"
+          }
+        ]
+      },
+      "review_status": "assistant_prepared_pending_human_review"
+    },
+    {
+      "input": {
+        "accession": "GSM10012171",
+        "series": "GSE345643",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM10012171",
+        "split": "development",
+        "fields": {
+          "Sample_title": [
+            "Human right ventricle Xenium, capture region 0038216_Region1"
+          ],
+          "Sample_source_name_ch1": [
+            "right ventricle (transmural)"
+          ],
+          "Sample_organism_ch1": [
+            "Homo sapiens"
+          ],
+          "Sample_characteristics_ch1": [
+            "tissue: right ventricle (transmural)"
+          ],
+          "Sample_extract_protocol_ch1": [
+            "tissue preparation protocol: 5-um sections of FFPE right ventricular tissue were mounted onto Xenium slides (10x Genomics) and processed per the manufacturer's protocol (CG000578) using the Xenium Slides and Sample Prep Reagents kit (PN-1000460), comprising deparaffinization, decrosslinking, fixation and permeabilization. Nine RV samples (3 NF, 3 pRV, 3 RVF) were selected on RNA quality and sample geometry (typically 10 x 10 mm)."
+          ],
+          "Sample_description": [
+            "2 transmural RV section(s) from patient(s) 1567, 1692 imaged in a single capture region (190,058 cells). Per-cell section assignment, spatial coordinates and cell-type labels are in 0038216_Region1_cells_stats.csv. Counts are the 477-gene measured panel after Proseg resegmentation; SpaGE-imputed genes are not included. Two matrices are provided: 0038216_Region1_cell_feature_matrix.h5 holds the raw measured counts (all cells), and 0038216_Region1_ambient_corrected_matrix.h5 holds the same cells after ambient-RNA correction and QC filtering (non-integer values; this is the matrix analysed in Figure 3)."
+          ],
+          "Sample_data_processing": [
+            "Cells were resegmented with Proseg. Cell types were assigned by RCTD against the matched snRNA-seq reference with SPLIT correction. Ambient RNA was removed to produce the corrected matrices; those counts are non-integer. Deposited count matrices contain the 477 measured panel genes only - SpaGE-imputed genes used elsewhere in the study are excluded."
+          ]
+        },
+        "fields_sha256": "b55cb32d48844fe5291c3aab3e48402e038493704876bf90d8f7891ea1f378c1"
+      },
+      "reference": {
+        "label": "non_lung",
+        "reason": "Sample-level tissue explicitly states right ventricle or larynx/hypopharynx, despite study appearing in a lung keyword query.",
+        "evidence": [
+          {
+            "field": "Sample_title",
+            "quote": "Human right ventricle Xenium, capture region 0038216_Region1",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM10012171"
+          },
+          {
+            "field": "Sample_source_name_ch1",
+            "quote": "right ventricle (transmural)",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM10012171"
+          },
+          {
+            "field": "Sample_organism_ch1",
+            "quote": "Homo sapiens",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM10012171"
+          },
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: right ventricle (transmural)",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM10012171"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "tissue preparation protocol: 5-um sections of FFPE right ventricular tissue were mounted onto Xenium slides (10x Genomics) and processed per the manufacturer's protocol (CG000578) using the Xenium Slides and Sample Prep Reagents kit (PN-1000460), comprising deparaffinization, decrosslinking, fixation and permeabilization. Nine RV samples (3 NF, 3 pRV, 3 RVF) were selected on RNA quality and sample geometry (typically 10 x 10 mm).",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM10012171"
+          }
+        ]
+      },
+      "review_status": "assistant_prepared_pending_human_review"
+    },
+    {
+      "input": {
+        "accession": "GSM10012172",
+        "series": "GSE345643",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM10012172",
+        "split": "development",
+        "fields": {
+          "Sample_title": [
+            "Human right ventricle Xenium, capture region 0038290_Region1"
+          ],
+          "Sample_source_name_ch1": [
+            "right ventricle (transmural)"
+          ],
+          "Sample_organism_ch1": [
+            "Homo sapiens"
+          ],
+          "Sample_characteristics_ch1": [
+            "tissue: right ventricle (transmural)"
+          ],
+          "Sample_extract_protocol_ch1": [
+            "tissue preparation protocol: 5-um sections of FFPE right ventricular tissue were mounted onto Xenium slides (10x Genomics) and processed per the manufacturer's protocol (CG000578) using the Xenium Slides and Sample Prep Reagents kit (PN-1000460), comprising deparaffinization, decrosslinking, fixation and permeabilization. Nine RV samples (3 NF, 3 pRV, 3 RVF) were selected on RNA quality and sample geometry (typically 10 x 10 mm)."
+          ],
+          "Sample_description": [
+            "1 transmural RV section(s) from patient(s) 1561 imaged in a single capture region (83,406 cells). Per-cell section assignment, spatial coordinates and cell-type labels are in 0038290_Region1_cells_stats.csv. Counts are the 477-gene measured panel after Proseg resegmentation; SpaGE-imputed genes are not included. Two matrices are provided: 0038290_Region1_cell_feature_matrix.h5 holds the raw measured counts (all cells), and 0038290_Region1_ambient_corrected_matrix.h5 holds the same cells after ambient-RNA correction and QC filtering (non-integer values; this is the matrix analysed in Figure 3)."
+          ],
+          "Sample_data_processing": [
+            "Cells were resegmented with Proseg. Cell types were assigned by RCTD against the matched snRNA-seq reference with SPLIT correction. Ambient RNA was removed to produce the corrected matrices; those counts are non-integer. Deposited count matrices contain the 477 measured panel genes only - SpaGE-imputed genes used elsewhere in the study are excluded."
+          ]
+        },
+        "fields_sha256": "a4ba1c801b74a91015386f73c7eac5753ed9831e229ce553cbb9d76ad4987a7b"
+      },
+      "reference": {
+        "label": "non_lung",
+        "reason": "Sample-level tissue explicitly states right ventricle or larynx/hypopharynx, despite study appearing in a lung keyword query.",
+        "evidence": [
+          {
+            "field": "Sample_title",
+            "quote": "Human right ventricle Xenium, capture region 0038290_Region1",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM10012172"
+          },
+          {
+            "field": "Sample_source_name_ch1",
+            "quote": "right ventricle (transmural)",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM10012172"
+          },
+          {
+            "field": "Sample_organism_ch1",
+            "quote": "Homo sapiens",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM10012172"
+          },
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: right ventricle (transmural)",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM10012172"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "tissue preparation protocol: 5-um sections of FFPE right ventricular tissue were mounted onto Xenium slides (10x Genomics) and processed per the manufacturer's protocol (CG000578) using the Xenium Slides and Sample Prep Reagents kit (PN-1000460), comprising deparaffinization, decrosslinking, fixation and permeabilization. Nine RV samples (3 NF, 3 pRV, 3 RVF) were selected on RNA quality and sample geometry (typically 10 x 10 mm).",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM10012172"
+          }
+        ]
+      },
+      "review_status": "assistant_prepared_pending_human_review"
+    },
+    {
+      "input": {
+        "accession": "GSM9949642",
+        "series": "GSE343350",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9949642",
+        "split": "development",
+        "fields": {
+          "Sample_title": [
+            "Tissue array: 8 punches"
+          ],
+          "Sample_source_name_ch1": [
+            "larynx; hypopharynx"
+          ],
+          "Sample_organism_ch1": [
+            "Homo sapiens"
+          ],
+          "Sample_characteristics_ch1": [
+            "tissue: larynx; hypopharynx"
+          ],
+          "Sample_extract_protocol_ch1": [
+            "tissue preparation protocol: FFPE: tissue array, 5 µm thick slice placed on Xenium slide, dried and permeabilized."
+          ],
+          "Sample_data_processing": [
+            "Xenium Explorer 2.0"
+          ]
+        },
+        "fields_sha256": "fecd826f296c302707058961ecca3694685e3b0cfc5e1bd40b4978fd338ddaf4"
+      },
+      "reference": {
+        "label": "non_lung",
+        "reason": "Sample-level tissue explicitly states right ventricle or larynx/hypopharynx, despite study appearing in a lung keyword query.",
+        "evidence": [
+          {
+            "field": "Sample_title",
+            "quote": "Tissue array: 8 punches",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9949642"
+          },
+          {
+            "field": "Sample_source_name_ch1",
+            "quote": "larynx; hypopharynx",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9949642"
+          },
+          {
+            "field": "Sample_organism_ch1",
+            "quote": "Homo sapiens",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9949642"
+          },
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: larynx; hypopharynx",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9949642"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "tissue preparation protocol: FFPE: tissue array, 5 µm thick slice placed on Xenium slide, dried and permeabilized.",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9949642"
+          }
+        ]
+      },
+      "review_status": "assistant_prepared_pending_human_review"
+    },
+    {
+      "input": {
+        "accession": "GSM9949643",
+        "series": "GSE343350",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9949643",
+        "split": "development",
+        "fields": {
+          "Sample_title": [
+            "Tissue array: 3 punches"
+          ],
+          "Sample_source_name_ch1": [
+            "larynx; hypopharynx"
+          ],
+          "Sample_organism_ch1": [
+            "Homo sapiens"
+          ],
+          "Sample_characteristics_ch1": [
+            "tissue: larynx; hypopharynx"
+          ],
+          "Sample_extract_protocol_ch1": [
+            "tissue preparation protocol: FFPE: tissue array, 5 µm thick slice placed on Xenium slide, dried and permeabilized."
+          ],
+          "Sample_data_processing": [
+            "Xenium Explorer 2.0"
+          ]
+        },
+        "fields_sha256": "0e52cb49375b065d0085c186ade4e39a0260ce55600ed4e0bc1fa66d89a89535"
+      },
+      "reference": {
+        "label": "non_lung",
+        "reason": "Sample-level tissue explicitly states right ventricle or larynx/hypopharynx, despite study appearing in a lung keyword query.",
+        "evidence": [
+          {
+            "field": "Sample_title",
+            "quote": "Tissue array: 3 punches",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9949643"
+          },
+          {
+            "field": "Sample_source_name_ch1",
+            "quote": "larynx; hypopharynx",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9949643"
+          },
+          {
+            "field": "Sample_organism_ch1",
+            "quote": "Homo sapiens",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9949643"
+          },
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: larynx; hypopharynx",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9949643"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "tissue preparation protocol: FFPE: tissue array, 5 µm thick slice placed on Xenium slide, dried and permeabilized.",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9949643"
+          }
+        ]
+      },
+      "review_status": "assistant_prepared_pending_human_review"
+    },
+    {
+      "input": {
+        "accession": "GSM9102552",
+        "series": "GSE302356",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9102552",
+        "split": "development",
+        "fields": {
+          "Sample_title": [
+            "LAM3 (scRNA-seq)"
+          ],
+          "Sample_source_name_ch1": [
+            "Lung"
+          ],
+          "Sample_organism_ch1": [
+            "Homo sapiens"
+          ],
+          "Sample_characteristics_ch1": [
+            "tissue: Lung"
+          ],
+          "Sample_extract_protocol_ch1": [
+            "Single-cell and single-nuclei suspensions were processed through the 10X Chromium to generate single-cell cDNA libraries attached to microbeads Microbeads were counted, and amplified by PCR, and the 3' end of the cDNA was prepared for sequencing using a modified Nextera XT protocol single-cell RNA-seq, single-nuclear RNA-seq",
+            "Microbeads were counted, and amplified by PCR, and the 3' end of the cDNA was prepared for sequencing using a modified Nextera XT protocol"
+          ],
+          "Sample_description": [
+            "Library name: Sample 1"
+          ],
+          "Sample_data_processing": [
+            "Read alignment and gene-expression quantification of human single-cell RNA-seq (scRNA-seq) data were performed using Cell Ranger version 3.0.2 pipeline (10x Genomics).",
+            "For scRNA-seq alignment and quantification, Cell Ranger pre-built human (hg38) reference package was used.",
+            "Assembly: GRCh38",
+            "Supplementary files format and content: Raw Feature Barcode Matrix and 10x Cell Ranger filtered Feature Barcode Matirx in HDF5 format"
+          ],
+          "Sample_library_selection": [
+            "cDNA"
+          ],
+          "Sample_library_source": [
+            "transcriptomic single cell"
+          ],
+          "Sample_library_strategy": [
+            "RNA-Seq"
+          ]
+        },
+        "fields_sha256": "89e0cd105acdcf1c8129d2dd6833d94dea68eba1506000e5c8acc858ced7769f"
+      },
+      "reference": {
+        "label": "unknown",
+        "reason": "Lung source is stated, but this sample describes dissociated Chromium scRNA/multiome, not confirmed spatial measurement; no spatial label inherited from the mixed parent study.",
+        "evidence": [
+          {
+            "field": "Sample_title",
+            "quote": "LAM3 (scRNA-seq)",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9102552"
+          },
+          {
+            "field": "Sample_source_name_ch1",
+            "quote": "Lung",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9102552"
+          },
+          {
+            "field": "Sample_organism_ch1",
+            "quote": "Homo sapiens",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9102552"
+          },
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: Lung",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9102552"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "Single-cell and single-nuclei suspensions were processed through the 10X Chromium to generate single-cell cDNA libraries attached to microbeads Microbeads were counted, and amplified by PCR, and the 3' end of the cDNA was prepared for sequencing using a modified Nextera XT protocol single-cell RNA-seq, single-nuclear RNA-seq",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9102552"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "Microbeads were counted, and amplified by PCR, and the 3' end of the cDNA was prepared for sequencing using a modified Nextera XT protocol",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9102552"
+          }
+        ]
+      },
+      "review_status": "assistant_prepared_pending_human_review"
+    },
+    {
+      "input": {
+        "accession": "GSM9102553",
+        "series": "GSE302356",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9102553",
+        "split": "development",
+        "fields": {
+          "Sample_title": [
+            "LAM4 (scRNA-seq)"
+          ],
+          "Sample_source_name_ch1": [
+            "Lung"
+          ],
+          "Sample_organism_ch1": [
+            "Homo sapiens"
+          ],
+          "Sample_characteristics_ch1": [
+            "tissue: Lung"
+          ],
+          "Sample_extract_protocol_ch1": [
+            "Single-cell and single-nuclei suspensions were processed through the 10X Chromium to generate single-cell cDNA libraries attached to microbeads Microbeads were counted, and amplified by PCR, and the 3' end of the cDNA was prepared for sequencing using a modified Nextera XT protocol single-cell RNA-seq, single-nuclear RNA-seq",
+            "Microbeads were counted, and amplified by PCR, and the 3' end of the cDNA was prepared for sequencing using a modified Nextera XT protocol"
+          ],
+          "Sample_description": [
+            "Library name: Sample 2"
+          ],
+          "Sample_data_processing": [
+            "Read alignment and gene-expression quantification of human single-cell RNA-seq (scRNA-seq) data were performed using Cell Ranger version 3.0.2 pipeline (10x Genomics).",
+            "For scRNA-seq alignment and quantification, Cell Ranger pre-built human (hg38) reference package was used.",
+            "Assembly: GRCh38",
+            "Supplementary files format and content: Raw Feature Barcode Matrix and 10x Cell Ranger filtered Feature Barcode Matirx in HDF5 format"
+          ],
+          "Sample_library_selection": [
+            "cDNA"
+          ],
+          "Sample_library_source": [
+            "transcriptomic single cell"
+          ],
+          "Sample_library_strategy": [
+            "RNA-Seq"
+          ]
+        },
+        "fields_sha256": "cdc485bd5a255fc16e598cfd77a72761edc4b02c64fa7200aea72ab3dd648d1a"
+      },
+      "reference": {
+        "label": "unknown",
+        "reason": "Lung source is stated, but this sample describes dissociated Chromium scRNA/multiome, not confirmed spatial measurement; no spatial label inherited from the mixed parent study.",
+        "evidence": [
+          {
+            "field": "Sample_title",
+            "quote": "LAM4 (scRNA-seq)",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9102553"
+          },
+          {
+            "field": "Sample_source_name_ch1",
+            "quote": "Lung",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9102553"
+          },
+          {
+            "field": "Sample_organism_ch1",
+            "quote": "Homo sapiens",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9102553"
+          },
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: Lung",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9102553"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "Single-cell and single-nuclei suspensions were processed through the 10X Chromium to generate single-cell cDNA libraries attached to microbeads Microbeads were counted, and amplified by PCR, and the 3' end of the cDNA was prepared for sequencing using a modified Nextera XT protocol single-cell RNA-seq, single-nuclear RNA-seq",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9102553"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "Microbeads were counted, and amplified by PCR, and the 3' end of the cDNA was prepared for sequencing using a modified Nextera XT protocol",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9102553"
+          }
+        ]
+      },
+      "review_status": "assistant_prepared_pending_human_review"
+    },
+    {
+      "input": {
+        "accession": "GSM9226647",
+        "series": "GSE302356",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9226647",
+        "split": "development",
+        "fields": {
+          "Sample_title": [
+            "LAM10, GEX"
+          ],
+          "Sample_source_name_ch1": [
+            "Lung"
+          ],
+          "Sample_organism_ch1": [
+            "Homo sapiens"
+          ],
+          "Sample_characteristics_ch1": [
+            "tissue: Lung"
+          ],
+          "Sample_extract_protocol_ch1": [
+            "Frozen tissue (30 mg) from LAM lungs was minced and lysed in buffer, then filtered. Nuclei were sorted using Sony SH800 and 150,000 nuclei were collected. Nuclei were spun and resuspended and concentrations adjusted for 10X multiome: 11,000 nuclei were loaded to target recovery of 7,000 nuclei. Fresh tissue from LAM44 was minced lysed in buffer yielding 300,000 nuclei. Nuclei were washed and resuspended. Final nuclei (11,000) were loaded for 10X.",
+            "Library was constructed by following 10X protocol: Chromium Next GEM Single Cell Multiome ATAC+ Gene Expression User Guide (CG000338)."
+          ],
+          "Sample_description": [
+            "Library name: Sample 10_RNA",
+            "10X Multiome",
+            "LAM10.tar.gz",
+            "Chromium X Series"
+          ],
+          "Sample_data_processing": [
+            "Demultiplexed data was processed using the 10X Cell Ranger count pipeline",
+            "Further processing was done with Seurat v4.1.0 (cell and gene filtering, hashtag identification, clustering, differential gene expression analysis).",
+            "Assembly: GRCh38",
+            "Supplementary files format and content: 10x Cell Ranger filtered Feature Barcode Matirx in HDF5 format",
+            "Supplementary files format and content: 10x Cell Ranger fragments fille"
+          ],
+          "Sample_library_selection": [
+            "cDNA"
+          ],
+          "Sample_library_source": [
+            "transcriptomic single cell"
+          ],
+          "Sample_library_strategy": [
+            "RNA-Seq"
+          ]
+        },
+        "fields_sha256": "bc8b0bb403c1309612aa4cf888a2db8102ec4de069e4f975dd990346785f0455"
+      },
+      "reference": {
+        "label": "unknown",
+        "reason": "Lung source is stated, but this sample describes dissociated Chromium scRNA/multiome, not confirmed spatial measurement; no spatial label inherited from the mixed parent study.",
+        "evidence": [
+          {
+            "field": "Sample_title",
+            "quote": "LAM10, GEX",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9226647"
+          },
+          {
+            "field": "Sample_source_name_ch1",
+            "quote": "Lung",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9226647"
+          },
+          {
+            "field": "Sample_organism_ch1",
+            "quote": "Homo sapiens",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9226647"
+          },
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: Lung",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9226647"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "Frozen tissue (30 mg) from LAM lungs was minced and lysed in buffer, then filtered. Nuclei were sorted using Sony SH800 and 150,000 nuclei were collected. Nuclei were spun and resuspended and concentrations adjusted for 10X multiome: 11,000 nuclei were loaded to target recovery of 7,000 nuclei. Fresh tissue from LAM44 was minced lysed in buffer yielding 300,000 nuclei. Nuclei were washed and resuspended. Final nuclei (11,000) were loaded for 10X.",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9226647"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "Library was constructed by following 10X protocol: Chromium Next GEM Single Cell Multiome ATAC+ Gene Expression User Guide (CG000338).",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9226647"
+          }
+        ]
+      },
+      "review_status": "assistant_prepared_pending_human_review"
+    }
+  ]
+}

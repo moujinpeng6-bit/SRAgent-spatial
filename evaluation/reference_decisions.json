@@ -1,0 +1,21 @@
+{
+  "reference_status": "assistant_prepared_pending_human_review",
+  "description": "Provisional development labels after reading sample-level public metadata; not independent human gold labels",
+  "labels": {
+    "GSM9485172": "eligible", "GSM9485173": "eligible", "GSM9485174": "eligible",
+    "GSM8217624": "eligible", "GSM8217625": "eligible",
+    "GSM8375640": "eligible", "GSM8375641": "eligible", "GSM8375642": "eligible",
+    "GSM7990532": "eligible", "GSM7990533": "eligible", "GSM7990534": "eligible",
+    "GSM9945415": "eligible", "GSM9945416": "eligible", "GSM9945417": "eligible",
+    "GSM10045631": "eligible", "GSM10045632": "eligible", "GSM10045633": "eligible",
+    "GSM10012170": "non_lung", "GSM10012171": "non_lung", "GSM10012172": "non_lung",
+    "GSM9949642": "non_lung", "GSM9949643": "non_lung",
+    "GSM9102552": "unknown", "GSM9102553": "unknown", "GSM9226647": "unknown"
+  },
+  "reasons": {
+    "eligible": "Sample-level organism and tissue explicitly support human lung; its own protocol/title mentions a spatial assay. Physical assets not verified.",
+    "non_lung": "Sample-level tissue explicitly states right ventricle or larynx/hypopharynx, despite study appearing in a lung keyword query.",
+    "unknown": "Lung source is stated, but this sample describes dissociated Chromium scRNA/multiome, not confirmed spatial measurement; no spatial label inherited from the mixed parent study."
+  },
+  "coverage_gap": "No real mixed-organ/platform sample is present in this first set; mixed handling is tested with fictional unit cases only."
+}
