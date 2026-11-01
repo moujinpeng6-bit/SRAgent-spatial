@@ -1,6 +1,6 @@
 {
   "config_version": "0.1.0",
-  "status": "planned_not_executed",
+  "status": "reference_only_not_loaded_by_cli",
   "pilot": {
     "organism": "Homo sapiens",
     "tissue": "lung",
@@ -9,5 +9,5 @@
     "initial_source": "GEO"
   },
   "candidate_terms": ["spatial transcriptomics", "spatial transcriptome", "Visium", "Xenium", "MERFISH"],
-  "notes": "搜索词用于形成候选，不保证完整召回或空间身份。实际查询式、数据库字段语法和筛选逻辑尚待实现并记录。"
+  "notes": "当前 CLI 使用显式参数而非自动读取本文件。搜索词用于形成候选，不保证完整召回或空间身份；实际查询式保存到每次输出的 run.json。"
 }

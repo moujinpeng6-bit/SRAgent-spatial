@@ -6,6 +6,10 @@
   "required": ["record_id", "source_database", "source_url", "retrieved_at", "platform", "observation_unit", "status", "assets", "evidence"],
   "properties": {
     "record_id": {"type": "string", "minLength": 1},
+    "title": {"type": "string"},
+    "summary": {"type": ["string", "null"]},
+    "platform_candidates": {"type": "array", "items": {"type": "string"}},
+    "related_accessions": {"type": "array", "items": {"type": "string", "pattern": "^(GSE|GSM)[1-9][0-9]*$"}},
     "source_database": {"type": "string", "minLength": 1},
     "source_accession": {"type": ["string", "null"]},
     "source_url": {"type": "string", "format": "uri"},

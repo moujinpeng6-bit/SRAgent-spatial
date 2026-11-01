@@ -11,6 +11,9 @@
 | retrieved_at | 查询日期，YYYY-MM-DD |
 | organism / tissue / disease | 物种、组织和疾病相关描述；未知时为 null |
 | platform | 测量平台；未知时为 unknown |
+| platform_candidates | 描述中检出的平台关键词；多平台时 platform 为 mixed_or_ambiguous，不代表所有样本都使用这些技术 |
+| title / summary | 来源的标题和摘要，保留研究层与样本层的区分 |
+| related_accessions | GEO 说明中列出的关联 GSE / GSM 编号 |
 | observation_unit | 表达行代表 cell、spot、bin，或 unknown |
 | study_id / sample_id / section_id | 研究、样本与切片身份；来源未说明时为 null |
 | coordinate_unit / coordinate_system | 坐标单位与参考系；未知时为 null |
@@ -21,6 +24,8 @@
 `metadata_reviewed` 表示人工复核了元数据；`assets_verified` 只在完成对应资产核查后使用，必须有 evidence 记录检查范围。Schema 只能检查结构，不能证明生物含义或空间配准正确。
 
 `assets` 的类别包括 expression、coordinates、image、segmentation、annotation、transform 和 other。发现链接不等于文件已下载或已验证。
+
+v0.1 的平台识别和资产类别是基于文字/文件名的启发式推断，记录保留 candidate 状态；不从标题推断疾病，也不自动填补坐标单位和切片身份。运行报告单独保存已读取样本数量与研究中可用样本总数，以及实际请求的 fetched_at 时间。
 
 `evidence.method` 使用 source_explicit（来源明确陈述）、inferred（推断）或 manual_check（人工检查）。推断需要复核；同研究的疾病描述不能直接作为每个样本的疾病状态。
 
