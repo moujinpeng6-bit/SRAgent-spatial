@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "samples": [
+    {
+      "sample_id": "GSM7990538",
+      "platform": "Xenium",
+      "coordinate_unit": "um",
+      "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM7990538",
+      "data_dir": "../data/GSM7990538/outs",
+      "image": "../data/GSM7990538/outs/morphology_focus.ome.tif",
+      "archive": "../data/GSM7990538/bundle.tar.gz",
+      "archive_prefix": "GSM7990538_output-XETG00048__0003789__VUHD095__20230308__003731/outs"
+    }
+  ]
+}

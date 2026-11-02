@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-02T16:17:52.127770+00:00",
+  "status": "completed",
+  "model": "deepseek-flash",
+  "provider": "deepseek",
+  "samples_registered": 1,
+  "samples_validated": 1,
+  "pending_sample_ids": [],
+  "failed_sample_ids": [],
+  "agent_error": null,
+  "elapsed_seconds": 23.546,
+  "upstream_commit": "67b60c24a49385d3eed8e5121be58d13c82839cd",
+  "supervisor": "pinned_upstream_SRAgent_create_sragent_agent_with_registered_local_tools",
+  "model_invocation_succeeded": true,
+  "agent_tool_loop_verified": true,
+  "tool_trace": [
+    {
+      "name": "list_local_spatial_samples",
+      "id": "call_00_bwljpGzNUSKGimuzRX4q6204",
+      "sample_id": null
+    },
+    {
+      "name": "validate_spatial_sample",
+      "id": "call_00_NFjF0hF3thaLYl2iaRTF7814",
+      "sample_id": "GSM7990538"
+    }
+  ],
+  "events": [
+    {
+      "event": "catalog_read",
+      "sample_ids": [
+        "GSM7990538"
+      ]
+    },
+    {
+      "event": "validation_started",
+      "sample_id": "GSM7990538"
+    },
+    {
+      "event": "validation_finished",
+      "sample_id": "GSM7990538",
+      "status": "correspondence_passed",
+      "report_sha256": "cbeac368608b175a39f37767bd506810eef7f18d912d3f891142cebe51975347"
+    }
+  ],
+  "scope": "Live pinned upstream SRAgent supervisor calling registered local Xenium tools. No new GEO search.",
+  "samples": [
+    {
+      "sample_id": "GSM7990538",
+      "platform": "Xenium",
+      "status": "correspondence_passed",
+      "cells": 12578,
+      "feature_type_counts": {
+        "Gene Expression": 343,
+        "Negative Control Probe": 20,
+        "Negative Control Codeword": 41,
+        "Unassigned Codeword": 137
+      },
+      "checks_passed": 19,
+      "checks_total": 19,
+      "roi": {
+        "radius_um": 150,
+        "cells": 417,
+        "pathology_region": false
+      },
+      "median_nearest_neighbor_um": 8.274627758805192,
+      "neighbor_distances_um": [
+        9.777595689831402,
+        12.145503497321227,
+        12.340857709471868,
+        13.347205337883697,
+        14.546631530012064
+      ]
+    }
+  ],
+  "publication_note": "Local paths, model prose, raw images, expression matrices, per-cell index and neighbor coordinates omitted. Full report SHA256 preserved in events."
+}

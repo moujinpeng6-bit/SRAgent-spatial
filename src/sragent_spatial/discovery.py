@@ -73,6 +73,7 @@ class DiscoverySession:
         self.created_at = datetime.now(timezone.utc).isoformat()
         self.lock = asyncio.Lock()
         self.resume_provenance = None
+        self.local_validation = None
 
     @classmethod
     def resume(cls, client, previous, out, model, *, max_samples_per_study=50, max_total_samples=50, predictor=None):
@@ -215,7 +216,18 @@ class DiscoverySession:
         limited = bool(self.search_report and self.search_report.get("search_truncated")) or any(
             row["not_read_ids"] for row in self.studies.values())
         status = "incomplete" if unfinished or failed or self.agent_error else "completed_with_limits" if limited else "completed"
+        local = self.local_validation.report() if self.local_validation else None
+        if local:
+            selected_local = [acc for acc, row in self.samples.items()
+                              if row.get("include_in_catalog") and acc in self.local_validation.samples]
+            pending["local_validation"] = [acc for acc in selected_local if acc not in self.local_validation.results]
+            if pending["local_validation"]:
+                status = "incomplete"
+            elif status != "incomplete" and any(self.local_validation.results[acc]["status"] != "correspondence_passed"
+                                               for acc in selected_local):
+                status = "completed_with_failures"
         return {"status": status, "request": asdict(self.request), "model": self.model,
+                "local_spatial_validation": local,
                 "resume_provenance": self.resume_provenance,
                 "created_at": self.created_at, "search": self.search_report,
                 "studies": list(self.studies.values()), "samples": list(self.samples.values()),
@@ -230,7 +242,7 @@ class DiscoverySession:
                     "No independent reference labels or accuracy score.",
                     "Selection requires rule/model agreement and requested platform evidence; may miss valid samples.",
                     "Platform mentions and citation checks do not prove assay use or spatial file correspondence.",
-                    "Assets are public links inferred from filenames; no large files downloaded or verified."]}
+                    "Public links alone are not file verification; only separately registered local inputs are read when local tools are enabled."]}
 
     def persist(self):
         report = self.report()
@@ -273,18 +285,14 @@ def session_tools(session, tool):
         async with session.lock:
             return json.dumps(await session.screen(accession), ensure_ascii=False)
 
-    return [search_spatial_datasets, expand_spatial_study, screen_spatial_study]
+    tools = [search_spatial_datasets, expand_spatial_study, screen_spatial_study]
+    if session.local_validation:
+        from .local_validation import local_validation_tools
+        tools.extend(local_validation_tools(session.local_validation, tool))
+    return tools
 
 
 def build_supervisor(session):
-    from .agents import configure, provider
-    from .deepseek_model import model_context
-    from .dependencies import activate_toolkit
-    _, _, _, tool = configure(session.model)
-    activate_toolkit()
-    module = importlib.import_module("SRAgent.agents.sragent")
-    original_builder = module.create_react_agent
-    additions = session_tools(session, tool)
     instructions = (
         "\n# Spatial discovery workflow\n"
         "For this task first call search_spatial_datasets. For EVERY returned GSE call expand_spatial_study, "
@@ -294,6 +302,25 @@ def build_supervisor(session):
         "Do not invent samples or evidence. Do not substitute your final prose for the screening tools. "
         "Finish all returned GSEs within the explicit limits before a concise final summary."
     )
+    if session.local_validation:
+        instructions += (
+            "\nLocal spatial tools are also available. After screening, call list_local_spatial_samples. "
+            "For every eligible sample also registered locally call validate_spatial_sample with its sample_id. "
+            "Report metadata selection separately from measured file correspondence. Never borrow files across samples."
+        )
+    return build_tool_supervisor(session.model, lambda tool: session_tools(session, tool), instructions)
+
+
+def build_tool_supervisor(model, additions_factory, instructions):
+    """Extend the actual pinned upstream supervisor, restoring its builder afterward."""
+    from .agents import configure, provider
+    from .deepseek_model import model_context
+    from .dependencies import activate_toolkit
+    _, _, _, tool = configure(model)
+    activate_toolkit()
+    module = importlib.import_module("SRAgent.agents.sragent")
+    original_builder = module.create_react_agent
+    additions = additions_factory(tool)
 
     def extended_builder(*args, **kwargs):
         kwargs["tools"] = list(kwargs["tools"]) + additions
@@ -302,9 +329,9 @@ def build_supervisor(session):
 
     # Construction is synchronous and serialized; the upstream binding is restored
     # before any graph invocation. No installed upstream source file is modified.
-    with _BUILD_LOCK, model_context(session.model) if provider() == "deepseek" else nullcontext():
+    with _BUILD_LOCK, model_context(model) if provider() == "deepseek" else nullcontext():
         with patch.object(module, "create_react_agent", new=extended_builder):
-            return module.create_sragent_agent(model_name=session.model, return_tool=False)
+            return module.create_sragent_agent(model_name=model, return_tool=False)
 
 
 async def discover(session, *, timeout=600, supervisor_factory=None):

@@ -73,6 +73,14 @@ def main(argv=None):
     discovery.add_argument("--refresh", action="store_true")
     discovery.add_argument("--resume", type=Path, help="Continue exactly the saved studies and reuse validated completed samples")
     discovery.add_argument("--out", type=Path, required=True)
+    discovery.add_argument("--local-manifest", type=Path, help="Optional registered local Xenium inputs for correspondence tools")
+    for name in ("check-xenium", "validate-local-agent"):
+        local = sub.add_parser(name, help="Registered local Xenium file validation" + (" via original SRAgent supervisor" if name.endswith("agent") else " without a model"))
+        local.add_argument("--manifest", type=Path, required=True)
+        local.add_argument("--out", type=Path, required=True)
+        if name.endswith("agent"):
+            local.add_argument("--model", default=os.getenv("SPATIAL_MODEL"))
+            local.add_argument("--timeout", type=bounded_integer(30, 1800), default=600)
     audit = sub.add_parser("audit-assets", help="Check each selected GSM's Visium expression/position/image bundle")
     audit.add_argument("--run", type=Path, required=True)
     audit.add_argument("--out", type=Path, required=True)
@@ -137,11 +145,35 @@ def main(argv=None):
             session = (DiscoverySession.resume(client, args.resume, args.out, args.model,
                        max_samples_per_study=args.max_samples_per_study, max_total_samples=args.max_total_samples)
                        if args.resume else DiscoverySession(client, request, args.out, args.model))
+            if args.local_manifest:
+                from .local_validation import LocalValidationSession
+                session.local_validation = LocalValidationSession(args.local_manifest, args.out / "local_validation", args.model)
             report = asyncio.run(discover(session, timeout=args.timeout))
             print(json.dumps({"status": report["status"], "counts": report["counts"], "out": str(args.out)}))
-            if report["status"] == "incomplete":
+            if report["status"] in {"incomplete", "completed_with_failures"}:
                 if report["agent_error"]:
                     print(json.dumps(report["agent_error"]), file=sys.stderr)
+                return 2
+        elif args.command in {"check-xenium", "validate-local-agent"}:
+            from .local_validation import LocalValidationSession, run_validation_agent
+            session = LocalValidationSession(args.manifest, args.out, getattr(args, "model", None))
+            if args.command == "validate-local-agent":
+                from .agents import credentials_present
+                if not args.model or not credentials_present():
+                    raise RuntimeError("Agent validation requires a model and locally configured provider credential")
+                if os.name == "nt":
+                    import truststore
+                    truststore.inject_into_ssl()
+                report = asyncio.run(run_validation_agent(session, timeout=args.timeout))
+            else:
+                async def validate_registered():
+                    session.catalog()
+                    for sample_id in session.samples:
+                        await session.validate(sample_id)
+                    return session.report()
+                report = asyncio.run(validate_registered())
+            print(json.dumps({key: report[key] for key in ("status", "samples_registered", "samples_validated", "failed_sample_ids")}))
+            if report["status"] != "completed":
                 return 2
         elif args.command == "audit-assets":
             from .asset_audit import audit_run

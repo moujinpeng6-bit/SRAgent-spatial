@@ -1,5 +1,7 @@
 # SRAgent-spatial
 
+v0.5 新增本地 Xenium 空间验证工具，并接入固定版本原版 SRAgent 总控。真实肺组织 GSM7990538 已完成“模型列出样本 → 调用验证工具 → 读取表达/坐标/图像/边界 → 返回核查结果”的运行：12,578 个细胞、343 个基因表达特征，19 项对应检查通过。见 [工具与复现说明](docs/local_validation_agent.md) 和 [真实调用摘要](examples/local_lung_agent/)。这是本地样本工具链验证，不代表任意平台或新一轮 GEO 全流程已经验证。
+
 v0.4 新增 `discover`：由原版总控调用空间搜索、自动展开 GSM 并逐样本核查，导出带原文证据的 JSON / CSV。人类肺 Visium 限定试点已实际完成 2 项研究、10 个样本，另有 21 个样本关联因上限未读取；不是完整召回或空间资产验证。运行与边界见 [空间发现流程](docs/discovery.md)，结果见 [公开示例](examples/lung_visium_discovery/)。
 
 后续已补完上述剩余 21 个样本：两项研究共 31 个 GSM 的元数据核查完成。新增 `--resume` 和 `audit-assets`；31 套文件名/归属一致，但本次 194 个所选文件入口全部返回 403，文件内部对应尚未验证。完整样本清单与受限结果见 [31 样本结果](examples/lung_visium_complete/) 和 [核查报告](docs/asset_audit.md)。

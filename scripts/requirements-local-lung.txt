@@ -1,0 +1,8 @@
+# Tested local demonstration environment, Python 3.11 on Windows.
+# NumPy <2 also preserves the pinned upstream langchain-chroma requirement.
+numpy==1.26.4
+scipy==1.17.1
+matplotlib==3.11.2
+tifffile==2026.3.3
+imagecodecs==2024.12.30
+h5py==3.16.0

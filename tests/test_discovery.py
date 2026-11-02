@@ -205,6 +205,44 @@ class DiscoveryTests(unittest.TestCase):
             self.assertEqual(list(session.studies), ["GSE999002"])
             self.assertEqual(session.search_report["study_failures"][0]["accession"], "GSE999001")
 
+    def test_selected_registered_sample_requires_local_validation_before_completion(self):
+        with tempfile.TemporaryDirectory() as folder:
+            session = self.session(folder, {"GSE999001": series("GSE999001", ["GSM999001"]),
+                                           "GSM999001": sample("GSM999001", platform="Xenium")},
+                                   DiscoveryRequest(platforms=("Xenium",)))
+            session.local_validation = types.SimpleNamespace(samples={"GSM999001": {}}, results={},
+                                                            report=lambda: {"status": "local_test"})
+            async def metadata():
+                await session.search(); await session.expand("GSE999001"); await session.screen("GSE999001")
+            asyncio.run(metadata())
+            self.assertEqual(session.report()["status"], "incomplete")
+            self.assertEqual(session.report()["pending"]["local_validation"], ["GSM999001"])
+            session.local_validation.results["GSM999001"] = {"status": "validation_error"}
+            self.assertEqual(session.report()["status"], "completed_with_failures")
+            session.local_validation.results["GSM999001"] = {"status": "correspondence_passed"}
+            self.assertEqual(session.report()["status"], "completed_with_limits")
+
+    def test_discovery_supervisor_includes_local_tools_when_manifest_is_attached(self):
+        observed = {}
+        def builder(**kwargs):
+            observed.update(kwargs)
+            return object()
+        module = types.SimpleNamespace(create_react_agent=builder)
+        module.create_sragent_agent = lambda **kwargs: module.create_react_agent(model="test", tools=[], prompt="upstream")
+        with tempfile.TemporaryDirectory() as folder:
+            session = self.session(folder, {})
+            session.local_validation = types.SimpleNamespace()
+            with patch("sragent_spatial.agents.configure", return_value=(None, None, None, lambda f: f)), \
+                    patch("sragent_spatial.agents.provider", return_value="openai"), \
+                    patch("sragent_spatial.discovery.importlib.import_module", return_value=module):
+                build_supervisor(session)
+        names = [tool.__name__ for tool in observed["tools"]]
+        self.assertIn("search_spatial_datasets", names)
+        self.assertIn("list_local_spatial_samples", names)
+        self.assertIn("validate_spatial_sample", names)
+        self.assertIn("After screening", observed["prompt"])
+        self.assertIs(module.create_react_agent, builder)
+
 
 if __name__ == "__main__":
     unittest.main()

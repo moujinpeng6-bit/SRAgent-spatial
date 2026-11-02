@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "validator": "xenium_correspondence_v1",
+  "sample_id": "GSM7990538",
+  "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM7990538",
+  "status": "correspondence_passed",
+  "cells": 12578,
+  "matrix_shape_features_by_cells": [
+    541,
+    12578
+  ],
+  "feature_type_counts": {
+    "Gene Expression": 343,
+    "Negative Control Probe": 20,
+    "Negative Control Codeword": 41,
+    "Unassigned Codeword": 137
+  },
+  "checks": {
+    "unique_cell_ids": true,
+    "unique_matrix_barcodes": true,
+    "cell_id_set_matches_matrix": true,
+    "finite_coordinates": true,
+    "experiment_cell_count_matches": true,
+    "nonnegative_integer_expression": true,
+    "matrix_order_reconciled_by_id": true,
+    "gene_features_present": true,
+    "gene_counts_equal_cells_summary": true,
+    "all_feature_counts_equal_cells_summary": true,
+    "pixel_size_agrees_with_ome": true,
+    "all_centroids_inside_image": true,
+    "cell_boundary_ids_match": true,
+    "cell_boundaries_finite_inside_image": true,
+    "nucleus_boundary_ids_match": true,
+    "nucleus_boundaries_finite_inside_image": true,
+    "archive_members_found": true,
+    "archive_member_hashes_match": true,
+    "source_archive_unchanged": true
+  },
+  "original_matrix_order_identical": true,
+  "image": {
+    "full_shape": [
+      12477,
+      14301
+    ],
+    "axes": "YX",
+    "preview_shape": [
+      3119,
+      3575
+    ],
+    "pyramid_level": 2,
+    "pixel_size_x_um": 0.2125,
+    "pixel_size_y_um": 0.2125,
+    "physical_unit_defaulted": true
+  },
+  "coordinate_unit": "um",
+  "pixel_size_um": 0.2125,
+  "centroids_inside_image": 12578,
+  "source_sha256": {
+    "experiment.xenium": "5b537bf5732b216076eed083897c5206680156e9795aa3d80220b962c73aa87d",
+    "cells.csv.gz": "91a4e4eaaf873e88d59ae9d9e379a9b2400febdb3397f02e19af1d977593566b",
+    "cell_feature_matrix.h5": "1a176e6d6a229632e6d0967685931d4fd05dd470c1819aa017c4878b8498a975",
+    "cell_boundaries.csv.gz": "954ce3ec2bbd50bba304b6ca1ae770b9a2fb6910c84926ba1a1e182e396cca88",
+    "nucleus_boundaries.csv.gz": "e6edf324181da6e8f3ebc954f07ddb8be0cfc7d01b59f5a7808e54c5d09abc5e",
+    "morphology_focus.ome.tif": "b28f4dd84efa1991b79a3e96e943aa7ebc0fb49f61144ce23dd166a539c2f597"
+  },
+  "archive_provenance": {
+    "all_members_found": true,
+    "source_unchanged": true,
+    "all_hashes_match": true,
+    "members": {
+      "cell_boundaries.csv.gz": {
+        "local_sha256": "954ce3ec2bbd50bba304b6ca1ae770b9a2fb6910c84926ba1a1e182e396cca88",
+        "archive_sha256": "954ce3ec2bbd50bba304b6ca1ae770b9a2fb6910c84926ba1a1e182e396cca88",
+        "matches": true
+      },
+      "cell_feature_matrix.h5": {
+        "local_sha256": "1a176e6d6a229632e6d0967685931d4fd05dd470c1819aa017c4878b8498a975",
+        "archive_sha256": "1a176e6d6a229632e6d0967685931d4fd05dd470c1819aa017c4878b8498a975",
+        "matches": true
+      },
+      "cells.csv.gz": {
+        "local_sha256": "91a4e4eaaf873e88d59ae9d9e379a9b2400febdb3397f02e19af1d977593566b",
+        "archive_sha256": "91a4e4eaaf873e88d59ae9d9e379a9b2400febdb3397f02e19af1d977593566b",
+        "matches": true
+      },
+      "experiment.xenium": {
+        "local_sha256": "5b537bf5732b216076eed083897c5206680156e9795aa3d80220b962c73aa87d",
+        "archive_sha256": "5b537bf5732b216076eed083897c5206680156e9795aa3d80220b962c73aa87d",
+        "matches": true
+      },
+      "morphology_focus.ome.tif": {
+        "local_sha256": "b28f4dd84efa1991b79a3e96e943aa7ebc0fb49f61144ce23dd166a539c2f597",
+        "archive_sha256": "b28f4dd84efa1991b79a3e96e943aa7ebc0fb49f61144ce23dd166a539c2f597",
+        "matches": true
+      },
+      "nucleus_boundaries.csv.gz": {
+        "local_sha256": "e6edf324181da6e8f3ebc954f07ddb8be0cfc7d01b59f5a7808e54c5d09abc5e",
+        "archive_sha256": "e6edf324181da6e8f3ebc954f07ddb8be0cfc7d01b59f5a7808e54c5d09abc5e",
+        "matches": true
+      }
+    },
+    "missing_members": []
+  },
+  "missing_optional_files": [],
+  "limitations": [
+    "Internal correspondence is not independent biological/segmentation ground truth.",
+    "Demo ROI is geometric, not a pathology annotation; neighbors do not prove communication.",
+    "No pathology region assignment or H&E registration accuracy measured."
+  ]
+}
