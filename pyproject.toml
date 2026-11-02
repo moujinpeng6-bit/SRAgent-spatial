@@ -4,12 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "sragent-spatial"
-version = "0.4.0"
+version = "0.4.1"
 description = "Evidence-preserving GEO spatial metadata lookup and local asset inventory"
 requires-python = ">=3.11"
 dependencies = []
 
 [project.optional-dependencies]
+validation = ["pillow>=10", "h5py>=3.10"]
 agent = ["SRAgent @ git+https://github.com/ArcInstitute/SRAgent.git@67b60c24a49385d3eed8e5121be58d13c82839cd", "truststore>=0.10; sys_platform == 'win32'"]
 
 [project.scripts]

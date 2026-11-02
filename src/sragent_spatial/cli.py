@@ -66,12 +66,18 @@ def main(argv=None):
     discovery.add_argument("--platforms", nargs="+", default=["Visium"])
     discovery.add_argument("--model", default=os.getenv("SPATIAL_MODEL"))
     discovery.add_argument("--max-studies", type=bounded_integer(1, 5), default=2)
-    discovery.add_argument("--max-samples-per-study", type=bounded_integer(1, 20), default=5)
+    discovery.add_argument("--max-samples-per-study", type=bounded_integer(1, 50), default=5)
     discovery.add_argument("--max-total-samples", type=bounded_integer(1, 50), default=10)
     discovery.add_argument("--timeout", type=bounded_integer(30, 1800), default=600)
     discovery.add_argument("--cache", type=Path, default=Path("outputs/discovery_cache"))
     discovery.add_argument("--refresh", action="store_true")
+    discovery.add_argument("--resume", type=Path, help="Continue exactly the saved studies and reuse validated completed samples")
     discovery.add_argument("--out", type=Path, required=True)
+    audit = sub.add_parser("audit-assets", help="Check each selected GSM's Visium expression/position/image bundle")
+    audit.add_argument("--run", type=Path, required=True)
+    audit.add_argument("--out", type=Path, required=True)
+    audit.add_argument("--workers", type=bounded_integer(1, 3), default=3)
+    audit.add_argument("--local-root", type=Path, help="Read matching original GEO filenames under this local directory")
     screening = sub.add_parser("screen-samples", help="Classify frozen GSM sample packets with evidence")
     screening.add_argument("--materials", type=Path, required=True)
     screening.add_argument("--out", type=Path, required=True)
@@ -127,12 +133,21 @@ def main(argv=None):
                 truststore.inject_into_ssl()
             request = DiscoveryRequest(args.organism, args.tissue, tuple(args.platforms), args.max_studies,
                                        args.max_samples_per_study, args.max_total_samples)
-            session = DiscoverySession(MetadataClient(args.cache, refresh=args.refresh), request, args.out, args.model)
+            client = MetadataClient(args.cache, refresh=args.refresh)
+            session = (DiscoverySession.resume(client, args.resume, args.out, args.model,
+                       max_samples_per_study=args.max_samples_per_study, max_total_samples=args.max_total_samples)
+                       if args.resume else DiscoverySession(client, request, args.out, args.model))
             report = asyncio.run(discover(session, timeout=args.timeout))
             print(json.dumps({"status": report["status"], "counts": report["counts"], "out": str(args.out)}))
             if report["status"] == "incomplete":
                 if report["agent_error"]:
                     print(json.dumps(report["agent_error"]), file=sys.stderr)
+                return 2
+        elif args.command == "audit-assets":
+            from .asset_audit import audit_run
+            report = audit_run(args.run, args.out, workers=args.workers, local_root=args.local_root)
+            print(json.dumps({key: report[key] for key in ("expected_samples", "audited_samples", "status_counts")}))
+            if report["status_counts"].get("basic_correspondence_passed", 0) != report["expected_samples"]:
                 return 2
         elif args.command == "inspect-local":
             report = inspect_local(args.root, args.max_files)

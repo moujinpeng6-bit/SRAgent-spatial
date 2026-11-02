@@ -1,0 +1,155 @@
+{
+  "status": "completed_with_limits",
+  "request": {
+    "organism": "Homo sapiens",
+    "tissue": "lung",
+    "platforms": [
+      "Visium"
+    ],
+    "max_studies": 2,
+    "max_samples_per_study": 50,
+    "max_total_samples": 50
+  },
+  "model": "deepseek-flash",
+  "provider": "deepseek",
+  "created_at": "2026-11-02T12:24:17.111693+00:00",
+  "elapsed_seconds": 212.953,
+  "counts": {
+    "studies_returned": 2,
+    "unique_samples_attempted": 31,
+    "processing_status": {
+      "completed": 31
+    },
+    "labels": {
+      "eligible": 31
+    },
+    "selected_metadata_candidates": 31,
+    "study_sample_links_not_read": 0
+  },
+  "resume_provenance": {
+    "source_run_sha256": "9de319eb57630a33898f7bbd62db8c4daaf9a80f00fb0775b1ff3216cbbdd89d",
+    "previous_completed_samples": 10,
+    "scope": "Continue the exact saved studies; retain validated previous results, no new study search"
+  },
+  "limitations": [
+    "Bounded GEO keyword search, not exhaustive retrieval or measured recall.",
+    "No independent reference labels or accuracy score.",
+    "Selection requires rule/model agreement and requested platform evidence; may miss valid samples.",
+    "Platform mentions and citation checks do not prove assay use or spatial file correspondence.",
+    "Assets are public links inferred from filenames; no large files downloaded or verified."
+  ],
+  "overall_status": "metadata_completed_assets_unavailable",
+  "scope": "All 31 GSM in the two previously selected studies; not all GEO search hits",
+  "studies": [
+    {
+      "accession": "GSE318039",
+      "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE318039",
+      "title": "Spatial Transcriptomics Reveals Compartment-Specific Cytotoxic T cells Crosstalk with AT2 and Goblet cells in Advanced COPD",
+      "sample_ids": [
+        "GSM9485172",
+        "GSM9485173",
+        "GSM9485174",
+        "GSM9485175",
+        "GSM9485176",
+        "GSM9485177",
+        "GSM9485178",
+        "GSM9485179"
+      ],
+      "attempted_ids": [
+        "GSM9485172",
+        "GSM9485173",
+        "GSM9485174",
+        "GSM9485175",
+        "GSM9485176",
+        "GSM9485177",
+        "GSM9485178",
+        "GSM9485179"
+      ],
+      "not_read_ids": []
+    },
+    {
+      "accession": "GSE271370",
+      "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE271370",
+      "title": "Spatial transcriptomics unveils the in situ cellular and molecular hallmarks of the lung in fatal COVID-19",
+      "sample_ids": [
+        "GSM8375640",
+        "GSM8375641",
+        "GSM8375642",
+        "GSM8375643",
+        "GSM8387358",
+        "GSM8387359",
+        "GSM8387360",
+        "GSM8387361",
+        "GSM8387362",
+        "GSM8387363",
+        "GSM8387364",
+        "GSM8387365",
+        "GSM8387366",
+        "GSM8387367",
+        "GSM8387368",
+        "GSM8387369",
+        "GSM8387370",
+        "GSM8387371",
+        "GSM8387372",
+        "GSM8387373",
+        "GSM8387374",
+        "GSM8387375",
+        "GSM8387376"
+      ],
+      "attempted_ids": [
+        "GSM8375640",
+        "GSM8375641",
+        "GSM8375642",
+        "GSM8375643",
+        "GSM8387358",
+        "GSM8387359",
+        "GSM8387360",
+        "GSM8387361",
+        "GSM8387362",
+        "GSM8387363",
+        "GSM8387364",
+        "GSM8387365",
+        "GSM8387366",
+        "GSM8387367",
+        "GSM8387368",
+        "GSM8387369",
+        "GSM8387370",
+        "GSM8387371",
+        "GSM8387372",
+        "GSM8387373",
+        "GSM8387374",
+        "GSM8387375",
+        "GSM8387376"
+      ],
+      "not_read_ids": []
+    }
+  ],
+  "new_model_screened_samples": 21,
+  "retained_previous_samples": 10,
+  "asset_audit": {
+    "expected_samples": 31,
+    "audited_samples": 31,
+    "status_counts": {
+      "unavailable": 31
+    },
+    "metadata_bundle_consistent": 31,
+    "file_requests_http_403": 194,
+    "downloaded_bytes": 0,
+    "content_verified_samples": 0
+  },
+  "author_reported_availability": [
+    {
+      "study": "GSE318039",
+      "status": "author_reported_embargo",
+      "until": "2027-01-04",
+      "source_url": "https://github.com/Lung-research-group/Spatial-Transcriptomic",
+      "scope": "Author statement about raw Visium data; not a proven diagnosis of every HTTP403"
+    },
+    {
+      "study": "GSE271370",
+      "status": "paper_points_to_GEO_but_files_return_HTTP403",
+      "source_url": "https://www.nature.com/articles/s41467-026-78188-3#data-availability",
+      "cause": "not_determined"
+    }
+  ]
+}

@@ -40,6 +40,8 @@ Windows DeepSeek 客户端直接使用 `truststore.SSLContext(PROTOCOL_TLS_CLIEN
 
 可设置 `--cache`、`--refresh` 和 `--timeout`。缓存保留公开请求的来源与校验和；默认允许复用缓存。超时只约束图执行的等待，构造阶段、网络线程或 SDK 内部调用可能使总耗时更长，不能把它视为金额上限。
 
+可用 `--resume PREVIOUS_RUN_JSON` 继续固定研究，重新验证并复用已完成样本结果；增加 `--max-samples-per-study` 与 `--max-total-samples` 可补读剩余 GSM。研究列表、组织、物种和平台沿用存档，模型必须一致。每研究上限可设 1–50、全局 1–50。两项研究的 31 个样本续跑及文件访问结果见 [完整核查与受限报告](asset_audit.md)。
+
 ## 输出文件
 
 | 文件 | 内容 |

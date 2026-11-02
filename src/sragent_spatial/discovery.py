@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import asyncio
 import csv
+import copy
 import hashlib
 import importlib
 import json
@@ -41,8 +42,8 @@ class DiscoveryRequest:
         if self.organism != "Homo sapiens" or self.tissue.lower() != "lung":
             raise ValueError("The current sample classifier supports the Homo sapiens/lung pilot only")
         check_platforms(self.platforms)
-        if not 1 <= self.max_studies <= 5 or not 1 <= self.max_samples_per_study <= 20 or not 1 <= self.max_total_samples <= 50:
-            raise ValueError("Expected studies 1..5, samples per study 1..20, total samples 1..50")
+        if not 1 <= self.max_studies <= 5 or not 1 <= self.max_samples_per_study <= 50 or not 1 <= self.max_total_samples <= 50:
+            raise ValueError("Expected studies 1..5, samples per study 1..50, total samples 1..50")
 
 
 def sample_packet(fields, accession):
@@ -71,6 +72,36 @@ class DiscoverySession:
         self.summary_text = ""
         self.created_at = datetime.now(timezone.utc).isoformat()
         self.lock = asyncio.Lock()
+        self.resume_provenance = None
+
+    @classmethod
+    def resume(cls, client, previous, out, model, *, max_samples_per_study=50, max_total_samples=50, predictor=None):
+        body = Path(previous).read_bytes()
+        data = json.loads(body)
+        if data["model"] != model:
+            raise ValueError("Resume must use the same model as the saved run")
+        request = dict(data["request"])
+        request.update(platforms=tuple(request["platforms"]), max_samples_per_study=max_samples_per_study,
+                       max_total_samples=max_total_samples)
+        session = cls(client, DiscoveryRequest(**request), out, model, predictor=predictor)
+        session.search_report = copy.deepcopy(data["search"])
+        if session.search_report is None:
+            raise ValueError("Resume requires a completed study search")
+        for study in data["studies"]:
+            row = copy.deepcopy(study)
+            row["expanded"] = False
+            session.studies[row["accession"]] = row
+        for row in data["samples"]:
+            sample = copy.deepcopy(row)
+            if "packet" in sample:
+                validate_packet(sample["packet"])
+            if sample["status"] == "completed":
+                parse_prediction(json.dumps(sample["model_prediction"]), sample["packet"])
+            session.samples[sample["accession"]] = sample
+        session.resume_provenance = {"source_run_sha256": hashlib.sha256(body).hexdigest(),
+            "previous_completed_samples": sum(s["status"] == "completed" for s in session.samples.values()),
+            "scope": "Continue the exact saved studies; retain validated previous results, no new study search"}
+        return session
 
     async def search(self):
         if self.search_report is not None:
@@ -100,7 +131,8 @@ class DiscoverySession:
         for acc in selected:
             if acc not in self.samples and len(self.samples) >= self.request.max_total_samples:
                 continue
-            study["attempted_ids"].append(acc)
+            if acc not in study["attempted_ids"]:
+                study["attempted_ids"].append(acc)
             if acc in self.samples:
                 if accession not in self.samples[acc].get("source_series_ids", []):
                     study["association_failures"].append(acc)
@@ -184,6 +216,7 @@ class DiscoverySession:
             row["not_read_ids"] for row in self.studies.values())
         status = "incomplete" if unfinished or failed or self.agent_error else "completed_with_limits" if limited else "completed"
         return {"status": status, "request": asdict(self.request), "model": self.model,
+                "resume_provenance": self.resume_provenance,
                 "created_at": self.created_at, "search": self.search_report,
                 "studies": list(self.studies.values()), "samples": list(self.samples.values()),
                 "counts": {"studies_returned": len(self.studies), "unique_samples_attempted": len(self.samples),

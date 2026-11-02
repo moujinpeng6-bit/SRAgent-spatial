@@ -44,6 +44,32 @@ async def predictor(packet, method, model):
 
 
 class DiscoveryTests(unittest.TestCase):
+    def test_resume_only_reads_and_model_checks_previously_unread_samples(self):
+        calls = []
+        async def counted(packet, method, model):
+            calls.append(packet["accession"])
+            return screen_sample(packet)
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            records = {"GSE999001": series("GSE999001", ["GSM999001", "GSM999002"]),
+                       "GSM999001": sample("GSM999001"), "GSM999002": sample("GSM999002")}
+            old = self.session(root / "old", records, DiscoveryRequest(max_samples_per_study=1), pred=counted)
+            async def initial():
+                await old.search(); await old.expand("GSE999001"); await old.screen("GSE999001")
+            asyncio.run(initial())
+            new = DiscoverySession.resume(Client(records), root / "old/run.json", root / "new", "gpt-test",
+                                          max_samples_per_study=50, predictor=counted)
+            async def complete():
+                await new.expand("GSE999001"); await new.screen("GSE999001")
+            asyncio.run(complete())
+            self.assertEqual(calls, ["GSM999001", "GSM999002"])
+            self.assertEqual(new.client.calls, ["GSM999002"])
+            self.assertEqual(new.studies["GSE999001"]["attempted_ids"], ["GSM999001", "GSM999002"])
+            self.assertEqual(new.studies["GSE999001"]["not_read_ids"], [])
+            self.assertEqual(new.resume_provenance["previous_completed_samples"], 1)
+            with self.assertRaises(ValueError):
+                DiscoverySession.resume(Client(records), root / "old/run.json", root / "new", "different-model")
+
     def session(self, root, records, request=None, pred=predictor):
         return DiscoverySession(Client(records), request or DiscoveryRequest(), root, "gpt-test", predictor=pred)
 
