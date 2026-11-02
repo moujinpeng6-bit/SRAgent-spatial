@@ -50,6 +50,16 @@ def main(argv=None):
     agent = sub.add_parser("agent-lookup", help="Optional upstream LLM call; may incur provider charges")
     agent.add_argument("accession")
     agent.add_argument("--out", type=Path, required=True)
+    spatial_search_cmd = sub.add_parser("spatial-search",
+                                        help="Search GEO for spatial series by platform(s); no model, no reads")
+    spatial_search_cmd.add_argument("--organism", default="Homo sapiens")
+    spatial_search_cmd.add_argument("--tissue", required=True)
+    spatial_search_cmd.add_argument("--platforms", nargs="+", required=True)
+    spatial_search_cmd.add_argument("--limit", type=bounded_integer(1, 20), default=5)
+    spatial_search_cmd.add_argument("--cache", type=Path, default=Path("outputs/cache"))
+    spatial_search_cmd.add_argument("--offline", action="store_true")
+    spatial_search_cmd.add_argument("--refresh", action="store_true")
+    spatial_search_cmd.add_argument("--out", type=Path, required=True)
     screening = sub.add_parser("screen-samples", help="Classify frozen GSM sample packets with evidence")
     screening.add_argument("--materials", type=Path, required=True)
     screening.add_argument("--out", type=Path, required=True)
@@ -88,6 +98,13 @@ def main(argv=None):
                 records, report = search(client, args.organism, args.tissue, args.platform, args.limit)
             export_records(args.out, records, report, client)
             print(json.dumps({"records": len(records), "out": str(args.out)}, ensure_ascii=True))
+        elif args.command == "spatial-search":
+            from .spatial_search import spatial_search
+            client = MetadataClient(args.cache, offline=args.offline, transport="auto", refresh=args.refresh)
+            records, report = spatial_search(client, args.organism, args.tissue, args.platforms, args.limit)
+            export_records(args.out, records, report, client)
+            print(json.dumps({"records": len(records), "total_hits": report["total_hits"],
+                              "platforms": report["platforms"], "out": str(args.out)}, ensure_ascii=True))
         elif args.command == "inspect-local":
             report = inspect_local(args.root, args.max_files)
             write_json(args.out, report)

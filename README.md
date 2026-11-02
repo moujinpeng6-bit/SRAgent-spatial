@@ -10,7 +10,7 @@ v0.3 在 v0.2 之上做了三件事：
 2. **接入完整 SRAgent 搜索模块**：`upstream_registry` 惰性注册 14 个上游 agent 模块（esearch/esummary/efetch/elink/entrez/entrez_convert/ncbi_fetch/tissue+disease ontology/papers/bigquery/sequences/find_datasets/sragent），`run.py modules` 列出每个模块的用途、空间适配状态与外部依赖。
 3. **新增 `sragent` 对照路径**：除 `original_agent`（仅 NCBI Agent）与 `spatial_agent` 外，可用完整上游 supervisor 作为工具参与同一批样本对照。
 
-首次真实调用已通过（2026-11-02，DeepSeek `deepseek-flash`，单模块 `ncbi_fetch`，51.5 秒，正确取回 GSE264398 的组织/平台/样本身份）。**尚未**跑批量对照，因此不能声称 Agent 效果已验证。未运行的情况仍明确标为 `not_run_missing_api_key`。
+首次真实调用已通过（2026-11-02，DeepSeek `deepseek-flash`）：单模块 `ncbi_fetch`、多级 `entrez` supervisor、以及带空间工具的 `spatial_agent`（1 条样本，引文逐字校验通过）。**尚未**跑完整 25 条批量对照，因此不能声称 Agent 效果已验证。未运行的情况仍明确标为 `not_run_missing_api_key`。
 
 ## 此前状态：v0.2 样本核查与 Agent 扩展
 
@@ -39,6 +39,7 @@ run.py                           无需安装即可运行的命令入口
 src/sragent_spatial/              查询、解析、盘点、来源比较与可选上游桥接
 src/sragent_spatial/deepseek_model.py     DeepSeek 路由（在 import 上游前替换 set_model）
 src/sragent_spatial/upstream_registry.py  14 个上游搜索模块的惰性注册与调用
+src/sragent_spatial/spatial_search.py     空间平台目录 + Entrez 查询构造 + 检索入口
 tests/test_pipeline.py            无网络离线测试
 docs/architecture.md             各模块的分工与原理
 docs/deepseek.md                 DeepSeek 配置、命令与已知不兼容

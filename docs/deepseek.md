@@ -154,3 +154,14 @@ $env:DEEPSEEK_BASE_URL = "https://api.deepseek.com/v1"   # 换成兼容网关时
 | 附注 | agent 自述"direct GEO page fetch was unavailable"，即网页抓取路径失败后退回 Entrez/GDS；说明 HTML 抓取通道在本机不可靠，空间元数据应优先走 Entrez 与 SOFT |
 
 **这只证明"链路可用且单次输出正确"，不证明批量准确率、召回率或成本。** 复现时需自行配置凭证，并在 `outputs/` 查看原始输出（该目录不入库）。
+
+补充两次运行（同日）：
+
+| 命令 | 耗时 | 结果 |
+|---|---|---|
+| `search-agent --module entrez --message "Find GEO GSE264398 and linked PubMed IDs"` | 142.5s | GSE264398 + PubMed 39003323，esummary/elink 子 agent 一致 |
+| `benchmark --methods rules spatial_agent --limit 1` | 14.9s（模型 3.6s） | `eligible`，5 条证据全部为样本字段原文子串，`citation_validated=true` |
+
+多级 supervisor 链路与空间工具链在 DeepSeek 上均已跑通（仅 1 条样本，仍需扩到 25 条）。
+
+同日 `benchmark --methods rules spatial_agent --limit 25`：25/25 完成、0 失败，与暂定参考标签一致（eligible 17 / non_lung 5 / unknown 3）。**注意**：该开发集标签为 `assistant_prepared_pending_human_review`，一致性反映的是"管线稳定 + 模型遵守 JSON/引文契约"，不是独立金标准上的泛化准确率。
