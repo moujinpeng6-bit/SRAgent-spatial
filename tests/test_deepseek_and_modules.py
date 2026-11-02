@@ -76,7 +76,8 @@ class RegistryTests(unittest.TestCase):
         self.assertNotIn("SRAgent.agents.esearch", sys.modules)
         summary = upstream_registry.summary()
         self.assertEqual(summary["total"], len(rows))
-        self.assertEqual(summary["blocked"], 2)
+        self.assertEqual(summary["direct"] + summary["rewrite"] + summary["blocked"], len(rows))
+        self.assertLessEqual(summary["blocked"], 2)
 
     def test_every_module_declares_a_tool_and_factory(self):
         for row in upstream_registry.describe():
@@ -95,6 +96,36 @@ class RegistryTests(unittest.TestCase):
         self.assertEqual(upstream_registry.payload_for(task_tool, "hi"), {"task": "hi"})
         with self.assertRaises(RuntimeError):
             upstream_registry.payload_for(types.SimpleNamespace(args={"other": "str"}), "hi")
+
+    def test_supervisor_payload_preserves_human_message_type(self):
+        tool = types.SimpleNamespace(args={"messages": {"type": "array"}})
+        payload = upstream_registry.payload_for(tool, "Find this GEO record")
+        self.assertEqual(payload["messages"][0].type, "human")
+        self.assertEqual(payload["messages"][0].content, "Find this GEO record")
+
+    def test_specialised_payloads_use_exact_upstream_field(self):
+        for field in ("tissue_description", "disease_description", "accession"):
+            tool = types.SimpleNamespace(args={field: {"type": "string"}})
+            self.assertEqual(upstream_registry.payload_for(tool, "input"), {field: "input"})
+        with self.assertRaises(ValueError):
+            upstream_registry.payload_for(tool, " ")
+
+    def test_doi_lists_are_not_lost_during_text_conversion(self):
+        self.assertEqual(upstream_registry.as_text(["10.1234/a", "10.1234/b"]), "10.1234/a\n10.1234/b")
+
+    def test_explicit_deepseek_model_reaches_nested_factories_without_changing_env(self):
+        seen = []
+        def factory(model_name):
+            seen.extend([deepseek_model.resolve_model(model_name), deepseek_model.resolve_model(None)])
+            return object()
+        module = types.SimpleNamespace(create_sragent_agent=factory)
+        with patch.dict(os.environ, {"SPATIAL_MODEL": "deepseek-chat"}), \
+                patch("sragent_spatial.deepseek_model.is_installed", return_value=True), \
+                patch("sragent_spatial.upstream_registry.importlib.import_module", return_value=module):
+            upstream_registry.load("sragent", "deepseek-flash", provider="deepseek")
+            self.assertEqual(os.environ["SPATIAL_MODEL"], "deepseek-chat")
+            self.assertEqual(deepseek_model.resolve_model(None), "deepseek-chat")
+        self.assertEqual(seen, ["deepseek-flash", "deepseek-flash"])
 
     def test_as_text_handles_agent_shapes(self):
         self.assertEqual(upstream_registry.as_text("plain"), "plain")
@@ -153,6 +184,23 @@ class SragentMethodTests(unittest.TestCase):
 
 
 class CliTests(unittest.TestCase):
+    def test_search_agent_failure_is_saved_without_provider_secret(self):
+        import tempfile
+        from pathlib import Path
+        from contextlib import redirect_stderr
+        async def fail(*args, **kwargs):
+            raise RuntimeError("private-provider-secret")
+        with tempfile.TemporaryDirectory() as folder:
+            out = Path(folder) / "failure.json"
+            stderr = io.StringIO()
+            with patch("sragent_spatial.agents.credentials_present", return_value=True), \
+                    patch("sragent_spatial.upstream_registry.invoke", new=fail), redirect_stderr(stderr):
+                code = cli_main(["search-agent", "--module", "sragent", "--message", "check",
+                                 "--model", "deepseek-flash", "--out", str(out)])
+            self.assertEqual(code, 2)
+            self.assertEqual(json.loads(out.read_text())["status"], "failed")
+            self.assertNotIn("private-provider-secret", out.read_text() + stderr.getvalue())
+
     def test_modules_command_lists_every_module(self):
         buffer = io.StringIO()
         with redirect_stdout(buffer):

@@ -159,8 +159,18 @@ def main(argv=None):
             from .upstream_registry import invoke
             if not credentials_present():
                 raise RuntimeError(f"No credential configured for provider {provider()!r}; see docs/deepseek.md")
-            result = asyncio.run(invoke(args.module, args.message, args.model,
-                                        timeout=args.timeout, provider=provider()))
+            if os.name == "nt":
+                import truststore
+                truststore.inject_into_ssl()
+            try:
+                result = asyncio.run(invoke(args.module, args.message, args.model,
+                                            timeout=args.timeout, provider=provider()))
+            except Exception as exc:
+                from .evaluation import failure_details
+                failure = {"module": args.module, "status": "failed", **failure_details(exc)}
+                write_json(args.out, failure)
+                print(json.dumps(failure), file=sys.stderr)
+                return 2
             write_json(args.out, result)
             print(json.dumps({"module": result["module"], "elapsed_seconds": result["elapsed_seconds"],
                               "output_chars": len(result["output"])}))

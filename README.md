@@ -4,19 +4,21 @@
 
 ## 当前状态：v0.3 模型接入与全量搜索模块
 
+v0.3.1 已修正全部模块的参数适配，实际验证总控 → Entrez → esummary 调用链，安装并检查 SRA Toolkit；外部依赖仍有明确缺口。逐项证据、复现命令和未通过项见 [原版模块接入记录](docs/upstream_modules.md)。模块注册、离线接口通过和在线服务可用是三个不同状态。
+
 v0.3 在 v0.2 之上做了三件事：
 
 1. **接入 DeepSeek**：通过替换上游 `SRAgent.agents.utils.set_model` 在 import 前完成路由，不复制不修改上游源码；`deepseek-flash` / `deepseek-v4-pro` 走 OpenAI 兼容端点。配置见 [DeepSeek 说明](docs/deepseek.md)。
 2. **接入完整 SRAgent 搜索模块**：`upstream_registry` 惰性注册 14 个上游 agent 模块（esearch/esummary/efetch/elink/entrez/entrez_convert/ncbi_fetch/tissue+disease ontology/papers/bigquery/sequences/find_datasets/sragent），`run.py modules` 列出每个模块的用途、空间适配状态与外部依赖。
 3. **新增 `sragent` 对照路径**：除 `original_agent`（仅 NCBI Agent）与 `spatial_agent` 外，可用完整上游 supervisor 作为工具参与同一批样本对照。
 
-首次真实调用已通过（2026-11-02，DeepSeek `deepseek-flash`）：单模块 `ncbi_fetch`、多级 `entrez` supervisor、以及带空间工具的 `spatial_agent`（1 条样本，引文逐字校验通过）。**尚未**跑完整 25 条批量对照，因此不能声称 Agent 效果已验证。未运行的情况仍明确标为 `not_run_missing_api_key`。
+已有真实调用记录（DeepSeek `deepseek-flash`），包括单模块、空间 Agent 和总控的 Entrez 分支。此前文档记录了规则与空间 Agent 的 25 条开发样本运行；完整原版总控尚未完成同批三路径对照，暂定标签也不代表独立金标准。未运行的情况仍明确标为 `not_run_missing_api_key`。
 
 ## 此前状态：v0.2 样本核查与 Agent 扩展
 
 已实现 GEO 查询、空间候选搜索、样本级四类筛选、引文检查、本地来源比较，以及 Visium 条码/坐标和低分辨率图像边界检查。新增 [25 条待人工复核的开发样本](evaluation/lung_spatial_development.csv) 与规则/原版 Agent/空间扩展 Agent 三路径对照。真实模型结果取决于本机凭证和依赖，未运行时明确跳过。详见 [v0.2 原理、运行和限制](docs/v02.md)。
 
-这是受 [Arc Institute SRAgent](https://github.com/ArcInstitute/SRAgent) 与 scBaseCount 启发的独立项目，不是作者官方空间版本。基础查询和空间检查为本项目新增实现；Agent 路径复用固定版本上游的模型工厂、NCBI Agent 与 LangGraph，详见 [上游说明](docs/upstream.md)。尚未真实调用付费模型，不能声称 Agent 效果已验证。
+这是受 [Arc Institute SRAgent](https://github.com/ArcInstitute/SRAgent) 与 scBaseCount 启发的独立项目，不是作者官方空间版本。基础查询和空间检查为本项目新增实现；Agent 路径复用固定版本上游的模型工厂、NCBI Agent 与 LangGraph，详见 [上游说明](docs/upstream.md)。真实接口调用已验证，但 Agent 效果仍需独立评估。
 
 ## 第一阶段要做什么
 
@@ -55,7 +57,7 @@ templates/records.csv            空白人工整理模板（只有表头）
 1. 先读 [运行说明](docs/usage.md)，执行已知编号查询或候选搜索。
 2. 对照 [字段说明](docs/fields.md)，使用 [空白模板](templates/records.csv) 整理真实候选。
 3. 参考 [系统分工](docs/architecture.md) 实现检索、来源读取和结构化导出。
-4. 用人工核查结果评价检索和提取质量，再决定是否引入语言模型。
+4. 用人工核查结果比较规则和语言模型的检索、提取质量。
 
 Python 3.11+；基础功能只使用标准库，不需要模型密钥。仓库内运行：
 

@@ -57,6 +57,7 @@ def credentials_present() -> bool:
 
 
 def doctor() -> dict:
+    from .dependencies import dependency_report
     from .deepseek_model import DEFAULT_BASE_URL, imported_agent_modules, is_installed
     chosen = provider()
     return {
@@ -71,6 +72,7 @@ def doctor() -> dict:
         "upstream_commit_required": UPSTREAM_COMMIT,
         "model": os.getenv("SPATIAL_MODEL") or None,
         "search_modules": upstream_registry.summary(),
+        "external_dependencies": dependency_report(),
         "note": "Only configuration presence is reported; no secret values or API request.",
     }
 

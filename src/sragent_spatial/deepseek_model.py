@@ -21,17 +21,30 @@ from __future__ import annotations
 import os
 import re
 import sys
+from contextlib import contextmanager
+from contextvars import ContextVar
 
 DEFAULT_BASE_URL = "https://api.deepseek.com/v1"
 DEFAULT_MODEL = "deepseek-flash"
 DEFAULT_TEMPERATURE = 0.1
 MODEL_PATTERN = re.compile(r"deepseek[-_][A-Za-z0-9._/-]+")
 _PATCH_FLAG = "_sragent_spatial_deepseek_patched"
+_SCOPED_MODEL = ContextVar("sragent_spatial_model", default=None)
+
+
+@contextmanager
+def model_context(model):
+    """Keep nested upstream factories on the explicitly selected model per task."""
+    token = _SCOPED_MODEL.set(validate_model(model))
+    try:
+        yield
+    finally:
+        _SCOPED_MODEL.reset(token)
 
 
 def resolve_model(model_name: str | None = None) -> str:
     """Explicit argument, then env override, then the documented default."""
-    return (model_name or os.getenv("SPATIAL_MODEL") or DEFAULT_MODEL).strip()
+    return (model_name or _SCOPED_MODEL.get() or os.getenv("SPATIAL_MODEL") or DEFAULT_MODEL).strip()
 
 
 def validate_model(model_name: str | None) -> str:

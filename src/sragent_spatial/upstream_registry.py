@@ -2,11 +2,8 @@
 
 The registry is metadata-only: importing this module must not import SRAgent, so
 ``run.py doctor`` and ``run.py modules`` stay usable without the optional dependency.
-Each module is imported on first use, which matters because a few upstream modules do
-real work at import time (``SRAgent.tools.tissue_ontology`` loads a Chroma vector store).
-
-Every upstream factory returns a LangChain ``@tool`` wrapper named
-``invoke_<name>_agent`` that accepts a ``message`` string, so invocation is uniform.
+Each module is imported on first use. Wrappers have different input schemas:
+message, messages, tissue_description, disease_description and accession.
 """
 
 from __future__ import annotations
@@ -16,7 +13,9 @@ import importlib
 import os
 import shutil
 import time
-from dataclasses import asdict, dataclass, field
+from contextlib import nullcontext
+from dataclasses import asdict, dataclass
+from pathlib import Path
 
 
 @dataclass(frozen=True)
@@ -55,14 +54,14 @@ MODULES: tuple[Module, ...] = (
     Module("tissue_ontology", "SRAgent.agents.tissue_ontology", "create_tissue_ontology_agent",
            "invoke_tissue_ontology_agent", "Uberon term selection and neighbours", "direct",
            setup="ontology-store",
-           note="importing the module loads a Chroma vector store; intended for tissue normalisation"),
+           note="vector search needs cached Uberon data and OpenAI text-embedding-3-small; resources load on tool use"),
     Module("disease_ontology", "SRAgent.agents.disease_ontology", "create_disease_ontology_agent",
            "invoke_disease_ontology_agent", "MONDO term selection and neighbours", "direct",
            setup="ontology-store",
-           note="importing the module loads a Chroma vector store"),
+           note="vector search needs cached MONDO data and OpenAI text-embedding-3-small; resources load on tool use"),
     Module("papers", "SRAgent.agents.papers", "create_papers_agent", "invoke_papers_agent",
-           "PubMed lookup and paper download", "direct", setup="pdf-tools",
-           note="useful to recover platform and section details that SRA metadata omits"),
+           "PubMed lookup returning DOIs", "direct",
+           note="the Agent returns DOI strings; downloading PDFs is a separate upstream helper"),
     Module("bigquery", "SRAgent.agents.bigquery", "create_bigquery_agent", "invoke_bigquery_agent",
            "SRA metadata via BigQuery", "blocked", setup="gcp",
            note="needs a Google Cloud project and credentials; omitted from the first milestone"),
@@ -74,6 +73,7 @@ MODULES: tuple[Module, ...] = (
            note="inherits the single-cell esearch query; also uses structured output in its workflow"),
     Module("sragent", "SRAgent.agents.sragent", "create_sragent_agent", "invoke_sragent_agent",
            "Full supervisor: Entrez + ncbi_fetch + BigQuery + sequences", "direct",
+           setup="supervisor",
            note="the complete hierarchy the v0.2 baseline did not use"),
 )
 
@@ -81,7 +81,7 @@ BY_KEY = {module.key: module for module in MODULES}
 
 #: Modules that answer questions about public metadata without credentials or new tooling.
 READ_ONLY = ("esearch", "esummary", "efetch", "elink", "entrez", "entrez_convert",
-             "ncbi_fetch", "tissue_ontology", "disease_ontology", "sragent")
+             "ncbi_fetch", "tissue_ontology", "disease_ontology")
 
 
 def _probe(setup: str) -> bool | None:
@@ -89,9 +89,15 @@ def _probe(setup: str) -> bool | None:
     if not setup:
         return True
     if setup == "gcp":
-        return bool(os.getenv("GOOGLE_APPLICATION_CREDENTIALS") or os.getenv("GOOGLE_CLOUD_PROJECT"))
+        from .dependencies import dependency_report
+        return dependency_report()["bigquery"]["requirements_detected"]
     if setup == "sra-tools":
-        return bool(shutil.which("fastq-dump") or shutil.which("sra-stat"))
+        from .dependencies import dependency_report
+        return dependency_report()["sequences"]["requirements_detected"]
+    if setup == "supervisor":
+        from .dependencies import dependency_report
+        deps = dependency_report()
+        return deps["bigquery"]["requirements_detected"] and deps["sequences"]["requirements_detected"]
     if setup in {"ontology-store", "pdf-tools"}:
         return None
     return None
@@ -103,6 +109,12 @@ def describe() -> list[dict]:
         row = asdict(module)
         row["setup_ready"] = _probe(module.setup)
         row["read_only"] = module.key in READ_ONLY
+        row["setup_scope"] = "local_requirements_only_not_live_validation"
+        if module.key in {"tissue_ontology", "disease_ontology"}:
+            from .dependencies import dependency_report
+            row["setup_ready"] = dependency_report()[module.key]["requirements_detected"]
+        if row["spatial_status"] == "blocked" and row["setup_ready"]:
+            row["spatial_status"] = "direct"
         rows.append(row)
     return rows
 
@@ -120,8 +132,13 @@ def load(key: str, model: str | None = None, *, provider: str | None = None):
     """Import and build one upstream agent tool, installing DeepSeek routing first."""
     if key not in BY_KEY:
         raise ValueError(f"Unknown SRAgent module {key!r}; expected one of {', '.join(BY_KEY)}")
+    from .dependencies import activate_toolkit
+    activate_toolkit()
     provider = (provider or os.getenv("SPATIAL_PROVIDER")
                 or ("deepseek" if os.getenv("DEEPSEEK_API_KEY") else "openai")).strip().lower()
+    if provider not in {"openai", "deepseek"}:
+        raise ValueError("Provider must be openai or deepseek")
+    os.environ.setdefault("DYNACONF_SETTINGS_PATH", str(Path(__file__).with_name("agent_settings.yml")))
     if provider == "deepseek":
         from .deepseek_model import install, is_installed
         if not is_installed():
@@ -131,17 +148,21 @@ def load(key: str, model: str | None = None, *, provider: str | None = None):
         imported = importlib.import_module(module.module)
     except Exception as exc:  # import-time side effects vary per module
         raise RuntimeError(
-            f"{key}: importing {module.module} failed ({type(exc).__name__}): {exc}. "
+            f"{key}: importing {module.module} failed ({type(exc).__name__}). "
             f"{('External setup: ' + module.setup) if module.setup else ''}"
         ) from exc
     factory = getattr(imported, module.factory, None)
     if factory is None:
         raise RuntimeError(f"{key}: {module.module} has no {module.factory}")
-    return factory(model_name=model) if model else factory()
+    from .deepseek_model import model_context
+    with model_context(model) if provider == "deepseek" and model else nullcontext():
+        return factory(model_name=model) if model else factory()
 
 
 def payload_for(tool, message: str) -> dict:
     """Build the argument dict from the tool's own schema instead of guessing."""
+    if not isinstance(message, str) or not message.strip():
+        raise ValueError("Module input must be a nonempty string")
     args = getattr(tool, "args", None) or {}
     if not isinstance(args, dict):
         args = {}
@@ -149,6 +170,12 @@ def payload_for(tool, message: str) -> dict:
         return {"message": message}
     if "task" in args:
         return {"task": message}
+    if "messages" in args:
+        from langchain_core.messages import HumanMessage
+        return {"messages": [HumanMessage(content=message)]}
+    for name in ("tissue_description", "disease_description", "accession"):
+        if name in args:
+            return {name: message}
     raise RuntimeError(f"Unsupported tool schema for {getattr(tool, 'name', tool)!r}: {sorted(args)}")
 
 
@@ -156,6 +183,9 @@ def as_text(result) -> str:
     """Normalise whatever an upstream agent returns into plain text."""
     if isinstance(result, str):
         return result
+    if isinstance(result, list):
+        return "\n".join(str(item.get("text", "")) if isinstance(item, dict)
+                         else str(getattr(item, "content", item)) for item in result)
     if isinstance(result, dict):
         content = result.get("messages") or result.get("content") or result
     else:
@@ -168,8 +198,6 @@ def as_text(result) -> str:
             else:
                 parts.append(str(getattr(item, "content", item)))
         return "\n".join(part for part in parts if part)
-    if isinstance(content, list):  # pragma: no cover - defensive
-        return "\n".join(map(str, content))
     return str(content)
 
 
@@ -177,9 +205,31 @@ async def invoke(key: str, message: str, model: str | None = None, *, timeout: f
                  provider: str | None = None) -> dict:
     """Run one upstream module as a tool and return text plus provenance."""
     started = time.monotonic()
+    from langchain_core.callbacks import BaseCallbackHandler
+
+    events = []
+
+    class Trace(BaseCallbackHandler):
+        def on_tool_start(self, serialized, input_str, *, run_id, **kwargs):
+            events.append({"event": "start", "name": (serialized or {}).get("name", "unknown"), "run_id": str(run_id)})
+
+        def on_tool_end(self, output, *, run_id, **kwargs):
+            events.append({"event": "returned", "run_id": str(run_id)})
+
+        def on_tool_error(self, error, *, run_id, **kwargs):
+            events.append({"event": "error", "error_type": type(error).__name__, "run_id": str(run_id)})
+
+    if os.getenv("GCP_PROJECT_ID") and not os.getenv("GOOGLE_CLOUD_PROJECT"):
+        os.environ["GOOGLE_CLOUD_PROJECT"] = os.environ["GCP_PROJECT_ID"]
     tool = load(key, model, provider=provider)
-    result = await asyncio.wait_for(tool.ainvoke(payload_for(tool, message)), timeout=timeout)
+    config = {"callbacks": [Trace()], "recursion_limit": 16, "max_concurrency": 1}
+    chosen_provider = provider or os.getenv("SPATIAL_PROVIDER") or ("deepseek" if os.getenv("DEEPSEEK_API_KEY") else "openai")
+    from .deepseek_model import model_context
+    with model_context(model) if chosen_provider == "deepseek" and model else nullcontext():
+        result = await asyncio.wait_for(tool.ainvoke(payload_for(tool, message), config=config), timeout=timeout)
     return {"module": key, "provider": provider or os.getenv("SPATIAL_PROVIDER") or "auto",
             "model": model, "elapsed_seconds": round(time.monotonic() - started, 3),
             "message": message, "output": as_text(result),
+            "tool_trace": events,
+            "trace_scope": "tool entry/return, no arguments or results; return does not prove data correctness",
             "scope": "upstream_agent_output_not_verified_metadata"}
