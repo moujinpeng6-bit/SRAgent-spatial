@@ -37,6 +37,15 @@ class DeepSeekModelTests(unittest.TestCase):
         self.assertEqual(str(client.openai_api_base).rstrip("/"), deepseek_model.DEFAULT_BASE_URL)
         self.assertEqual(client.max_tokens, 64)
 
+    def test_thinking_is_disabled_by_default_and_opt_in(self):
+        with patch.dict(os.environ, {"DEEPSEEK_API_KEY": "k"}, clear=True):
+            off = deepseek_model.build("deepseek-flash")
+            self.assertEqual(off.extra_body, {"thinking": {"type": "disabled"}})
+        with patch.dict(os.environ, {"DEEPSEEK_API_KEY": "k",
+                                     "SPATIAL_DEEPSEEK_THINKING": "enabled"}, clear=True):
+            on = deepseek_model.build("deepseek-flash")
+        self.assertNotEqual(on.extra_body, {"thinking": {"type": "disabled"}})
+
     def test_install_patches_upstream_factory_before_agent_imports(self):
         fake_utils = types.ModuleType("SRAgent.agents.utils")
         fake_utils.set_model = object()

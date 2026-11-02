@@ -56,6 +56,19 @@ def credentials_present() -> bool:
     return bool(api_key())
 
 
+def thinking_enabled() -> bool:
+    """DeepSeek thinking mode is on by default; we default it OFF for agent loops.
+
+    With thinking enabled, the API emits ``reasoning_content`` on top of ``content`` and,
+    for requests that carry ``tools``, requires that field to be passed back on every
+    subsequent turn. LangChain/LangGraph does not round-trip ``reasoning_content``, so a
+    multi-turn agent errors with 400 ``reasoning_content ... must be passed back``.
+    Disabling thinking removes the field entirely. Opt back in with
+    ``SPATIAL_DEEPSEEK_THINKING=enabled`` for single-shot, non-tool calls only.
+    """
+    return (os.getenv("SPATIAL_DEEPSEEK_THINKING") or "disabled").strip().lower() == "enabled"
+
+
 def build(model_name=None, *, temperature=None, max_tokens=None, timeout=None, max_retries=2):
     """Create an OpenAI-compatible chat client pointed at DeepSeek.
 
@@ -76,6 +89,9 @@ def build(model_name=None, *, temperature=None, max_tokens=None, timeout=None, m
         "base_url": base_url(),
         "max_retries": max_retries,
     }
+    if not thinking_enabled():
+        # OpenAI-format toggle; see api-docs.deepseek.com/guides/thinking_mode
+        kwargs["extra_body"] = {"thinking": {"type": "disabled"}}
     if temperature is not None:
         kwargs["temperature"] = float(temperature)
     if max_tokens:

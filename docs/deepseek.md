@@ -108,6 +108,7 @@ $env:DEEPSEEK_BASE_URL = "https://api.deepseek.com/v1"   # 换成兼容网关时
 | 项目 | 情况 | 处理 |
 |---|---|---|
 | 模型 id | 本机端点没有 `deepseek-chat` / `deepseek-reasoner` | 用 `ping_model.py --list` 确认后设 `SPATIAL_MODEL` |
+| **thinking mode（默认开）** | 带 `tools` 的多轮请求必须回传 `reasoning_content`，否则 400 | shim 默认传 `extra_body={"thinking":{"type":"disabled"}}`；见下方说明 |
 | `service_tier` / flex 重试 | DeepSeek 无这些字段 | shim 不转发，相关分支自然失效 |
 | `workflows/convert.py:181` | `with_structured_output(..., strict=True)` 走 OpenAI json_schema | 可能报 400；`entrez_convert` 若失败，改用 `entrez` + `ncbi_fetch` 组合 |
 | `find_datasets` workflow | 内部用结构化输出选 Entrez ID | 属"rewrite"模块，先在单条上验证再批跑 |
@@ -132,6 +133,7 @@ $env:DEEPSEEK_BASE_URL = "https://api.deepseek.com/v1"   # 换成兼容网关时
 | 400 与 `response_format`/`json_schema` 相关 | 结构化输出不兼容 | 换 `entrez`/`ncbi_fetch` 路径，避开 `convert` |
 | `DeepSeek routing must be installed before ...` | 先 import 了上游 agent 模块 | 保证 `configure()` 在 import 上游之前调用（本项目已如此） |
 | `importing SRAgent.agents.tissue_ontology failed` | 该模块在 import 时加载 Chroma 向量库 | 属预期；先跳过本体论模块或用 OLS 工具 |
+| 400 `reasoning_content ... must be passed back` | 某个 agent 走了多轮工具调用，而 thinking 开着、LangChain 没回传 `reasoning_content` | 默认已关闭 thinking；若手动 `SPATIAL_DEEPSEEK_THINKING=enabled`，改回 `disabled` |
 
 ## 8. 安全边界
 
