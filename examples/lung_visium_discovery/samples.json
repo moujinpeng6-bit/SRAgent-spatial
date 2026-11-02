@@ -1,0 +1,302 @@
+[
+  {
+    "accession": "GSM9485172",
+    "studies": [
+      "GSE318039"
+    ],
+    "status": "completed",
+    "label": "eligible",
+    "rule_label": "eligible",
+    "requested_platform_confirmed": true,
+    "include_in_catalog": true,
+    "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485172",
+    "source_fields_sha256": "21a7fe6c49cc343f22c9b88d3e0f296413aa6f10af0f499364a1224e427b0f46",
+    "evidence_excerpt": [
+      {
+        "field": "Sample_organism_ch1",
+        "quote": "Homo sapiens",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485172"
+      },
+      {
+        "field": "Sample_characteristics_ch1",
+        "quote": "tissue: lung",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485172"
+      },
+      {
+        "field": "Sample_extract_protocol_ch1",
+        "quote": "10X Genomics Visium Spatial Gene Expression Slides & Reagent kit",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485172"
+      }
+    ]
+  },
+  {
+    "accession": "GSM9485173",
+    "studies": [
+      "GSE318039"
+    ],
+    "status": "completed",
+    "label": "eligible",
+    "rule_label": "eligible",
+    "requested_platform_confirmed": true,
+    "include_in_catalog": true,
+    "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485173",
+    "source_fields_sha256": "6f57d08c03a7d5b9cba4305a127d381f02f5eb52b0f701125450ab2a7232fb49",
+    "evidence_excerpt": [
+      {
+        "field": "Sample_organism_ch1",
+        "quote": "Homo sapiens",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485173"
+      },
+      {
+        "field": "Sample_characteristics_ch1",
+        "quote": "tissue: lung",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485173"
+      },
+      {
+        "field": "Sample_extract_protocol_ch1",
+        "quote": "10X Genomics Visium Spatial Gene Expression Slides & Reagent kit",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485173"
+      }
+    ]
+  },
+  {
+    "accession": "GSM9485174",
+    "studies": [
+      "GSE318039"
+    ],
+    "status": "completed",
+    "label": "eligible",
+    "rule_label": "eligible",
+    "requested_platform_confirmed": true,
+    "include_in_catalog": true,
+    "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485174",
+    "source_fields_sha256": "31533bc786f2cb7b7f836cc63fa3288ffed523d2c16bf3419b436dc48b7b59c7",
+    "evidence_excerpt": [
+      {
+        "field": "Sample_organism_ch1",
+        "quote": "Homo sapiens",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485174"
+      },
+      {
+        "field": "Sample_characteristics_ch1",
+        "quote": "tissue: lung",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485174"
+      },
+      {
+        "field": "Sample_extract_protocol_ch1",
+        "quote": "10X Genomics Visium Spatial Gene Expression Slides & Reagent kit",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485174"
+      }
+    ]
+  },
+  {
+    "accession": "GSM9485175",
+    "studies": [
+      "GSE318039"
+    ],
+    "status": "completed",
+    "label": "eligible",
+    "rule_label": "eligible",
+    "requested_platform_confirmed": true,
+    "include_in_catalog": true,
+    "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485175",
+    "source_fields_sha256": "a6fcec5d837b81ee1533b862e065d049aef548bde4af3e2cc43b3a2bd772a1c7",
+    "evidence_excerpt": [
+      {
+        "field": "Sample_organism_ch1",
+        "quote": "Homo sapiens",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485175"
+      },
+      {
+        "field": "Sample_characteristics_ch1",
+        "quote": "tissue: lung",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485175"
+      },
+      {
+        "field": "Sample_extract_protocol_ch1",
+        "quote": "10X Genomics Visium Spatial Gene Expression Slides & Reagent kit",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485175"
+      }
+    ]
+  },
+  {
+    "accession": "GSM9485176",
+    "studies": [
+      "GSE318039"
+    ],
+    "status": "completed",
+    "label": "eligible",
+    "rule_label": "eligible",
+    "requested_platform_confirmed": true,
+    "include_in_catalog": true,
+    "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485176",
+    "source_fields_sha256": "2b3f484db6f464c1bae9cb2230602ea78c415d6a27e1a9e3a2bf865325b76790",
+    "evidence_excerpt": [
+      {
+        "field": "Sample_organism_ch1",
+        "quote": "Homo sapiens",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485176"
+      },
+      {
+        "field": "Sample_characteristics_ch1",
+        "quote": "tissue: lung",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485176"
+      },
+      {
+        "field": "Sample_extract_protocol_ch1",
+        "quote": "10X Genomics Visium Spatial Gene Expression Slides & Reagent kit",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9485176"
+      }
+    ]
+  },
+  {
+    "accession": "GSM8375640",
+    "studies": [
+      "GSE271370"
+    ],
+    "status": "completed",
+    "label": "eligible",
+    "rule_label": "eligible",
+    "requested_platform_confirmed": true,
+    "include_in_catalog": true,
+    "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8375640",
+    "source_fields_sha256": "6edc46a1c4b20b839f85765df1e349462a8ce3258d038d08f7d7fbcb62591418",
+    "evidence_excerpt": [
+      {
+        "field": "Sample_organism_ch1",
+        "quote": "Homo sapiens",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8375640"
+      },
+      {
+        "field": "Sample_characteristics_ch1",
+        "quote": "tissue: Lung",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8375640"
+      },
+      {
+        "field": "Sample_extract_protocol_ch1",
+        "quote": "Spatial transcriptome sequencing libraries were preapred with 10xGenomics Visium Spatial Gene Expression Slides & Reagent kit",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8375640"
+      }
+    ]
+  },
+  {
+    "accession": "GSM8375641",
+    "studies": [
+      "GSE271370"
+    ],
+    "status": "completed",
+    "label": "eligible",
+    "rule_label": "eligible",
+    "requested_platform_confirmed": true,
+    "include_in_catalog": true,
+    "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8375641",
+    "source_fields_sha256": "8bc7ee40077a56c396236a78363e497594ad2bb45f912481d287e6db86f13daa",
+    "evidence_excerpt": [
+      {
+        "field": "Sample_organism_ch1",
+        "quote": "Homo sapiens",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8375641"
+      },
+      {
+        "field": "Sample_characteristics_ch1",
+        "quote": "tissue: Lung",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8375641"
+      },
+      {
+        "field": "Sample_extract_protocol_ch1",
+        "quote": "Spatial transcriptome sequencing libraries were preapred with 10xGenomics Visium Spatial Gene Expression Slides & Reagent kit",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8375641"
+      }
+    ]
+  },
+  {
+    "accession": "GSM8375642",
+    "studies": [
+      "GSE271370"
+    ],
+    "status": "completed",
+    "label": "eligible",
+    "rule_label": "eligible",
+    "requested_platform_confirmed": true,
+    "include_in_catalog": true,
+    "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8375642",
+    "source_fields_sha256": "a35b090c55f932f66e6c8816603213c04dbb70052b3045ebee6aad6b9b64d16f",
+    "evidence_excerpt": [
+      {
+        "field": "Sample_organism_ch1",
+        "quote": "Homo sapiens",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8375642"
+      },
+      {
+        "field": "Sample_characteristics_ch1",
+        "quote": "tissue: Lung",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8375642"
+      },
+      {
+        "field": "Sample_extract_protocol_ch1",
+        "quote": "Spatial transcriptome sequencing libraries were preapred with 10xGenomics Visium Spatial Gene Expression Slides & Reagent kit",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8375642"
+      }
+    ]
+  },
+  {
+    "accession": "GSM8375643",
+    "studies": [
+      "GSE271370"
+    ],
+    "status": "completed",
+    "label": "eligible",
+    "rule_label": "eligible",
+    "requested_platform_confirmed": true,
+    "include_in_catalog": true,
+    "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8375643",
+    "source_fields_sha256": "601b7f5fcf97ad203526d64db3bb8cfaebcb452cdc7a26f5f80c5135fd6248c4",
+    "evidence_excerpt": [
+      {
+        "field": "Sample_organism_ch1",
+        "quote": "Homo sapiens",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8375643"
+      },
+      {
+        "field": "Sample_characteristics_ch1",
+        "quote": "tissue: Lung",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8375643"
+      },
+      {
+        "field": "Sample_extract_protocol_ch1",
+        "quote": "Spatial transcriptome sequencing libraries were preapred with 10xGenomics Visium Spatial Gene Expression Slides & Reagent kit",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8375643"
+      }
+    ]
+  },
+  {
+    "accession": "GSM8387358",
+    "studies": [
+      "GSE271370"
+    ],
+    "status": "completed",
+    "label": "eligible",
+    "rule_label": "eligible",
+    "requested_platform_confirmed": true,
+    "include_in_catalog": true,
+    "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8387358",
+    "source_fields_sha256": "30bded2c4e54c49d89e60262473e9cd5a67e49dfa3767ba253a07db37ad100c8",
+    "evidence_excerpt": [
+      {
+        "field": "Sample_organism_ch1",
+        "quote": "Homo sapiens",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8387358"
+      },
+      {
+        "field": "Sample_characteristics_ch1",
+        "quote": "tissue: Lung",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8387358"
+      },
+      {
+        "field": "Sample_extract_protocol_ch1",
+        "quote": "Spatial transcriptome sequencing libraries were preapred with 10xGenomics Visium Spatial Gene Expression Slides & Reagent kit according to manufacturer´s construction.",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8387358"
+      }
+    ]
+  }
+]

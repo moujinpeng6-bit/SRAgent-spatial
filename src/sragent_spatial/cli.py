@@ -60,6 +60,18 @@ def main(argv=None):
     spatial_search_cmd.add_argument("--offline", action="store_true")
     spatial_search_cmd.add_argument("--refresh", action="store_true")
     spatial_search_cmd.add_argument("--out", type=Path, required=True)
+    discovery = sub.add_parser("discover", help="Original SRAgent supervisor: spatial search -> GSM expansion -> individual screening")
+    discovery.add_argument("--organism", default="Homo sapiens")
+    discovery.add_argument("--tissue", default="lung")
+    discovery.add_argument("--platforms", nargs="+", default=["Visium"])
+    discovery.add_argument("--model", default=os.getenv("SPATIAL_MODEL"))
+    discovery.add_argument("--max-studies", type=bounded_integer(1, 5), default=2)
+    discovery.add_argument("--max-samples-per-study", type=bounded_integer(1, 20), default=5)
+    discovery.add_argument("--max-total-samples", type=bounded_integer(1, 50), default=10)
+    discovery.add_argument("--timeout", type=bounded_integer(30, 1800), default=600)
+    discovery.add_argument("--cache", type=Path, default=Path("outputs/discovery_cache"))
+    discovery.add_argument("--refresh", action="store_true")
+    discovery.add_argument("--out", type=Path, required=True)
     screening = sub.add_parser("screen-samples", help="Classify frozen GSM sample packets with evidence")
     screening.add_argument("--materials", type=Path, required=True)
     screening.add_argument("--out", type=Path, required=True)
@@ -105,6 +117,23 @@ def main(argv=None):
             export_records(args.out, records, report, client)
             print(json.dumps({"records": len(records), "total_hits": report["total_hits"],
                               "platforms": report["platforms"], "out": str(args.out)}, ensure_ascii=True))
+        elif args.command == "discover":
+            from .agents import credentials_present
+            from .discovery import DiscoveryRequest, DiscoverySession, discover
+            if not args.model or not credentials_present():
+                raise RuntimeError("Discovery requires an explicit model and a locally configured provider API key")
+            if os.name == "nt":
+                import truststore
+                truststore.inject_into_ssl()
+            request = DiscoveryRequest(args.organism, args.tissue, tuple(args.platforms), args.max_studies,
+                                       args.max_samples_per_study, args.max_total_samples)
+            session = DiscoverySession(MetadataClient(args.cache, refresh=args.refresh), request, args.out, args.model)
+            report = asyncio.run(discover(session, timeout=args.timeout))
+            print(json.dumps({"status": report["status"], "counts": report["counts"], "out": str(args.out)}))
+            if report["status"] == "incomplete":
+                if report["agent_error"]:
+                    print(json.dumps(report["agent_error"]), file=sys.stderr)
+                return 2
         elif args.command == "inspect-local":
             report = inspect_local(args.root, args.max_files)
             write_json(args.out, report)

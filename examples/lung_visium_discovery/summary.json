@@ -1,0 +1,170 @@
+{
+  "status": "completed_with_limits",
+  "request": {
+    "organism": "Homo sapiens",
+    "tissue": "lung",
+    "platforms": [
+      "Visium"
+    ],
+    "max_studies": 2,
+    "max_samples_per_study": 5,
+    "max_total_samples": 10
+  },
+  "model": "deepseek-flash",
+  "provider": "deepseek",
+  "created_at": "2026-11-02T12:07:02.617472+00:00",
+  "elapsed_seconds": 111.781,
+  "search": {
+    "query": "\"Homo sapiens\"[Organism] AND \"lung\"[All Fields] AND (\"Visium\"[All Fields] OR \"10x Visium\"[All Fields] OR \"Visium Spatial Gene Expression\"[All Fields]) AND gse[ETYP]",
+    "platforms": [
+      "Visium"
+    ],
+    "platform_kinds": {
+      "Visium": "sequencing"
+    },
+    "total_hits": 58,
+    "returned_ids": [
+      "200318039",
+      "200271370"
+    ],
+    "skipped_nonseries_ids": [],
+    "records_exported": 2,
+    "study_failures": [],
+    "search_truncated": true
+  },
+  "counts": {
+    "studies_returned": 2,
+    "unique_samples_attempted": 10,
+    "processing_status": {
+      "completed": 10
+    },
+    "labels": {
+      "eligible": 10
+    },
+    "selected_metadata_candidates": 10,
+    "study_sample_links_not_read": 21
+  },
+  "limitations": [
+    "Bounded GEO keyword search, not exhaustive retrieval or measured recall.",
+    "No independent reference labels or accuracy score.",
+    "Selection requires rule/model agreement and requested platform evidence; may miss valid samples.",
+    "Platform mentions and citation checks do not prove assay use or spatial file correspondence.",
+    "Assets are public links inferred from filenames; no large files downloaded or verified."
+  ],
+  "studies": [
+    {
+      "accession": "GSE318039",
+      "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE318039",
+      "title": "Spatial Transcriptomics Reveals Compartment-Specific Cytotoxic T cells Crosstalk with AT2 and Goblet cells in Advanced COPD",
+      "sample_ids": [
+        "GSM9485172",
+        "GSM9485173",
+        "GSM9485174",
+        "GSM9485175",
+        "GSM9485176",
+        "GSM9485177",
+        "GSM9485178",
+        "GSM9485179"
+      ],
+      "attempted_ids": [
+        "GSM9485172",
+        "GSM9485173",
+        "GSM9485174",
+        "GSM9485175",
+        "GSM9485176"
+      ],
+      "not_read_ids": [
+        "GSM9485177",
+        "GSM9485178",
+        "GSM9485179"
+      ],
+      "association_failures": []
+    },
+    {
+      "accession": "GSE271370",
+      "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE271370",
+      "title": "Spatial transcriptomics unveils the in situ cellular and molecular hallmarks of the lung in fatal COVID-19",
+      "sample_ids": [
+        "GSM8375640",
+        "GSM8375641",
+        "GSM8375642",
+        "GSM8375643",
+        "GSM8387358",
+        "GSM8387359",
+        "GSM8387360",
+        "GSM8387361",
+        "GSM8387362",
+        "GSM8387363",
+        "GSM8387364",
+        "GSM8387365",
+        "GSM8387366",
+        "GSM8387367",
+        "GSM8387368",
+        "GSM8387369",
+        "GSM8387370",
+        "GSM8387371",
+        "GSM8387372",
+        "GSM8387373",
+        "GSM8387374",
+        "GSM8387375",
+        "GSM8387376"
+      ],
+      "attempted_ids": [
+        "GSM8375640",
+        "GSM8375641",
+        "GSM8375642",
+        "GSM8375643",
+        "GSM8387358"
+      ],
+      "not_read_ids": [
+        "GSM8387359",
+        "GSM8387360",
+        "GSM8387361",
+        "GSM8387362",
+        "GSM8387363",
+        "GSM8387364",
+        "GSM8387365",
+        "GSM8387366",
+        "GSM8387367",
+        "GSM8387368",
+        "GSM8387369",
+        "GSM8387370",
+        "GSM8387371",
+        "GSM8387372",
+        "GSM8387373",
+        "GSM8387374",
+        "GSM8387375",
+        "GSM8387376"
+      ],
+      "association_failures": []
+    }
+  ],
+  "tools_entered": [
+    "search_spatial_datasets",
+    "expand_spatial_study",
+    "expand_spatial_study",
+    "screen_spatial_study",
+    "read_spatial_sample",
+    "screen_spatial_sample",
+    "read_spatial_sample",
+    "screen_spatial_sample",
+    "read_spatial_sample",
+    "screen_spatial_sample",
+    "read_spatial_sample",
+    "screen_spatial_sample",
+    "read_spatial_sample",
+    "screen_spatial_sample",
+    "screen_spatial_study",
+    "read_spatial_sample",
+    "screen_spatial_sample",
+    "read_spatial_sample",
+    "screen_spatial_sample",
+    "read_spatial_sample",
+    "screen_spatial_sample",
+    "read_spatial_sample",
+    "screen_spatial_sample",
+    "read_spatial_sample",
+    "screen_spatial_sample"
+  ],
+  "review_status": "assistant_checked_sample_fields_not_independent_human_gold"
+}

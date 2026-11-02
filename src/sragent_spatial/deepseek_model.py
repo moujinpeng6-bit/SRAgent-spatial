@@ -21,6 +21,7 @@ from __future__ import annotations
 import os
 import re
 import sys
+import ssl
 from contextlib import contextmanager
 from contextvars import ContextVar
 
@@ -82,6 +83,15 @@ def thinking_enabled() -> bool:
     return (os.getenv("SPATIAL_DEEPSEEK_THINKING") or "disabled").strip().lower() == "enabled"
 
 
+def native_tls_context():
+    """Use native roots directly, without reloading certifi for every nested client."""
+    import truststore
+    context = truststore.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+    if os.getenv("SSL_CERT_FILE") or os.getenv("SSL_CERT_DIR"):
+        context.load_verify_locations(cafile=os.getenv("SSL_CERT_FILE"), capath=os.getenv("SSL_CERT_DIR"))
+    return context
+
+
 def build(model_name=None, *, temperature=None, max_tokens=None, timeout=None, max_retries=2):
     """Create an OpenAI-compatible chat client pointed at DeepSeek.
 
@@ -102,6 +112,11 @@ def build(model_name=None, *, temperature=None, max_tokens=None, timeout=None, m
         "base_url": base_url(),
         "max_retries": max_retries,
     }
+    if sys.platform == "win32":
+        import httpx
+        context = native_tls_context()
+        kwargs["http_client"] = httpx.Client(verify=context)
+        kwargs["http_async_client"] = httpx.AsyncClient(verify=context)
     if not thinking_enabled():
         # OpenAI-format toggle; see api-docs.deepseek.com/guides/thinking_mode
         kwargs["extra_body"] = {"thinking": {"type": "disabled"}}

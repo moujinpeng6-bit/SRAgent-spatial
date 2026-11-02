@@ -15,6 +15,13 @@ from test_screening import packet
 
 
 class DeepSeekModelTests(unittest.TestCase):
+    def test_native_tls_requires_certificates_and_hostname_validation(self):
+        import ssl
+        with patch.dict(os.environ, {}, clear=True):
+            context = deepseek_model.native_tls_context()
+        self.assertEqual(context.verify_mode, ssl.CERT_REQUIRED)
+        self.assertTrue(context.check_hostname)
+
     def test_model_ids_are_provider_checked(self):
         with patch.dict(os.environ, {}, clear=True):
             self.assertEqual(deepseek_model.validate_model("deepseek-chat"), "deepseek-chat")
@@ -31,20 +38,23 @@ class DeepSeekModelTests(unittest.TestCase):
         self.assertIn("DEEPSEEK_API_KEY", str(caught.exception))
 
     def test_client_targets_deepseek_base_url(self):
-        with patch.dict(os.environ, {"DEEPSEEK_API_KEY": "offline-test-key"}, clear=True):
-            client = deepseek_model.build("deepseek-chat", temperature=0.1, max_tokens=64)
-        self.assertEqual(client.model_name, "deepseek-chat")
-        self.assertEqual(str(client.openai_api_base).rstrip("/"), deepseek_model.DEFAULT_BASE_URL)
-        self.assertEqual(client.max_tokens, 64)
+        with patch.dict(os.environ, {"DEEPSEEK_API_KEY": "offline-test-key"}, clear=True), \
+                patch("langchain_openai.ChatOpenAI") as client:
+            deepseek_model.build("deepseek-chat", temperature=0.1, max_tokens=64)
+        self.assertEqual(client.call_args.kwargs["model"], "deepseek-chat")
+        self.assertEqual(client.call_args.kwargs["base_url"], deepseek_model.DEFAULT_BASE_URL)
+        self.assertEqual(client.call_args.kwargs["max_tokens"], 64)
 
     def test_thinking_is_disabled_by_default_and_opt_in(self):
-        with patch.dict(os.environ, {"DEEPSEEK_API_KEY": "k"}, clear=True):
-            off = deepseek_model.build("deepseek-flash")
-            self.assertEqual(off.extra_body, {"thinking": {"type": "disabled"}})
+        with patch.dict(os.environ, {"DEEPSEEK_API_KEY": "k"}, clear=True), \
+                patch("langchain_openai.ChatOpenAI") as client:
+            deepseek_model.build("deepseek-flash")
+            self.assertEqual(client.call_args.kwargs["extra_body"], {"thinking": {"type": "disabled"}})
         with patch.dict(os.environ, {"DEEPSEEK_API_KEY": "k",
-                                     "SPATIAL_DEEPSEEK_THINKING": "enabled"}, clear=True):
-            on = deepseek_model.build("deepseek-flash")
-        self.assertNotEqual(on.extra_body, {"thinking": {"type": "disabled"}})
+                                     "SPATIAL_DEEPSEEK_THINKING": "enabled"}, clear=True), \
+                patch("langchain_openai.ChatOpenAI") as client:
+            deepseek_model.build("deepseek-flash")
+        self.assertNotIn("extra_body", client.call_args.kwargs)
 
     def test_install_patches_upstream_factory_before_agent_imports(self):
         fake_utils = types.ModuleType("SRAgent.agents.utils")
@@ -194,7 +204,8 @@ class CliTests(unittest.TestCase):
             out = Path(folder) / "failure.json"
             stderr = io.StringIO()
             with patch("sragent_spatial.agents.credentials_present", return_value=True), \
-                    patch("sragent_spatial.upstream_registry.invoke", new=fail), redirect_stderr(stderr):
+                    patch("sragent_spatial.upstream_registry.invoke", new=fail), \
+                    patch("truststore.inject_into_ssl"), redirect_stderr(stderr):
                 code = cli_main(["search-agent", "--module", "sragent", "--message", "check",
                                  "--model", "deepseek-flash", "--out", str(out)])
             self.assertEqual(code, 2)

@@ -85,7 +85,7 @@ def platform_kinds(platforms) -> dict[str, str]:
     return {key: SPATIAL_PLATFORMS[key]["kind"] for key in check_platforms(platforms)}
 
 
-def spatial_search(client, organism: str, tissue: str, platforms, limit: int = 5):
+def spatial_search(client, organism: str, tissue: str, platforms, limit: int = 5, *, continue_on_error=False):
     """Search GEO for spatial series and hydrate records via the shared lookup path."""
     from .geo import lookup
 
@@ -99,17 +99,24 @@ def spatial_search(client, organism: str, tissue: str, platforms, limit: int = 5
     details = client.get_json("esummary.fcgi", db="gds", id=",".join(ids), retmode="json")["result"] if ids else {}
     records = []
     skipped = []
+    failures = []
     for uid in ids:
         accession = details.get(uid, {}).get("accession", "")
         if not re.fullmatch(r"GSE[1-9][0-9]*", accession):
             skipped.append(uid)
             continue
-        records.extend(lookup(client, accession)[0])
+        try:
+            records.extend(lookup(client, accession)[0])
+        except Exception as exc:
+            if not continue_on_error:
+                raise
+            failures.append({"accession": accession, "error_type": type(exc).__name__})
     return records, {"query": query, "platforms": check_platforms(platforms),
                      "platform_kinds": platform_kinds(platforms),
                      "total_hits": int(found["esearchresult"].get("count", 0)),
                      "returned_ids": ids, "skipped_nonseries_ids": skipped,
-                     "records_exported": len(records)}
+                     "records_exported": len(records), "study_failures": failures,
+                     "search_truncated": int(found["esearchresult"].get("count", 0)) > len(ids)}
 
 
 def as_langchain_tool():
