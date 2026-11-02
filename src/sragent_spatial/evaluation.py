@@ -10,6 +10,28 @@ from collections import Counter
 from .screening import LABELS, screen_sample, validate_packet
 
 
+def failure_details(exc):
+    """Expose only allowlisted diagnostics, never provider messages or request bodies."""
+    details = {"failure_type": type(exc).__name__}
+    status = getattr(exc, "status_code", None)
+    if type(status) is int and 100 <= status <= 599:
+        details["http_status"] = status
+    code = getattr(exc, "code", None)
+    if isinstance(code, str) and code in {
+        "invalid_api_key", "insufficient_quota", "model_not_found",
+        "rate_limit_exceeded", "invalid_organization", "organization_deactivated",
+        "unsupported_parameter", "unsupported_value",
+    }:
+        details["provider_error_code"] = code
+    if details["failure_type"] == "AuthenticationError" or status == 401:
+        details["failure_hint"] = "Authentication rejected. Re-enter a valid provider API key locally (OpenAI: --prompt-key); check endpoint, model id and account billing."
+    elif details["failure_type"] == "PermissionDeniedError" or status == 403:
+        details["failure_hint"] = "Check project/model permissions and API access policies."
+    elif code == "insufficient_quota":
+        details["failure_hint"] = "Check this API project's available quota and billing."
+    return details
+
+
 def load_cases(path):
     dataset = json.loads(path.read_text(encoding="utf-8"))
     if dataset.get("reference_status") != "assistant_prepared_pending_human_review":
@@ -37,8 +59,9 @@ def score(rows):
 
 
 async def benchmark(dataset, methods, model=None, limit=None, timeout=120, predictor=None):
-    if any(m not in {"rules", "original_agent", "spatial_agent"} for m in methods):
+    if any(m not in {"rules", "original_agent", "spatial_agent", "sragent"} for m in methods):
         raise ValueError("Unknown benchmark method")
+    from .agents import credentials_present, provider
     cases = dataset["cases"][:limit] if limit else dataset["cases"]
     rows = []
     for case in cases:
@@ -49,7 +72,7 @@ async def benchmark(dataset, methods, model=None, limit=None, timeout=120, predi
             if method == "rules":
                 prediction = screen_sample(packet)
                 row.update(status="completed", prediction=prediction)
-            elif not os.getenv("OPENAI_API_KEY") and predictor is None:
+            elif not credentials_present() and predictor is None:
                 row.update(status="not_run_missing_api_key")
             elif not model:
                 row.update(status="not_run_missing_model_selection")
@@ -63,12 +86,13 @@ async def benchmark(dataset, methods, model=None, limit=None, timeout=120, predi
                     row.update(status="completed", prediction=prediction)
                 except Exception as exc:
                     # Do not serialize exceptions that might contain credential/request details.
-                    row.update(status="failed", failure_type=type(exc).__name__)
+                    row.update(status="failed", **failure_details(exc))
             rows.append(row)
     return {"reference_status": dataset["reference_status"], "case_count": len(cases),
             "method_scopes": {"original_agent": "Pinned upstream NCBI fetch Agent component, not the complete SRAgent hierarchy",
-                              "spatial_agent": "Same upstream NCBI Agent plus upstream model factory and two sample-level tools"},
-            "model": model, "results": rows,
+                              "spatial_agent": "Same upstream NCBI Agent plus upstream model factory and two sample-level tools",
+                              "sragent": "Complete pinned upstream SRAgent supervisor (Entrez, ncbi_fetch, BigQuery, sequences) plus the same two sample-level tools"},
+            "provider": provider(), "model": model, "results": rows,
             "summary": {method: score([r for r in rows if r["method"] == method]) for method in methods},
             "limitations": ["Development cases, selected nonrandomly; not independent gold labels or held-out generalization.",
                             "This run does not measure retrieval recall or validate spatial assets.",

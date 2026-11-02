@@ -53,15 +53,24 @@ def main(argv=None):
     screening = sub.add_parser("screen-samples", help="Classify frozen GSM sample packets with evidence")
     screening.add_argument("--materials", type=Path, required=True)
     screening.add_argument("--out", type=Path, required=True)
-    evaluation = sub.add_parser("benchmark", help="Rules/original/spatial Agent comparison on the same development cases")
+    evaluation = sub.add_parser("benchmark", help="Rules/original/spatial/sragent comparison on the same development cases")
     evaluation.add_argument("--cases", type=Path, default=Path("evaluation/lung_spatial_development.json"))
-    evaluation.add_argument("--methods", nargs="+", choices=["rules", "original_agent", "spatial_agent"],
+    evaluation.add_argument("--methods", nargs="+", choices=["rules", "original_agent", "spatial_agent", "sragent"],
                             default=["rules", "original_agent", "spatial_agent"])
     evaluation.add_argument("--model", default=os.getenv("SPATIAL_MODEL"))
     evaluation.add_argument("--limit", type=bounded_integer(1, 100))
     evaluation.add_argument("--timeout", type=bounded_integer(10, 600), default=120)
     evaluation.add_argument("--out", type=Path, required=True)
     sub.add_parser("doctor", help="Report credential/dependency presence without printing secrets or calling APIs")
+    registry = sub.add_parser("modules", help="List every upstream SRAgent search/fetch module and its readiness")
+    registry.add_argument("--out", type=Path)
+    search_agent = sub.add_parser("search-agent",
+                                  help="Run one upstream SRAgent module as a tool; may incur provider charges")
+    search_agent.add_argument("--module", required=True)
+    search_agent.add_argument("--message", required=True)
+    search_agent.add_argument("--model", default=os.getenv("SPATIAL_MODEL"))
+    search_agent.add_argument("--timeout", type=bounded_integer(10, 600), default=120)
+    search_agent.add_argument("--out", type=Path, required=True)
     spatial = sub.add_parser("check-visium", help="Basic barcode/coordinate and optional low-resolution bounds checks")
     spatial.add_argument("--barcodes", type=Path, required=True)
     spatial.add_argument("--positions", type=Path, required=True)
@@ -94,10 +103,12 @@ def main(argv=None):
             write_json(args.out, [screen_sample(packet) for packet in packets])
             print(json.dumps({"samples": len(packets), "out": str(args.out)}))
         elif args.command == "benchmark":
+            from .agents import credentials_present, provider
             from .evaluation import benchmark, load_cases
-            if os.getenv("OPENAI_API_KEY") and args.model and args.limit is None and any(m != "rules" for m in args.methods):
+            paid = any(m != "rules" for m in args.methods)
+            if credentials_present() and args.model and args.limit is None and paid:
                 raise ValueError("For paid Agent runs, specify an explicit --limit (start with 1)")
-            if os.name == "nt" and os.getenv("OPENAI_API_KEY") and any(m != "rules" for m in args.methods):
+            if os.name == "nt" and credentials_present() and paid:
                 try:
                     import truststore
                 except ImportError as exc:
@@ -108,11 +119,34 @@ def main(argv=None):
                                           args.limit, args.timeout))
             write_json(args.out, report)
             print(json.dumps(report["summary"]))
+            for row in report["results"]:
+                if row["status"] == "failed":
+                    print(json.dumps({key: row[key] for key in (
+                        "accession", "method", "failure_type", "http_status", "provider_error_code", "failure_hint"
+                    ) if key in row}), file=sys.stderr)
             if any(value["skipped"] or value["failed"] for value in report["summary"].values()):
                 return 2
         elif args.command == "doctor":
             from .agents import doctor
             print(json.dumps(doctor()))
+        elif args.command == "modules":
+            from .upstream_registry import describe
+            rows = describe()
+            if args.out:
+                write_json(args.out, rows)
+            for row in rows:
+                ready = {True: "yes", False: "no", None: "unknown"}[row["setup_ready"]]
+                print(f"{row['key']:<15} {row['spatial_status']:<8} setup_ready={ready:<8} {row['role']}")
+        elif args.command == "search-agent":
+            from .agents import credentials_present, provider
+            from .upstream_registry import invoke
+            if not credentials_present():
+                raise RuntimeError(f"No credential configured for provider {provider()!r}; see docs/deepseek.md")
+            result = asyncio.run(invoke(args.module, args.message, args.model,
+                                        timeout=args.timeout, provider=provider()))
+            write_json(args.out, result)
+            print(json.dumps({"module": result["module"], "elapsed_seconds": result["elapsed_seconds"],
+                              "output_chars": len(result["output"])}))
         elif args.command == "check-visium":
             from .spatial import validate_visium
             if bool(args.scalefactors) != bool(args.lowres_image):

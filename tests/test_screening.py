@@ -7,7 +7,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from sragent_spatial.evaluation import benchmark
+from sragent_spatial.evaluation import benchmark, failure_details
 from sragent_spatial.screening import parse_prediction, screen_sample
 
 
@@ -85,6 +85,30 @@ class ScreeningTests(unittest.TestCase):
         result = asyncio.run(benchmark(dataset, ["original_agent", "spatial_agent"], "test-model", predictor=fake_predictor))
         self.assertEqual(received, ["GSM999001", "GSM999001"])
         self.assertEqual(result["summary"]["spatial_agent"]["completed"], 1)
+
+    def test_auth_failure_report_does_not_leak_provider_message(self):
+        class AuthenticationError(Exception):
+            status_code = 401
+            code = "invalid_api_key"
+            body = {"message": "private-key-in-provider-body"}
+
+        async def failing_predictor(*args):
+            raise AuthenticationError("private-key-in-provider-message")
+
+        dataset = {"reference_status": "assistant_prepared_pending_human_review",
+                   "cases": [{"input": packet(), "reference": {"label": "eligible"}}]}
+        result = asyncio.run(benchmark(dataset, ["original_agent"], "test-model", predictor=failing_predictor))
+        row = result["results"][0]
+        self.assertEqual(row["http_status"], 401)
+        self.assertEqual(row["provider_error_code"], "invalid_api_key")
+        self.assertIn("--prompt-key", row["failure_hint"])
+        self.assertNotIn("private-key", json.dumps(result))
+
+    def test_unknown_error_code_cannot_leak_arbitrary_provider_text(self):
+        exc = RuntimeError("private-key-message")
+        exc.code = "private-key-as-code"
+        exc.status_code = "private-key-as-status"
+        self.assertEqual(failure_details(exc), {"failure_type": "RuntimeError"})
 
 
 if __name__ == "__main__":

@@ -2,7 +2,17 @@
 
 自动发现公开空间转录组数据、整理实验背景，并追踪表达、坐标、图像与标注之间的对应关系。
 
-## 当前状态：v0.2 样本核查与 Agent 扩展
+## 当前状态：v0.3 模型接入与全量搜索模块
+
+v0.3 在 v0.2 之上做了三件事：
+
+1. **接入 DeepSeek**：通过替换上游 `SRAgent.agents.utils.set_model` 在 import 前完成路由，不复制不修改上游源码；`deepseek-flash` / `deepseek-v4-pro` 走 OpenAI 兼容端点。配置见 [DeepSeek 说明](docs/deepseek.md)。
+2. **接入完整 SRAgent 搜索模块**：`upstream_registry` 惰性注册 14 个上游 agent 模块（esearch/esummary/efetch/elink/entrez/entrez_convert/ncbi_fetch/tissue+disease ontology/papers/bigquery/sequences/find_datasets/sragent），`run.py modules` 列出每个模块的用途、空间适配状态与外部依赖。
+3. **新增 `sragent` 对照路径**：除 `original_agent`（仅 NCBI Agent）与 `spatial_agent` 外，可用完整上游 supervisor 作为工具参与同一批样本对照。
+
+首次真实调用已通过（2026-11-02，DeepSeek `deepseek-flash`，单模块 `ncbi_fetch`，51.5 秒，正确取回 GSE264398 的组织/平台/样本身份）。**尚未**跑批量对照，因此不能声称 Agent 效果已验证。未运行的情况仍明确标为 `not_run_missing_api_key`。
+
+## 此前状态：v0.2 样本核查与 Agent 扩展
 
 已实现 GEO 查询、空间候选搜索、样本级四类筛选、引文检查、本地来源比较，以及 Visium 条码/坐标和低分辨率图像边界检查。新增 [25 条待人工复核的开发样本](evaluation/lung_spatial_development.csv) 与规则/原版 Agent/空间扩展 Agent 三路径对照。真实模型结果取决于本机凭证和依赖，未运行时明确跳过。详见 [v0.2 原理、运行和限制](docs/v02.md)。
 
@@ -27,8 +37,12 @@
 configs/search_terms.json         候选搜索词与首批试点范围
 run.py                           无需安装即可运行的命令入口
 src/sragent_spatial/              查询、解析、盘点、来源比较与可选上游桥接
+src/sragent_spatial/deepseek_model.py     DeepSeek 路由（在 import 上游前替换 set_model）
+src/sragent_spatial/upstream_registry.py  14 个上游搜索模块的惰性注册与调用
 tests/test_pipeline.py            无网络离线测试
 docs/architecture.md             各模块的分工与原理
+docs/deepseek.md                 DeepSeek 配置、命令与已知不兼容
+docs/tasks_v03_v04.md            任务顺序、验收标准与排错（先看这个）
 docs/fields.md                   字段的中文解释和记录规则
 docs/roadmap.md                  分阶段开发与验收要求
 schemas/spatial_record.schema.json  单条记录的 JSON Schema
