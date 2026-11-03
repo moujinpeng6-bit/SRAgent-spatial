@@ -1,7 +1,7 @@
 """Bounded spatial discovery driven by the original SRAgent supervisor.
 
 Tools own the evidence ledger. Model prose cannot create or change exported rows.
-Only the human-lung pilot is supported by the current sample classifier.
+Species and tissue filters are carried through to each sample screen.
 """
 
 from __future__ import annotations
@@ -24,7 +24,7 @@ from unittest.mock import patch
 
 from .geo import parse_soft, record_from_soft, source_url, write_json
 from .screening import VISIUM_HD, parse_prediction, screen_sample, validate_packet
-from .spatial_search import check_platforms, spatial_search
+from .spatial_search import check_platforms, check_text, spatial_search
 
 _BUILD_LOCK = threading.RLock()
 
@@ -40,8 +40,8 @@ class DiscoveryRequest:
     study: str | None = None
 
     def __post_init__(self):
-        if self.organism != "Homo sapiens" or self.tissue.lower() != "lung":
-            raise ValueError("The current sample classifier supports the Homo sapiens/lung pilot only")
+        check_text(self.organism, "organism")
+        check_text(self.tissue, "tissue")
         check_platforms(self.platforms)
         if not 1 <= self.max_studies <= 5 or not 1 <= self.max_samples_per_study <= 50 or not 1 <= self.max_total_samples <= 50:
             raise ValueError("Expected studies 1..5, samples per study 1..50, total samples 1..50")
@@ -150,6 +150,8 @@ class DiscoverySession:
                     raise ValueError("Sample does not explicitly link back to the selected study")
                 row["source_series_ids"] = fields["Sample_series_id"]
                 row["packet"] = sample_packet(fields, acc)
+                if (self.request.organism, self.request.tissue.lower()) != ("Homo sapiens", "lung"):
+                    row["packet"]["screen_scope"] = {"organism": self.request.organism, "tissue": self.request.tissue}
                 row["rule_prediction"] = screen_sample(row["packet"])
                 row["assets"] = record_from_soft(fields, acc)["assets"]
                 row["status"] = "ready"

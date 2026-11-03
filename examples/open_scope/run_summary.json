@@ -1,0 +1,524 @@
+{
+  "geo_lung_visium_hd_discovery": {
+    "status": "completed_with_limits",
+    "request": {
+      "organism": "Homo sapiens",
+      "tissue": "lung",
+      "platforms": [
+        "Visium HD"
+      ],
+      "max_studies": 5,
+      "max_samples_per_study": 2,
+      "max_total_samples": 10,
+      "study": null
+    },
+    "counts": {
+      "studies_returned": 5,
+      "unique_samples_attempted": 10,
+      "processing_status": {
+        "completed": 10
+      },
+      "labels": {
+        "unknown": 4,
+        "eligible": 5,
+        "non_lung": 1
+      },
+      "selected_metadata_candidates": 5,
+      "study_sample_links_not_read": 33
+    },
+    "query": "\"Homo sapiens\"[Organism] AND \"lung\"[All Fields] AND (\"Visium HD\"[All Fields] OR \"VisiumHD\"[All Fields] OR \"Visium CytAssist HD\"[All Fields]) AND gse[ETYP]",
+    "studies": [
+      "GSE302356",
+      "GSE325706",
+      "GSE282057",
+      "GSE312053",
+      "GSE301973"
+    ],
+    "samples": [
+      {
+        "accession": "GSM9102552",
+        "status": "completed",
+        "label": "unknown",
+        "include_in_catalog": false
+      },
+      {
+        "accession": "GSM9102553",
+        "status": "completed",
+        "label": "unknown",
+        "include_in_catalog": false
+      },
+      {
+        "accession": "GSM9610990",
+        "status": "completed",
+        "label": "eligible",
+        "include_in_catalog": true
+      },
+      {
+        "accession": "GSM9610991",
+        "status": "completed",
+        "label": "eligible",
+        "include_in_catalog": true
+      },
+      {
+        "accession": "GSM8634986",
+        "status": "completed",
+        "label": "non_lung",
+        "include_in_catalog": false
+      },
+      {
+        "accession": "GSM8634987",
+        "status": "completed",
+        "label": "eligible",
+        "include_in_catalog": true
+      },
+      {
+        "accession": "GSM9336944",
+        "status": "completed",
+        "label": "unknown",
+        "include_in_catalog": false
+      },
+      {
+        "accession": "GSM9336945",
+        "status": "completed",
+        "label": "unknown",
+        "include_in_catalog": false
+      },
+      {
+        "accession": "GSM9093278",
+        "status": "completed",
+        "label": "eligible",
+        "include_in_catalog": true
+      },
+      {
+        "accession": "GSM9093279",
+        "status": "completed",
+        "label": "eligible",
+        "include_in_catalog": true
+      }
+    ]
+  },
+  "geo_lung_local_replay": {
+    "status": "completed_with_issues",
+    "status_counts": {
+      "missing_files": 3,
+      "correspondence_passed": 2
+    },
+    "samples": [
+      {
+        "sample_id": "GSM9610990",
+        "status": "missing_files",
+        "listed_asset_count": 9,
+        "remote_probe": {
+          "requested": true,
+          "results": [
+            {
+              "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9610nnn/GSM9610990/suppl/GSM9610990_SPSC_biopsy1_matrix.mtx.gz",
+              "method": "HEAD",
+              "downloaded_bytes": 0,
+              "status": "reachable_metadata_only",
+              "http_status": 200
+            },
+            {
+              "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9610nnn/GSM9610990/suppl/GSM9610990_SPSC_biopsy1_tissue_positions.parquet.gz",
+              "method": "HEAD",
+              "downloaded_bytes": 0,
+              "status": "reachable_metadata_only",
+              "http_status": 200
+            },
+            {
+              "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9610nnn/GSM9610990/suppl/GSM9610990_SPSC_biopsy1_tissue_lowres_image.png.gz",
+              "method": "HEAD",
+              "downloaded_bytes": 0,
+              "status": "reachable_metadata_only",
+              "http_status": 200
+            },
+            {
+              "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9610nnn/GSM9610990/suppl/GSM9610990_SPSC_biopsy1_scalefactors_json.json.gz",
+              "method": "HEAD",
+              "downloaded_bytes": 0,
+              "status": "reachable_metadata_only",
+              "http_status": 200
+            }
+          ]
+        },
+        "local_files": {
+          "barcodes": "missing_local_file",
+          "image": "missing_local_file",
+          "matrix": "missing_local_file",
+          "positions": "missing_local_file",
+          "scalefactors": "missing_local_file"
+        },
+        "bins": {}
+      },
+      {
+        "sample_id": "GSM9610991",
+        "status": "missing_files",
+        "listed_asset_count": 9,
+        "remote_probe": {
+          "requested": true,
+          "results": [
+            {
+              "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9610nnn/GSM9610991/suppl/GSM9610991_SPSC_biopsy2_matrix.mtx.gz",
+              "method": "HEAD",
+              "downloaded_bytes": 0,
+              "status": "reachable_metadata_only",
+              "http_status": 200
+            },
+            {
+              "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9610nnn/GSM9610991/suppl/GSM9610991_SPSC_biopsy2_tissue_positions.parquet.gz",
+              "method": "HEAD",
+              "downloaded_bytes": 0,
+              "status": "reachable_metadata_only",
+              "http_status": 200
+            },
+            {
+              "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9610nnn/GSM9610991/suppl/GSM9610991_SPSC_biopsy2_tissue_lowres_image.png.gz",
+              "method": "HEAD",
+              "downloaded_bytes": 0,
+              "status": "reachable_metadata_only",
+              "http_status": 200
+            },
+            {
+              "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9610nnn/GSM9610991/suppl/GSM9610991_SPSC_biopsy2_scalefactors_json.json.gz",
+              "method": "HEAD",
+              "downloaded_bytes": 0,
+              "status": "reachable_metadata_only",
+              "http_status": 200
+            }
+          ]
+        },
+        "local_files": {
+          "barcodes": "missing_local_file",
+          "image": "missing_local_file",
+          "matrix": "missing_local_file",
+          "positions": "missing_local_file",
+          "scalefactors": "missing_local_file"
+        },
+        "bins": {}
+      },
+      {
+        "sample_id": "GSM8634987",
+        "status": "missing_files",
+        "listed_asset_count": 9,
+        "remote_probe": {
+          "requested": true,
+          "results": [
+            {
+              "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM8634nnn/GSM8634987/suppl/GSM8634987_bS1_matrix.mtx.gz",
+              "method": "HEAD",
+              "downloaded_bytes": 0,
+              "status": "reachable_metadata_only",
+              "http_status": 200
+            },
+            {
+              "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM8634nnn/GSM8634987/suppl/GSM8634987_bS1_tissue_positions.parquet.gz",
+              "method": "HEAD",
+              "downloaded_bytes": 0,
+              "status": "reachable_metadata_only",
+              "http_status": 200
+            },
+            {
+              "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM8634nnn/GSM8634987/suppl/GSM8634987_bS1_tissue_lowres_image.png.gz",
+              "method": "HEAD",
+              "downloaded_bytes": 0,
+              "status": "reachable_metadata_only",
+              "http_status": 200
+            },
+            {
+              "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM8634nnn/GSM8634987/suppl/GSM8634987_bS1_scalefactors_json.json.gz",
+              "method": "HEAD",
+              "downloaded_bytes": 0,
+              "status": "reachable_metadata_only",
+              "http_status": 200
+            }
+          ]
+        },
+        "local_files": {
+          "barcodes": "missing_local_file",
+          "image": "missing_local_file",
+          "matrix": "missing_local_file",
+          "positions": "missing_local_file",
+          "scalefactors": "missing_local_file"
+        },
+        "bins": {}
+      },
+      {
+        "sample_id": "GSM9093278",
+        "status": "correspondence_passed",
+        "listed_asset_count": 1,
+        "remote_probe": {
+          "requested": true,
+          "results": []
+        },
+        "local_files": {},
+        "archive": {
+          "source_url": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9093nnn/GSM9093278/suppl/GSM9093278_A.tar.gz",
+          "filename": "GSM9093278_A.tar.gz",
+          "bytes": 1273649314,
+          "mode": "exact_local_archive_reuse"
+        },
+        "bins": {
+          "2": {
+            "status": "correspondence_passed",
+            "barcodes": 2319753,
+            "outside_image": 0
+          }
+        }
+      },
+      {
+        "sample_id": "GSM9093279",
+        "status": "correspondence_passed",
+        "listed_asset_count": 1,
+        "remote_probe": {
+          "requested": true,
+          "results": []
+        },
+        "local_files": {},
+        "archive": {
+          "source_url": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9093nnn/GSM9093279/suppl/GSM9093279_C.tar.gz",
+          "filename": "GSM9093279_C.tar.gz",
+          "bytes": 2100250737,
+          "mode": "exact_local_archive_reuse"
+        },
+        "bins": {
+          "2": {
+            "status": "correspondence_passed",
+            "barcodes": 10547274,
+            "outside_image": 0
+          }
+        }
+      }
+    ]
+  },
+  "other_geo_discovery": {
+    "brain": {
+      "status": "completed_with_limits",
+      "request": {
+        "organism": "Homo sapiens",
+        "tissue": "brain",
+        "platforms": [
+          "Xenium"
+        ],
+        "max_studies": 2,
+        "max_samples_per_study": 2,
+        "max_total_samples": 4,
+        "study": null
+      },
+      "counts": {
+        "studies_returned": 2,
+        "unique_samples_attempted": 4,
+        "processing_status": {
+          "completed": 4
+        },
+        "labels": {
+          "out_of_scope": 3,
+          "mixed": 1
+        },
+        "selected_metadata_candidates": 0,
+        "study_sample_links_not_read": 90
+      },
+      "query": "\"Homo sapiens\"[Organism] AND \"brain\"[All Fields] AND (\"Xenium\"[All Fields]) AND gse[ETYP]",
+      "studies": [
+        "GSE343022",
+        "GSE342824"
+      ],
+      "samples": [
+        {
+          "accession": "GSM8859587",
+          "status": "completed",
+          "label": "out_of_scope",
+          "include_in_catalog": false
+        },
+        {
+          "accession": "GSM8859588",
+          "status": "completed",
+          "label": "out_of_scope",
+          "include_in_catalog": false
+        },
+        {
+          "accession": "GSM9940582",
+          "status": "completed",
+          "label": "mixed",
+          "include_in_catalog": false
+        },
+        {
+          "accession": "GSM9940583",
+          "status": "completed",
+          "label": "out_of_scope",
+          "include_in_catalog": false
+        }
+      ]
+    },
+    "breast": {
+      "status": "incomplete",
+      "request": {
+        "organism": "Homo sapiens",
+        "tissue": "breast",
+        "platforms": [
+          "Xenium"
+        ],
+        "max_studies": 3,
+        "max_samples_per_study": 1,
+        "max_total_samples": 3,
+        "study": null
+      },
+      "counts": {
+        "studies_returned": 3,
+        "unique_samples_attempted": 3,
+        "processing_status": {
+          "screen_failed": 2,
+          "completed": 1
+        },
+        "labels": {
+          "out_of_scope": 1
+        },
+        "selected_metadata_candidates": 0,
+        "study_sample_links_not_read": 32
+      },
+      "query": "\"Homo sapiens\"[Organism] AND \"breast\"[All Fields] AND (\"Xenium\"[All Fields]) AND gse[ETYP]",
+      "studies": [
+        "GSE348919",
+        "GSE348584",
+        "GSE328422"
+      ],
+      "samples": [
+        {
+          "accession": "GSM10083683",
+          "status": "screen_failed",
+          "label": null,
+          "include_in_catalog": null
+        },
+        {
+          "accession": "GSM10075604",
+          "status": "screen_failed",
+          "label": null,
+          "include_in_catalog": null
+        },
+        {
+          "accession": "GSM9682589",
+          "status": "completed",
+          "label": "out_of_scope",
+          "include_in_catalog": false
+        }
+      ]
+    },
+    "tonsil": {
+      "status": "completed",
+      "request": {
+        "organism": "Homo sapiens",
+        "tissue": "tonsil",
+        "platforms": [
+          "Xenium"
+        ],
+        "max_studies": 4,
+        "max_samples_per_study": 1,
+        "max_total_samples": 4,
+        "study": null
+      },
+      "counts": {
+        "studies_returned": 0,
+        "unique_samples_attempted": 0,
+        "processing_status": {},
+        "labels": {},
+        "selected_metadata_candidates": 0,
+        "study_sample_links_not_read": 0
+      },
+      "query": "\"Homo sapiens\"[Organism] AND \"tonsil\"[All Fields] AND (\"Xenium\"[All Fields]) AND gse[ETYP]",
+      "studies": [],
+      "samples": []
+    }
+  },
+  "local_xenium_inventory": {
+    "organ_counts": {
+      "Lung": 31,
+      "Brain": 4,
+      "Breast": 7,
+      "Pancreas": 4,
+      "Tonsil": 2,
+      "Liver": 2,
+      "Heart": 1,
+      "Skin": 2,
+      "Colon": 5,
+      "Kidney": 2,
+      "Lymph Node": 1,
+      "Ovary": 1,
+      "Bone Marrow": 1
+    },
+    "asset_status_counts": {
+      "local_exact_listed_size": 133,
+      "local_present_size_unverified": 32,
+      "missing_local_file": 24
+    },
+    "remote_payload_bytes": 0
+  },
+  "native_16um": {
+    "status": "correspondence_passed",
+    "source": "https://doi.org/10.34810/data3063",
+    "published_directory": "visiumhd_Lung/binned_outputs/square_016um",
+    "bin_um": 16,
+    "assets": {
+      "barcodes": {
+        "url": "https://dataverse.csuc.cat/api/access/datafile/431183",
+        "bytes": 732559,
+        "md5": "7de3d6fe47e01235aa11f5448145347e",
+        "filename": "barcodes.tsv.gz",
+        "sha256": "8ae78755049aa781efe4d8179c1294888a43e539788f37dfc04f44f596c9be32"
+      },
+      "positions": {
+        "url": "https://dataverse.csuc.cat/api/access/datafile/431133",
+        "bytes": 3339955,
+        "md5": "da187f98ab98ee106682a282de757ebe",
+        "filename": "tissue_positions.parquet",
+        "sha256": "2d59877b7cf95684597df09de50e3f77223bf8cac1c878d512e26122b4c14a90"
+      },
+      "scalefactors": {
+        "url": "https://dataverse.csuc.cat/api/access/datafile/431110",
+        "bytes": 296,
+        "md5": "c933166bb147c20f36454f6e8841e45f",
+        "filename": "scalefactors_json.json",
+        "sha256": "4092b6f87f69cd70081ceea7e7277ebbf5d0324e355fdb8fc522411ea1e0810f"
+      },
+      "image": {
+        "url": "https://dataverse.csuc.cat/api/access/datafile/431157",
+        "bytes": 478716,
+        "md5": "feffb7dda83ddd11716a641057f16b67",
+        "filename": "tissue_lowres_image.png",
+        "sha256": "0820cf9162a6fd17f5e66f7e066acfdf443876014a2ffb67eeaed69a41b36f64"
+      }
+    },
+    "checks": {
+      "expression_barcode_count": 158361,
+      "position_count": 175561,
+      "missing_expression_ids_count": 0,
+      "missing_ids_preview": [],
+      "matrix_columns_checked": null,
+      "image_bounds_check": {
+        "width": 600,
+        "height": 544,
+        "scale": 0.052470487,
+        "tested_in_tissue_barcodes": 158361,
+        "out_of_image_count": 0,
+        "bin_size_um_in_scalefactors": 16.0
+      },
+      "issues": [],
+      "basic_checks_passed": true,
+      "coordinate_convention": "position file full-resolution image pixels; physical micrometre scale not inferred",
+      "not_verified": [
+        "same physical section or donor",
+        "matrix values and feature identities",
+        "image pixel contents or anatomical registration",
+        "cell segmentation or pathology annotation"
+      ],
+      "scope": "barcode/position/optional matrix-header and image-bounds consistency only"
+    },
+    "image_decode": {
+      "width": 600,
+      "height": 544,
+      "format": "PNG",
+      "pixel_decode_verified": true
+    },
+    "scope": "published filtered expression barcode list, coordinates, scale and image; matrix not read",
+    "manifest": "native16_manifest.json",
+    "verified_asset_bytes": 4551526
+  }
+}

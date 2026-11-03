@@ -1,6 +1,8 @@
 """Prepare and validate eligible Xenium and Visium samples from a discovery report."""
 import asyncio
 import re
+from urllib.parse import urlsplit, urlunsplit
+from urllib.request import HTTPRedirectHandler, Request, build_opener
 from collections import Counter
 from pathlib import Path
 from urllib.error import HTTPError, URLError
@@ -10,7 +12,7 @@ from .geo import write_json
 from .hd_archive import audit_hd_geo_archive, audit_prepared_archive, spatial_bin_size, validate_hd_bin
 from .pipeline import PipelineSession
 from .screening import VISIUM_HD
-from .xenium_assets import DownloadBudgetExceeded, find_archive
+from .xenium_assets import AmbiguousBundle, DownloadBudgetExceeded, find_archive
 
 
 def audit_visium_candidate(row, root, out, download_bytes, *, bin_um=None, remote=None):
@@ -46,7 +48,8 @@ def audit_visium_candidate(row, root, out, download_bytes, *, bin_um=None, remot
 
 def audit_hd_untagged(row, root, out, download_bytes):
     plan = file_plan(row, hd_untagged=True)
-    required = {"h5", "positions", "scalefactors", "image"}
+    expression = {"h5"} if "h5" in plan["roles"] else {"barcodes", "matrix"}
+    required = expression | {"positions", "scalefactors", "image"}
     if not plan["metadata_bundle_consistent"]:
         return {"stage": "prepare", "status": "ambiguous_bundle", "bins_um": {}}
     if required - plan["roles"].keys():
@@ -120,14 +123,55 @@ def audit_hd_candidate(row, root, out, download_bytes):
     elif all(item["status"] == "correspondence_passed" for item in bins.values()):
         status = "correspondence_passed"
     else:
-        status = "completed_with_issues"
+        states = {item["status"] for item in bins.values()}
+        status = next(iter(states)) if len(states) == 1 else "completed_with_issues"
     result = {"status": status, "stage": "validate", "bins_um": bins,
               "unlisted_standard_bin_sizes_um": sorted({2, 8, 16} - sizes)}
     write_json(out / "validation.json", result)
     return result
 
 
-async def validate_candidates(report, archive_root, out, *, download_bytes=0):
+class NoRedirect(HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        return None
+
+
+def probe_sample_assets(row, limit=4):
+    """HEAD only: an inaccessible link and a missing local file are separate observations."""
+    opener = build_opener(NoRedirect())
+    results = []
+    assets = row.get("assets", [])
+    def priority(asset):
+        path = asset["url"].lower()
+        roles = ("matrix", "positions", "lowres", "scalefactors", "barcodes")
+        return next((i for i, role in enumerate(roles) if role in path), len(roles))
+    for asset in sorted(assets, key=priority):
+        try:
+            parts = urlsplit(asset["url"])
+        except ValueError:
+            continue
+        if (parts.scheme not in {"ftp", "https"} or parts.netloc != "ftp.ncbi.nlm.nih.gov"
+                or parts.query or parts.fragment or f"/{row['accession']}/suppl/" not in parts.path):
+            continue
+        url = urlunsplit(("https", parts.netloc, parts.path, "", ""))
+        if any(item["url"] == url for item in results):
+            continue
+        result = {"url": url, "method": "HEAD", "downloaded_bytes": 0}
+        try:
+            with opener.open(Request(url, method="HEAD"), timeout=8) as response:
+                result.update(status="reachable_metadata_only", http_status=response.status)
+        except HTTPError as exc:
+            result.update(status="access_failed" if exc.code in {401, 403, 404, 410, 429}
+                          or exc.code >= 500 else "probe_inconclusive", http_status=exc.code)
+        except (URLError, OSError, ValueError):
+            result["status"] = "probe_failed"
+        results.append(result)
+        if len(results) >= limit:
+            break
+    return results
+
+
+async def validate_candidates(report, archive_root, out, *, download_bytes=0, probe_remote=False):
     out = Path(out).resolve()
     root = Path(archive_root).resolve()
     if not root.is_dir() or out.is_relative_to(root):
@@ -156,6 +200,8 @@ async def validate_candidates(report, archive_root, out, *, download_bytes=0):
                 if not re.fullmatch(r"GSM[1-9][0-9]*", sample):
                     raise ValueError("Invalid sample accession")
                 result.update(await asyncio.to_thread(audit_hd_candidate, row, root, out / sample, download_bytes))
+            except AmbiguousBundle:
+                result["status"] = "ambiguous_bundle"
             except FileNotFoundError as exc:
                 result.update(status="missing_files", error_type=type(exc).__name__)
             except HTTPError as exc:
@@ -194,6 +240,8 @@ async def validate_candidates(report, archive_root, out, *, download_bytes=0):
                 result["stage"] = "validate"
                 result["validation"] = await session.validate_sample()
                 result["status"] = result["validation"]["status"]
+            except AmbiguousBundle:
+                result["status"] = "ambiguous_bundle"
             except FileNotFoundError as exc:
                 result.update(status="missing_files", error_type=type(exc).__name__)
             except HTTPError as exc:
@@ -204,6 +252,12 @@ async def validate_candidates(report, archive_root, out, *, download_bytes=0):
                 result["status"] = "download_budget_exceeded"
             except Exception as exc:
                 result.update(status="processing_failed", error_type=type(exc).__name__)
+        result["asset_acquisition_policy"] = "local_only" if not download_bytes else "local_then_bounded_download"
+        result["source_url"] = row.get("source_url")
+        result["listed_asset_count"] = len(row.get("assets", []))
+        result["remote_probe"] = {"requested": probe_remote, "results": (
+            await asyncio.to_thread(probe_sample_assets, row)
+            if probe_remote and result["status"] not in {"correspondence_passed", "unsupported_platform"} else [])}
         batch["samples"].append(result)
         batch["status_counts"] = dict(Counter(item["status"] for item in batch["samples"]))
         write_json(out / "batch.json", batch)

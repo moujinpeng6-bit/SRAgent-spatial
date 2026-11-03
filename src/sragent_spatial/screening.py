@@ -6,7 +6,7 @@ import hashlib
 import json
 import re
 
-LABELS = ("eligible", "non_lung", "mixed", "unknown")
+LABELS = ("eligible", "non_lung", "out_of_scope", "mixed", "unknown")
 PLATFORMS = ("Visium", "Xenium", "MERFISH", "CosMx", "Stereo-seq", "Slide-seq")
 VISIUM_HD = re.compile(r"\bvisium\s*(?:cytassist\s+)?hd\b", re.I)
 LUNG = re.compile(r"\blungs?\b|肺", re.I)
@@ -70,7 +70,24 @@ def screen_sample(packet: dict) -> dict:
     other = bool(NON_LUNG.search(tissue))
     citations = [item for _, item in tissue_entries] + organ_entries + list(platform_hits.values())
     citations = list({json.dumps(item, sort_keys=True): item for item in citations}.values())
-    if (lung and other) or len(platform_hits) > 1 or len(organisms) > 1:
+    scope = packet.get("screen_scope")
+    if scope:
+        organism, target = scope["organism"].strip().casefold(), scope["tissue"].strip()
+        species_match = organism == "*" or organism in organisms or (
+            organism == "homo sapiens" and "human" in organisms)
+        tissue_match = target == "*" or any(
+            re.search(r"(?<!\w)" + re.escape(target) + r"(?!\w)", value, re.I)
+            and not re.search(r"\b(?:non[- ]|not +)" + re.escape(target) + r"(?!\w)", value, re.I)
+            for value, _ in tissue_entries)
+        if len(platform_hits) > 1 or len(organisms) > 1:
+            label, reason = "mixed", "Multiple sample platform or organism signals require review."
+        elif organisms and not species_match:
+            label, reason = "out_of_scope", "Sample organism differs from the requested organism."
+        elif organisms and species_match and tissue_match and len(platform_hits) == 1:
+            label, reason = "eligible", "Sample metadata matches the requested scope and has a spatial assay signal."
+        else:
+            label, reason = "unknown", "Could not confirm the requested sample scope and a spatial assay."
+    elif (lung and other) or len(platform_hits) > 1 or len(organisms) > 1:
         label, reason = "mixed", "Multiple organ, platform or organism signals require review."
     elif other and not lung:
         label, reason = "non_lung", "Explicit sample tissue/source identifies a non-lung organ."

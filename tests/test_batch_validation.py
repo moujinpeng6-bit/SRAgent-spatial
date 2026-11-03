@@ -6,6 +6,7 @@ from unittest.mock import AsyncMock, patch
 from urllib.error import HTTPError
 
 from sragent_spatial.batch_validation import validate_candidates
+from sragent_spatial.xenium_assets import AmbiguousBundle
 
 
 class BatchValidationTests(unittest.TestCase):
@@ -15,11 +16,11 @@ class BatchValidationTests(unittest.TestCase):
                  studies=["GSE1"], source_series_ids=["GSE1"],
                  rule_prediction={"platform_candidates": ["Xenium"]},
                  packet={"fields": {}}, assets=[])
-            for i in range(1, 4)
+            for i in range(1, 5)
         ]
         report = {"samples": samples, "request": {"platforms": ["Xenium"]}, "model": "test"}
         prepare = AsyncMock(side_effect=[
-            FileNotFoundError(), HTTPError("https://example.org", 403, "", {}, None), {},
+            FileNotFoundError(), HTTPError("https://example.org", 403, "", {}, None), AmbiguousBundle(), {},
         ])
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -30,7 +31,7 @@ class BatchValidationTests(unittest.TestCase):
             ):
                 result = asyncio.run(validate_candidates(report, root / "inputs", root / "out"))
         self.assertEqual([row["status"] for row in result["samples"]],
-                         ["missing_files", "access_failed", "correspondence_passed"])
+                         ["missing_files", "access_failed", "ambiguous_bundle", "correspondence_passed"])
         self.assertEqual(result["samples"][1]["http_status"], 403)
 
     def test_saved_candidate_reuses_real_preparation_and_exports_pixel_coordinates(self):

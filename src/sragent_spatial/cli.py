@@ -61,9 +61,9 @@ def main(argv=None):
     spatial_search_cmd.add_argument("--refresh", action="store_true")
     spatial_search_cmd.add_argument("--out", type=Path, required=True)
     discovery = sub.add_parser("discover", help="Original SRAgent supervisor: spatial search -> GSM expansion -> individual screening")
-    discovery.add_argument("--organism", default="Homo sapiens")
-    discovery.add_argument("--tissue", default="lung")
-    discovery.add_argument("--platforms", nargs="+", default=["Visium"])
+    discovery.add_argument("--organism", default="Homo sapiens", help="Scientific name or * for any species")
+    discovery.add_argument("--tissue", default="lung", help="Tissue keyword or * for any tissue")
+    discovery.add_argument("--platforms", nargs="+", default=["Visium"], help="Platform names or all for the full supported search catalog")
     discovery.add_argument("--model", default=os.getenv("SPATIAL_MODEL"))
     discovery.add_argument("--max-studies", type=bounded_integer(1, 5), default=2)
     discovery.add_argument("--max-samples-per-study", type=bounded_integer(1, 50), default=5)
@@ -75,11 +75,13 @@ def main(argv=None):
     discovery.add_argument("--study", help="Restrict the GEO query to one GSE")
     discovery.add_argument("--archive-root", type=Path, help="Prepare and validate screened Xenium, Visium and Visium HD candidates")
     discovery.add_argument("--download-mib", type=bounded_integer(0, 2048), default=0, help="Maximum download per candidate")
+    discovery.add_argument("--probe-remote", action="store_true", help="HEAD only for unresolved sample-owned GEO assets")
     discovery.add_argument("--out", type=Path, required=True)
     discovery.add_argument("--local-manifest", type=Path, help="Optional registered local Xenium inputs for correspondence tools")
     batch = sub.add_parser("validate-candidates", help="Validate candidates from an existing discovery run")
     batch.add_argument("--run", type=Path, required=True)
     batch.add_argument("--archive-root", type=Path, required=True)
+    batch.add_argument("--probe-remote", action="store_true", help="HEAD only for unresolved sample-owned GEO assets")
     batch.add_argument("--out", type=Path, required=True)
     batch.add_argument("--download-mib", type=bounded_integer(0, 2048), default=0)
     pipeline = sub.add_parser("pipeline", help="Targeted GEO search -> same-sample automatic files -> Xenium spatial validation")
@@ -155,7 +157,9 @@ def main(argv=None):
             if os.name == "nt":
                 import truststore
                 truststore.inject_into_ssl()
-            request = DiscoveryRequest(args.organism, args.tissue, tuple(args.platforms), args.max_studies,
+            from .spatial_search import PLATFORM_KEYS
+            platforms = PLATFORM_KEYS if args.platforms == ["all"] else tuple(args.platforms)
+            request = DiscoveryRequest(args.organism, args.tissue, platforms, args.max_studies,
                                        args.max_samples_per_study, args.max_total_samples, args.study)
             client = MetadataClient(args.cache, refresh=args.refresh)
             session = (DiscoverySession.resume(client, args.resume, args.out, args.model,
@@ -170,7 +174,7 @@ def main(argv=None):
                     from .batch_validation import validate_candidates
                     report["asset_batch"] = await validate_candidates(
                         report, args.archive_root, args.out / "asset_batch",
-                        download_bytes=args.download_mib * 1024**2)
+                        download_bytes=args.download_mib * 1024**2, probe_remote=args.probe_remote)
                     write_json(args.out / "run.json", report)
                 return report
             report = asyncio.run(discover_and_validate())
@@ -183,12 +187,12 @@ def main(argv=None):
                 return 2
         elif args.command == "validate-candidates":
             from .batch_validation import validate_candidates
-            if os.name == "nt" and args.download_mib:
+            if os.name == "nt" and (args.download_mib or args.probe_remote):
                 import truststore
                 truststore.inject_into_ssl()
             report = asyncio.run(validate_candidates(
                 json.loads(args.run.read_text(encoding="utf-8")), args.archive_root, args.out,
-                download_bytes=args.download_mib * 1024**2))
+                download_bytes=args.download_mib * 1024**2, probe_remote=args.probe_remote))
             print(json.dumps({"status": report["status"], "status_counts": report["status_counts"]}))
         elif args.command == "pipeline":
             from .agents import credentials_present

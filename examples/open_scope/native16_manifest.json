@@ -1,0 +1,11 @@
+{
+  "source": "https://doi.org/10.34810/data3063",
+  "published_directory": "visiumhd_Lung/binned_outputs/square_016um",
+  "bin_um": 16,
+  "assets": {
+    "barcodes": {"url": "https://dataverse.csuc.cat/api/access/datafile/431183", "bytes": 732559, "md5": "7de3d6fe47e01235aa11f5448145347e"},
+    "positions": {"url": "https://dataverse.csuc.cat/api/access/datafile/431133", "bytes": 3339955, "md5": "da187f98ab98ee106682a282de757ebe"},
+    "scalefactors": {"url": "https://dataverse.csuc.cat/api/access/datafile/431110", "bytes": 296, "md5": "c933166bb147c20f36454f6e8841e45f"},
+    "image": {"url": "https://dataverse.csuc.cat/api/access/datafile/431157", "bytes": 478716, "md5": "feffb7dda83ddd11716a641057f16b67"}
+  }
+}

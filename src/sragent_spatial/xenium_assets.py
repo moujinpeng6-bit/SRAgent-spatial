@@ -16,6 +16,10 @@ REQUIRED = {"experiment.xenium", "cells.csv.gz", "cell_feature_matrix.h5", "morp
 OPTIONAL = {"cell_boundaries.csv.gz", "nucleus_boundaries.csv.gz"}
 
 
+class AmbiguousBundle(ValueError):
+    """More than one plausible local or published bundle."""
+
+
 def archive_plan(accession, fields):
     checked_accession(accession)
     if not accession.startswith("GSM"):
@@ -41,7 +45,7 @@ def archive_plan(accession, fields):
     if not choices:
         raise FileNotFoundError("No sample-owned tar.gz link")
     if len(choices) != 1:
-        raise ValueError("Expected exactly one sample archive; missing or ambiguous archives require review")
+        raise AmbiguousBundle("Expected exactly one sample archive; missing or ambiguous archives require review")
     return choices[0]
 
 
@@ -58,7 +62,7 @@ def find_archive(root, filename, max_files=100000):
                 if path.is_file() and not path.is_symlink():
                     matches.append(path.resolve())
     if len(matches) > 1:
-        raise ValueError("Multiple exact local archives found; refusing arbitrary selection")
+        raise AmbiguousBundle("Multiple exact local archives found; refusing arbitrary selection")
     return matches[0] if matches else None
 
 

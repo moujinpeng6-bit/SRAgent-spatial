@@ -18,7 +18,7 @@ import re
 SPATIAL_PLATFORMS: dict[str, dict] = {
     "Visium": {"terms": ["Visium", "10x Visium", "Visium Spatial Gene Expression"],
                "kind": "sequencing", "resolution": "spot"},
-    "Visium HD": {"terms": ["Visium HD", "VisiumHD"],
+    "Visium HD": {"terms": ["Visium HD", "VisiumHD", "Visium CytAssist HD"],
                   "kind": "sequencing", "resolution": "bin"},
     "Xenium": {"terms": ["Xenium"],
                "kind": "imaging", "resolution": "cell"},
@@ -70,8 +70,11 @@ def build_spatial_query(organism: str, tissue: str, platforms, *, series_only=Tr
     Only descriptive fields are constrained; we never filter on read layout or sequencer,
     because imaging platforms have neither.
     """
-    parts = [f'"{check_text(organism, "organism")}"[Organism]',
-             f'"{check_text(tissue, "tissue")}"[All Fields]']
+    parts = []
+    if organism != "*":
+        parts.append(f'"{check_text(organism, "organism")}"[Organism]')
+    if tissue != "*":
+        parts.append(f'"{check_text(tissue, "tissue")}"[All Fields]')
     terms = []
     for key in check_platforms(platforms):
         terms.extend(SPATIAL_PLATFORMS[key]["terms"])

@@ -9,7 +9,7 @@ from pathlib import Path, PurePosixPath
 from .asset_audit import decode_image, matrix_dimensions
 from .geo import write_json
 from .spatial import validate_visium
-from .xenium_assets import archive_plan, download_archive, find_archive
+from .xenium_assets import AmbiguousBundle, archive_plan, download_archive, find_archive
 
 
 ROLE_NAMES = {
@@ -48,7 +48,7 @@ def prepare_hd_archive(archive, out):
             key = (size, str(anchor))
             bucket = groups.setdefault(key, {})
             if role in bucket:
-                raise ValueError("Ambiguous HD archive role within bin")
+                raise AmbiguousBundle("Ambiguous HD archive role within bin")
             limit = 65536 if role == "matrix" else 512 * 1024**2
             if role != "matrix" and member.size > limit:
                 raise ValueError("HD archive member exceeds preparation limit")
@@ -69,13 +69,13 @@ def prepare_hd_archive(archive, out):
     roots = {str(PurePosixPath(anchor).parent) if PurePosixPath(anchor).name.startswith("square_")
              else anchor for size, anchor in groups if size is not None}
     if len(roots) > 1:
-        raise ValueError("Multiple sample roots in HD archive")
+        raise AmbiguousBundle("Multiple sample roots in HD archive")
     bins = {}
     for (size, anchor), files in groups.items():
         if size is None:
             continue
         if size in bins:
-            raise ValueError("Multiple archive directories for the same HD bin")
+            raise AmbiguousBundle("Multiple archive directories for the same HD bin")
         shared = groups.get((None, anchor), {})
         # An untagged file can be associated only with the sole bin in that same directory.
         if sum(key[0] is not None and key[1] == anchor for key in groups) == 1:
@@ -137,7 +137,8 @@ def validate_hd_bin(files, out, size):
         dims = hdf5_barcodes(paths["h5"], barcodes)
     else:
         barcodes = paths["barcodes"]
-        dims = matrix_dimensions(paths["matrix"].read_bytes(), str(paths["matrix"]).endswith(".gz"))
+        with paths["matrix"].open("rb") as stream:
+            dims = matrix_dimensions(stream.read(65536), str(paths["matrix"]).endswith(".gz"))
     basic = validate_visium(barcodes, paths["positions"], paths["scalefactors"], paths["image"], bin_um=size)
     image = decode_image(paths["image"])
     columns_match = dims["observations"] == basic["expression_barcode_count"]
