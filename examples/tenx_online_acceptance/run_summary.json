@@ -23,7 +23,75 @@
     ]
   },
   "direct_official_archive_validation": {
-    "status": "incomplete",
+    "sample_id": "visium-hd-cytassist-gene-expression-libraries-human-kidney-ffpe",
+    "platform": "Visium HD",
+    "source_url": "https://www.10xgenomics.com/datasets/visium-hd-cytassist-gene-expression-libraries-human-kidney-ffpe",
+    "archives": {
+      "binned_outputs": [
+        "https://cf.10xgenomics.com/samples/spatial-exp/3.1.2/Visium_HD_Human_Kidney_FFPE/Visium_HD_Human_Kidney_FFPE_binned_outputs.tar.gz"
+      ],
+      "spatial": [
+        "https://cf.10xgenomics.com/samples/spatial-exp/3.1.2/Visium_HD_Human_Kidney_FFPE/Visium_HD_Human_Kidney_FFPE_spatial.tar.gz"
+      ]
+    },
+    "source": "10x_online",
+    "found": true,
+    "selected": true,
+    "files_ready": true,
+    "status": "correspondence_passed",
+    "bins_um": {
+      "2": {
+        "archive_members": {
+          "matrix": "binned_outputs/square_002um/filtered_feature_bc_matrix/matrix.mtx.gz",
+          "barcodes": "binned_outputs/square_002um/filtered_feature_bc_matrix/barcodes.tsv.gz",
+          "scalefactors": "binned_outputs/square_002um/spatial/scalefactors_json.json",
+          "image": "binned_outputs/square_002um/spatial/tissue_lowres_image.png",
+          "positions": "binned_outputs/square_002um/spatial/tissue_positions.parquet"
+        },
+        "checks": {
+          "barcode_position_image": {
+            "expression_barcode_count": 10651343,
+            "position_count": 11222500,
+            "missing_expression_ids_count": 0,
+            "missing_ids_preview": [],
+            "matrix_columns_checked": null,
+            "image_bounds_check": {
+              "width": 446,
+              "height": 600,
+              "scale": 0.013636674,
+              "tested_in_tissue_barcodes": 10651343,
+              "out_of_image_count": 0,
+              "bin_size_um_in_scalefactors": 2.0
+            },
+            "issues": [],
+            "basic_checks_passed": true,
+            "coordinate_convention": "position file full-resolution image pixels; physical micrometre scale not inferred",
+            "not_verified": [
+              "same physical section or donor",
+              "matrix values and feature identities",
+              "image pixel contents or anatomical registration",
+              "cell segmentation or pathology annotation"
+            ],
+            "scope": "barcode/position/optional matrix-header and image-bounds consistency only"
+          },
+          "matrix_dimensions": {
+            "features": 18085,
+            "observations": 10651343,
+            "nonzeros": 72105719,
+            "scope": "header_only_not_matrix_values_or_complete_gzip_integrity"
+          },
+          "matrix_columns_match_barcodes": true,
+          "image_decode": {
+            "width": 446,
+            "height": 600,
+            "format": "PNG",
+            "pixel_decode_verified": true
+          }
+        },
+        "status": "correspondence_passed"
+      }
+    },
+    "archive_bytes_read": 1535115264,
     "filtered_barcode_count": 10651343,
     "matrix_header": {
       "features": 18085,
