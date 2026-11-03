@@ -1,3 +1,3 @@
 """Spatial metadata tools. Local inspection never uploads files."""
 
-__version__ = "0.5.0"
+__version__ = "0.6.0"

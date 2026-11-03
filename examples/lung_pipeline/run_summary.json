@@ -1,0 +1,239 @@
+{
+  "schema_version": 1,
+  "status": "completed",
+  "study": "GSE250346",
+  "sample_id": "GSM7990538",
+  "model": "deepseek-flash",
+  "provider": "deepseek",
+  "upstream_commit": "67b60c24a49385d3eed8e5121be58d13c82839cd",
+  "elapsed_seconds": 38.89,
+  "agent_pipeline_verified": true,
+  "search": {
+    "query": "\"Homo sapiens\"[Organism] AND \"lung\"[All Fields] AND (\"Xenium\"[All Fields]) AND gse[ETYP] AND \"GSE250346\"[All Fields]",
+    "total_hits": 1,
+    "returned_ids": [
+      "200250346"
+    ],
+    "study": "GSE250346",
+    "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE250346",
+    "title": [
+      "Image-based spatial transcriptomics identifies molecular niche dysregulation associated with distal lung remodeling in pulmonary fibrosis [Xenium]"
+    ],
+    "listed_samples": 45,
+    "target_sample": "GSM7990538",
+    "target_membership_verified": true,
+    "scope": "User-targeted study and sample; other study samples are outside this run"
+  },
+  "screening": {
+    "sample_id": "GSM7990538",
+    "study": "GSE250346",
+    "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM7990538",
+    "rule_label": "eligible",
+    "model_label": "eligible",
+    "platforms": [
+      "Xenium"
+    ],
+    "evidence": [
+      {
+        "field": "Sample_characteristics_ch1",
+        "quote": "tissue: Lung",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM7990538"
+      },
+      {
+        "field": "Sample_source_name_ch1",
+        "quote": "Lung, control",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM7990538"
+      },
+      {
+        "field": "Sample_organism_ch1",
+        "quote": "Homo sapiens",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM7990538"
+      },
+      {
+        "field": "Sample_extract_protocol_ch1",
+        "quote": "Sections were placed on Xenium slides (10X Genomics)",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM7990538"
+      }
+    ],
+    "eligible": true,
+    "fields_sha256": "6b8e110c64457471fc13bfc968f8f8e991de8843a28ea2809898b7c0c597d6f0"
+  },
+  "preparation": {
+    "sample_id": "GSM7990538",
+    "mode": "exact_local_archive_reuse",
+    "source_url": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM7990nnn/GSM7990538/suppl/GSM7990538_output-XETG00048__0003789__VUHD095__20230308__003731.tar.gz",
+    "filename": "GSM7990538_output-XETG00048__0003789__VUHD095__20230308__003731.tar.gz",
+    "archive_sha256": "ad026fae15017c763d05f1602e5fc679d7eb93532c163db52af9f7cd30bebd98",
+    "archive_bytes": 932744371,
+    "prepared_files": 6,
+    "copied_bytes": 68022330,
+    "experiment_region_matches_title": true,
+    "manifest_generated": true,
+    "downloaded_bytes": 0,
+    "remote_byte_identity_verified": false
+  },
+  "events": [
+    {
+      "stage": "searched",
+      "study": "GSE250346",
+      "sample_id": "GSM7990538"
+    },
+    {
+      "stage": "screened",
+      "sample_id": "GSM7990538",
+      "eligible": true
+    },
+    {
+      "stage": "files_prepared",
+      "sample_id": "GSM7990538",
+      "mode": "exact_local_archive_reuse"
+    },
+    {
+      "stage": "validated",
+      "sample_id": "GSM7990538",
+      "status": "correspondence_passed"
+    }
+  ],
+  "tool_trace": [
+    {
+      "name": "search_pipeline_study",
+      "id": "call_00_MvBwc5XsdVsonlZiEHFQ6390"
+    },
+    {
+      "name": "screen_pipeline_sample",
+      "id": "call_00_BWMVcoBjSfKLMOviIrbV3139"
+    },
+    {
+      "name": "prepare_pipeline_files",
+      "id": "call_00_xMpBRymwXZ34aQ7UM5i89992"
+    },
+    {
+      "name": "validate_pipeline_sample",
+      "id": "call_00_qKaqqLetQFi0oFAAYzLF2232"
+    }
+  ],
+  "requests": [
+    {
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gds&term=%22Homo+sapiens%22%5BOrganism%5D+AND+%22lung%22%5BAll+Fields%5D+AND+%28%22Xenium%22%5BAll+Fields%5D%29+AND+gse%5BETYP%5D+AND+%22GSE250346%22%5BAll+Fields%5D&retmode=json&retmax=5",
+      "fetched_at": "2026-11-03T04:44:07.849525+00:00",
+      "sha256": "1a97939e92b43636682df4e705c78fd1991e6486a54b2eec55aac5445ffceafe",
+      "transport": "urllib",
+      "cached": false
+    },
+    {
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gds&id=200250346&retmode=json",
+      "fetched_at": "2026-11-03T04:44:08.620457+00:00",
+      "sha256": "8f30f043f55f0f9713c146b3d6d2f5d96b24dbe4303204cfa0c2529e4715b14d",
+      "transport": "urllib",
+      "cached": false
+    },
+    {
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE250346&targ=self&form=text&view=full",
+      "fetched_at": "2026-11-03T04:44:11.051333+00:00",
+      "sha256": "f289610ba56402249c9a711ec4c7bc08a0e24a6d2e8470d4a7cf2c2501c11214",
+      "transport": "urllib",
+      "cached": false
+    },
+    {
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM7990538&targ=self&form=text&view=full",
+      "fetched_at": "2026-11-03T04:44:12.956665+00:00",
+      "sha256": "b037ce3392c432fce67823dc8ee19c94eb841757ffd7775ea2f771ee9b235c8d",
+      "transport": "urllib",
+      "cached": false
+    }
+  ],
+  "agent_error": null,
+  "validation": {
+    "status": "correspondence_passed",
+    "cells": 12578,
+    "feature_type_counts": {
+      "Gene Expression": 343,
+      "Negative Control Probe": 20,
+      "Negative Control Codeword": 41,
+      "Unassigned Codeword": 137
+    },
+    "checks": {
+      "unique_cell_ids": true,
+      "unique_matrix_barcodes": true,
+      "cell_id_set_matches_matrix": true,
+      "finite_coordinates": true,
+      "experiment_cell_count_matches": true,
+      "nonnegative_integer_expression": true,
+      "matrix_order_reconciled_by_id": true,
+      "gene_features_present": true,
+      "gene_counts_equal_cells_summary": true,
+      "all_feature_counts_equal_cells_summary": true,
+      "pixel_size_agrees_with_ome": true,
+      "all_centroids_inside_image": true,
+      "cell_boundary_ids_match": true,
+      "cell_boundaries_finite_inside_image": true,
+      "nucleus_boundary_ids_match": true,
+      "nucleus_boundaries_finite_inside_image": true,
+      "archive_members_found": true,
+      "archive_member_hashes_match": true,
+      "source_archive_unchanged": true
+    },
+    "coordinate_unit": "um",
+    "pixel_size_um": 0.2125,
+    "centroids_inside_image": 12578,
+    "median_nearest_neighbor_um": 8.274627758805192,
+    "source_sha256": {
+      "experiment.xenium": "5b537bf5732b216076eed083897c5206680156e9795aa3d80220b962c73aa87d",
+      "cells.csv.gz": "91a4e4eaaf873e88d59ae9d9e379a9b2400febdb3397f02e19af1d977593566b",
+      "cell_feature_matrix.h5": "1a176e6d6a229632e6d0967685931d4fd05dd470c1819aa017c4878b8498a975",
+      "cell_boundaries.csv.gz": "954ce3ec2bbd50bba304b6ca1ae770b9a2fb6910c84926ba1a1e182e396cca88",
+      "nucleus_boundaries.csv.gz": "e6edf324181da6e8f3ebc954f07ddb8be0cfc7d01b59f5a7808e54c5d09abc5e",
+      "morphology_focus.ome.tif": "b28f4dd84efa1991b79a3e96e943aa7ebc0fb49f61144ce23dd166a539c2f597"
+    },
+    "archive_provenance": {
+      "all_members_found": true,
+      "source_unchanged": true,
+      "all_hashes_match": true,
+      "members": {
+        "cell_boundaries.csv.gz": {
+          "local_sha256": "954ce3ec2bbd50bba304b6ca1ae770b9a2fb6910c84926ba1a1e182e396cca88",
+          "archive_sha256": "954ce3ec2bbd50bba304b6ca1ae770b9a2fb6910c84926ba1a1e182e396cca88",
+          "matches": true
+        },
+        "cell_feature_matrix.h5": {
+          "local_sha256": "1a176e6d6a229632e6d0967685931d4fd05dd470c1819aa017c4878b8498a975",
+          "archive_sha256": "1a176e6d6a229632e6d0967685931d4fd05dd470c1819aa017c4878b8498a975",
+          "matches": true
+        },
+        "cells.csv.gz": {
+          "local_sha256": "91a4e4eaaf873e88d59ae9d9e379a9b2400febdb3397f02e19af1d977593566b",
+          "archive_sha256": "91a4e4eaaf873e88d59ae9d9e379a9b2400febdb3397f02e19af1d977593566b",
+          "matches": true
+        },
+        "experiment.xenium": {
+          "local_sha256": "5b537bf5732b216076eed083897c5206680156e9795aa3d80220b962c73aa87d",
+          "archive_sha256": "5b537bf5732b216076eed083897c5206680156e9795aa3d80220b962c73aa87d",
+          "matches": true
+        },
+        "morphology_focus.ome.tif": {
+          "local_sha256": "b28f4dd84efa1991b79a3e96e943aa7ebc0fb49f61144ce23dd166a539c2f597",
+          "archive_sha256": "b28f4dd84efa1991b79a3e96e943aa7ebc0fb49f61144ce23dd166a539c2f597",
+          "matches": true
+        },
+        "nucleus_boundaries.csv.gz": {
+          "local_sha256": "e6edf324181da6e8f3ebc954f07ddb8be0cfc7d01b59f5a7808e54c5d09abc5e",
+          "archive_sha256": "e6edf324181da6e8f3ebc954f07ddb8be0cfc7d01b59f5a7808e54c5d09abc5e",
+          "matches": true
+        }
+      },
+      "missing_members": []
+    },
+    "limitations": [
+      "Internal correspondence is not independent biological/segmentation ground truth.",
+      "Demo ROI is geometric, not a pathology annotation; neighbors do not prove communication.",
+      "No pathology region assignment or H&E registration accuracy measured."
+    ],
+    "roi": {
+      "radius_um": 150,
+      "cells": 417,
+      "pathology_region": false
+    },
+    "report_sha256": "5e8cf0acbd061b00e9d3f7ed4f074da989160c3b94eda245fb3d07ccf6221005"
+  },
+  "publication_note": "No local paths, raw images/matrices, per-cell indices, demographics, neighbor coordinates or model prose published."
+}

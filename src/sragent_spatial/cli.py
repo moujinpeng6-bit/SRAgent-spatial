@@ -74,6 +74,14 @@ def main(argv=None):
     discovery.add_argument("--resume", type=Path, help="Continue exactly the saved studies and reuse validated completed samples")
     discovery.add_argument("--out", type=Path, required=True)
     discovery.add_argument("--local-manifest", type=Path, help="Optional registered local Xenium inputs for correspondence tools")
+    pipeline = sub.add_parser("pipeline", help="Targeted GEO search -> same-sample automatic files -> Xenium spatial validation")
+    pipeline.add_argument("--study", required=True)
+    pipeline.add_argument("--sample", required=True)
+    pipeline.add_argument("--archive-root", type=Path, required=True)
+    pipeline.add_argument("--out", type=Path, required=True)
+    pipeline.add_argument("--model", default=os.getenv("SPATIAL_MODEL"))
+    pipeline.add_argument("--timeout", type=bounded_integer(30, 1800), default=900)
+    pipeline.add_argument("--download-mib", type=bounded_integer(0, 2048), default=0)
     for name in ("check-xenium", "validate-local-agent"):
         local = sub.add_parser(name, help="Registered local Xenium file validation" + (" via original SRAgent supervisor" if name.endswith("agent") else " without a model"))
         local.add_argument("--manifest", type=Path, required=True)
@@ -153,6 +161,21 @@ def main(argv=None):
             if report["status"] in {"incomplete", "completed_with_failures"}:
                 if report["agent_error"]:
                     print(json.dumps(report["agent_error"]), file=sys.stderr)
+                return 2
+        elif args.command == "pipeline":
+            from .agents import credentials_present
+            from .pipeline import PipelineSession, run_pipeline
+            if not args.model or not credentials_present():
+                raise RuntimeError("Pipeline requires a model and local provider credential")
+            if os.name == "nt":
+                import truststore
+                truststore.inject_into_ssl()
+            client = MetadataClient(args.out / "metadata_cache", refresh=True)
+            session = PipelineSession(client, args.study, args.sample, args.archive_root, args.out,
+                                      args.model, download_bytes=args.download_mib*1024**2)
+            report = asyncio.run(run_pipeline(session, timeout=args.timeout))
+            print(json.dumps({key: report[key] for key in ("status", "study", "sample_id", "agent_pipeline_verified", "elapsed_seconds")}))
+            if report["status"] != "completed":
                 return 2
         elif args.command in {"check-xenium", "validate-local-agent"}:
             from .local_validation import LocalValidationSession, run_validation_agent
