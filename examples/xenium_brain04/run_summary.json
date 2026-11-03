@@ -1,0 +1,113 @@
+{
+  "sample_id": "04_Brain",
+  "sample_name": "Xenium_V1_FFPE_Human_Brain_Healthy_With_Addon",
+  "source_page": "https://www.10xgenomics.com/datasets/xenium-human-brain-preview-data-1-standard",
+  "provenance": {
+    "archive_url": "https://cf.10xgenomics.com/samples/xenium/1.3.0/Xenium_V1_FFPE_Human_Brain_Healthy_With_Addon/Xenium_V1_FFPE_Human_Brain_Healthy_With_Addon_outs.zip",
+    "archive_bytes": 5453596675,
+    "files": {
+      "experiment.xenium": {
+        "bytes": 1434,
+        "compressed_bytes": 548,
+        "crc32": "1cf797a7",
+        "sha256": "ad0c75ef5a7d77882b88a66851b034622c3abe7c913d893dded1e0a00ac9541e"
+      },
+      "cells.csv.gz": {
+        "bytes": 1258098,
+        "compressed_bytes": 1232165,
+        "crc32": "e4ab0368",
+        "sha256": "b2a2d51944d84bf07813d043e145d43b25932cdb16b8de5c4bafc9e15647c172"
+      },
+      "cell_feature_matrix.h5": {
+        "bytes": 1984934,
+        "compressed_bytes": 1923895,
+        "crc32": "1aba20fe",
+        "sha256": "89f2986c1a41d133b0400b76e3ae7df31b1a9bbd5a6e8e4c572d02698c139aa7"
+      },
+      "cell_boundaries.csv.gz": {
+        "bytes": 3583810,
+        "compressed_bytes": 3515659,
+        "crc32": "5f013445",
+        "sha256": "baf3667a454d7aded63785f1f55cb098f386be3594ddd414d608f37971e323e6"
+      },
+      "nucleus_boundaries.csv.gz": {
+        "bytes": 3285871,
+        "compressed_bytes": 3228623,
+        "crc32": "c1598c83",
+        "sha256": "1c87c42b23398d6b6ae1ce5b1bce15739b9dc36225630a017bcef3e1e7987d7d"
+      },
+      "morphology_focus.ome.tif": {
+        "bytes": 403417938,
+        "compressed_bytes": 403355428,
+        "crc32": "9d9aa695",
+        "sha256": "f1c63f9346c8eeab5a4456c576e9748d9a8e962b02ab898708c5f5a327eb4780",
+        "local_reuse": true
+      }
+    }
+  },
+  "provenance_method": "File sizes and CRC32 matched the central directory of the same public ZIP, including the reused image. SHA-256 records the checked local bytes.",
+  "agent": {
+    "status": "completed",
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "upstream_commit": "67b60c24a49385d3eed8e5121be58d13c82839cd",
+    "agent_tool_loop_verified": true,
+    "elapsed_seconds": 16.906
+  },
+  "tool_calls": [
+    {
+      "name": "list_local_spatial_samples",
+      "sample_id": null
+    },
+    {
+      "name": "validate_spatial_sample",
+      "sample_id": "04_Brain"
+    }
+  ],
+  "validation": {
+    "status": "correspondence_passed",
+    "cells": 24406,
+    "feature_type_counts": {
+      "Gene Expression": 319,
+      "Negative Control Probe": 20,
+      "Negative Control Codeword": 41,
+      "Unassigned Codeword": 161
+    },
+    "pixel_size_um": 0.2125,
+    "centroids_inside_image": 24406,
+    "image": {
+      "full_shape": [
+        27282,
+        36955
+      ],
+      "axes": "YX",
+      "preview_shape": [
+        1705,
+        2309
+      ],
+      "pyramid_level": 4,
+      "pixel_size_x_um": 0.2125,
+      "pixel_size_y_um": 0.2125,
+      "physical_unit_defaulted": true
+    },
+    "checks": {
+      "unique_cell_ids": true,
+      "unique_matrix_barcodes": true,
+      "cell_id_set_matches_matrix": true,
+      "finite_coordinates": true,
+      "experiment_cell_count_matches": true,
+      "nonnegative_integer_expression": true,
+      "matrix_order_reconciled_by_id": true,
+      "gene_features_present": true,
+      "gene_counts_equal_cells_summary": true,
+      "all_feature_counts_equal_cells_summary": true,
+      "pixel_size_agrees_with_ome": true,
+      "all_centroids_inside_image": true,
+      "cell_boundary_ids_match": true,
+      "cell_boundaries_finite_inside_image": true,
+      "nucleus_boundary_ids_match": true,
+      "nucleus_boundaries_finite_inside_image": true
+    }
+  },
+  "scope": "Expression, coordinate, image and boundary correspondence. Biological and segmentation ground truth were not assessed."
+}
