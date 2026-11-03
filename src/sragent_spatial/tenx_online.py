@@ -101,7 +101,7 @@ class ArchiveStream(io.RawIOBase):
         self.budget = budget
         self.offset = 0
         self.size = None
-        self.pending = b""
+        self.pending = memoryview(b"")
         self.cache = cache / hashlib.sha256(url.encode()).hexdigest()
         self.cache.mkdir(parents=True, exist_ok=True)
         self.identity = None
@@ -170,8 +170,8 @@ class ArchiveStream(io.RawIOBase):
             data = self.range_bytes(end)
             self.size = self.identity[2]
             self.offset += len(data)
-            self.pending += data
-        data, self.pending = self.pending[:length], self.pending[length:]
+            self.pending = memoryview(self.pending.tobytes() + data) if self.pending else memoryview(data)
+        data, self.pending = self.pending[:length].tobytes(), self.pending[length:]
         return data
 
 

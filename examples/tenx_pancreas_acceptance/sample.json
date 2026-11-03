@@ -7,6 +7,7 @@
   "archive_url": "https://cf.10xgenomics.com/samples/spatial-exp/3.0.0/Visium_HD_Human_Pancreas/Visium_HD_Human_Pancreas_binned_outputs.tar.gz",
   "archive_total_bytes": 8046375772,
   "candidate_provenance": "official dataset detail page in interactive browser",
-  "status": "correspondence_not_completed",
-  "verified_resume_prefix_bytes": 8388608
+  "status": "correspondence_passed",
+  "verified_resume_prefix_bytes": 8388608,
+  "validation_mode": "browser-confirmed official archive; same-version ranges supplemented after an HTTP range failure, then replayed offline"
 }

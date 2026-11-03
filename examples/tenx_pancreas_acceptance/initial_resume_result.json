@@ -1,0 +1,19 @@
+{
+  "sample_id": "visium-hd-cytassist-gene-expression-libraries-human-pancreas",
+  "platform": "Visium HD",
+  "species": "Human",
+  "tissue": "Pancreas",
+  "source_url": "https://www.10xgenomics.com/datasets/visium-hd-cytassist-gene-expression-libraries-human-pancreas",
+  "archives": {
+    "binned_outputs": [
+      "https://cf.10xgenomics.com/samples/spatial-exp/3.0.0/Visium_HD_Human_Pancreas/Visium_HD_Human_Pancreas_binned_outputs.tar.gz"
+    ]
+  },
+  "source": "10x_online",
+  "found": true,
+  "selected": true,
+  "files_ready": false,
+  "status": "processing_failed",
+  "error_type": "OSError",
+  "reason": "Unable to read 10x archive range 2097152000-2105540607"
+}
