@@ -23,7 +23,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 from .geo import parse_soft, record_from_soft, source_url, write_json
-from .screening import parse_prediction, screen_sample, validate_packet
+from .screening import VISIUM_HD, parse_prediction, screen_sample, validate_packet
 from .spatial_search import check_platforms, spatial_search
 
 _BUILD_LOCK = threading.RLock()
@@ -181,7 +181,7 @@ class DiscoverySession:
                 # Visium includes its HD family. Other requested platforms use exact detected names.
                 hits = row["rule_prediction"]["platform_candidates"]
                 row["requested_platform_confirmed"] = any(
-                    p in hits or (p == "Visium HD" and any("visium hd" in x.lower()
+                    p in hits or (p == "Visium HD" and any(VISIUM_HD.search(x)
                      for values in row["packet"]["fields"].values() for x in values)) for p in self.request.platforms)
                 row["include_in_catalog"] = bool(checked["label"] == "eligible"
                     and row["rule_prediction"]["label"] == "eligible" and row["requested_platform_confirmed"])

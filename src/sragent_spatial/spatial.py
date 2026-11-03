@@ -10,7 +10,7 @@ import struct
 from pathlib import Path
 
 
-def text_lines(path):
+def text_lines(path, *, max_rows=1_000_000):
     opener = gzip.open if str(path).endswith(".gz") else open
     with opener(path, "rt", encoding="utf-8-sig", newline="") as stream:
         count = 0
@@ -19,7 +19,7 @@ def text_lines(path):
             if not line:
                 break
             count += 1
-            if len(line) > 1_000_000 or count > 1_000_000:
+            if len(line) > 1_000_000 or count > max_rows:
                 raise ValueError("Text size limit exceeded; use a dedicated large-scale validator")
             yield line
 
@@ -54,7 +54,7 @@ def parquet_positions(path):
 
 
 def validate_visium(barcodes: Path, positions: Path, scalefactors=None, image=None, matrix=None, *, bin_um=None):
-    barcodes_list = [line.strip().split("\t")[0] for line in text_lines(barcodes) if line.strip()]
+    barcodes_list = [line.strip().split("\t")[0] for line in text_lines(barcodes, max_rows=32_000_000 if bin_um is not None else 1_000_000) if line.strip()]
     if not barcodes_list:
         raise ValueError("No expression barcodes")
     issues = []

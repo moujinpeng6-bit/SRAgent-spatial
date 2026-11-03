@@ -8,6 +8,7 @@ import re
 
 LABELS = ("eligible", "non_lung", "mixed", "unknown")
 PLATFORMS = ("Visium", "Xenium", "MERFISH", "CosMx", "Stereo-seq", "Slide-seq")
+VISIUM_HD = re.compile(r"\bvisium\s*(?:cytassist\s+)?hd\b", re.I)
 LUNG = re.compile(r"\blungs?\b|肺", re.I)
 NON_LUNG = re.compile(
     r"ventricl|ventricle|\bheart\b|myocard|larynx|hypopharynx|\bliver\b|\bkidney\b|\bbrain\b|"
@@ -61,7 +62,8 @@ def screen_sample(packet: dict) -> dict:
     platform_hits = {}
     for platform in PLATFORMS:
         for item in assay_entries:
-            if re.search(r"(?<!\w)" + re.escape(platform) + r"(?!\w)", item["quote"], re.I):
+            if (platform == "Visium" and VISIUM_HD.search(item["quote"])) or re.search(
+                    r"(?<!\w)" + re.escape(platform) + r"(?!\w)", item["quote"], re.I):
                 platform_hits[platform] = item
                 break
     lung = bool(LUNG.search(tissue)) and not bool(re.search(r"non[- ]lung|not lung", tissue, re.I))

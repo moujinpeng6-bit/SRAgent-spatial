@@ -130,3 +130,42 @@ class BatchValidationTests(unittest.TestCase):
         self.assertEqual({key: value["status"] for key, value in row["bins_um"].items()},
                          {"2": "correspondence_passed", "8": "correspondence_passed", "16": "mismatch"})
         self.assertIn("expression_barcode_bin_size_mismatch", row["bins_um"]["16"]["validation"]["issues"])
+
+    def test_hd_archive_matches_flat_native_bin_files(self):
+        import importlib.util
+        import json
+        import tarfile
+
+        if not all(importlib.util.find_spec(name) for name in ("PIL", "pyarrow", "h5py")):
+            self.skipTest("Install Visium HD dependencies")
+        import h5py
+        import pyarrow as pa
+        import pyarrow.parquet as pq
+        from PIL import Image
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            inputs = root / "inputs"
+            source = root / "A"
+            inputs.mkdir()
+            source.mkdir()
+            barcode = "s_002um_00000_00000-1"
+            with h5py.File(source / "A_2um_filtered_feature_bc_matrix.h5", "w") as stream:
+                stream["matrix/shape"] = [1, 1]
+                stream["matrix/barcodes"] = [barcode.encode()]
+            pq.write_table(pa.table({"barcode": [barcode], "in_tissue": [1], "array_row": [0],
+                "array_col": [0], "pxl_row_in_fullres": [20.], "pxl_col_in_fullres": [10.]}),
+                source / "A_2um_tissue_positions.parquet")
+            (source / "A_2um_scalefactors_json.json").write_text(json.dumps({"bin_size_um": 2, "tissue_lowres_scalef": 0.5}))
+            Image.new("RGB", (20, 20), "white").save(source / "A_tissue_lowres_image.png")
+            with tarfile.open(inputs / "GSM123_A.tar.gz", "w:gz") as stream:
+                stream.add(source, arcname="A")
+            row = {"accession": "GSM123", "status": "completed", "include_in_catalog": True,
+                   "rule_prediction": {"platform_candidates": ["Visium HD"]},
+                   "assets": [{"url": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSMnnn/GSM123/suppl/GSM123_A.tar.gz"}]}
+            report = {"request": {"platforms": ["Visium HD"]}, "samples": [row]}
+            result = asyncio.run(validate_candidates(report, inputs, root / "batch"))
+        self.assertEqual(result["status_counts"], {"correspondence_passed": 1})
+        bin_report = result["samples"][0]["bins_um"]["2"]
+        self.assertEqual(bin_report["archive_members"]["image"], "A/A_tissue_lowres_image.png")
+        self.assertTrue(bin_report["checks"]["matrix_columns_match_barcodes"])

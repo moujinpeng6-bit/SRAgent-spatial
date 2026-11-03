@@ -1,5 +1,7 @@
 # Visium HD batch validation
 
+This page records v0.9. See [archive and resolution verification](visium_hd_archive.md) for v0.10.
+
 The same `discover --archive-root` and `validate-candidates` commands handle Xenium, conventional Visium, and Visium HD. For HD, the adapter groups sample-owned, individually listed GEO files by explicit `002um`, `008um`, or `016um` filename tags. Each group has its own validation report. Unlisted bin sizes are recorded separately. A multi-sample archive or a bundle without explicit resolution tags requires a separate acquisition adapter.
 
 The HD validator reads expression barcodes, the Matrix Market header, Parquet positions, scale factors, and the low-resolution PNG. It checks resolution in barcode names and in scale-factor metadata when available. It matches expression barcodes to positions and multiplies full-resolution x and y by the low-resolution scale before checking image bounds for in-tissue expression bins. The Parquet reader scans batches and retains coordinates for expression barcodes. All bins of one candidate share a download allowance.

@@ -51,5 +51,20 @@ class SpatialSearchQueryTests(unittest.TestCase):
         self.assertEqual(check_platforms(["Visium", "Visium"]), ["Visium"])
 
 
+    def test_targeted_study_falls_back_when_series_keywords_miss(self):
+        from unittest.mock import Mock, patch
+        from sragent_spatial.spatial_search import spatial_search
+
+        client = Mock()
+        client.get_json.return_value = {"esearchresult": {"count": "0", "idlist": []}}
+        record = {"source_accession": "GSE123"}
+        with patch("sragent_spatial.geo.lookup", return_value=([record], {})) as lookup:
+            records, evidence = spatial_search(client, "Homo sapiens", "lung", ["Visium HD"], study="GSE123")
+        lookup.assert_called_once_with(client, "GSE123")
+        self.assertEqual(records, [record])
+        self.assertTrue(evidence["accession_lookup_fallback"])
+        self.assertEqual(evidence["total_hits"], 0)
+
+
 if __name__ == "__main__":
     unittest.main()

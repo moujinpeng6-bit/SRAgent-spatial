@@ -44,16 +44,20 @@ def asset_read_limit(asset):
         return 65536
     if asset["role"] == "positions" and ".parquet" in asset["filename"].lower():
         return 256 * 1024**2
+    if asset["role"] == "h5" and asset["filename"].endswith(".h5.gz"):
+        return 256 * 1024**2
     return (32 if asset["role"] == "h5" else 8) * 1024**2
 
 
-def file_plan(sample, *, bin_um=None):
+def file_plan(sample, *, bin_um=None, hd_untagged=False):
     acc = sample["accession"]
     if not re.fullmatch(r"GSM[1-9][0-9]*", acc):
         raise ValueError("Expected a GSM sample")
     patterns = dict(PATTERNS)
-    if bin_um is not None:
+    if bin_um is not None or hd_untagged:
         patterns["positions"] = r"_tissue_positions\.parquet(?:\.gz)?$"
+    if hd_untagged:
+        patterns["h5"] = r"_filtered_feature_bc_matrix\.h5(?:\.gz)?$"
     by_role = {role: [] for role in patterns}
     rejected = []
     for asset in sample.get("assets", []):

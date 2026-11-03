@@ -117,7 +117,17 @@ def spatial_search(client, organism: str, tissue: str, platforms, limit: int = 5
             if not continue_on_error:
                 raise
             failures.append({"accession": accession, "error_type": type(exc).__name__})
-    return records, {"query": query, "platforms": check_platforms(platforms),
+    accession_lookup_fallback = False
+    if study and not records and not failures:
+        # Series-level keywords can miss the assay or tissue reported by its samples.
+        try:
+            records.extend(lookup(client, study)[0])
+            accession_lookup_fallback = True
+        except Exception as exc:
+            if not continue_on_error:
+                raise
+            failures.append({"accession": study, "error_type": type(exc).__name__})
+    return records, {"query": query, "accession_lookup_fallback": accession_lookup_fallback, "platforms": check_platforms(platforms),
                      "platform_kinds": platform_kinds(platforms),
                      "total_hits": int(found["esearchresult"].get("count", 0)),
                      "returned_ids": ids, "skipped_nonseries_ids": skipped,
