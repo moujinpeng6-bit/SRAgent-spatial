@@ -37,6 +37,7 @@ class DiscoveryRequest:
     max_studies: int = 2
     max_samples_per_study: int = 5
     max_total_samples: int = 10
+    study: str | None = None
 
     def __post_init__(self):
         if self.organism != "Homo sapiens" or self.tissue.lower() != "lung":
@@ -108,7 +109,7 @@ class DiscoverySession:
         if self.search_report is not None:
             return self.search_summary()
         records, report = await asyncio.to_thread(spatial_search, self.client, self.request.organism,
-            self.request.tissue, list(self.request.platforms), self.request.max_studies, continue_on_error=True)
+            self.request.tissue, list(self.request.platforms), self.request.max_studies, continue_on_error=True, study=self.request.study)
         self.search_report = report
         for record in records:
             acc = record["source_accession"]

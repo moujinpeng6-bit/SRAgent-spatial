@@ -72,8 +72,16 @@ def main(argv=None):
     discovery.add_argument("--cache", type=Path, default=Path("outputs/discovery_cache"))
     discovery.add_argument("--refresh", action="store_true")
     discovery.add_argument("--resume", type=Path, help="Continue exactly the saved studies and reuse validated completed samples")
+    discovery.add_argument("--study", help="Restrict the GEO query to one GSE")
+    discovery.add_argument("--archive-root", type=Path, help="Prepare and validate screened Xenium candidates")
+    discovery.add_argument("--download-mib", type=bounded_integer(0, 2048), default=0, help="Maximum download per candidate")
     discovery.add_argument("--out", type=Path, required=True)
     discovery.add_argument("--local-manifest", type=Path, help="Optional registered local Xenium inputs for correspondence tools")
+    batch = sub.add_parser("validate-candidates", help="Validate candidates from an existing discovery run")
+    batch.add_argument("--run", type=Path, required=True)
+    batch.add_argument("--archive-root", type=Path, required=True)
+    batch.add_argument("--out", type=Path, required=True)
+    batch.add_argument("--download-mib", type=bounded_integer(0, 2048), default=0)
     pipeline = sub.add_parser("pipeline", help="Targeted GEO search -> same-sample automatic files -> Xenium spatial validation")
     pipeline.add_argument("--study", required=True)
     pipeline.add_argument("--sample", required=True)
@@ -148,7 +156,7 @@ def main(argv=None):
                 import truststore
                 truststore.inject_into_ssl()
             request = DiscoveryRequest(args.organism, args.tissue, tuple(args.platforms), args.max_studies,
-                                       args.max_samples_per_study, args.max_total_samples)
+                                       args.max_samples_per_study, args.max_total_samples, args.study)
             client = MetadataClient(args.cache, refresh=args.refresh)
             session = (DiscoverySession.resume(client, args.resume, args.out, args.model,
                        max_samples_per_study=args.max_samples_per_study, max_total_samples=args.max_total_samples)
@@ -156,12 +164,32 @@ def main(argv=None):
             if args.local_manifest:
                 from .local_validation import LocalValidationSession
                 session.local_validation = LocalValidationSession(args.local_manifest, args.out / "local_validation", args.model)
-            report = asyncio.run(discover(session, timeout=args.timeout))
+            async def discover_and_validate():
+                report = await discover(session, timeout=args.timeout)
+                if args.archive_root:
+                    from .batch_validation import validate_candidates
+                    report["asset_batch"] = await validate_candidates(
+                        report, args.archive_root, args.out / "asset_batch",
+                        download_bytes=args.download_mib * 1024**2)
+                    write_json(args.out / "run.json", report)
+                return report
+            report = asyncio.run(discover_and_validate())
+            if "asset_batch" in report:
+                print(json.dumps({"asset_status_counts": report["asset_batch"]["status_counts"]}))
             print(json.dumps({"status": report["status"], "counts": report["counts"], "out": str(args.out)}))
             if report["status"] in {"incomplete", "completed_with_failures"}:
                 if report["agent_error"]:
                     print(json.dumps(report["agent_error"]), file=sys.stderr)
                 return 2
+        elif args.command == "validate-candidates":
+            from .batch_validation import validate_candidates
+            if os.name == "nt" and args.download_mib:
+                import truststore
+                truststore.inject_into_ssl()
+            report = asyncio.run(validate_candidates(
+                json.loads(args.run.read_text(encoding="utf-8")), args.archive_root, args.out,
+                download_bytes=args.download_mib * 1024**2))
+            print(json.dumps({"status": report["status"], "status_counts": report["status_counts"]}))
         elif args.command == "pipeline":
             from .agents import credentials_present
             from .pipeline import PipelineSession, run_pipeline

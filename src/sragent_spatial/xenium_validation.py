@@ -216,9 +216,9 @@ def validate_xenium(spec, out):
     values = {gene: matrix.getrow(int(np.flatnonzero((names == gene) & gene_mask)[0])).toarray().ravel() for gene in genes}
     with (out / "cell_spatial_index.csv").open("w", encoding="utf-8", newline="") as stream:
         writer = csv.writer(stream)
-        writer.writerow(["cell_id", "x_um", "y_um", "in_demo_roi", "nearest_other_cell_um", "neighbors_within_50um"] + genes)
+        writer.writerow(["cell_id", "x_um", "y_um", "x_image_px", "y_image_px", "in_demo_roi", "nearest_other_cell_um", "neighbors_within_50um"] + genes)
         for i, cell_id in enumerate(ids):
-            writer.writerow([cell_id, *xy[i], bool(roi_mask[i]), nearest[i], int(radius_counts[i])]
+            writer.writerow([cell_id, *xy[i], *(xy[i] / pixel_size if checks["pixel_size_agrees_with_ome"] else ("", "")), bool(roi_mask[i]), nearest[i], int(radius_counts[i])]
                             + [int(values[gene][i]) for gene in genes])
     neighbors = [{"cell_id": str(ids[j]), "distance_um": float(d), "x_um": float(xy[j, 0]), "y_um": float(xy[j, 1])}
                  for d, j in zip(distance[1:], nearby[1:])]
@@ -232,6 +232,9 @@ def validate_xenium(spec, out):
               "feature_type_counts": dict(Counter(types)), "checks": checks,
               "original_matrix_order_identical": original_order, "image": image,
               "coordinate_unit": "um", "pixel_size_um": pixel_size,
+              "image_mapping": {"frame": "native_morphology_full_resolution", "origin": "top_left",
+                                "formula": "xy_image_px = xy_um / pixel_size_um",
+                                "applicable": checks["pixel_size_agrees_with_ome"]},
               "centroids_inside_image": int(inside.sum()),
               "roi": {"center_um": xy[anchor].tolist(), "radius_um": 150, "cells": int(roi_mask.sum()), "pathology_region": False},
               "anchor_cell_id": str(ids[anchor]), "five_nearest_neighbors": neighbors,

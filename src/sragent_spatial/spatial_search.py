@@ -85,13 +85,17 @@ def platform_kinds(platforms) -> dict[str, str]:
     return {key: SPATIAL_PLATFORMS[key]["kind"] for key in check_platforms(platforms)}
 
 
-def spatial_search(client, organism: str, tissue: str, platforms, limit: int = 5, *, continue_on_error=False):
+def spatial_search(client, organism: str, tissue: str, platforms, limit: int = 5, *, continue_on_error=False, study=None):
     """Search GEO for spatial series and hydrate records via the shared lookup path."""
     from .geo import lookup
 
     if not 1 <= limit <= 20:
         raise ValueError("limit must be in 1..20")
     query = build_spatial_query(organism, tissue, platforms)
+    if study:
+        if not re.fullmatch(r'GSE[1-9][0-9]*', study):
+            raise ValueError('Expected GSE study accession')
+        query += f' AND "{study}"[All Fields]'
     found = client.get_json("esearch.fcgi", db="gds", term=query, retmode="json", retmax=limit)
     if found["esearchresult"].get("errorlist"):
         raise ValueError("GEO rejected search fields: " + ", ".join(found["esearchresult"]["errorlist"]))
@@ -102,6 +106,8 @@ def spatial_search(client, organism: str, tissue: str, platforms, limit: int = 5
     failures = []
     for uid in ids:
         accession = details.get(uid, {}).get("accession", "")
+        if study and accession != study:
+            continue
         if not re.fullmatch(r"GSE[1-9][0-9]*", accession):
             skipped.append(uid)
             continue

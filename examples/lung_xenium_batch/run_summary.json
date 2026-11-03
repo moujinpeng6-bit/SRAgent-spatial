@@ -1,0 +1,147 @@
+{
+  "study": "GSE250346",
+  "discovery_status": "completed_with_limits",
+  "model": "deepseek-flash",
+  "discovery_counts": {
+    "studies_returned": 1,
+    "unique_samples_attempted": 7,
+    "processing_status": {
+      "completed": 7
+    },
+    "labels": {
+      "eligible": 7
+    },
+    "selected_metadata_candidates": 7,
+    "study_sample_links_not_read": 38
+  },
+  "runs": {
+    "local_only": {
+      "status": "completed_with_issues",
+      "status_counts": {
+        "missing_files": 6,
+        "correspondence_passed": 1
+      },
+      "samples": [
+        {
+          "sample_id": "GSM7990532",
+          "stage": "prepare",
+          "status": "missing_files"
+        },
+        {
+          "sample_id": "GSM7990533",
+          "stage": "prepare",
+          "status": "missing_files"
+        },
+        {
+          "sample_id": "GSM7990534",
+          "stage": "prepare",
+          "status": "missing_files"
+        },
+        {
+          "sample_id": "GSM7990535",
+          "stage": "prepare",
+          "status": "missing_files"
+        },
+        {
+          "sample_id": "GSM7990536",
+          "stage": "prepare",
+          "status": "missing_files"
+        },
+        {
+          "sample_id": "GSM7990537",
+          "stage": "prepare",
+          "status": "missing_files"
+        },
+        {
+          "sample_id": "GSM7990538",
+          "stage": "validate",
+          "status": "correspondence_passed"
+        }
+      ]
+    },
+    "bounded": {
+      "status": "completed_with_issues",
+      "status_counts": {
+        "download_budget_exceeded": 6,
+        "correspondence_passed": 1
+      },
+      "samples": [
+        {
+          "sample_id": "GSM7990532",
+          "stage": "prepare",
+          "status": "download_budget_exceeded"
+        },
+        {
+          "sample_id": "GSM7990533",
+          "stage": "prepare",
+          "status": "download_budget_exceeded"
+        },
+        {
+          "sample_id": "GSM7990534",
+          "stage": "prepare",
+          "status": "download_budget_exceeded"
+        },
+        {
+          "sample_id": "GSM7990535",
+          "stage": "prepare",
+          "status": "download_budget_exceeded"
+        },
+        {
+          "sample_id": "GSM7990536",
+          "stage": "prepare",
+          "status": "download_budget_exceeded"
+        },
+        {
+          "sample_id": "GSM7990537",
+          "stage": "prepare",
+          "status": "download_budget_exceeded"
+        },
+        {
+          "sample_id": "GSM7990538",
+          "stage": "validate",
+          "status": "correspondence_passed"
+        }
+      ]
+    }
+  },
+  "mapping": {
+    "sample_id": "GSM7990538",
+    "cells": 12578,
+    "feature_type_counts": {
+      "Gene Expression": 343,
+      "Negative Control Probe": 20,
+      "Negative Control Codeword": 41,
+      "Unassigned Codeword": 137
+    },
+    "pixel_size_um": 0.2125,
+    "centroids_inside_image": 12578,
+    "image_mapping": {
+      "frame": "native_morphology_full_resolution",
+      "origin": "top_left",
+      "formula": "xy_image_px = xy_um / pixel_size_um",
+      "applicable": true
+    },
+    "checks": {
+      "unique_cell_ids": true,
+      "unique_matrix_barcodes": true,
+      "cell_id_set_matches_matrix": true,
+      "finite_coordinates": true,
+      "experiment_cell_count_matches": true,
+      "nonnegative_integer_expression": true,
+      "matrix_order_reconciled_by_id": true,
+      "gene_features_present": true,
+      "gene_counts_equal_cells_summary": true,
+      "all_feature_counts_equal_cells_summary": true,
+      "pixel_size_agrees_with_ome": true,
+      "all_centroids_inside_image": true,
+      "cell_boundary_ids_match": true,
+      "cell_boundaries_finite_inside_image": true,
+      "nucleus_boundary_ids_match": true,
+      "nucleus_boundaries_finite_inside_image": true,
+      "archive_members_found": true,
+      "archive_member_hashes_match": true,
+      "source_archive_unchanged": true
+    }
+  },
+  "http_403_test": "Simulated HTTP 403 followed by a successful candidate in an offline test. No HTTP 403 observed in this live batch."
+}

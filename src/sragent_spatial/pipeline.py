@@ -104,6 +104,8 @@ class PipelineSession:
         plan = archive_plan(self.sample, self.fields)
         archive = await asyncio.to_thread(find_archive, self.archive_root, plan["filename"])
         mode = "exact_local_archive_reuse"
+        if archive is None and self.download_bytes <= 0:
+            raise FileNotFoundError("No complete local archive; downloads disabled")
         if archive is None:
             archive = await asyncio.to_thread(download_archive, plan, self.out / "downloads", self.download_bytes)
             mode = "downloaded_from_sample_url"
@@ -139,7 +141,7 @@ class PipelineSession:
                 "status": "completed" if complete and not self.agent_error else "incomplete",
                 "search": self.search, "screening": self.screen, "preparation": self.preparation,
                 "validation": self.validation, "events": self.events, "tool_trace": self.tool_trace,
-                "requests": self.client.requests, "agent_error": self.agent_error,
+                "requests": self.client.requests if self.client is not None else [], "agent_error": self.agent_error,
                 "agent_summary_unverified": self.summary,
                 "scope": "Targeted human lung Xenium pilot; not unrestricted discovery or all listed samples"}
 

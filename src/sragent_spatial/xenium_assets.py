@@ -38,6 +38,8 @@ def archive_plan(accession, fields):
                     "download_url": urlunsplit(("https", parts.netloc, parts.path, "", "")), "field": key}
             if item not in choices:
                 choices.append(item)
+    if not choices:
+        raise FileNotFoundError("No sample-owned tar.gz link")
     if len(choices) != 1:
         raise ValueError("Expected exactly one sample archive; missing or ambiguous archives require review")
     return choices[0]
@@ -60,6 +62,10 @@ def find_archive(root, filename, max_files=100000):
     return matches[0] if matches else None
 
 
+class DownloadBudgetExceeded(ValueError):
+    pass
+
+
 def download_archive(plan, out, budget):
     if budget <= 0:
         raise ValueError("Archive not found locally and download byte budget is zero")
@@ -75,12 +81,12 @@ def download_archive(plan, out, budget):
                 raise ValueError("Unexpected archive download redirect")
             length = response.headers.get("Content-Length")
             if length is not None and int(length) > budget:
-                raise ValueError("Archive exceeds download budget")
+                raise DownloadBudgetExceeded("Archive exceeds download budget")
             with partial.open("xb") as stream:
                 while chunk := response.read(min(1024*1024, budget-received+1)):
                     received += len(chunk)
                     if received > budget:
-                        raise ValueError("Archive download byte budget exceeded")
+                        raise DownloadBudgetExceeded("Archive download byte budget exceeded")
                     stream.write(chunk)
             if length is not None and received != int(length):
                 raise ValueError("Incomplete archive response")
@@ -130,7 +136,7 @@ def prepare_archive(plan, archive, out, sample_title):
             copied += actual
             records[p.name] = {"archive_member": member.name, "bytes": actual, "sha256": digest.hexdigest()}
     if REQUIRED - records.keys():
-        raise ValueError("Missing required Xenium outputs: " + ",".join(sorted(REQUIRED-records.keys())))
+        raise FileNotFoundError("Missing required Xenium outputs: " + ",".join(sorted(REQUIRED-records.keys())))
     after = archive.stat()
     if (before.st_size, before.st_mtime_ns) != (after.st_size, after.st_mtime_ns):
         raise ValueError("Archive changed while reading")
