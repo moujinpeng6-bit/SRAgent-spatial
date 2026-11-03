@@ -91,7 +91,7 @@ def spatial_bin_size(path):
     if len(raw) > 65536:
         raise ValueError("HD scale factors exceed size limit")
     size = json.loads(raw)["bin_size_um"]
-    if size not in (2, 8, 16):
+    if size not in (2, 8, 16, 24):
         raise ValueError("Unsupported declared HD resolution")
     return int(size)
 
@@ -138,7 +138,8 @@ def validate_hd_bin(files, out, size):
     else:
         barcodes = paths["barcodes"]
         with paths["matrix"].open("rb") as stream:
-            dims = matrix_dimensions(stream.read(65536), str(paths["matrix"]).endswith(".gz"))
+            prefix = stream.read(65536)
+            dims = matrix_dimensions(prefix, prefix.startswith(b"\x1f\x8b"))
     basic = validate_visium(barcodes, paths["positions"], paths["scalefactors"], paths["image"], bin_um=size)
     image = decode_image(paths["image"])
     columns_match = dims["observations"] == basic["expression_barcode_count"]

@@ -1,0 +1,357 @@
+{
+  "status": "completed_with_issues",
+  "samples": [
+    {
+      "sample_id": "GSM9767741",
+      "source": "GEO",
+      "platform": "Visium",
+      "found": true,
+      "selected": true,
+      "files_ready": true,
+      "status": "mismatch",
+      "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9767741",
+      "issues": [
+        "invalid_coordinates_or_tissue_flags"
+      ],
+      "checks": {
+        "barcode_position_image": {
+          "expression_barcode_count": 769,
+          "position_count": 4634,
+          "missing_expression_ids_count": 0,
+          "missing_ids_preview": [],
+          "matrix_columns_checked": null,
+          "image_bounds_check": {
+            "width": 477,
+            "height": 600,
+            "scale": 0.03418219,
+            "tested_in_tissue_barcodes": 769,
+            "out_of_image_count": 0
+          },
+          "issues": [
+            "invalid_coordinates_or_tissue_flags"
+          ],
+          "basic_checks_passed": false,
+          "coordinate_convention": "position file full-resolution image pixels; physical micrometre scale not inferred",
+          "not_verified": [
+            "same physical section or donor",
+            "matrix values and feature identities",
+            "image pixel contents or anatomical registration",
+            "cell segmentation or pathology annotation"
+          ],
+          "scope": "barcode/position/optional matrix-header and image-bounds consistency only"
+        },
+        "matrix_header": {
+          "features": 18085,
+          "observations": 769,
+          "nonzeros": 3904426,
+          "scope": "header_only_not_matrix_values_or_complete_gzip_integrity"
+        },
+        "matrix_columns_match_barcodes": true,
+        "image_decode": {
+          "width": 477,
+          "height": 600,
+          "format": "PNG",
+          "pixel_decode_verified": true
+        },
+        "feature_count": 18085
+      }
+    },
+    {
+      "sample_id": "GSM9767742",
+      "source": "GEO",
+      "platform": "Visium",
+      "found": true,
+      "selected": true,
+      "files_ready": true,
+      "status": "correspondence_passed",
+      "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9767742",
+      "issues": [],
+      "checks": {
+        "barcode_position_image": {
+          "expression_barcode_count": 955,
+          "position_count": 4992,
+          "missing_expression_ids_count": 0,
+          "missing_ids_preview": [],
+          "matrix_columns_checked": null,
+          "image_bounds_check": {
+            "width": 600,
+            "height": 568,
+            "scale": 0.046339203,
+            "tested_in_tissue_barcodes": 955,
+            "out_of_image_count": 0
+          },
+          "issues": [],
+          "basic_checks_passed": true,
+          "coordinate_convention": "position file full-resolution image pixels; physical micrometre scale not inferred",
+          "not_verified": [
+            "same physical section or donor",
+            "matrix values and feature identities",
+            "image pixel contents or anatomical registration",
+            "cell segmentation or pathology annotation"
+          ],
+          "scope": "barcode/position/optional matrix-header and image-bounds consistency only"
+        },
+        "matrix_header": {
+          "features": 18085,
+          "observations": 955,
+          "nonzeros": 3251880,
+          "scope": "header_only_not_matrix_values_or_complete_gzip_integrity"
+        },
+        "matrix_columns_match_barcodes": true,
+        "image_decode": {
+          "width": 600,
+          "height": 568,
+          "format": "PNG",
+          "pixel_decode_verified": true
+        },
+        "feature_count": 18085
+      }
+    },
+    {
+      "sample_id": "GSM8634988",
+      "source": "GEO",
+      "platform": "Visium HD",
+      "found": true,
+      "selected": true,
+      "files_ready": true,
+      "status": "correspondence_passed",
+      "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8634988",
+      "bins_um": {
+        "24": {
+          "status": "correspondence_passed",
+          "checks": {
+            "barcode_position_image": {
+              "expression_barcode_count": 3048,
+              "position_count": 78400,
+              "missing_expression_ids_count": 0,
+              "missing_ids_preview": [],
+              "matrix_columns_checked": null,
+              "image_bounds_check": {
+                "width": 528,
+                "height": 600,
+                "scale": 0.07109847,
+                "tested_in_tissue_barcodes": 3048,
+                "out_of_image_count": 0,
+                "bin_size_um_in_scalefactors": 24.0
+              },
+              "issues": [],
+              "basic_checks_passed": true,
+              "coordinate_convention": "position file full-resolution image pixels; physical micrometre scale not inferred",
+              "not_verified": [
+                "same physical section or donor",
+                "matrix values and feature identities",
+                "image pixel contents or anatomical registration",
+                "cell segmentation or pathology annotation"
+              ],
+              "scope": "barcode/position/optional matrix-header and image-bounds consistency only"
+            },
+            "matrix_dimensions": {
+              "features": 18086,
+              "observations": 3048,
+              "nonzeros": 2747302,
+              "scope": "header_only_not_matrix_values_or_complete_gzip_integrity"
+            },
+            "matrix_columns_match_barcodes": true,
+            "image_decode": {
+              "width": 528,
+              "height": 600,
+              "format": "PNG",
+              "pixel_decode_verified": true
+            }
+          }
+        }
+      }
+    },
+    {
+      "sample_id": "GSM9336946",
+      "source": "GEO",
+      "platform": "Visium HD",
+      "found": true,
+      "selected": false,
+      "files_ready": false,
+      "status": "not_selected",
+      "label": "mixed",
+      "screen_status": "completed"
+    },
+    {
+      "sample_id": "21_Pancreas",
+      "source": "10x_cache",
+      "platform": "Xenium",
+      "found": true,
+      "selected": true,
+      "files_ready": true,
+      "status": "correspondence_passed",
+      "preparation": {
+        "status": "prepared",
+        "archive_url": "https://cf.10xgenomics.com/samples/xenium/1.5.0/Xenium_V1_hPancreas_nondiseased_section/Xenium_V1_hPancreas_nondiseased_section_outs.zip",
+        "archive_bytes": 4660108035,
+        "image": {
+          "status": "reused_verified",
+          "bytes": 293939744,
+          "crc32": "8d7474e1"
+        },
+        "files": {
+          "experiment.xenium": {
+            "status": "downloaded",
+            "bytes": 1579,
+            "crc32": "47123eec"
+          },
+          "cells.csv.gz": {
+            "status": "downloaded",
+            "bytes": 5995551,
+            "crc32": "2aa4b405"
+          },
+          "cell_feature_matrix.h5": {
+            "status": "downloaded",
+            "bytes": 5911650,
+            "crc32": "ca87932f"
+          }
+        },
+        "zip_range_bytes": 11672067
+      },
+      "checks": {
+        "cells": 103901,
+        "checks": {
+          "passed": 12,
+          "total": 12,
+          "failed": []
+        },
+        "centroids_inside_image": 103901,
+        "feature_type_counts": {
+          "Gene Expression": 377,
+          "Negative Control Probe": 20,
+          "Negative Control Codeword": 41,
+          "Unassigned Codeword": 103
+        }
+      }
+    },
+    {
+      "sample_id": "22_Kidney",
+      "source": "10x_cache",
+      "platform": "Xenium",
+      "found": true,
+      "selected": true,
+      "files_ready": true,
+      "status": "correspondence_passed",
+      "preparation": {
+        "status": "prepared",
+        "archive_url": "https://cf.10xgenomics.com/samples/xenium/1.5.0/Xenium_V1_hKidney_nondiseased_section/Xenium_V1_hKidney_nondiseased_section_outs.zip",
+        "archive_bytes": 5069771406,
+        "image": {
+          "status": "reused_verified",
+          "bytes": 361465038,
+          "crc32": "f113727d"
+        },
+        "files": {
+          "experiment.xenium": {
+            "status": "downloaded",
+            "bytes": 1573,
+            "crc32": "e5040e6b"
+          },
+          "cells.csv.gz": {
+            "status": "downloaded",
+            "bytes": 5619452,
+            "crc32": "6b70e4ea"
+          },
+          "cell_feature_matrix.h5": {
+            "status": "downloaded",
+            "bytes": 3803983,
+            "crc32": "d973d114"
+          }
+        },
+        "zip_range_bytes": 9224412
+      },
+      "checks": {
+        "cells": 97560,
+        "checks": {
+          "passed": 12,
+          "total": 12,
+          "failed": []
+        },
+        "centroids_inside_image": 97560,
+        "feature_type_counts": {
+          "Gene Expression": 377,
+          "Negative Control Probe": 20,
+          "Negative Control Codeword": 41,
+          "Unassigned Codeword": 103
+        }
+      }
+    }
+  ],
+  "totals": {
+    "found": 6,
+    "selected": 5,
+    "files_ready": 5,
+    "passed": 4,
+    "failed": 1,
+    "outcomes": {
+      "mismatch": 1,
+      "correspondence_passed": 4,
+      "not_selected": 1
+    }
+  },
+  "by_source": {
+    "10x_cache": {
+      "found": 2,
+      "selected": 2,
+      "files_ready": 2,
+      "passed": 2,
+      "failed": 0,
+      "outcomes": {
+        "correspondence_passed": 2
+      }
+    },
+    "GEO": {
+      "found": 4,
+      "selected": 3,
+      "files_ready": 3,
+      "passed": 2,
+      "failed": 1,
+      "outcomes": {
+        "mismatch": 1,
+        "correspondence_passed": 2,
+        "not_selected": 1
+      }
+    }
+  },
+  "by_platform": {
+    "Visium": {
+      "found": 2,
+      "selected": 2,
+      "files_ready": 2,
+      "passed": 1,
+      "failed": 1,
+      "outcomes": {
+        "mismatch": 1,
+        "correspondence_passed": 1
+      }
+    },
+    "Visium HD": {
+      "found": 2,
+      "selected": 1,
+      "files_ready": 1,
+      "passed": 1,
+      "failed": 0,
+      "outcomes": {
+        "correspondence_passed": 1,
+        "not_selected": 1
+      }
+    },
+    "Xenium": {
+      "found": 2,
+      "selected": 2,
+      "files_ready": 2,
+      "passed": 2,
+      "failed": 0,
+      "outcomes": {
+        "correspondence_passed": 2
+      }
+    }
+  },
+  "scope": "Four fresh GEO sample records selected for this acceptance from live lung Visium HD and kidney Visium discovery, plus two explicitly requested E-drive 10x sample IDs.",
+  "observations": {
+    "GSM9767741": "358 negative pixel-coordinate entries were outside tissue. All 769 selected expression barcodes had positions and fit the scaled image. The current validator checks coordinate validity across the full position table.",
+    "GSM8634988": "Publisher-declared 24 \u00b5m bin. The bounded Matrix Market prefix is gzip compressed even though its local name ends in .prefix.",
+    "GSM9336946": "Excluded by sample-level screening, not a file-validation failure."
+  }
+}

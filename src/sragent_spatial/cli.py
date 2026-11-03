@@ -84,6 +84,14 @@ def main(argv=None):
     batch.add_argument("--probe-remote", action="store_true", help="HEAD only for unresolved sample-owned GEO assets")
     batch.add_argument("--out", type=Path, required=True)
     batch.add_argument("--download-mib", type=bounded_integer(0, 2048), default=0)
+    unified = sub.add_parser("validate-spatial-batch", help="Validate GEO discovery results and 10x cache samples together")
+    unified.add_argument("--geo-run", type=Path, action="append", default=[])
+    unified.add_argument("--archive-root", type=Path)
+    unified.add_argument("--10x-cache", dest="tenx_cache", type=Path)
+    unified.add_argument("--sample-ids", nargs="+", default=[])
+    unified.add_argument("--out", type=Path, required=True)
+    unified.add_argument("--download-mib", type=bounded_integer(0, 2048), default=0)
+    unified.add_argument("--probe-remote", action="store_true")
     pipeline = sub.add_parser("pipeline", help="Targeted GEO search -> same-sample automatic files -> Xenium spatial validation")
     pipeline.add_argument("--study", required=True)
     pipeline.add_argument("--sample", required=True)
@@ -198,6 +206,21 @@ def main(argv=None):
             if report["status"] in {"incomplete", "completed_with_failures"}:
                 if report["agent_error"]:
                     print(json.dumps(report["agent_error"]), file=sys.stderr)
+                return 2
+        elif args.command == "validate-spatial-batch":
+            from .unified_batch import validate_sources
+            if (not (args.geo_run or args.sample_ids) or bool(args.geo_run) != bool(args.archive_root)
+                    or bool(args.sample_ids) != bool(args.tenx_cache)):
+                raise ValueError("Supply --geo-run with --archive-root and/or --10x-cache with --sample-ids")
+            if os.name == "nt" and (args.sample_ids or args.download_mib or args.probe_remote):
+                import truststore
+                truststore.inject_into_ssl()
+            reports = [json.loads(path.read_text(encoding="utf-8-sig")) for path in args.geo_run]
+            report = asyncio.run(validate_sources(reports, args.archive_root, args.tenx_cache, args.sample_ids,
+                                                  args.out, download_bytes=args.download_mib * 1024**2,
+                                                  probe_remote=args.probe_remote))
+            print(json.dumps({"status": report["status"], **report["totals"]}))
+            if report["status"] != "completed":
                 return 2
         elif args.command == "validate-candidates":
             from .batch_validation import validate_candidates
