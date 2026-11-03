@@ -1,5 +1,7 @@
 # v0.8 Shared Visium and Xenium validation
 
+This page records v0.8. See [Visium HD validation](visium_hd_batch.md) for v0.9.
+
 `discover --archive-root` and `validate-candidates` route screened samples by platform. Traditional Visium matches GEO supplement filenames within the same sample and bundle, uses local files when available, and can retrieve missing files within the per-sample `--download-mib` allowance. Xenium continues to use the archive and native morphology checks. Visium HD is outside the tested adapter.
 
 For Visium, the validator aligns expression barcodes to the tissue positions table, checks the Matrix Market header dimensions, decodes the low-resolution PNG, and multiplies full-resolution image pixel coordinates by `tissue_lowres_scalef` before checking image bounds. The pixel bounds check covers expression barcodes marked as in tissue. Matrix Market values and independent anatomical registration were outside the scope of this run.

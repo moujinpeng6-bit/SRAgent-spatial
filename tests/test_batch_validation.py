@@ -82,7 +82,51 @@ class BatchValidationTests(unittest.TestCase):
             hd["packet"] = {"fields": {"Sample_title": ["Human lung Visium HD"]}}
             report = {"request": {"platforms": ["Visium"]}, "samples": [sample, hd]}
             result = asyncio.run(validate_candidates(report, inputs, root / "batch"))
-        self.assertEqual(result["status_counts"], {"correspondence_passed": 1, "unsupported_platform": 1})
+        self.assertEqual(result["status_counts"], {"correspondence_passed": 1, "missing_files": 1})
         checks = result["samples"][0]["validation"]["checks"]
         self.assertEqual(checks["barcode_position_image"]["image_bounds_check"]["tested_in_tissue_barcodes"], 2)
         self.assertTrue(checks["image_decode"]["pixel_decode_verified"])
+
+    def test_visium_hd_keeps_parquet_and_barcodes_separate_by_bin(self):
+        import gzip
+        import importlib.util
+        from test_asset_audit import LocalFiles, sample_record
+        from sragent_spatial.asset_audit import file_plan
+
+        if not all(importlib.util.find_spec(name) for name in ("PIL", "pyarrow")):
+            self.skipTest("Install the Visium HD extra")
+        import pyarrow as pa
+        import pyarrow.parquet as pq
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            inputs = root / "inputs"
+            inputs.mkdir()
+            sample = sample_record(suffix="section1_002um")
+            sample["assets"] = []
+            sample["rule_prediction"] = {"platform_candidates": ["Visium"]}
+            sample["packet"] = {"fields": {"Sample_title": ["Human lung Visium HD"]}}
+            for size in (2, 8, 16):
+                assets = sample_record(suffix=f"section1_{size:03d}um")["assets"]
+                for asset in assets:
+                    asset["url"] = asset["url"].replace("tissue_positions_list.csv.gz", "tissue_positions.parquet.gz")
+                sample["assets"].extend(assets)
+                fixture = root / str(size)
+                fixture.mkdir()
+                LocalFiles(fixture)
+                ids = [f"s_{size:03d}um_00000_00000-1", f"s_{size:03d}um_00000_00001-1"]
+                expression_ids = ids if size != 16 else [barcode.replace("016um", "008um") for barcode in ids]
+                (fixture / "barcodes.gz").write_bytes(gzip.compress(("\n".join(expression_ids) + "\n").encode()))
+                pq.write_table(pa.table({"barcode": ids, "in_tissue": [1, 1], "array_row": [0, 0],
+                    "array_col": [0, 1], "pxl_row_in_fullres": [10., 30.],
+                    "pxl_col_in_fullres": [20., 40.]}), fixture / "positions.parquet")
+                (fixture / "positions.gz").write_bytes(gzip.compress((fixture / "positions.parquet").read_bytes()))
+                for role, asset in file_plan(sample, bin_um=size)["roles"].items():
+                    (fixture / (role + ".gz")).rename(inputs / asset["filename"])
+            report = {"request": {"platforms": ["Visium HD"]}, "samples": [sample]}
+            result = asyncio.run(validate_candidates(report, inputs, root / "batch"))
+        row = result["samples"][0]
+        self.assertEqual(row["platform"], "Visium HD")
+        self.assertEqual({key: value["status"] for key, value in row["bins_um"].items()},
+                         {"2": "correspondence_passed", "8": "correspondence_passed", "16": "mismatch"})
+        self.assertIn("expression_barcode_bin_size_mismatch", row["bins_um"]["16"]["validation"]["issues"])

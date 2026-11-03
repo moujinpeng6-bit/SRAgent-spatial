@@ -73,7 +73,7 @@ def main(argv=None):
     discovery.add_argument("--refresh", action="store_true")
     discovery.add_argument("--resume", type=Path, help="Continue exactly the saved studies and reuse validated completed samples")
     discovery.add_argument("--study", help="Restrict the GEO query to one GSE")
-    discovery.add_argument("--archive-root", type=Path, help="Prepare and validate screened Xenium and Visium candidates")
+    discovery.add_argument("--archive-root", type=Path, help="Prepare and validate screened Xenium, Visium and Visium HD candidates")
     discovery.add_argument("--download-mib", type=bounded_integer(0, 2048), default=0, help="Maximum download per candidate")
     discovery.add_argument("--out", type=Path, required=True)
     discovery.add_argument("--local-manifest", type=Path, help="Optional registered local Xenium inputs for correspondence tools")

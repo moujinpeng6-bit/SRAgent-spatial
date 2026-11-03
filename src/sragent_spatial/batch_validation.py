@@ -5,16 +5,17 @@ from collections import Counter
 from pathlib import Path
 from urllib.error import HTTPError, URLError
 
-from .asset_audit import FileFetcher, LocalFileFetcher, audit_sample, file_plan
+from .asset_audit import FileFetcher, LocalFileFetcher, audit_sample, file_plan, hd_bin_sizes
 from .geo import write_json
 from .pipeline import PipelineSession
 from .xenium_assets import DownloadBudgetExceeded
 
 
-def audit_visium_candidate(row, root, out, download_bytes):
-    plan = file_plan(row)
+def audit_visium_candidate(row, root, out, download_bytes, *, bin_um=None, remote=None):
+    plan = file_plan(row, bin_um=bin_um)
     local = LocalFileFetcher(root, {asset["filename"] for asset in plan["roles"].values()})
-    remote = FileFetcher(out / "files", download_bytes=download_bytes)
+    if remote is None:
+        remote = FileFetcher(out / "files", download_bytes=download_bytes)
 
     class Fetcher:
         def fetch(self, accession, asset):
@@ -23,7 +24,7 @@ def audit_visium_candidate(row, root, out, download_bytes):
                 return remote.fetch(accession, asset)
             return result
 
-    audit = audit_sample(row, Fetcher())
+    audit = audit_sample(row, Fetcher(), bin_um=bin_um)
     write_json(out / "validation.json", audit)
     status = audit["status"]
     if status == "basic_correspondence_passed":
@@ -39,6 +40,31 @@ def audit_visium_candidate(row, root, out, download_bytes):
         elif "ambiguous_local_file" in states:
             status = "ambiguous_bundle"
     return {"status": status, "stage": "validate", "validation": audit}
+
+
+def audit_hd_candidate(row, root, out, download_bytes):
+    from urllib.parse import unquote, urlsplit
+
+    sizes = set()
+    for asset in row["assets"]:
+        name = unquote(urlsplit(asset["url"]).path.rsplit("/", 1)[-1])
+        sizes.update(hd_bin_sizes(name))
+    remote = FileFetcher(out / "files", download_bytes=download_bytes)
+    bins = {}
+    for size in sorted(sizes):
+        bins[str(size)] = audit_visium_candidate(
+            row, root, out / f"square_{size:03d}um", download_bytes,
+            bin_um=size, remote=remote)
+    if not bins:
+        status = "missing_files"
+    elif all(item["status"] == "correspondence_passed" for item in bins.values()):
+        status = "correspondence_passed"
+    else:
+        status = "completed_with_issues"
+    result = {"status": status, "stage": "validate", "bins_um": bins,
+              "unlisted_standard_bin_sizes_um": sorted({2, 8, 16} - sizes)}
+    write_json(out / "validation.json", result)
+    return result
 
 
 async def validate_candidates(report, archive_root, out, *, download_bytes=0):
@@ -61,9 +87,18 @@ async def validate_candidates(report, archive_root, out, *, download_bytes=0):
         platforms = row.get("rule_prediction", {}).get("platform_candidates")
         requested = report["request"]["platforms"]
         fields = row.get("packet", {}).get("fields", {})
-        hd = any(re.search(r"\bvisium\s*hd\b", value, re.I)
+        hd = platforms == ["Visium HD"] or any(re.search(r"\bvisium\s*hd\b", value, re.I)
                  for values in fields.values() for value in values)
-        if platforms == ["Visium"] and "Visium" in requested and not hd:
+        if platforms in (["Visium"], ["Visium HD"]) and hd and any(
+                platform in requested for platform in ("Visium", "Visium HD")):
+            result["platform"] = "Visium HD"
+            try:
+                if not re.fullmatch(r"GSM[1-9][0-9]*", sample):
+                    raise ValueError("Invalid sample accession")
+                result.update(await asyncio.to_thread(audit_hd_candidate, row, root, out / sample, download_bytes))
+            except (OSError, ValueError, KeyError) as exc:
+                result.update(status="processing_failed", error_type=type(exc).__name__)
+        elif platforms == ["Visium"] and "Visium" in requested and not hd:
             result["platform"] = "Visium"
             try:
                 if not re.fullmatch(r"GSM[1-9][0-9]*", sample):

@@ -1,0 +1,210 @@
+{
+  "study": "GSE286227",
+  "discovery_status": "completed",
+  "discovery_counts": {
+    "studies_returned": 1,
+    "unique_samples_attempted": 2,
+    "processing_status": {
+      "completed": 2
+    },
+    "labels": {
+      "eligible": 2
+    },
+    "selected_metadata_candidates": 2,
+    "study_sample_links_not_read": 0
+  },
+  "status": "completed",
+  "status_counts": {
+    "correspondence_passed": 2
+  },
+  "samples": [
+    {
+      "sample_id": "GSM8721365",
+      "platform": "Visium HD",
+      "status": "correspondence_passed",
+      "unlisted_standard_bin_sizes_um": [
+        2,
+        16
+      ],
+      "bins_um": {
+        "8": {
+          "status": "correspondence_passed",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8721365",
+          "checks": {
+            "barcode_position_image": {
+              "expression_barcode_count": 317761,
+              "position_count": 702244,
+              "missing_expression_ids_count": 0,
+              "missing_ids_preview": [],
+              "matrix_columns_checked": null,
+              "image_bounds_check": {
+                "width": 600,
+                "height": 421,
+                "scale": 0.02864372,
+                "tested_in_tissue_barcodes": 317761,
+                "out_of_image_count": 0,
+                "bin_size_um_in_scalefactors": 8.0
+              },
+              "issues": [],
+              "basic_checks_passed": true,
+              "coordinate_convention": "position file full-resolution image pixels; physical micrometre scale not inferred",
+              "not_verified": [
+                "same physical section or donor",
+                "matrix values and feature identities",
+                "image pixel contents or anatomical registration",
+                "cell segmentation or pathology annotation"
+              ],
+              "scope": "barcode/position/optional matrix-header and image-bounds consistency only"
+            },
+            "matrix_header": {
+              "features": 18085,
+              "observations": 317761,
+              "nonzeros": 17256286,
+              "scope": "header_only_not_matrix_values_or_complete_gzip_integrity"
+            },
+            "matrix_columns_match_barcodes": true,
+            "image_decode": {
+              "width": 600,
+              "height": 421,
+              "format": "PNG",
+              "pixel_decode_verified": true
+            },
+            "feature_count": 18085
+          },
+          "files": {
+            "barcodes": {
+              "download_url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM8721nnn/GSM8721365/suppl/GSM8721365_Non-LTx_008um_barcodes.tsv.gz",
+              "bytes": 1561055,
+              "checksum_scope": "complete_local_file",
+              "sha256": "df276e73802036e4d674a665b025594545b893074093c6ecbff8ae0326a47b0b"
+            },
+            "features": {
+              "download_url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM8721nnn/GSM8721365/suppl/GSM8721365_Non-LTx_008um_features.tsv.gz",
+              "bytes": 156435,
+              "checksum_scope": "complete_local_file",
+              "sha256": "6a8cfd0984684fb274d54439b77a391f2bfdf69063d83c8e4cef0c292e007b56"
+            },
+            "matrix": {
+              "download_url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM8721nnn/GSM8721365/suppl/GSM8721365_Non-LTx_008um_matrix.mtx.gz",
+              "bytes": 65536,
+              "checksum_scope": "downloaded_compressed_prefix_only",
+              "sha256": "2516886fde95ce943a9b3be1ae94b79e072d4587d4894547c6907cc4b0f3cce9"
+            },
+            "positions": {
+              "download_url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM8721nnn/GSM8721365/suppl/GSM8721365_Non-LTx_008um_tissue_positions.parquet.gz",
+              "bytes": 10957971,
+              "checksum_scope": "complete_local_file",
+              "sha256": "5297b86da6fd6611e34267ea1b19d1423bbef54d3099565aac5609ac9793b5c8"
+            },
+            "scalefactors": {
+              "download_url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM8721nnn/GSM8721365/suppl/GSM8721365_Non-LTx_008um_scalefactors_json.json.gz",
+              "bytes": 237,
+              "checksum_scope": "complete_local_file",
+              "sha256": "79c1f136bac47bcd12e4afb2398a040c3ee3acb65b52fa16a7f0ebaf2b2be569"
+            },
+            "image": {
+              "download_url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM8721nnn/GSM8721365/suppl/GSM8721365_Non-LTx_008um_tissue_lowres_image.png.gz",
+              "bytes": 288129,
+              "checksum_scope": "complete_local_file",
+              "sha256": "c26686f60e7396c81b38d9eba6cdd7213f77c9759d022b8457a7e4d1106ff9cf"
+            }
+          }
+        }
+      }
+    },
+    {
+      "sample_id": "GSM8721366",
+      "platform": "Visium HD",
+      "status": "correspondence_passed",
+      "unlisted_standard_bin_sizes_um": [
+        2,
+        16
+      ],
+      "bins_um": {
+        "8": {
+          "status": "correspondence_passed",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8721366",
+          "checks": {
+            "barcode_position_image": {
+              "expression_barcode_count": 133878,
+              "position_count": 702244,
+              "missing_expression_ids_count": 0,
+              "missing_ids_preview": [],
+              "matrix_columns_checked": null,
+              "image_bounds_check": {
+                "width": 600,
+                "height": 534,
+                "scale": 0.03179987,
+                "tested_in_tissue_barcodes": 133878,
+                "out_of_image_count": 0,
+                "bin_size_um_in_scalefactors": 8.0
+              },
+              "issues": [],
+              "basic_checks_passed": true,
+              "coordinate_convention": "position file full-resolution image pixels; physical micrometre scale not inferred",
+              "not_verified": [
+                "same physical section or donor",
+                "matrix values and feature identities",
+                "image pixel contents or anatomical registration",
+                "cell segmentation or pathology annotation"
+              ],
+              "scope": "barcode/position/optional matrix-header and image-bounds consistency only"
+            },
+            "matrix_header": {
+              "features": 18085,
+              "observations": 133878,
+              "nonzeros": 28204865,
+              "scope": "header_only_not_matrix_values_or_complete_gzip_integrity"
+            },
+            "matrix_columns_match_barcodes": true,
+            "image_decode": {
+              "width": 600,
+              "height": 534,
+              "format": "PNG",
+              "pixel_decode_verified": true
+            },
+            "feature_count": 18085
+          },
+          "files": {
+            "barcodes": {
+              "download_url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM8721nnn/GSM8721366/suppl/GSM8721366_LTx_008um_barcodes.tsv.gz",
+              "bytes": 636261,
+              "checksum_scope": "complete_local_file",
+              "sha256": "0bda4d7240e7f3c91e2b9eb97d9c87496357badda670dfaa6c9aec93498e7e45"
+            },
+            "features": {
+              "download_url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM8721nnn/GSM8721366/suppl/GSM8721366_LTx_008um_features.tsv.gz",
+              "bytes": 156435,
+              "checksum_scope": "complete_local_file",
+              "sha256": "391031bb11069f04a058390b4e023b1c755e81c15586c5083954d9947185c609"
+            },
+            "matrix": {
+              "download_url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM8721nnn/GSM8721366/suppl/GSM8721366_LTx_008um_matrix.mtx.gz",
+              "bytes": 65536,
+              "checksum_scope": "downloaded_compressed_prefix_only",
+              "sha256": "e5644a97e90b4816630f6c647a0c067c44b2f026407136de96dec54cbae991f8"
+            },
+            "positions": {
+              "download_url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM8721nnn/GSM8721366/suppl/GSM8721366_LTx_008um_tissue_positions.parquet.gz",
+              "bytes": 10943857,
+              "checksum_scope": "complete_local_file",
+              "sha256": "39ae45709918de3c82248c53cb0afdc3da5ec67038815be47735c4df7882f239"
+            },
+            "scalefactors": {
+              "download_url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM8721nnn/GSM8721366/suppl/GSM8721366_LTx_008um_scalefactors_json.json.gz",
+              "bytes": 236,
+              "checksum_scope": "complete_local_file",
+              "sha256": "da151703fbc5957b7fc9a7be9bbc30a08db226f630e22d0cb233c296b32bbff5"
+            },
+            "image": {
+              "download_url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM8721nnn/GSM8721366/suppl/GSM8721366_LTx_008um_tissue_lowres_image.png.gz",
+              "bytes": 287918,
+              "checksum_scope": "complete_local_file",
+              "sha256": "10ddb4a9f82bd438e61161b6ec4911fdbc04c5c5756e1ffa250c72d2de7dbaa1"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

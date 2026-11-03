@@ -35,11 +35,26 @@ PATTERNS = {
 REQUIRED = ("barcodes", "matrix", "positions", "scalefactors", "image")
 
 
-def file_plan(sample):
+def hd_bin_sizes(filename):
+    return {int(value) for value in re.findall(r"(?<![A-Za-z0-9])(002|008|016)um(?![A-Za-z0-9])", filename, re.I)}
+
+
+def asset_read_limit(asset):
+    if asset["role"] == "matrix":
+        return 65536
+    if asset["role"] == "positions" and ".parquet" in asset["filename"].lower():
+        return 256 * 1024**2
+    return (32 if asset["role"] == "h5" else 8) * 1024**2
+
+
+def file_plan(sample, *, bin_um=None):
     acc = sample["accession"]
     if not re.fullmatch(r"GSM[1-9][0-9]*", acc):
         raise ValueError("Expected a GSM sample")
-    by_role = {role: [] for role in PATTERNS}
+    patterns = dict(PATTERNS)
+    if bin_um is not None:
+        patterns["positions"] = r"_tissue_positions\.parquet(?:\.gz)?$"
+    by_role = {role: [] for role in patterns}
     rejected = []
     for asset in sample.get("assets", []):
         parts = urlsplit(asset["url"])
@@ -47,7 +62,9 @@ def file_plan(sample):
         if parts.hostname != "ftp.ncbi.nlm.nih.gov" or f"/{acc}/suppl/" not in parts.path or not name.startswith(acc + "_") or any(c in name for c in '/\\<>:"|?*\r\n'):
             rejected.append(asset["url"])
             continue
-        for role, pattern in PATTERNS.items():
+        if bin_um is not None and hd_bin_sizes(name) != {bin_um}:
+            continue
+        for role, pattern in patterns.items():
             match = re.search(pattern, name, re.I)
             if match:
                 core = name[len(acc) + 1:match.start()]
@@ -77,7 +94,7 @@ class FileFetcher:
     def fetch(self, accession, asset):
         role = asset["role"]
         partial = role == "matrix"
-        limit = 65536 if partial else (32 * 1024 * 1024 if role == "h5" else 8 * 1024 * 1024)
+        limit = asset_read_limit(asset)
         directory = self.root / accession
         filename = asset["filename"] + (".prefix" if partial else "")
         path = directory / filename
@@ -153,7 +170,7 @@ class LocalFileFetcher:
             return {**result, "status": "missing_local_file" if not paths else "ambiguous_local_file"}
         path = paths[0]
         partial = asset["role"] == "matrix"
-        limit = 65536 if partial else (32 * 1024 * 1024 if asset["role"] == "h5" else 8 * 1024 * 1024)
+        limit = asset_read_limit(asset)
         if not partial and path.stat().st_size > limit:
             return {**result, "status": "size_limit"}
         with path.open("rb") as stream:
@@ -201,8 +218,8 @@ def decode_image(path):
                 "pixel_decode_verified": True}
 
 
-def audit_sample(sample, fetcher):
-    plan = file_plan(sample)
+def audit_sample(sample, fetcher, *, bin_um=None):
+    plan = file_plan(sample, bin_um=bin_um)
     row = {"accession": sample["accession"], "studies": sample["studies"], "source_url": sample["source_url"],
            "plan": plan, "files": {}, "checks": {}, "issues": [], "correspondence_verified": False,
            "status": "not_checked", "not_verified": ["physical section or donor identity",
@@ -220,7 +237,7 @@ def audit_sample(sample, fetcher):
         return row
     files = {role: Path(info["local_path"]) for role, info in row["files"].items() if info["status"] == "downloaded"}
     try:
-        basic = validate_visium(files["barcodes"], files["positions"], files["scalefactors"], files["image"])
+        basic = validate_visium(files["barcodes"], files["positions"], files["scalefactors"], files["image"], bin_um=bin_um)
         with files["matrix"].open("rb") as stream:
             prefix = stream.read(65536)
         dims = matrix_dimensions(prefix, plan["roles"]["matrix"]["filename"].endswith(".gz"))
