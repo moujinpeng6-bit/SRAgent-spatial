@@ -23,6 +23,7 @@ data/
 downloads/
 outputs/
 .cache/
+.archive-cache/
 *.h5ad
 *.h5
 *.zarr/

@@ -1,0 +1,14 @@
+{
+  "terminated_exit_code": 1,
+  "chunks": {
+    "0.range": {
+      "sha256": "d3ea95a55c050e8d5a8b56ec0a4f0db7a115bbf92d45d73ca1fc1f759f052c0d",
+      "mtime_ns": 1793721324561974800
+    }
+  },
+  "replay_reused_bytes": 8388608,
+  "replay_downloaded_bytes": 0,
+  "replay_http_calls": 0,
+  "pre_interrupt_chunks_unchanged": true,
+  "committed_chunks_observed_after_restart": 9
+}

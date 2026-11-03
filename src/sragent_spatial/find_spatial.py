@@ -94,9 +94,11 @@ async def find_spatial(organism, tissue, platforms, cache, out, *, model=None, d
                 for row in matches:
                     sample_out = online / row["sample_id"]
                     sample_result = sample_out / "result.json"
-                    if sample_result.exists():
-                        measured = json.loads(sample_result.read_text(encoding="utf8"))
-                    else:
+                    measured = (json.loads(sample_result.read_text(encoding="utf8"))
+                                if sample_result.exists() else None)
+                    if measured is None or (resume and measured["status"] in {
+                        "processing_failed", "download_budget_exceeded",
+                    }):
                         sample_out.mkdir(exist_ok=True)
                         measured = await asyncio.to_thread(validate_online, row, sample_out, download_bytes)
                         checkpoint(sample_result, measured)

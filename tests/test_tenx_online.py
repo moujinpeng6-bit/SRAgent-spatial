@@ -5,10 +5,33 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from sragent_spatial.tenx_online import collect, platform_for
+from sragent_spatial.tenx_online import ArchiveStream, collect, platform_for
 
 
 class TenxOnlineTests(unittest.TestCase):
+    def test_resume_reuses_verified_range_and_requests_only_remaining_bytes(self):
+        class RangeResponse(io.BytesIO):
+            status = 206
+
+            def __init__(self, data, span):
+                super().__init__(data)
+                self.headers = {"Content-Range": f"bytes {span}/6", "ETag": '"version"'}
+
+        url = "https://cf.10xgenomics.com/test.tar.gz"
+        with tempfile.TemporaryDirectory() as folder, patch(
+            "sragent_spatial.tenx_online.RANGE_BYTES", 4
+        ), patch("sragent_spatial.tenx_online.urlopen", side_effect=[
+            RangeResponse(b"abcd", "0-3"), RangeResponse(b"ef", "4-5"),
+        ]) as get:
+            cache = Path(folder)
+            self.assertEqual(ArchiveStream(url, 6, cache).read(4), b"abcd")
+            resumed = ArchiveStream(url, 6, cache)
+            self.assertEqual(resumed.read(6), b"abcdef")
+            self.assertEqual((resumed.reused, resumed.downloaded), (4, 2))
+            self.assertEqual([call.args[0].get_header("Range") for call in get.call_args_list],
+                             ["bytes=0-3", "bytes=4-5"])
+            self.assertEqual(get.call_args.args[0].get_header("If-match"), '"version"')
+
     def test_selects_filtered_2um_members_and_bounds_matrix_prefix(self):
         stream = io.BytesIO()
         prefix = "binned_outputs/square_002um/"
@@ -26,11 +49,8 @@ class TenxOnlineTests(unittest.TestCase):
                 entry.size = len(data)
                 tar.addfile(entry, io.BytesIO(data))
         stream.seek(0)
-        stream.offset = len(stream.getvalue())
-        with tempfile.TemporaryDirectory() as folder, patch(
-            "sragent_spatial.tenx_online.ArchiveStream", return_value=stream
-        ):
-            files, _ = collect("https://example.invalid/test.tar.gz", Path(folder), 100000)
+        with tempfile.TemporaryDirectory() as folder:
+            files = collect(stream, Path(folder))
             self.assertEqual(files["barcodes"]["path"].read_bytes(), b"filtered")
             self.assertEqual(files["matrix"]["path"].stat().st_size, 65536)
             self.assertEqual(set(files), {"matrix", "barcodes", "positions", "scalefactors", "image"})
