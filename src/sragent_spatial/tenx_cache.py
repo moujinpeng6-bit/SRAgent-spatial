@@ -18,6 +18,12 @@ IMAGE = "morphology_focus.ome.tif"
 MIB = 1024**2
 
 
+class CacheInputError(ValueError):
+    def __init__(self, status, message):
+        super().__init__(message)
+        self.status = status
+
+
 def cache_entry(root, sample_id):
     if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]{0,79}", sample_id):
         raise ValueError("Invalid cached sample ID")
@@ -25,16 +31,22 @@ def cache_entry(root, sample_id):
     rows = json.loads((root / "download_manifest.json").read_text(encoding="utf-8-sig"))
     matches = [row for row in rows if row.get("relative") == relative and row.get("type") == "zip"]
     if len(matches) != 1:
-        raise ValueError("Expected one 10x ZIP entry for this cached image")
-    entry = matches[0]
+        raise CacheInputError("ambiguous_source" if matches else "missing_source",
+                              "Expected one 10x ZIP entry for this cached image")
+    entry = dict(matches[0])
+    mirror = "https://s3-us-west-2.amazonaws.com/10x.files/"
+    if entry["url"].startswith(mirror):
+        entry["url"] = "https://cf.10xgenomics.com/" + entry["url"][len(mirror):]
     parsed = urlsplit(entry["url"])
     if (parsed.scheme != "https" or parsed.netloc != "cf.10xgenomics.com"
             or not re.fullmatch(r"/samples/xenium/[A-Za-z0-9._/-]+\.zip", parsed.path)
             or ".." in parsed.path.split("/") or parsed.query or parsed.fragment):
         raise ValueError("Expected an official 10x Xenium ZIP URL")
     path = (root / relative).resolve()
-    if not path.is_relative_to(root) or not path.is_file():
-        raise ValueError("Cached image must exist inside the cache root")
+    if not path.is_relative_to(root):
+        raise ValueError("Cached image must stay inside the cache root")
+    if not path.is_file():
+        raise CacheInputError("missing_image", "Cached image is missing")
     return entry, path
 
 
@@ -101,13 +113,14 @@ def prepare(entry, image, destination):
         image_info = images[0]
         if (image_info.file_size != entry["bytes"] or f"{image_info.CRC:08x}" != entry["crc32"].lower()
                 or not verify_member(image, image_info)):
-            raise ValueError("Cached image does not match the official ZIP entry")
+            raise CacheInputError("image_mismatch", "Cached image does not match the official ZIP entry")
         prefix = image_name[:-len(IMAGE)]
         selected = []
         for name in REQUIRED:
             items = [item for item in archive.infolist() if item.filename == prefix + name]
             if len(items) != 1 or items[0].is_dir():
-                raise ValueError(f"Expected one same-directory ZIP member for {name}")
+                raise CacheInputError("ambiguous_source" if items else "missing_companion",
+                                      f"Expected one same-directory ZIP member for {name}")
             selected.append(items[0])
         if any(not 0 < item.file_size <= 64 * MIB for item in selected) or sum(
                 item.compress_size for item in selected) > 64 * MIB:

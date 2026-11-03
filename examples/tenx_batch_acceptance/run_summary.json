@@ -1,0 +1,315 @@
+{
+  "mixed_batch": {
+    "schema_version": 1,
+    "request": {
+      "sample_ids": [
+        "Fixture_Missing",
+        "Fixture_Mismatch",
+        "14_Heart",
+        "36_Breast"
+      ],
+      "model": null,
+      "local_tools": true
+    },
+    "resumes": 1,
+    "samples": {
+      "Fixture_Missing": {
+        "status": "missing_image",
+        "attempts": 2,
+        "error_type": "CacheInputError"
+      },
+      "Fixture_Mismatch": {
+        "status": "image_mismatch",
+        "attempts": 2,
+        "preparation": null,
+        "agent_tool_loop_verified": false,
+        "validation": {}
+      },
+      "14_Heart": {
+        "status": "correspondence_passed",
+        "attempts": 1,
+        "preparation": {
+          "status": "prepared",
+          "archive_url": "https://cf.10xgenomics.com/samples/xenium/1.9.0/Xenium_V1_hHeart_nondiseased_section_FFPE/Xenium_V1_hHeart_nondiseased_section_FFPE_outs.zip",
+          "archive_bytes": 3456638778,
+          "image": {
+            "status": "reused_verified",
+            "bytes": 274743084,
+            "crc32": "14474cf3"
+          },
+          "files": {
+            "experiment.xenium": {
+              "status": "reused_verified",
+              "bytes": 1748,
+              "crc32": "b9f2f5e2"
+            },
+            "cells.csv.gz": {
+              "status": "reused_verified",
+              "bytes": 1552321,
+              "crc32": "acefadbf"
+            },
+            "cell_feature_matrix.h5": {
+              "status": "reused_verified",
+              "bytes": 973283,
+              "crc32": "60dcfc6f"
+            }
+          },
+          "zip_range_bytes": 2106
+        },
+        "agent_tool_loop_verified": false,
+        "validation": {
+          "cells": 26366,
+          "checks": {
+            "passed": 12,
+            "total": 12,
+            "failed": []
+          },
+          "centroids_inside_image": 26366,
+          "feature_type_counts": {
+            "Gene Expression": 377,
+            "Negative Control Probe": 20,
+            "Negative Control Codeword": 41,
+            "Unassigned Codeword": 103
+          }
+        }
+      },
+      "36_Breast": {
+        "status": "validation_error",
+        "attempts": 2,
+        "preparation": {
+          "status": "prepared",
+          "archive_url": "https://cf.10xgenomics.com/samples/xenium/1.0.2/Xenium_V1_FFPE_Human_Breast_ILC_With_Addon/Xenium_V1_FFPE_Human_Breast_ILC_With_Addon_outs.zip",
+          "archive_bytes": 17109364784,
+          "image": {
+            "status": "reused_verified",
+            "bytes": 1069862429,
+            "crc32": "3ab1b459"
+          },
+          "files": {
+            "experiment.xenium": {
+              "status": "reused_verified",
+              "bytes": 1521,
+              "crc32": "d8255ddc"
+            },
+            "cells.csv.gz": {
+              "status": "reused_verified",
+              "bytes": 15914133,
+              "crc32": "b84eae1d"
+            },
+            "cell_feature_matrix.h5": {
+              "status": "reused_verified",
+              "bytes": 21570220,
+              "crc32": "fb5f2fce"
+            }
+          },
+          "zip_range_bytes": 9991
+        },
+        "agent_tool_loop_verified": false,
+        "validation": {}
+      }
+    },
+    "status": "completed_with_failures"
+  },
+  "direct_e_drive_batch": {
+    "schema_version": 1,
+    "request": {
+      "sample_ids": [
+        "15_Skin",
+        "23_Kidney"
+      ],
+      "model": null,
+      "local_tools": true
+    },
+    "resumes": 0,
+    "samples": {
+      "15_Skin": {
+        "status": "correspondence_passed",
+        "attempts": 1,
+        "preparation": {
+          "status": "prepared",
+          "archive_url": "https://cf.10xgenomics.com/samples/xenium/1.7.0/Xeniumranger_V1_hSkin_Melanoma_Add_on_FFPE/Xeniumranger_V1_hSkin_Melanoma_Add_on_FFPE_outs.zip",
+          "archive_bytes": 3779858076,
+          "image": {
+            "status": "reused_verified",
+            "bytes": 207941036,
+            "crc32": "20a2665a"
+          },
+          "files": {
+            "experiment.xenium": {
+              "status": "downloaded",
+              "bytes": 2049,
+              "crc32": "2362b010"
+            },
+            "cells.csv.gz": {
+              "status": "downloaded",
+              "bytes": 5014621,
+              "crc32": "d3d45096"
+            },
+            "cell_feature_matrix.h5": {
+              "status": "downloaded",
+              "bytes": 6059157,
+              "crc32": "edeb0a33"
+            }
+          },
+          "zip_range_bytes": 10843590
+        },
+        "agent_tool_loop_verified": false,
+        "validation": {
+          "cells": 87499,
+          "checks": {
+            "passed": 12,
+            "total": 12,
+            "failed": []
+          },
+          "centroids_inside_image": 87499,
+          "feature_type_counts": {
+            "Gene Expression": 382,
+            "Negative Control Probe": 20,
+            "Negative Control Codeword": 41,
+            "Unassigned Codeword": 98
+          }
+        }
+      },
+      "23_Kidney": {
+        "status": "correspondence_passed",
+        "attempts": 1,
+        "preparation": {
+          "status": "prepared",
+          "archive_url": "https://cf.10xgenomics.com/samples/xenium/1.5.0/Xenium_V1_hKidney_cancer_section/Xenium_V1_hKidney_cancer_section_outs.zip",
+          "archive_bytes": 3434883956,
+          "image": {
+            "status": "reused_verified",
+            "bytes": 249566928,
+            "crc32": "916400a1"
+          },
+          "files": {
+            "experiment.xenium": {
+              "status": "downloaded",
+              "bytes": 1561,
+              "crc32": "5eddc77a"
+            },
+            "cells.csv.gz": {
+              "status": "downloaded",
+              "bytes": 3285924,
+              "crc32": "a06d2881"
+            },
+            "cell_feature_matrix.h5": {
+              "status": "downloaded",
+              "bytes": 3005245,
+              "crc32": "a0d2dc22"
+            }
+          },
+          "zip_range_bytes": 6141983
+        },
+        "agent_tool_loop_verified": false,
+        "validation": {
+          "cells": 56510,
+          "checks": {
+            "passed": 12,
+            "total": 12,
+            "failed": []
+          },
+          "centroids_inside_image": 56510,
+          "feature_type_counts": {
+            "Gene Expression": 377,
+            "Negative Control Probe": 20,
+            "Negative Control Codeword": 41,
+            "Unassigned Codeword": 103
+          }
+        }
+      }
+    },
+    "status": "completed"
+  },
+  "interruption": {
+    "first_process_exit": 1,
+    "resume_exit": 2,
+    "interrupted_sample": "36_Breast",
+    "reused_member": "experiment.xenium",
+    "reused_member_mtime_unchanged": true,
+    "heart_attempts_before_after": [
+      1,
+      1
+    ],
+    "statuses_before_resume": {
+      "Fixture_Missing": "missing_image",
+      "Fixture_Mismatch": "image_mismatch",
+      "14_Heart": "correspondence_passed",
+      "36_Breast": "running"
+    },
+    "resumed_companions": {
+      "experiment.xenium": {
+        "status": "reused_verified",
+        "bytes": 1521,
+        "crc32": "d8255ddc"
+      },
+      "cells.csv.gz": {
+        "status": "reused_verified",
+        "bytes": 15914133,
+        "crc32": "b84eae1d"
+      },
+      "cell_feature_matrix.h5": {
+        "status": "reused_verified",
+        "bytes": 21570220,
+        "crc32": "fb5f2fce"
+      }
+    }
+  },
+  "controlled_cases": {
+    "Fixture_Missing": "Registered 10x entry with no local TIFF",
+    "Fixture_Mismatch": "Registered 10x entry with deliberately wrong local TIFF bytes",
+    "image_staging": "Unmodified local copies of E-drive TIFFs were staged alongside the fixtures.",
+    "companion_staging": "Previously acquired companion files were staged for the controlled local run. The breast experiment file was fetched in the first process, verified and reused after restart."
+  },
+  "breast_cell_count_from_experiment": 365604,
+  "validator_cell_limit": 200000,
+  "deepseek_heart_check": {
+    "status": "correspondence_passed",
+    "attempts": 1,
+    "preparation": {
+      "status": "prepared",
+      "archive_url": "https://cf.10xgenomics.com/samples/xenium/1.9.0/Xenium_V1_hHeart_nondiseased_section_FFPE/Xenium_V1_hHeart_nondiseased_section_FFPE_outs.zip",
+      "archive_bytes": 3456638778,
+      "image": {
+        "status": "reused_verified",
+        "bytes": 274743084,
+        "crc32": "14474cf3"
+      },
+      "files": {
+        "experiment.xenium": {
+          "status": "downloaded",
+          "bytes": 1748,
+          "crc32": "b9f2f5e2"
+        },
+        "cells.csv.gz": {
+          "status": "downloaded",
+          "bytes": 1552321,
+          "crc32": "acefadbf"
+        },
+        "cell_feature_matrix.h5": {
+          "status": "downloaded",
+          "bytes": 973283,
+          "crc32": "60dcfc6f"
+        }
+      },
+      "zip_range_bytes": 2448043
+    },
+    "agent_tool_loop_verified": true,
+    "validation": {
+      "cells": 26366,
+      "checks": {
+        "passed": 12,
+        "total": 12,
+        "failed": []
+      },
+      "centroids_inside_image": 26366,
+      "feature_type_counts": {
+        "Gene Expression": 377,
+        "Negative Control Probe": 20,
+        "Negative Control Codeword": 41,
+        "Unassigned Codeword": 103
+      }
+    }
+  },
+  "offline_tests_passed": 112
+}

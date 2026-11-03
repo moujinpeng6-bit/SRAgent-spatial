@@ -105,6 +105,14 @@ def main(argv=None):
         if name.endswith("agent"):
             local.add_argument("--model", default=os.getenv("SPATIAL_MODEL"))
             local.add_argument("--timeout", type=bounded_integer(30, 1800), default=600)
+    tenx_batch = sub.add_parser("validate-10x-batch", help="Validate and resume a batch of cached 10x images")
+    tenx_batch.add_argument("--10x-cache", dest="tenx_cache", type=Path, required=True)
+    tenx_batch.add_argument("--sample-ids", nargs="+", required=True)
+    tenx_batch.add_argument("--out", type=Path, required=True)
+    tenx_batch.add_argument("--model", default=os.getenv("SPATIAL_MODEL"))
+    tenx_batch.add_argument("--timeout", type=bounded_integer(30, 1800), default=600)
+    tenx_batch.add_argument("--resume", action="store_true")
+    tenx_batch.add_argument("--local-tools", action="store_true", help="Run the same preparation and validation tools directly")
     audit = sub.add_parser("audit-assets", help="Check each selected GSM's Visium expression/position/image bundle")
     audit.add_argument("--run", type=Path, required=True)
     audit.add_argument("--out", type=Path, required=True)
@@ -238,6 +246,21 @@ def main(argv=None):
                     return session.report()
                 report = asyncio.run(validate_registered())
             print(json.dumps({key: report[key] for key in ("status", "samples_registered", "samples_validated", "failed_sample_ids")}))
+            if report["status"] != "completed":
+                return 2
+        elif args.command == "validate-10x-batch":
+            from .agents import credentials_present
+            from .tenx_batch import run_batch
+            if not args.local_tools and (not args.model or not credentials_present()):
+                raise RuntimeError("Batch validation requires a model and locally configured provider credential")
+            if os.name == "nt":
+                import truststore
+                truststore.inject_into_ssl()
+            report = asyncio.run(run_batch(args.tenx_cache, args.sample_ids, args.out,
+                                           None if args.local_tools else args.model,
+                                           timeout=args.timeout, resume=args.resume, local_tools=args.local_tools))
+            print(json.dumps({"status": report["status"],
+                              "samples": {key: row["status"] for key, row in report["samples"].items()}}))
             if report["status"] != "completed":
                 return 2
         elif args.command == "audit-assets":

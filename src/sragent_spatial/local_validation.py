@@ -133,7 +133,7 @@ class TenxCacheSession(LocalValidationSession):
         return catalog
 
     async def prepare(self, sample_id):
-        from .tenx_cache import prepare
+        from .tenx_cache import CacheInputError, prepare
 
         if not self.listed or sample_id not in self.samples:
             return {"status": "rejected", "reason": "List registered samples first and use their exact ID"}
@@ -142,9 +142,12 @@ class TenxCacheSession(LocalValidationSession):
                 self.preparation = await asyncio.to_thread(prepare, self.entry, self.image, self.inputs)
                 self.events.append({"event": "10x_companions_prepared", "sample_id": sample_id})
             except Exception as exc:
-                self.events.append({"event": "10x_preparation_error", "error_type": type(exc).__name__})
+                status = (exc.status if isinstance(exc, CacheInputError) else
+                          "access_error" if isinstance(exc, OSError) else "preparation_failed")
+                self.events.append({"event": "10x_preparation_error", "error_type": type(exc).__name__,
+                                    "status": status})
                 self.persist()
-                return {"status": "preparation_failed", "error_type": type(exc).__name__}
+                return {"status": "preparation_failed", "reason": status, "error_type": type(exc).__name__}
             self.persist()
         return self.preparation
 
