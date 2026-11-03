@@ -133,7 +133,9 @@ class XeniumValidationTests(unittest.TestCase):
             root = Path(folder)
             _, manifest = self.fixture(root)
             session = LocalValidationSession(manifest, root / "out", "gpt-test")
-            report = asyncio.run(run_validation_agent(session, supervisor_factory=lambda _: ProseGraph()))
+            with patch("sragent_spatial.agents.provider", return_value="openai"):
+                report = asyncio.run(run_validation_agent(session, supervisor_factory=lambda _: ProseGraph()))
+            self.assertTrue(report["model_invocation_succeeded"])
             self.assertEqual(report["status"], "incomplete")
             self.assertFalse(report["agent_tool_loop_verified"])
             self.assertEqual(report["samples_validated"], 0)
@@ -163,7 +165,9 @@ class XeniumValidationTests(unittest.TestCase):
             root = Path(folder)
             _, manifest = self.fixture(root)
             session = LocalValidationSession(manifest, root / "out", "gpt-test")
-            with patch("sragent_spatial.xenium_validation.plot_preview"):
+            with patch("sragent_spatial.xenium_validation.plot_preview"), patch(
+                "sragent_spatial.agents.provider", return_value="openai"
+            ):
                 report = asyncio.run(run_validation_agent(session, supervisor_factory=ToolGraph))
             self.assertEqual(report["status"], "completed")
             self.assertTrue(report["agent_tool_loop_verified"])

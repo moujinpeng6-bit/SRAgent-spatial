@@ -520,5 +520,58 @@
     "scope": "published filtered expression barcode list, coordinates, scale and image; matrix not read",
     "manifest": "native16_manifest.json",
     "verified_asset_bytes": 4551526
+  },
+  "offline_tests_passed": 110,
+  "local_xenium_geo_replay": {
+    "scope": "separate replay of the prior GEO Xenium discovery against local-only files",
+    "status_counts": {
+      "missing_files": 6,
+      "correspondence_passed": 1
+    },
+    "samples": [
+      {
+        "sample_id": "GSM7990532",
+        "status": "missing_files"
+      },
+      {
+        "sample_id": "GSM7990533",
+        "status": "missing_files"
+      },
+      {
+        "sample_id": "GSM7990534",
+        "status": "missing_files"
+      },
+      {
+        "sample_id": "GSM7990535",
+        "status": "missing_files"
+      },
+      {
+        "sample_id": "GSM7990536",
+        "status": "missing_files"
+      },
+      {
+        "sample_id": "GSM7990537",
+        "status": "missing_files"
+      },
+      {
+        "sample_id": "GSM7990538",
+        "status": "correspondence_passed"
+      }
+    ],
+    "verified_sample": {
+      "sample_id": "GSM7990538",
+      "cells": 12578,
+      "feature_type_counts": {
+        "Gene Expression": 343,
+        "Negative Control Probe": 20,
+        "Negative Control Codeword": 41,
+        "Unassigned Codeword": 137
+      },
+      "checks": {
+        "passed": 19,
+        "total": 19,
+        "failed": []
+      }
+    }
   }
 }
