@@ -1,12 +1,44 @@
-"""Prepare and validate eligible Xenium samples from a discovery report."""
+"""Prepare and validate eligible Xenium and Visium samples from a discovery report."""
+import asyncio
 import re
 from collections import Counter
 from pathlib import Path
 from urllib.error import HTTPError, URLError
 
+from .asset_audit import FileFetcher, LocalFileFetcher, audit_sample, file_plan
 from .geo import write_json
 from .pipeline import PipelineSession
 from .xenium_assets import DownloadBudgetExceeded
+
+
+def audit_visium_candidate(row, root, out, download_bytes):
+    plan = file_plan(row)
+    local = LocalFileFetcher(root, {asset["filename"] for asset in plan["roles"].values()})
+    remote = FileFetcher(out / "files", download_bytes=download_bytes)
+
+    class Fetcher:
+        def fetch(self, accession, asset):
+            result = local.fetch(accession, asset)
+            if result["status"] == "missing_local_file" and download_bytes:
+                return remote.fetch(accession, asset)
+            return result
+
+    audit = audit_sample(row, Fetcher())
+    write_json(out / "validation.json", audit)
+    status = audit["status"]
+    if status == "basic_correspondence_passed":
+        status = "correspondence_passed"
+    elif status == "unavailable":
+        states = {audit["files"][role]["status"] for role in audit["unavailable_required_roles"]}
+        if states <= {"missing_local_file"}:
+            status = "missing_files"
+        elif states & {"unavailable", "read_error"}:
+            status = "access_failed"
+        elif states & {"download_budget_exceeded", "size_limit", "size_limit_or_empty", "incomplete_or_budget_limit"}:
+            status = "file_limit_exceeded"
+        elif "ambiguous_local_file" in states:
+            status = "ambiguous_bundle"
+    return {"status": status, "stage": "validate", "validation": audit}
 
 
 async def validate_candidates(report, archive_root, out, *, download_bytes=0):
@@ -27,9 +59,22 @@ async def validate_candidates(report, archive_root, out, *, download_bytes=0):
         seen.add(sample)
         result = {"sample_id": sample, "stage": "prepare"}
         platforms = row.get("rule_prediction", {}).get("platform_candidates")
-        if platforms != ["Xenium"] or "Xenium" not in report["request"]["platforms"]:
+        requested = report["request"]["platforms"]
+        fields = row.get("packet", {}).get("fields", {})
+        hd = any(re.search(r"\bvisium\s*hd\b", value, re.I)
+                 for values in fields.values() for value in values)
+        if platforms == ["Visium"] and "Visium" in requested and not hd:
+            result["platform"] = "Visium"
+            try:
+                if not re.fullmatch(r"GSM[1-9][0-9]*", sample):
+                    raise ValueError("Invalid sample accession")
+                result.update(await asyncio.to_thread(audit_visium_candidate, row, root, out / sample, download_bytes))
+            except (OSError, ValueError, KeyError) as exc:
+                result.update(status="processing_failed", error_type=type(exc).__name__)
+        elif platforms != ["Xenium"] or "Xenium" not in requested:
             result["status"] = "unsupported_platform"
         else:
+            result["platform"] = "Xenium"
             try:
                 if not re.fullmatch(r"GSM[1-9][0-9]*", sample):
                     raise ValueError("Invalid sample accession")

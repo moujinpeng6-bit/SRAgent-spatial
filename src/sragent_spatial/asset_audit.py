@@ -67,11 +67,12 @@ def file_plan(sample):
 
 
 class FileFetcher:
-    def __init__(self, root, *, interval=0.35):
+    def __init__(self, root, *, interval=0.35, download_bytes=None):
         self.root = Path(root)
         self.lock = threading.Lock()
         self.last_request = 0.0
         self.interval = interval
+        self.remaining_bytes = download_bytes
 
     def fetch(self, accession, asset):
         role = asset["role"]
@@ -86,9 +87,13 @@ class FileFetcher:
             meta = json.loads(meta_path.read_text(encoding="utf-8"))
             if meta["download_url"] == asset["download_url"] and hashlib.sha256(path.read_bytes()).hexdigest() == meta["sha256"]:
                 return {**meta, "cached": True, "local_path": str(path)}
+        if self.remaining_bytes is not None:
+            if self.remaining_bytes <= 0:
+                return {**result, "status": "download_budget_exceeded"}
+            limit = min(limit, self.remaining_bytes)
         headers = {"User-Agent": "SRAgent-spatial/0.4 (public Visium correspondence audit)", "Accept-Encoding": "identity"}
         if partial:
-            headers["Range"] = "bytes=0-65535"
+            headers["Range"] = f"bytes=0-{limit - 1}"
         try:
             with self.lock:
                 time.sleep(max(0, self.interval - (time.monotonic() - self.last_request)))
@@ -99,7 +104,13 @@ class FileFetcher:
                 length = response.headers.get("Content-Length")
                 if not partial and length and int(length) > limit:
                     return {**result, "status": "size_limit", "http_status": response.status, "content_length": int(length)}
-                body = response.read(limit if partial else limit + 1)
+                read_limit = limit if partial or self.remaining_bytes == limit else limit + 1
+                body = response.read(read_limit)
+                if self.remaining_bytes is not None:
+                    self.remaining_bytes -= len(body)
+                if not partial and ((length is not None and len(body) < int(length))
+                                    or (length is None and len(body) == limit and read_limit == limit)):
+                    return {**result, "status": "incomplete_or_budget_limit"}
                 if not body or len(body) > limit:
                     return {**result, "status": "size_limit_or_empty", "http_status": response.status}
                 result.update(status="downloaded", http_status=response.status, bytes=len(body),

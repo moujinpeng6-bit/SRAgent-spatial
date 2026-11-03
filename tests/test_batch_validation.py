@@ -59,3 +59,30 @@ class BatchValidationTests(unittest.TestCase):
                 cell = next(csv.DictReader(stream))
             self.assertEqual(cell["cell_id"], "a")
             self.assertEqual((float(cell["x_image_px"]), float(cell["y_image_px"])), (2.0, 2.0))
+
+    def test_visium_candidate_checks_local_files_and_hd_is_not_routed_as_visium(self):
+        import importlib.util
+        from test_asset_audit import LocalFiles, sample_record
+        from sragent_spatial.asset_audit import file_plan
+
+        if not importlib.util.find_spec("PIL"):
+            self.skipTest("Install the validation extra")
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            inputs = root / "inputs"
+            inputs.mkdir()
+            LocalFiles(inputs)
+            sample = sample_record()
+            sample["rule_prediction"] = {"platform_candidates": ["Visium"]}
+            sample["packet"] = {"fields": {}}
+            for role, asset in file_plan(sample)["roles"].items():
+                (inputs / (role + ".gz")).rename(inputs / asset["filename"])
+            hd = sample_record("GSM999002")
+            hd["rule_prediction"] = sample["rule_prediction"]
+            hd["packet"] = {"fields": {"Sample_title": ["Human lung Visium HD"]}}
+            report = {"request": {"platforms": ["Visium"]}, "samples": [sample, hd]}
+            result = asyncio.run(validate_candidates(report, inputs, root / "batch"))
+        self.assertEqual(result["status_counts"], {"correspondence_passed": 1, "unsupported_platform": 1})
+        checks = result["samples"][0]["validation"]["checks"]
+        self.assertEqual(checks["barcode_position_image"]["image_bounds_check"]["tested_in_tissue_barcodes"], 2)
+        self.assertTrue(checks["image_decode"]["pixel_decode_verified"])

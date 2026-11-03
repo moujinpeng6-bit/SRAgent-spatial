@@ -1,5 +1,7 @@
 # Xenium candidate batch
 
+This page records v0.7. See [the shared Visium and Xenium entry point](visium_batch.md) for v0.8.
+
 `discover --archive-root` now sends screened candidates to the existing preparation and validation tools. Alternatively, replay the file stage from a saved discovery run without invoking the language model.
 
 ```powershell
