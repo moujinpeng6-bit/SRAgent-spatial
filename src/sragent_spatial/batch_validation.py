@@ -1,5 +1,7 @@
 """Prepare and validate eligible Xenium and Visium samples from a discovery report."""
 import asyncio
+import json
+import tempfile
 import re
 from urllib.parse import urlsplit, urlunsplit
 from urllib.request import HTTPRedirectHandler, Request, build_opener
@@ -9,6 +11,7 @@ from urllib.error import HTTPError, URLError
 
 from .asset_audit import FileFetcher, LocalFileFetcher, audit_sample, file_plan, hd_bin_sizes
 from .geo import write_json
+from .tenx_batch import checkpoint
 from .hd_archive import audit_hd_geo_archive, audit_prepared_archive, spatial_bin_size, validate_hd_bin
 from .pipeline import PipelineSession
 from .screening import VISIUM_HD
@@ -171,15 +174,17 @@ def probe_sample_assets(row, limit=4):
     return results
 
 
-async def validate_candidates(report, archive_root, out, *, download_bytes=0, probe_remote=False):
+async def validate_candidates(report, archive_root, out, *, download_bytes=0, probe_remote=False, resume=False):
     out = Path(out).resolve()
     root = Path(archive_root).resolve()
     if not root.is_dir() or out.is_relative_to(root):
         raise ValueError("Archive root must exist and batch output must be outside it")
-    out.mkdir(parents=True, exist_ok=False)
-    batch = {"status": "running", "samples": [], "status_counts": {}}
-    write_json(out / "batch.json", batch)
-    seen = set()
+    out.mkdir(parents=True, exist_ok=resume)
+    path = out / "batch.json"
+    batch = (json.loads(path.read_text(encoding="utf8")) if resume and path.exists() else
+             {"status": "running", "samples": [], "status_counts": {}})
+    checkpoint(path, batch)
+    seen = {row["sample_id"] for row in batch["samples"]}
     for row in report["samples"]:
         if row.get("status") != "completed" or row.get("include_in_catalog") is not True:
             continue
@@ -188,6 +193,13 @@ async def validate_candidates(report, archive_root, out, *, download_bytes=0, pr
             continue
         seen.add(sample)
         result = {"sample_id": sample, "stage": "prepare"}
+        sample_out = out / sample
+        if resume and re.fullmatch(r"GSM[1-9][0-9]*", sample) and (
+                (sample_out / "prepared").exists() or (sample_out / "downloads").exists()
+                or any(sample_out.glob("square_*/expression_barcodes.tsv"))):
+            # Archive extraction uses exclusive writes. Preserve interrupted artifacts and retry separately.
+            sample_out = Path(tempfile.mkdtemp(prefix=f"{sample}.retry-", dir=out))
+            result["artifact_dir"] = sample_out.name
         platforms = row.get("rule_prediction", {}).get("platform_candidates")
         requested = report["request"]["platforms"]
         fields = row.get("packet", {}).get("fields", {})
@@ -199,7 +211,7 @@ async def validate_candidates(report, archive_root, out, *, download_bytes=0, pr
             try:
                 if not re.fullmatch(r"GSM[1-9][0-9]*", sample):
                     raise ValueError("Invalid sample accession")
-                result.update(await asyncio.to_thread(audit_hd_candidate, row, root, out / sample, download_bytes))
+                result.update(await asyncio.to_thread(audit_hd_candidate, row, root, sample_out, download_bytes))
             except AmbiguousBundle:
                 result["status"] = "ambiguous_bundle"
             except FileNotFoundError as exc:
@@ -217,7 +229,7 @@ async def validate_candidates(report, archive_root, out, *, download_bytes=0, pr
             try:
                 if not re.fullmatch(r"GSM[1-9][0-9]*", sample):
                     raise ValueError("Invalid sample accession")
-                result.update(await asyncio.to_thread(audit_visium_candidate, row, root, out / sample, download_bytes))
+                result.update(await asyncio.to_thread(audit_visium_candidate, row, root, sample_out, download_bytes))
             except (OSError, ValueError, KeyError) as exc:
                 result.update(status="processing_failed", error_type=type(exc).__name__)
         elif platforms != ["Xenium"] or "Xenium" not in requested:
@@ -230,7 +242,7 @@ async def validate_candidates(report, archive_root, out, *, download_bytes=0, pr
                 study = row["studies"][0]
                 if study not in row["source_series_ids"]:
                     raise ValueError("Sample lacks study association")
-                session = PipelineSession(None, study, sample, root, out / sample, report["model"],
+                session = PipelineSession(None, study, sample, root, sample_out, report["model"],
                                           download_bytes=download_bytes)
                 session.search = {"source": "saved_discovery_selection", "study": study, "sample_id": sample}
                 session.screen = {"eligible": True}
@@ -260,12 +272,12 @@ async def validate_candidates(report, archive_root, out, *, download_bytes=0, pr
             if probe_remote and result["status"] not in {"correspondence_passed", "unsupported_platform"} else [])}
         batch["samples"].append(result)
         batch["status_counts"] = dict(Counter(item["status"] for item in batch["samples"]))
-        write_json(out / "batch.json", batch)
+        checkpoint(path, batch)
     if not batch["samples"]:
         batch["status"] = "no_candidates"
     else:
         batch["status"] = "completed" if all(
             row["status"] == "correspondence_passed" for row in batch["samples"]
         ) else "completed_with_issues"
-    write_json(out / "batch.json", batch)
+    checkpoint(path, batch)
     return batch

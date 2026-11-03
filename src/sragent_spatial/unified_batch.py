@@ -34,12 +34,12 @@ def counts(rows):
             "outcomes": dict(Counter(row["status"] for row in rows))}
 
 
-async def validate_sources(reports, geo_root, cache, sample_ids, out, *, download_bytes=0, probe_remote=False):
+async def validate_sources(reports, geo_root, cache, sample_ids, out, *, download_bytes=0, probe_remote=False, resume=False):
     out = Path(out).resolve()
     for root in (geo_root, cache):
         if root is not None and (not Path(root).is_dir() or out.is_relative_to(Path(root).resolve())):
             raise ValueError("Input root must exist and output must be outside it")
-    out.mkdir(parents=True, exist_ok=False)
+    out.mkdir(parents=True, exist_ok=resume)
     path = out / "batch.json"
     result = {"status": "running", "samples": []}
     checkpoint(path, result)
@@ -56,8 +56,10 @@ async def validate_sources(reports, geo_root, cache, sample_ids, out, *, downloa
         chosen = [row for group, row, eligible in selected.values() if group == index and eligible]
         if not chosen:
             continue
-        batch = await validate_candidates({**report, "samples": chosen}, geo_root, out / f"geo_{index + 1}",
-                                          download_bytes=download_bytes, probe_remote=probe_remote)
+        options = {"download_bytes": download_bytes, "probe_remote": probe_remote}
+        if resume:
+            options["resume"] = True
+        batch = await validate_candidates({**report, "samples": chosen}, geo_root, out / f"geo_{index + 1}", **options)
         rows.extend({"source": "GEO", "found": True, "selected": True, **row,
                      "platform": row.get("platform", "unclassified"), "files_ready": files_ready(row)}
                     for row in batch["samples"])
@@ -68,7 +70,7 @@ async def validate_sources(reports, geo_root, cache, sample_ids, out, *, downloa
                 for sample, (_, row, eligible) in selected.items() if not eligible)
     checkpoint(path, result)
     if sample_ids:
-        batch = await run_batch(cache, sample_ids, out / "10x", None, timeout=600, local_tools=True)
+        batch = await run_batch(cache, sample_ids, out / "10x", None, timeout=600, local_tools=True, resume=resume and (out / "10x/batch.json").exists())
         rows.extend({"source": "10x_cache", "sample_id": sample, "platform": "Xenium", **row,
                      "selected": True, "found": row["status"] not in {"missing_source", "ambiguous_source", "sample_input_error"},
                      "files_ready": bool(row.get("preparation"))} for sample, row in batch["samples"].items())

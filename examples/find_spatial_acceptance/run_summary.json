@@ -1,0 +1,758 @@
+{
+  "kidney": {
+    "status": "completed_with_issues",
+    "samples": [
+      {
+        "sample_id": "GSM8720409",
+        "source": "GEO",
+        "platform": "Xenium",
+        "found": true,
+        "selected": true,
+        "files_ready": false,
+        "status": "missing_files",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8720409",
+        "error_type": "FileNotFoundError"
+      },
+      {
+        "sample_id": "GSM8720410",
+        "source": "GEO",
+        "platform": "Xenium",
+        "found": true,
+        "selected": true,
+        "files_ready": false,
+        "status": "missing_files",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8720410",
+        "error_type": "FileNotFoundError"
+      },
+      {
+        "sample_id": "GSM9767741",
+        "source": "GEO",
+        "platform": "Visium",
+        "found": true,
+        "selected": true,
+        "files_ready": true,
+        "status": "mismatch",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9767741",
+        "issues": [
+          "invalid_coordinates_or_tissue_flags"
+        ]
+      },
+      {
+        "sample_id": "GSM9767742",
+        "source": "GEO",
+        "platform": "Visium",
+        "found": true,
+        "selected": true,
+        "files_ready": true,
+        "status": "correspondence_passed",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9767742"
+      },
+      {
+        "sample_id": "GSM9108683",
+        "source": "GEO",
+        "platform": "Visium",
+        "found": true,
+        "selected": true,
+        "files_ready": true,
+        "status": "correspondence_passed",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9108683"
+      },
+      {
+        "sample_id": "GSM9108684",
+        "source": "GEO",
+        "platform": "Visium",
+        "found": true,
+        "selected": true,
+        "files_ready": true,
+        "status": "correspondence_passed",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9108684"
+      },
+      {
+        "sample_id": "GSM8371513",
+        "source": "GEO",
+        "platform": "unclassified",
+        "found": true,
+        "selected": false,
+        "files_ready": false,
+        "status": "not_selected",
+        "label": "unknown",
+        "screen_status": "completed"
+      },
+      {
+        "sample_id": "GSM8371514",
+        "source": "GEO",
+        "platform": "unclassified",
+        "found": true,
+        "selected": false,
+        "files_ready": false,
+        "status": "not_selected",
+        "label": "unknown",
+        "screen_status": "completed"
+      },
+      {
+        "sample_id": "GSM9802150",
+        "source": "GEO",
+        "platform": "unclassified",
+        "found": true,
+        "selected": false,
+        "files_ready": false,
+        "status": "not_selected",
+        "label": "unknown",
+        "screen_status": "completed"
+      },
+      {
+        "sample_id": "GSM9802151",
+        "source": "GEO",
+        "platform": "unclassified",
+        "found": true,
+        "selected": false,
+        "files_ready": false,
+        "status": "not_selected",
+        "label": "unknown",
+        "screen_status": "completed"
+      },
+      {
+        "sample_id": "GSM9802210",
+        "source": "GEO",
+        "platform": "Visium HD",
+        "found": true,
+        "selected": false,
+        "files_ready": false,
+        "status": "not_selected",
+        "label": "unknown",
+        "screen_status": "completed"
+      },
+      {
+        "sample_id": "GSM9802211",
+        "source": "GEO",
+        "platform": "Visium HD",
+        "found": true,
+        "selected": false,
+        "files_ready": false,
+        "status": "not_selected",
+        "label": "unknown",
+        "screen_status": "completed"
+      },
+      {
+        "sample_id": "22_Kidney",
+        "source": "10x_cache",
+        "platform": "Xenium",
+        "found": true,
+        "selected": true,
+        "files_ready": true,
+        "status": "correspondence_passed",
+        "archive_url": "https://cf.10xgenomics.com/samples/xenium/1.5.0/Xenium_V1_hKidney_nondiseased_section/Xenium_V1_hKidney_nondiseased_section_outs.zip",
+        "checks": {
+          "cells": 97560,
+          "checks": {
+            "passed": 12,
+            "total": 12,
+            "failed": []
+          },
+          "centroids_inside_image": 97560,
+          "feature_type_counts": {
+            "Gene Expression": 377,
+            "Negative Control Probe": 20,
+            "Negative Control Codeword": 41,
+            "Unassigned Codeword": 103
+          }
+        }
+      },
+      {
+        "sample_id": "23_Kidney",
+        "source": "10x_cache",
+        "platform": "Xenium",
+        "found": true,
+        "selected": true,
+        "files_ready": true,
+        "status": "correspondence_passed",
+        "archive_url": "https://cf.10xgenomics.com/samples/xenium/1.5.0/Xenium_V1_hKidney_cancer_section/Xenium_V1_hKidney_cancer_section_outs.zip",
+        "checks": {
+          "cells": 56510,
+          "checks": {
+            "passed": 12,
+            "total": 12,
+            "failed": []
+          },
+          "centroids_inside_image": 56510,
+          "feature_type_counts": {
+            "Gene Expression": 377,
+            "Negative Control Probe": 20,
+            "Negative Control Codeword": 41,
+            "Unassigned Codeword": 103
+          }
+        }
+      }
+    ],
+    "totals": {
+      "found": 14,
+      "selected": 8,
+      "files_ready": 6,
+      "passed": 5,
+      "failed": 3,
+      "outcomes": {
+        "missing_files": 2,
+        "mismatch": 1,
+        "correspondence_passed": 5,
+        "not_selected": 6
+      }
+    },
+    "by_source": {
+      "10x_cache": {
+        "found": 2,
+        "selected": 2,
+        "files_ready": 2,
+        "passed": 2,
+        "failed": 0,
+        "outcomes": {
+          "correspondence_passed": 2
+        }
+      },
+      "GEO": {
+        "found": 12,
+        "selected": 6,
+        "files_ready": 4,
+        "passed": 3,
+        "failed": 3,
+        "outcomes": {
+          "missing_files": 2,
+          "mismatch": 1,
+          "correspondence_passed": 3,
+          "not_selected": 6
+        }
+      }
+    },
+    "by_platform": {
+      "Visium": {
+        "found": 4,
+        "selected": 4,
+        "files_ready": 4,
+        "passed": 3,
+        "failed": 1,
+        "outcomes": {
+          "mismatch": 1,
+          "correspondence_passed": 3
+        }
+      },
+      "Visium HD": {
+        "found": 2,
+        "selected": 0,
+        "files_ready": 0,
+        "passed": 0,
+        "failed": 0,
+        "outcomes": {
+          "not_selected": 2
+        }
+      },
+      "Xenium": {
+        "found": 4,
+        "selected": 4,
+        "files_ready": 2,
+        "passed": 2,
+        "failed": 2,
+        "outcomes": {
+          "missing_files": 2,
+          "correspondence_passed": 2
+        }
+      },
+      "unclassified": {
+        "found": 4,
+        "selected": 0,
+        "files_ready": 0,
+        "passed": 0,
+        "failed": 0,
+        "outcomes": {
+          "not_selected": 4
+        }
+      }
+    },
+    "discovery": [
+      {
+        "request": {
+          "organism": "Homo sapiens",
+          "tissue": "kidney",
+          "platforms": [
+            "Xenium"
+          ],
+          "max_studies": 2,
+          "max_samples_per_study": 2,
+          "max_total_samples": 4,
+          "study": null
+        },
+        "status": "completed_with_limits",
+        "counts": {
+          "studies_returned": 2,
+          "unique_samples_attempted": 4,
+          "processing_status": {
+            "completed": 4
+          },
+          "labels": {
+            "unknown": 2,
+            "eligible": 2
+          },
+          "selected_metadata_candidates": 2,
+          "study_sample_links_not_read": 77
+        },
+        "search": {
+          "query": "\"Homo sapiens\"[Organism] AND \"kidney\"[All Fields] AND (\"Xenium\"[All Fields]) AND gse[ETYP]",
+          "accession_lookup_fallback": false,
+          "platforms": [
+            "Xenium"
+          ],
+          "platform_kinds": {
+            "Xenium": "imaging"
+          },
+          "total_hits": 14,
+          "returned_ids": [
+            "200286186",
+            "200286184"
+          ],
+          "skipped_nonseries_ids": [],
+          "records_exported": 2,
+          "study_failures": [],
+          "search_truncated": true
+        },
+        "screening_mode": "rules_only"
+      },
+      {
+        "request": {
+          "organism": "Homo sapiens",
+          "tissue": "kidney",
+          "platforms": [
+            "Visium"
+          ],
+          "max_studies": 2,
+          "max_samples_per_study": 2,
+          "max_total_samples": 4,
+          "study": null
+        },
+        "status": "completed_with_limits",
+        "counts": {
+          "studies_returned": 2,
+          "unique_samples_attempted": 4,
+          "processing_status": {
+            "completed": 4
+          },
+          "labels": {
+            "eligible": 4
+          },
+          "selected_metadata_candidates": 4,
+          "study_sample_links_not_read": 3
+        },
+        "search": {
+          "query": "\"Homo sapiens\"[Organism] AND \"kidney\"[All Fields] AND (\"Visium\"[All Fields] OR \"10x Visium\"[All Fields] OR \"Visium Spatial Gene Expression\"[All Fields]) AND gse[ETYP]",
+          "accession_lookup_fallback": false,
+          "platforms": [
+            "Visium"
+          ],
+          "platform_kinds": {
+            "Visium": "sequencing"
+          },
+          "total_hits": 34,
+          "returned_ids": [
+            "200333529",
+            "200302677"
+          ],
+          "skipped_nonseries_ids": [],
+          "records_exported": 2,
+          "study_failures": [],
+          "search_truncated": true
+        },
+        "screening_mode": "rules_only"
+      },
+      {
+        "request": {
+          "organism": "Homo sapiens",
+          "tissue": "kidney",
+          "platforms": [
+            "Visium HD"
+          ],
+          "max_studies": 2,
+          "max_samples_per_study": 2,
+          "max_total_samples": 4,
+          "study": null
+        },
+        "status": "completed_with_limits",
+        "counts": {
+          "studies_returned": 2,
+          "unique_samples_attempted": 4,
+          "processing_status": {
+            "completed": 4
+          },
+          "labels": {
+            "unknown": 4
+          },
+          "selected_metadata_candidates": 0,
+          "study_sample_links_not_read": 60
+        },
+        "search": {
+          "query": "\"Homo sapiens\"[Organism] AND \"kidney\"[All Fields] AND (\"Visium HD\"[All Fields] OR \"VisiumHD\"[All Fields] OR \"Visium CytAssist HD\"[All Fields]) AND gse[ETYP]",
+          "accession_lookup_fallback": false,
+          "platforms": [
+            "Visium HD"
+          ],
+          "platform_kinds": {
+            "Visium HD": "sequencing"
+          },
+          "total_hits": 10,
+          "returned_ids": [
+            "200334980",
+            "200334924"
+          ],
+          "skipped_nonseries_ids": [],
+          "records_exported": 2,
+          "study_failures": [],
+          "search_truncated": true
+        },
+        "screening_mode": "rules_only"
+      }
+    ],
+    "resumed": true,
+    "selected_10x_cache_ids": [
+      "22_Kidney",
+      "23_Kidney"
+    ]
+  },
+  "pancreas": {
+    "status": "completed_with_issues",
+    "samples": [
+      {
+        "sample_id": "GSM8890214",
+        "source": "GEO",
+        "platform": "Xenium",
+        "found": true,
+        "selected": true,
+        "files_ready": false,
+        "status": "missing_files",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8890214",
+        "error_type": "FileNotFoundError"
+      },
+      {
+        "sample_id": "GSM9861745",
+        "source": "GEO",
+        "platform": "Visium",
+        "found": true,
+        "selected": true,
+        "files_ready": true,
+        "status": "correspondence_passed",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9861745"
+      },
+      {
+        "sample_id": "GSM9861746",
+        "source": "GEO",
+        "platform": "Visium",
+        "found": true,
+        "selected": true,
+        "files_ready": true,
+        "status": "correspondence_passed",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9861746"
+      },
+      {
+        "sample_id": "GSM9204716",
+        "source": "GEO",
+        "platform": "Visium",
+        "found": true,
+        "selected": true,
+        "files_ready": false,
+        "status": "missing_files",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9204716"
+      },
+      {
+        "sample_id": "GSM9204717",
+        "source": "GEO",
+        "platform": "Visium",
+        "found": true,
+        "selected": true,
+        "files_ready": false,
+        "status": "missing_files",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9204717"
+      },
+      {
+        "sample_id": "GSM9945538",
+        "source": "GEO",
+        "platform": "unclassified",
+        "found": true,
+        "selected": false,
+        "files_ready": false,
+        "status": "not_selected",
+        "label": "unknown",
+        "screen_status": "completed"
+      },
+      {
+        "sample_id": "GSM9945539",
+        "source": "GEO",
+        "platform": "unclassified",
+        "found": true,
+        "selected": false,
+        "files_ready": false,
+        "status": "not_selected",
+        "label": "unknown",
+        "screen_status": "completed"
+      },
+      {
+        "sample_id": "08_Pancreas",
+        "source": "10x_cache",
+        "platform": "Xenium",
+        "found": true,
+        "selected": true,
+        "files_ready": true,
+        "status": "correspondence_passed",
+        "archive_url": "https://cf.10xgenomics.com/samples/xenium/1.6.0/Xenium_V1_hPancreas_Cancer_Add_on_FFPE/Xenium_V1_hPancreas_Cancer_Add_on_FFPE_outs.zip",
+        "checks": {
+          "cells": 190965,
+          "checks": {
+            "passed": 12,
+            "total": 12,
+            "failed": []
+          },
+          "centroids_inside_image": 190965,
+          "feature_type_counts": {
+            "Gene Expression": 474,
+            "Negative Control Probe": 20,
+            "Negative Control Codeword": 41,
+            "Unassigned Codeword": 3
+          }
+        }
+      },
+      {
+        "sample_id": "21_Pancreas",
+        "source": "10x_cache",
+        "platform": "Xenium",
+        "found": true,
+        "selected": true,
+        "files_ready": true,
+        "status": "correspondence_passed",
+        "archive_url": "https://cf.10xgenomics.com/samples/xenium/1.5.0/Xenium_V1_hPancreas_nondiseased_section/Xenium_V1_hPancreas_nondiseased_section_outs.zip",
+        "checks": {
+          "cells": 103901,
+          "checks": {
+            "passed": 12,
+            "total": 12,
+            "failed": []
+          },
+          "centroids_inside_image": 103901,
+          "feature_type_counts": {
+            "Gene Expression": 377,
+            "Negative Control Probe": 20,
+            "Negative Control Codeword": 41,
+            "Unassigned Codeword": 103
+          }
+        }
+      }
+    ],
+    "totals": {
+      "found": 9,
+      "selected": 7,
+      "files_ready": 4,
+      "passed": 4,
+      "failed": 3,
+      "outcomes": {
+        "missing_files": 3,
+        "correspondence_passed": 4,
+        "not_selected": 2
+      }
+    },
+    "by_source": {
+      "10x_cache": {
+        "found": 2,
+        "selected": 2,
+        "files_ready": 2,
+        "passed": 2,
+        "failed": 0,
+        "outcomes": {
+          "correspondence_passed": 2
+        }
+      },
+      "GEO": {
+        "found": 7,
+        "selected": 5,
+        "files_ready": 2,
+        "passed": 2,
+        "failed": 3,
+        "outcomes": {
+          "missing_files": 3,
+          "correspondence_passed": 2,
+          "not_selected": 2
+        }
+      }
+    },
+    "by_platform": {
+      "Visium": {
+        "found": 4,
+        "selected": 4,
+        "files_ready": 2,
+        "passed": 2,
+        "failed": 2,
+        "outcomes": {
+          "correspondence_passed": 2,
+          "missing_files": 2
+        }
+      },
+      "Xenium": {
+        "found": 3,
+        "selected": 3,
+        "files_ready": 2,
+        "passed": 2,
+        "failed": 1,
+        "outcomes": {
+          "missing_files": 1,
+          "correspondence_passed": 2
+        }
+      },
+      "unclassified": {
+        "found": 2,
+        "selected": 0,
+        "files_ready": 0,
+        "passed": 0,
+        "failed": 0,
+        "outcomes": {
+          "not_selected": 2
+        }
+      }
+    },
+    "discovery": [
+      {
+        "request": {
+          "organism": "Homo sapiens",
+          "tissue": "pancreas",
+          "platforms": [
+            "Xenium"
+          ],
+          "max_studies": 2,
+          "max_samples_per_study": 2,
+          "max_total_samples": 4,
+          "study": null
+        },
+        "status": "completed_with_limits",
+        "counts": {
+          "studies_returned": 2,
+          "unique_samples_attempted": 3,
+          "processing_status": {
+            "completed": 3
+          },
+          "labels": {
+            "unknown": 2,
+            "eligible": 1
+          },
+          "selected_metadata_candidates": 1,
+          "study_sample_links_not_read": 64
+        },
+        "search": {
+          "query": "\"Homo sapiens\"[Organism] AND \"pancreas\"[All Fields] AND (\"Xenium\"[All Fields]) AND gse[ETYP]",
+          "accession_lookup_fallback": false,
+          "platforms": [
+            "Xenium"
+          ],
+          "platform_kinds": {
+            "Xenium": "imaging"
+          },
+          "total_hits": 14,
+          "returned_ids": [
+            "200343070",
+            "200293800"
+          ],
+          "skipped_nonseries_ids": [],
+          "records_exported": 2,
+          "study_failures": [],
+          "search_truncated": true
+        }
+      },
+      {
+        "request": {
+          "organism": "Homo sapiens",
+          "tissue": "pancreas",
+          "platforms": [
+            "Visium"
+          ],
+          "max_studies": 2,
+          "max_samples_per_study": 2,
+          "max_total_samples": 4,
+          "study": null
+        },
+        "status": "completed_with_limits",
+        "counts": {
+          "studies_returned": 2,
+          "unique_samples_attempted": 4,
+          "processing_status": {
+            "completed": 4
+          },
+          "labels": {
+            "eligible": 4
+          },
+          "selected_metadata_candidates": 4,
+          "study_sample_links_not_read": 9
+        },
+        "search": {
+          "query": "\"Homo sapiens\"[Organism] AND \"pancreas\"[All Fields] AND (\"Visium\"[All Fields] OR \"10x Visium\"[All Fields] OR \"Visium Spatial Gene Expression\"[All Fields]) AND gse[ETYP]",
+          "accession_lookup_fallback": false,
+          "platforms": [
+            "Visium"
+          ],
+          "platform_kinds": {
+            "Visium": "sequencing"
+          },
+          "total_hits": 27,
+          "returned_ids": [
+            "200337859",
+            "200306617"
+          ],
+          "skipped_nonseries_ids": [],
+          "records_exported": 2,
+          "study_failures": [],
+          "search_truncated": true
+        }
+      },
+      {
+        "request": {
+          "organism": "Homo sapiens",
+          "tissue": "pancreas",
+          "platforms": [
+            "Visium HD"
+          ],
+          "max_studies": 2,
+          "max_samples_per_study": 2,
+          "max_total_samples": 4,
+          "study": null
+        },
+        "status": "completed",
+        "counts": {
+          "studies_returned": 0,
+          "unique_samples_attempted": 0,
+          "processing_status": {},
+          "labels": {},
+          "selected_metadata_candidates": 0,
+          "study_sample_links_not_read": 0
+        },
+        "search": {
+          "query": "\"Homo sapiens\"[Organism] AND \"pancreas\"[All Fields] AND (\"Visium HD\"[All Fields] OR \"VisiumHD\"[All Fields] OR \"Visium CytAssist HD\"[All Fields]) AND gse[ETYP]",
+          "accession_lookup_fallback": false,
+          "platforms": [
+            "Visium HD"
+          ],
+          "platform_kinds": {
+            "Visium HD": "sequencing"
+          },
+          "total_hits": 0,
+          "returned_ids": [],
+          "skipped_nonseries_ids": [],
+          "records_exported": 0,
+          "study_failures": [],
+          "search_truncated": false
+        }
+      }
+    ],
+    "resumed": false,
+    "selected_10x_cache_ids": [
+      "08_Pancreas",
+      "21_Pancreas"
+    ]
+  },
+  "interruption": {
+    "interrupted_process_exit": 1,
+    "resume_exit": 2,
+    "reused_geo_sample": "GSM9767742",
+    "unchanged_files": 13,
+    "verified_sha256_and_mtime": true
+  },
+  "offline_tests_passed": 117
+}

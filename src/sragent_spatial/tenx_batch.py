@@ -2,6 +2,7 @@
 import json
 import os
 import re
+import time
 from contextlib import contextmanager
 from pathlib import Path
 
@@ -33,7 +34,14 @@ def checkpoint(path, report):
         stream.write("\n")
         stream.flush()
         os.fsync(stream.fileno())
-    temporary.replace(path)
+    for attempt in range(10):
+        try:
+            temporary.replace(path)
+            return
+        except PermissionError:
+            if os.name != "nt" or attempt == 9:
+                raise
+            time.sleep(0.05)
 
 
 async def run_batch(root, sample_ids, out, model, *, timeout, resume=False, local_tools=False):

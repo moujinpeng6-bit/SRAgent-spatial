@@ -92,6 +92,17 @@ def main(argv=None):
     unified.add_argument("--out", type=Path, required=True)
     unified.add_argument("--download-mib", type=bounded_integer(0, 2048), default=0)
     unified.add_argument("--probe-remote", action="store_true")
+    find = sub.add_parser("find-spatial", help="Search GEO and a registered 10x cache, then validate")
+    find.add_argument("--organism", required=True)
+    find.add_argument("--tissue", required=True)
+    find.add_argument("--platforms", nargs="+", choices=["Xenium", "Visium", "Visium HD"], required=True)
+    find.add_argument("--10x-cache", dest="tenx_cache", type=Path)
+    find.add_argument("--model", help="Optional model for GEO screening; defaults to rules")
+    find.add_argument("--max-studies", type=bounded_integer(1, 5), default=2)
+    find.add_argument("--samples-per-study", type=bounded_integer(1, 10), default=2)
+    find.add_argument("--download-mib", type=bounded_integer(0, 2048), default=128)
+    find.add_argument("--out", type=Path, required=True)
+    find.add_argument("--resume", action="store_true")
     pipeline = sub.add_parser("pipeline", help="Targeted GEO search -> same-sample automatic files -> Xenium spatial validation")
     pipeline.add_argument("--study", required=True)
     pipeline.add_argument("--sample", required=True)
@@ -206,6 +217,21 @@ def main(argv=None):
             if report["status"] in {"incomplete", "completed_with_failures"}:
                 if report["agent_error"]:
                     print(json.dumps(report["agent_error"]), file=sys.stderr)
+                return 2
+        elif args.command == "find-spatial":
+            from .agents import credentials_present
+            from .find_spatial import find_spatial
+            if args.model and not credentials_present():
+                raise RuntimeError("Model screening requires a locally configured provider API key")
+            if os.name == "nt":
+                import truststore
+                truststore.inject_into_ssl()
+            report = asyncio.run(find_spatial(args.organism, args.tissue, args.platforms, args.tenx_cache,
+                                              args.out, model=args.model, download_bytes=args.download_mib * 1024**2,
+                                              max_studies=args.max_studies, samples_per_study=args.samples_per_study,
+                                              resume=args.resume))
+            print(json.dumps({"status": report["status"], **report["totals"]}))
+            if report["status"] != "completed":
                 return 2
         elif args.command == "validate-spatial-batch":
             from .unified_batch import validate_sources

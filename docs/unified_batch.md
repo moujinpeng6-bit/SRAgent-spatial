@@ -9,3 +9,13 @@ python run.py validate-spatial-batch --geo-run visium_run.json --geo-run visium_
 The output `batch.json` includes rows and counts by platform and source. A GEO result counts as found when its accession appears in an input discovery report. A 10x sample counts as found when its registered source can be resolved. Repeated GEO accessions are deduplicated. Unselected GEO rows are retained and excluded from the failure count. Files ready means the validator has the inputs required for its configured correspondence checks. A Visium Matrix Market header can be checked with a bounded prefix, so this count does not certify full expression-matrix downloads. Exit code 2 indicates an empty or mixed-outcome batch. The source-specific reports remain in the output subdirectories.
 
 For untagged Visium HD files, the publisher's scale-factor JSON can declare 24 µm bins. The validator still checks the declared size against barcode identifiers. The [live acceptance summary](../examples/unified_spatial_batch/run_summary.json) covers new kidney Visium and lung Visium HD accessions and two new 10x Xenium samples.
+
+## Search by organism and tissue
+
+```powershell
+python run.py find-spatial --organism "Homo sapiens" --tissue kidney --platforms Xenium Visium "Visium HD" --10x-cache E:/Xenium --out outputs/kidney
+```
+
+The command queries GEO separately for each requested platform and screens each sample with the project's metadata rules. Supply `--model deepseek-flash` to require model agreement as well. Search limits default to two studies and two samples per study for each platform. The 10x cache lookup matches human tissue metadata to registered Xenium image rows. The cache path is a source configuration and the command derives the sample IDs automatically.
+
+The output includes the frozen GEO reports, the cache selection and the combined per-sample `batch.json`. Add `--resume` to the same command after an interruption. Completed GEO sample records are reused from their checkpoints. The 10x batch skips successful samples and verifies cached companions before requesting their contents. An unfinished transfer can still require a new download.
