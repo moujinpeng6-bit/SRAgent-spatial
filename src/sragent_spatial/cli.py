@@ -96,6 +96,7 @@ def main(argv=None):
     find.add_argument("--organism", required=True)
     find.add_argument("--tissue", required=True)
     find.add_argument("--platforms", nargs="+", choices=["Xenium", "Visium", "Visium HD"], required=True)
+    find.add_argument("--source", choices=["geo", "10x", "both"], default="geo")
     find.add_argument("--10x-cache", dest="tenx_cache", type=Path)
     find.add_argument("--model", help="Optional model for GEO screening; defaults to rules")
     find.add_argument("--max-studies", type=bounded_integer(1, 5), default=2)
@@ -229,7 +230,7 @@ def main(argv=None):
             report = asyncio.run(find_spatial(args.organism, args.tissue, args.platforms, args.tenx_cache,
                                               args.out, model=args.model, download_bytes=args.download_mib * 1024**2,
                                               max_studies=args.max_studies, samples_per_study=args.samples_per_study,
-                                              resume=args.resume))
+                                              resume=args.resume, source=args.source))
             print(json.dumps({"status": report["status"], **report["totals"]}))
             if report["status"] != "completed":
                 return 2

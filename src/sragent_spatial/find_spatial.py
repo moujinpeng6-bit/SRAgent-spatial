@@ -1,4 +1,5 @@
 """Search by tissue and platform, then validate the frozen candidates."""
+import asyncio
 import json
 import re
 from pathlib import Path
@@ -7,7 +8,7 @@ from .discovery import DiscoveryRequest, DiscoverySession
 from .geo import MetadataClient
 from .screening import screen_sample
 from .tenx_batch import batch_lock, checkpoint
-from .unified_batch import validate_sources
+from .unified_batch import summarize, validate_sources
 
 
 def cache_samples(cache, organism, tissue, platforms):
@@ -31,17 +32,19 @@ async def rule_predictor(packet, _method, _model):
 
 
 async def find_spatial(organism, tissue, platforms, cache, out, *, model=None, download_bytes=0,
-                       max_studies=2, samples_per_study=2, resume=False):
+                       max_studies=2, samples_per_study=2, resume=False, source="geo"):
     out = Path(out).resolve()
     cache = Path(cache).resolve() if cache else None
     if cache and (not cache.is_dir() or out.is_relative_to(cache)):
         raise ValueError("10x cache must exist and output must be outside it")
     platforms = list(dict.fromkeys(platforms))
     requests = [DiscoveryRequest(organism, tissue, (platform,), max_studies, samples_per_study,
-                                 max_studies * samples_per_study) for platform in platforms]
+                                 max_studies * samples_per_study) for platform in platforms] if source != "10x" else []
     request = {"organism": organism, "tissue": tissue, "platforms": platforms, "model": model,
                "cache": str(cache) if cache else None, "download_bytes": download_bytes,
                "max_studies": max_studies, "samples_per_study": samples_per_study}
+    if source != "geo":
+        request["source"] = source
     out.mkdir(parents=True, exist_ok=resume)
     with batch_lock(out):
         request_path = out / "request.json"
@@ -77,6 +80,34 @@ async def find_spatial(organism, tissue, platforms, cache, out, *, model=None, d
         assets.mkdir(exist_ok=True)
         result = await validate_sources(reports, assets, cache, ids, out / "validation",
                                         download_bytes=download_bytes, resume=resume)
+        if source != "geo":
+            from .tenx_online import discover_10x, validate_online
+
+            online = out / "10x_online"
+            online.mkdir(exist_ok=True)
+            catalog = online / "catalog.json"
+            try:
+                if not catalog.exists():
+                    matches = await asyncio.to_thread(discover_10x, organism, tissue, platforms, max_studies)
+                    checkpoint(catalog, {"samples": matches})
+                matches = json.loads(catalog.read_text(encoding="utf8"))["samples"]
+                for row in matches:
+                    sample_out = online / row["sample_id"]
+                    sample_result = sample_out / "result.json"
+                    if sample_result.exists():
+                        measured = json.loads(sample_result.read_text(encoding="utf8"))
+                    else:
+                        sample_out.mkdir(exist_ok=True)
+                        measured = await asyncio.to_thread(validate_online, row, sample_out, download_bytes)
+                        checkpoint(sample_result, measured)
+                    result["samples"].append(measured)
+                result["10x_catalog"] = {"status": "completed", "found": len(matches)}
+            except (ImportError, OSError, RuntimeError) as exc:
+                result["10x_catalog"] = {"status": "access_failed", "error_type": type(exc).__name__,
+                                         "reason": str(exc)}
+            summarize(result)
+            if result["10x_catalog"]["status"] != "completed":
+                result["status"] = "completed_with_issues"
         result["discovery"] = [{"request": item["request"], "status": item["status"],
                                 "counts": item["counts"], "search": item["search"],
                                 "screening_mode": item.get("screening_mode", "rules_and_model" if model else "rules_only")} for item in reports]

@@ -1,0 +1,36 @@
+{
+  "request": {
+    "organism": "Homo sapiens",
+    "tissue": "kidney",
+    "platform": "Visium HD"
+  },
+  "standalone_cli_catalog": {
+    "status": "access_failed",
+    "error_type": "RuntimeError",
+    "reason": "The 10x catalog browser could not read the public page"
+  },
+  "official_catalog_via_browser": {
+    "status": "completed",
+    "candidates": [
+      {
+        "source_url": "https://www.10xgenomics.com/datasets/visium-hd-cytassist-gene-expression-libraries-human-kidney-ffpe-v4",
+        "binned_archive": "https://cf.10xgenomics.com/samples/spatial-exp/4.0.1/Visium_HD_Human_Kidney_FFPE/Visium_HD_Human_Kidney_FFPE_binned_outputs.tar.gz"
+      },
+      {
+        "source_url": "https://www.10xgenomics.com/datasets/visium-hd-cytassist-gene-expression-libraries-human-kidney-ffpe",
+        "binned_archive": "https://cf.10xgenomics.com/samples/spatial-exp/3.1.2/Visium_HD_Human_Kidney_FFPE/Visium_HD_Human_Kidney_FFPE_binned_outputs.tar.gz"
+      }
+    ]
+  },
+  "direct_official_archive_validation": {
+    "status": "incomplete",
+    "filtered_barcode_count": 10651343,
+    "matrix_header": {
+      "features": 18085,
+      "observations": 10651343,
+      "nonzeros": 72105719,
+      "scope": "header_only_not_matrix_values_or_complete_gzip_integrity"
+    },
+    "barcodes_match_matrix_columns": true
+  }
+}

@@ -34,6 +34,17 @@ def counts(rows):
             "outcomes": dict(Counter(row["status"] for row in rows))}
 
 
+def summarize(result):
+    rows = result["samples"]
+    result["totals"] = counts(rows)
+    result["by_source"] = {source: counts([row for row in rows if row["source"] == source])
+                           for source in sorted({row["source"] for row in rows})}
+    result["by_platform"] = {platform: counts([row for row in rows if row["platform"] == platform])
+                             for platform in sorted({row["platform"] for row in rows})}
+    result["status"] = "completed_with_issues" if result["totals"]["failed"] else (
+        "completed" if result["totals"]["selected"] else "no_candidates")
+
+
 async def validate_sources(reports, geo_root, cache, sample_ids, out, *, download_bytes=0, probe_remote=False, resume=False):
     out = Path(out).resolve()
     for root in (geo_root, cache):
@@ -74,12 +85,6 @@ async def validate_sources(reports, geo_root, cache, sample_ids, out, *, downloa
         rows.extend({"source": "10x_cache", "sample_id": sample, "platform": "Xenium", **row,
                      "selected": True, "found": row["status"] not in {"missing_source", "ambiguous_source", "sample_input_error"},
                      "files_ready": bool(row.get("preparation"))} for sample, row in batch["samples"].items())
-    result["totals"] = counts(rows)
-    result["by_source"] = {source: counts([row for row in rows if row["source"] == source])
-                           for source in sorted({row["source"] for row in rows})}
-    result["by_platform"] = {platform: counts([row for row in rows if row["platform"] == platform])
-                             for platform in sorted({row["platform"] for row in rows})}
-    result["status"] = "completed_with_issues" if result["totals"]["failed"] else (
-        "completed" if result["totals"]["selected"] else "no_candidates")
+    summarize(result)
     checkpoint(path, result)
     return result
