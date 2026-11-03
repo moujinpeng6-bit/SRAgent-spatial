@@ -94,7 +94,13 @@ def main(argv=None):
     pipeline.add_argument("--download-mib", type=bounded_integer(0, 2048), default=0)
     for name in ("check-xenium", "validate-local-agent"):
         local = sub.add_parser(name, help="Registered local Xenium file validation" + (" via original SRAgent supervisor" if name.endswith("agent") else " without a model"))
-        local.add_argument("--manifest", type=Path, required=True)
+        if name.endswith("agent"):
+            source = local.add_mutually_exclusive_group(required=True)
+            source.add_argument("--manifest", type=Path)
+            source.add_argument("--10x-cache", dest="tenx_cache", type=Path)
+            local.add_argument("--sample-id", help="Exact sample directory ID in the 10x cache")
+        else:
+            local.add_argument("--manifest", type=Path, required=True)
         local.add_argument("--out", type=Path, required=True)
         if name.endswith("agent"):
             local.add_argument("--model", default=os.getenv("SPATIAL_MODEL"))
@@ -210,8 +216,7 @@ def main(argv=None):
             if report["status"] != "completed":
                 return 2
         elif args.command in {"check-xenium", "validate-local-agent"}:
-            from .local_validation import LocalValidationSession, run_validation_agent
-            session = LocalValidationSession(args.manifest, args.out, getattr(args, "model", None))
+            from .local_validation import LocalValidationSession, TenxCacheSession, run_validation_agent
             if args.command == "validate-local-agent":
                 from .agents import credentials_present
                 if not args.model or not credentials_present():
@@ -219,8 +224,13 @@ def main(argv=None):
                 if os.name == "nt":
                     import truststore
                     truststore.inject_into_ssl()
+                if bool(args.tenx_cache) != bool(args.sample_id):
+                    raise ValueError("--10x-cache and --sample-id must be supplied together")
+                session = (TenxCacheSession(args.tenx_cache, args.sample_id, args.out, args.model)
+                           if args.tenx_cache else LocalValidationSession(args.manifest, args.out, args.model))
                 report = asyncio.run(run_validation_agent(session, timeout=args.timeout))
             else:
+                session = LocalValidationSession(args.manifest, args.out)
                 async def validate_registered():
                     session.catalog()
                     for sample_id in session.samples:

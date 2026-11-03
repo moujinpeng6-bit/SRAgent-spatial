@@ -1,0 +1,72 @@
+{
+  "status": "completed",
+  "model": "deepseek-flash",
+  "provider": "deepseek",
+  "elapsed_seconds": 48.484,
+  "agent_tool_loop_verified": true,
+  "preparation": {
+    "status": "prepared",
+    "archive_url": "https://cf.10xgenomics.com/samples/xenium/1.3.0/Xenium_V1_FFPE_Human_Brain_Alzheimers_With_Addon/Xenium_V1_FFPE_Human_Brain_Alzheimers_With_Addon_outs.zip",
+    "archive_bytes": 7567057067,
+    "image": {
+      "status": "reused_verified",
+      "bytes": 522890660,
+      "crc32": "07a18a44"
+    },
+    "files": {
+      "experiment.xenium": {
+        "status": "downloaded",
+        "bytes": 1451,
+        "crc32": "dfd5e75e"
+      },
+      "cells.csv.gz": {
+        "status": "downloaded",
+        "bytes": 2300154,
+        "crc32": "56ea9e88"
+      },
+      "cell_feature_matrix.h5": {
+        "status": "downloaded",
+        "bytes": 1792308,
+        "crc32": "148eba87"
+      }
+    },
+    "zip_range_bytes": 4001617
+  },
+  "source_page": "https://www.10xgenomics.com/datasets/xenium-human-brain-preview-data-1-standard",
+  "tool_calls": [
+    {
+      "name": "list_local_spatial_samples",
+      "sample_id": null
+    },
+    {
+      "name": "prepare_10x_companions",
+      "sample_id": "05_Brain"
+    },
+    {
+      "name": "validate_spatial_sample",
+      "sample_id": "05_Brain"
+    }
+  ],
+  "validation": {
+    "sample_id": "05_Brain",
+    "status": "correspondence_passed",
+    "cells": 44955,
+    "feature_type_counts": {
+      "Gene Expression": 354,
+      "Negative Control Probe": 20,
+      "Negative Control Codeword": 41,
+      "Unassigned Codeword": 126
+    },
+    "pixel_size_um": 0.2125,
+    "centroids_inside_image": 44955,
+    "checks": {
+      "passed": 12,
+      "total": 12,
+      "failed": []
+    },
+    "missing_optional_files": [
+      "cell_boundaries.csv.gz",
+      "nucleus_boundaries.csv.gz"
+    ]
+  }
+}

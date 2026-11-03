@@ -109,6 +109,56 @@ class LocalValidationSession:
         write_json(self.out / "run.json", self.report())
 
 
+
+class TenxCacheSession(LocalValidationSession):
+    def __init__(self, root, sample_id, out, model):
+        from .tenx_cache import cache_entry
+
+        root, out = Path(root).resolve(), Path(out).resolve()
+        if out.is_relative_to(root):
+            raise ValueError("Output must be outside the image cache")
+        self.entry, self.image = cache_entry(root, sample_id)
+        self.inputs = out / "companions"
+        self.preparation = None
+        manifest = out / "manifest.json"
+        write_json(manifest, {"schema_version": 1, "samples": [{
+            "sample_id": sample_id, "platform": "Xenium", "coordinate_unit": "um",
+            "source_url": self.entry["url"], "image": str(self.image), "data_dir": str(self.inputs),
+        }]})
+        super().__init__(manifest, out / "validation", model)
+
+    def catalog(self):
+        catalog = super().catalog()
+        catalog["instruction"] = "Call prepare_10x_companions for the listed sample before validate_spatial_sample."
+        return catalog
+
+    async def prepare(self, sample_id):
+        from .tenx_cache import prepare
+
+        if not self.listed or sample_id not in self.samples:
+            return {"status": "rejected", "reason": "List registered samples first and use their exact ID"}
+        if self.preparation is None:
+            try:
+                self.preparation = await asyncio.to_thread(prepare, self.entry, self.image, self.inputs)
+                self.events.append({"event": "10x_companions_prepared", "sample_id": sample_id})
+            except Exception as exc:
+                self.events.append({"event": "10x_preparation_error", "error_type": type(exc).__name__})
+                self.persist()
+                return {"status": "preparation_failed", "error_type": type(exc).__name__}
+            self.persist()
+        return self.preparation
+
+    async def validate(self, sample_id):
+        if self.preparation is None:
+            return {"status": "rejected", "reason": "Prepare the 10x companions first"}
+        return await super().validate(sample_id)
+
+    def report(self):
+        report = super().report()
+        report["scope"] = "Exact 10x ZIP companions for a registered local Xenium image"
+        report["preparation"] = self.preparation
+        return report
+
 def local_validation_tools(session, tool):
     @tool
     def list_local_spatial_samples() -> str:
@@ -127,7 +177,15 @@ def local_validation_tools(session, tool):
         async with session.lock:
             return json.dumps(await session.validate(sample_id), ensure_ascii=False)
 
-    return [list_local_spatial_samples, validate_spatial_sample]
+    tools = [list_local_spatial_samples, validate_spatial_sample]
+    if isinstance(session, TenxCacheSession):
+        @tool
+        async def prepare_10x_companions(sample_id: str) -> str:
+            """Check the registered 10x ZIP against the cached image and acquire missing companion files."""
+            async with session.lock:
+                return json.dumps(await session.prepare(sample_id), ensure_ascii=False)
+        tools.append(prepare_10x_companions)
+    return tools
 
 
 VALIDATION_INSTRUCTIONS = (
@@ -147,12 +205,19 @@ async def run_validation_agent(session, *, timeout=600, supervisor_factory=None)
     from .discovery import build_tool_supervisor
     from .upstream import UPSTREAM_COMMIT
 
+    cache_mode = isinstance(session, TenxCacheSession)
+    instructions = VALIDATION_INSTRUCTIONS
+    if cache_mode:
+        instructions = instructions.replace(
+            "then validate_spatial_sample for EVERY registered sample.",
+            "then call prepare_10x_companions for the registered sample, then validate_spatial_sample after preparation succeeds."
+        ).replace("for this local-only task", "outside the registered 10x preparation tool")
     started = time.monotonic()
     session.persist()
     try:
         with model_context(session.model) if provider() == "deepseek" else nullcontext():
             graph = (supervisor_factory(session) if supervisor_factory else build_tool_supervisor(
-                session.model, lambda tool: local_validation_tools(session, tool), VALIDATION_INSTRUCTIONS))
+                session.model, lambda tool: local_validation_tools(session, tool), instructions))
             response = await asyncio.wait_for(graph.ainvoke({"messages": [("human",
                 "请使用本地空间工具逐一核查已注册的样本：表达、细胞ID、坐标、图像、边界和邻居。完成后用中文说明结果和限制。") ]},
                 config={"recursion_limit": 16, "max_concurrency": 1}), timeout=timeout)
@@ -179,6 +244,10 @@ async def run_validation_agent(session, *, timeout=600, supervisor_factory=None)
         and {"list_local_spatial_samples", "validate_spatial_sample"} <= invoked
         and set(session.samples) <= validated_ids
         and len(session.results) == len(session.samples))
+    if cache_mode:
+        report["agent_tool_loop_verified"] &= bool(session.preparation and any(
+            item["name"] == "prepare_10x_companions" and item["sample_id"] in session.samples
+            for item in session.tool_trace))
     # Even fabricated final text must not cause a successful run without tool calls.
     if not report["agent_tool_loop_verified"]:
         report["status"] = "incomplete"
