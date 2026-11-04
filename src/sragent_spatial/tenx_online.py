@@ -31,6 +31,58 @@ def platform_for(product, title):
     return None
 
 
+class CatalogAccessError(RuntimeError):
+    pass
+
+
+def open_catalog_page(page, url):
+    response = page.goto(url, wait_until="domcontentloaded", timeout=45_000)
+    if response is None or response.status < 400:
+        return
+    if response.status == 429 and response.headers.get("x-vercel-mitigated") == "challenge":
+        from playwright.sync_api import TimeoutError
+
+        try:
+            page.wait_for_function(
+                "() => document.title && !document.title.includes('Vercel Security Checkpoint')", timeout=15_000
+            )
+            return
+        except TimeoutError as exc:
+            raise CatalogAccessError("10x returned HTTP 429 with an unresolved browser verification page") from exc
+    raise CatalogAccessError(f"10x returned HTTP {response.status}")
+
+
+def read_catalog_snapshot(path, organism, tissue, platforms, limit):
+    species = SPECIES.get(organism.casefold(), organism)
+    try:
+        rows = json.loads(path.read_text(encoding="utf-8-sig"))["samples"]
+        if not isinstance(rows, list):
+            raise ValueError("Expected a list of catalog records")
+        matches = []
+        seen = set()
+        for row in rows:
+            if (row["species"].casefold() != species.casefold() or row["tissue"].casefold() != tissue.casefold()
+                    or row["platform"] not in platforms):
+                continue
+            slug = row["sample_id"]
+            if not re.fullmatch(r"[A-Za-z0-9_-]+", slug) or row["source_url"] != f"{CATALOG}/{slug}":
+                raise ValueError("Invalid official 10x dataset URL")
+            for kind, urls in row["archives"].items():
+                if kind not in {"binned_outputs", "spatial"} or not isinstance(urls, list):
+                    raise ValueError("Invalid official 10x archive list")
+                for url in urls:
+                    if not re.fullmatch(
+                        rf"https://cf\.10xgenomics\.com/samples/spatial-exp/[\w.-]+/[\w-]+/[\w-]+_{kind}\.tar\.gz", url
+                    ):
+                        raise ValueError("Invalid official 10x archive URL")
+            if slug not in seen:
+                matches.append(row)
+                seen.add(slug)
+        return matches[:limit]
+    except (ValueError, KeyError, TypeError, AttributeError) as exc:
+        raise CatalogAccessError(f"Invalid 10x catalog snapshot: {exc}") from exc
+
+
 def discover_10x(organism, tissue, platforms, limit):
     from playwright.sync_api import Error
 
@@ -50,7 +102,7 @@ def _discover_10x(organism, tissue, platforms, limit):
             page = browser.new_page()
             for platform in platforms:
                 query = urlencode({"search": f"{platform} {species} {tissue}", "sort": "publishedAt DESC"})
-                page.goto(f"{CATALOG}?{query}", wait_until="domcontentloaded", timeout=45_000)
+                open_catalog_page(page, f"{CATALOG}?{query}")
                 cards = page.locator('a[href^="/datasets/"]').filter(has_text="Sample type")
                 page.wait_for_function("""() =>
                     [...document.querySelectorAll('a[href^="/datasets/"]')].some(a => a.innerText.includes('Sample type'))
@@ -72,7 +124,7 @@ def _discover_10x(organism, tissue, platforms, limit):
                                         "tissue": lines[5], "catalog_query": query})
                 for row in matches[:limit]:
                     try:
-                        page.goto(row["source_url"], wait_until="domcontentloaded", timeout=45_000)
+                        open_catalog_page(page, row["source_url"])
                         page.get_by_role("button", name="Output and supplemental files").click(timeout=30_000)
                         row["archives"] = {}
                         for link in page.get_by_role("link", name=re.compile("Binned outputs|Spatial outputs", re.I)).all():

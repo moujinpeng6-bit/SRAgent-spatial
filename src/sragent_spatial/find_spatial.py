@@ -32,7 +32,7 @@ async def rule_predictor(packet, _method, _model):
 
 
 async def find_spatial(organism, tissue, platforms, cache, out, *, model=None, download_bytes=0,
-                       max_studies=2, samples_per_study=2, resume=False, source="geo"):
+                       max_studies=2, samples_per_study=2, resume=False, source="geo", catalog_snapshot=None):
     out = Path(out).resolve()
     cache = Path(cache).resolve() if cache else None
     if cache and (not cache.is_dir() or out.is_relative_to(cache)):
@@ -45,6 +45,10 @@ async def find_spatial(organism, tissue, platforms, cache, out, *, model=None, d
                "max_studies": max_studies, "samples_per_study": samples_per_study}
     if source != "geo":
         request["source"] = source
+    if catalog_snapshot is not None:
+        if source == "geo":
+            raise ValueError("A 10x catalog snapshot requires --source 10x or both")
+        request["tenx_catalog_mode"] = "snapshot"
     out.mkdir(parents=True, exist_ok=resume)
     with batch_lock(out):
         request_path = out / "request.json"
@@ -81,14 +85,19 @@ async def find_spatial(organism, tissue, platforms, cache, out, *, model=None, d
         result = await validate_sources(reports, assets, cache, ids, out / "validation",
                                         download_bytes=download_bytes, resume=resume)
         if source != "geo":
-            from .tenx_online import discover_10x, validate_online
+            from .tenx_online import discover_10x, read_catalog_snapshot, validate_online
 
             online = out / "10x_online"
             online.mkdir(exist_ok=True)
             catalog = online / "catalog.json"
+            mode = "snapshot" if catalog_snapshot is not None else "live"
             try:
                 if not catalog.exists():
-                    matches = await asyncio.to_thread(discover_10x, organism, tissue, platforms, max_studies)
+                    filters = (organism, tissue, platforms, max_studies)
+                    if catalog_snapshot is None:
+                        matches = await asyncio.to_thread(discover_10x, *filters)
+                    else:
+                        matches = read_catalog_snapshot(catalog_snapshot, *filters)
                     checkpoint(catalog, {"samples": matches})
                 matches = json.loads(catalog.read_text(encoding="utf8"))["samples"]
                 for row in matches:
@@ -103,10 +112,10 @@ async def find_spatial(organism, tissue, platforms, cache, out, *, model=None, d
                         measured = await asyncio.to_thread(validate_online, row, sample_out, download_bytes)
                         checkpoint(sample_result, measured)
                     result["samples"].append(measured)
-                result["10x_catalog"] = {"status": "completed", "found": len(matches)}
+                result["10x_catalog"] = {"status": "completed", "found": len(matches), "mode": mode}
             except (ImportError, OSError, RuntimeError) as exc:
                 result["10x_catalog"] = {"status": "access_failed", "error_type": type(exc).__name__,
-                                         "reason": str(exc)}
+                                         "reason": str(exc), "mode": mode}
             summarize(result)
             if result["10x_catalog"]["status"] != "completed":
                 result["status"] = "completed_with_issues"

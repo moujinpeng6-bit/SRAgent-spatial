@@ -1,0 +1,22 @@
+{
+  "status": "completed_with_issues",
+  "samples": [],
+  "totals": {
+    "found": 0,
+    "selected": 0,
+    "files_ready": 0,
+    "passed": 0,
+    "failed": 0,
+    "outcomes": {}
+  },
+  "by_source": {},
+  "by_platform": {},
+  "10x_catalog": {
+    "status": "access_failed",
+    "error_type": "CatalogAccessError",
+    "reason": "10x returned HTTP 429 with an unresolved browser verification page",
+    "mode": "live"
+  },
+  "discovery": [],
+  "resumed": false
+}

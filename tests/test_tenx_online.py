@@ -1,14 +1,30 @@
 import io
+import json
 import tarfile
 import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from sragent_spatial.tenx_online import ArchiveStream, collect, platform_for
+from sragent_spatial.tenx_online import ArchiveStream, CatalogAccessError, collect, platform_for, read_catalog_snapshot
 
 
 class TenxOnlineTests(unittest.TestCase):
+    def test_snapshot_filters_by_metadata_and_rejects_nonofficial_archives(self):
+        row = {"species": "Human", "tissue": "Tonsil", "platform": "Visium HD",
+               "sample_id": "tonsil", "source_url": "https://www.10xgenomics.com/datasets/tonsil",
+               "archives": {"binned_outputs": [
+                   "https://cf.10xgenomics.com/samples/spatial-exp/4.1.0/Example/Example_binned_outputs.tar.gz"]}}
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / "catalog.json"
+            path.write_text(json.dumps({"samples": [row, row]}), encoding="utf-8")
+            self.assertEqual(read_catalog_snapshot(path, "Homo sapiens", "tonsil", ["Visium HD"], 2), [row])
+            self.assertEqual(read_catalog_snapshot(path, "Homo sapiens", "lung", ["Visium HD"], 2), [])
+            row["archives"]["binned_outputs"] = ["https://example.org/binned_outputs.tar.gz"]
+            path.write_text(json.dumps({"samples": [row]}), encoding="utf-8")
+            with self.assertRaises(CatalogAccessError):
+                read_catalog_snapshot(path, "Homo sapiens", "tonsil", ["Visium HD"], 2)
+
     def test_resume_reuses_verified_range_and_requests_only_remaining_bytes(self):
         class RangeResponse(io.BytesIO):
             status = 206

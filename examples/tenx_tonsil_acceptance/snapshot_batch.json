@@ -1,0 +1,122 @@
+{
+  "status": "completed",
+  "samples": [
+    {
+      "sample_id": "visium-hd-three-prime-human-tonsil-fresh-frozen",
+      "source_url": "https://www.10xgenomics.com/datasets/visium-hd-three-prime-human-tonsil-fresh-frozen",
+      "title": "Visium HD 3' Gene Expression Library, Human Tonsil (Fresh Frozen)",
+      "species": "Human",
+      "tissue": "Tonsil",
+      "platform": "Visium HD",
+      "archives": {
+        "binned_outputs": [
+          "https://cf.10xgenomics.com/samples/spatial-exp/4.1.0/Visium_HD_3prime_Human_Tonsil/Visium_HD_3prime_Human_Tonsil_binned_outputs.tar.gz"
+        ],
+        "spatial": [
+          "https://cf.10xgenomics.com/samples/spatial-exp/4.1.0/Visium_HD_3prime_Human_Tonsil/Visium_HD_3prime_Human_Tonsil_spatial.tar.gz"
+        ]
+      },
+      "source": "10x_online",
+      "found": true,
+      "selected": true,
+      "files_ready": true,
+      "status": "correspondence_passed",
+      "bins_um": {
+        "2": {
+          "archive_members": {
+            "matrix": "binned_outputs/square_002um/filtered_feature_bc_matrix/matrix.mtx.gz",
+            "barcodes": "binned_outputs/square_002um/filtered_feature_bc_matrix/barcodes.tsv.gz",
+            "scalefactors": "binned_outputs/square_002um/spatial/scalefactors_json.json",
+            "image": "binned_outputs/square_002um/spatial/tissue_lowres_image.png",
+            "positions": "binned_outputs/square_002um/spatial/tissue_positions.parquet"
+          },
+          "checks": {
+            "barcode_position_image": {
+              "expression_barcode_count": 8689797,
+              "position_count": 11222500,
+              "missing_expression_ids_count": 0,
+              "missing_ids_preview": [],
+              "matrix_columns_checked": null,
+              "image_bounds_check": {
+                "width": 422,
+                "height": 600,
+                "scale": 0.014316392,
+                "tested_in_tissue_barcodes": 8689797,
+                "out_of_image_count": 0,
+                "bin_size_um_in_scalefactors": 2.0
+              },
+              "issues": [],
+              "basic_checks_passed": true,
+              "coordinate_convention": "position file full-resolution image pixels; physical micrometre scale not inferred",
+              "not_verified": [
+                "same physical section or donor",
+                "matrix values and feature identities",
+                "image pixel contents or anatomical registration",
+                "cell segmentation or pathology annotation"
+              ],
+              "scope": "barcode/position/optional matrix-header and image-bounds consistency only"
+            },
+            "matrix_dimensions": {
+              "features": 38606,
+              "observations": 8689797,
+              "nonzeros": 112452330,
+              "scope": "header_only_not_matrix_values_or_complete_gzip_integrity"
+            },
+            "matrix_columns_match_barcodes": true,
+            "image_decode": {
+              "width": 422,
+              "height": 600,
+              "format": "PNG",
+              "pixel_decode_verified": true
+            }
+          },
+          "status": "correspondence_passed"
+        }
+      },
+      "archive_bytes_read": 1853882368,
+      "downloaded_bytes": 377487360,
+      "reused_bytes": 1476395008
+    }
+  ],
+  "totals": {
+    "found": 1,
+    "selected": 1,
+    "files_ready": 1,
+    "passed": 1,
+    "failed": 0,
+    "outcomes": {
+      "correspondence_passed": 1
+    }
+  },
+  "by_source": {
+    "10x_online": {
+      "found": 1,
+      "selected": 1,
+      "files_ready": 1,
+      "passed": 1,
+      "failed": 0,
+      "outcomes": {
+        "correspondence_passed": 1
+      }
+    }
+  },
+  "by_platform": {
+    "Visium HD": {
+      "found": 1,
+      "selected": 1,
+      "files_ready": 1,
+      "passed": 1,
+      "failed": 0,
+      "outcomes": {
+        "correspondence_passed": 1
+      }
+    }
+  },
+  "10x_catalog": {
+    "status": "completed",
+    "found": 1,
+    "mode": "snapshot"
+  },
+  "discovery": [],
+  "resumed": false
+}
