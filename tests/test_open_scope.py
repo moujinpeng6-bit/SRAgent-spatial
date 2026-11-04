@@ -1,4 +1,5 @@
 from pathlib import Path
+import tempfile
 import unittest
 from urllib.error import HTTPError
 from unittest.mock import patch
@@ -19,6 +20,25 @@ def packet(organism, tissue, requested_organism, requested_tissue):
 
 
 class OpenScopeTests(unittest.TestCase):
+    def test_untagged_hd_groups_validate_independently_without_crossing_slices(self):
+        base = "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSMnnn/GSM100/suppl/GSM100_"
+        roles = ["barcodes.tsv.gz", "matrix.mtx.gz", "tissue_positions.parquet",
+                 "tissue_lowres_image.png", "scalefactors_json.json"]
+        assets = [{"url": f"{base}{anchor}_{role}"} for anchor in ("left", "right") for role in roles]
+        with tempfile.TemporaryDirectory() as folder, patch(
+            "sragent_spatial.batch_validation.LocalFileFetcher"
+        ) as fetcher, patch("sragent_spatial.batch_validation.spatial_bin_size", return_value=2), patch(
+            "sragent_spatial.batch_validation.validate_hd_bin", return_value={"status": "correspondence_passed"}
+        ) as validate:
+            fetcher.return_value.fetch.side_effect = lambda _sample, asset: {
+                "status": "downloaded", "local_path": asset["filename"],
+            }
+            result = audit_hd_untagged({"accession": "GSM100", "assets": assets}, Path(folder), Path(folder), 0)
+        self.assertEqual(result["status"], "correspondence_passed")
+        self.assertEqual(set(result["slices"]), {"left", "right"})
+        for anchor, call in zip(("left", "right"), validate.call_args_list):
+            self.assertTrue(all(f"_{anchor}_" in info["member"] for info in call.args[0].values()))
+
     def test_species_and_tissue_independent(self):
         request = DiscoveryRequest("Mus musculus", "*", ("Xenium",))
         query = build_spatial_query(request.organism, request.tissue, request.platforms)

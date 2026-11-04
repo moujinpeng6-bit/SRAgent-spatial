@@ -1,0 +1,390 @@
+{
+  "dataset_id": "cross_tissue_provisional_v1",
+  "reference_status": "assistant_prepared_pending_human_review",
+  "description": "Six public GEO samples from five series, selected from cross-tissue discovery results. Labels assigned from quoted sample evidence. Visium includes the HD family. Pending independent researcher review.",
+  "cases": [
+    {
+      "input": {
+        "accession": "GSM9815454",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9815454",
+        "fields": {
+          "Sample_title": [
+            "tumor1_M242T"
+          ],
+          "Sample_source_name_ch1": [
+            "Liver"
+          ],
+          "Sample_organism_ch1": [
+            "Homo sapiens"
+          ],
+          "Sample_characteristics_ch1": [
+            "tissue: Liver",
+            "tissue preservation method: FFPE",
+            "treatment: CRLM tumor",
+            "sample identifier: M242T"
+          ],
+          "Sample_extract_protocol_ch1": [
+            "tissue preparation protocol: The samples were sectioned at 5µm thickness and placed onto Xenium slides. This was followed by deparaffinization, rehydration, and decrosslinking of the tissue sections."
+          ],
+          "Sample_description": [
+            "CRLM tumor tissue section, Xenium spatial transcriptomics performed using a 462-gene panel."
+          ],
+          "Sample_data_processing": [
+            "Raw data was processed using the Xenium Onboard Analysis software."
+          ]
+        },
+        "fields_sha256": "9d4a8a7e26923c6ce8526c06459c4c2a4b5df61acc5e26055e8aba42bce1cb1c",
+        "screen_scope": {
+          "organism": "Homo sapiens",
+          "tissue": "liver"
+        },
+        "split": "cross_tissue_provisional"
+      },
+      "reference": {
+        "label": "eligible",
+        "evidence": [
+          {
+            "field": "Sample_description",
+            "quote": "Xenium spatial transcriptomics",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9815454"
+          }
+        ]
+      }
+    },
+    {
+      "input": {
+        "accession": "GSM9815455",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9815455",
+        "fields": {
+          "Sample_title": [
+            "tumor2_M131T"
+          ],
+          "Sample_source_name_ch1": [
+            "Liver"
+          ],
+          "Sample_organism_ch1": [
+            "Homo sapiens"
+          ],
+          "Sample_characteristics_ch1": [
+            "tissue: Liver",
+            "tissue preservation method: FFPE",
+            "treatment: CRLM tumor",
+            "sample identifier: M131T"
+          ],
+          "Sample_extract_protocol_ch1": [
+            "tissue preparation protocol: The samples were sectioned at 5µm thickness and placed onto Xenium slides. This was followed by deparaffinization, rehydration, and decrosslinking of the tissue sections."
+          ],
+          "Sample_description": [
+            "CRLM tumor tissue section, Xenium spatial transcriptomics performed using a 462-gene panel."
+          ],
+          "Sample_data_processing": [
+            "Raw data was processed using the Xenium Onboard Analysis software."
+          ]
+        },
+        "fields_sha256": "fed274f142a51c1685f92094b9e7b892f2cde7410f477a38d35f6e8c2ffe16b3",
+        "screen_scope": {
+          "organism": "Homo sapiens",
+          "tissue": "liver"
+        },
+        "split": "cross_tissue_provisional"
+      },
+      "reference": {
+        "label": "eligible",
+        "evidence": [
+          {
+            "field": "Sample_description",
+            "quote": "Xenium spatial transcriptomics",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9815455"
+          }
+        ]
+      }
+    },
+    {
+      "input": {
+        "accession": "GSM8942293",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8942293",
+        "fields": {
+          "Sample_title": [
+            "Spleen, control"
+          ],
+          "Sample_source_name_ch1": [
+            "Spleen"
+          ],
+          "Sample_organism_ch1": [
+            "Mus musculus"
+          ],
+          "Sample_characteristics_ch1": [
+            "tissue: Spleen",
+            "treatment: Vehicle (saline)"
+          ],
+          "Sample_extract_protocol_ch1": [
+            "Murine spleens and tumors were collected in 4% paraformaldehyde and fixed at 4°C overnight, after which samples were suspended in 70% ethanol and submitted to the Columbia University Molecular Pathology Shared Resource facility. 5 µm thick sections were prepared from FFPE tissues and submitted to the Genomics Core Facility at Mount Sinai Icahn School of Medicine for library preparation and sequencing.",
+            "Slides were stained, imaged, and then processed using the Visium Spatial Gene Expression for FFPE Kit (10X Genomics #PN-1000338)."
+          ],
+          "Sample_description": [
+            "Library name: 4613-Control-S"
+          ],
+          "Sample_data_processing": [
+            "Raw sequencing data were processed using the 10x Genomics Space Ranger pipeline to generate FASTQ files.",
+            "Sequenes were aligned to mm10 genome to gene expression count using Space Ranger's default settings.",
+            "Assembly: mm10",
+            "Supplementary files format and content: barcodes.tsv.gz: list of spatial barcodes",
+            "Supplementary files format and content: features.tsv.gz: list of gene IDs",
+            "Supplementary files format and content: matrix.mtx.gz: gene expression count data in Matrix Market Exchange Format",
+            "Supplementary files format and content: aligned_fiducials.jpg.gz: aligned fiducials of the tissue image",
+            "Supplementary files format and content: detected_tissue_image.jpg.gz: image of tissue and spots",
+            "Supplementary files format and content: tissue_hires_image.png.gz: hi-res image of tissue",
+            "Supplementary files format and content: tissue_lowres_image.png.gz: low-res image of tissue",
+            "Library strategy: Spatial Transcriptomics"
+          ],
+          "Sample_library_selection": [
+            "other"
+          ],
+          "Sample_library_source": [
+            "transcriptomic"
+          ],
+          "Sample_library_strategy": [
+            "OTHER"
+          ]
+        },
+        "fields_sha256": "a3c0d1f1c15d3a4df08a426fd956657593071fc4181817690c5fa573aaf2d392",
+        "screen_scope": {
+          "organism": "Mus musculus",
+          "tissue": "spleen"
+        },
+        "split": "cross_tissue_provisional"
+      },
+      "reference": {
+        "label": "eligible",
+        "evidence": [
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "Visium Spatial Gene Expression for FFPE Kit",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8942293"
+          }
+        ]
+      }
+    },
+    {
+      "input": {
+        "accession": "GSM9855547",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9855547",
+        "fields": {
+          "Sample_title": [
+            "Spatial Transcriptomics, Spleen set_1"
+          ],
+          "Sample_source_name_ch1": [
+            "Spleen"
+          ],
+          "Sample_organism_ch1": [
+            "Mus musculus"
+          ],
+          "Sample_characteristics_ch1": [
+            "tissue: Spleen"
+          ],
+          "Sample_extract_protocol_ch1": [
+            "Visium HD spatial transcriptomics were performed with paraffin-embedded spleen sections. Two areas per spleen with n = 3 spleens per condition (4 conditions; WT and C3KO; ThPO-late and empty vector control each) were used for the experiment. One area of spleens from one set of conditions was sequenced as one batch (n = 12 spleen areas per batch).",
+            "Spatial transcriptome sequencing librairies were prepared with 10xGenomics Visium CytAssist Spatial Gene Expression Slides & Reagent kit according to manufacturer’s construction. Visium V4 Slides FFPE v2 were used."
+          ],
+          "Sample_description": [
+            "Library name: TMA_set_1"
+          ],
+          "Sample_data_processing": [
+            "Raw sequencing data were processed using the 10x Genomics Space Ranger (v2.0.0) pipeline.",
+            "Assembly: GRCm39-2024-A",
+            "Supplementary files format and content: barcodes.tsv.gz : list of spatial barcodes",
+            "Supplementary files format and content: features.tsv.gz : list of gene Ids",
+            "Supplementary files format and content: matrix.mtx.gz : gene expresion count data in Matrix Market Exchange Format",
+            "Supplementary files format and content: TMA_overview.xlsx : Spatial location of each TMA",
+            "Supplementary files format and content: OverviewBF.tif : Bright field tissue image",
+            "Supplementary files format and content: high_res.qptiff : High quality image",
+            "Library strategy: Spatial Transcriptomics"
+          ],
+          "Sample_library_selection": [
+            "other"
+          ],
+          "Sample_library_source": [
+            "transcriptomic"
+          ],
+          "Sample_library_strategy": [
+            "OTHER"
+          ]
+        },
+        "fields_sha256": "0f5ec463c58f28f0888f01ce4fb2bca73a5717fa094d94d630c8809c7c3d9a28",
+        "screen_scope": {
+          "organism": "Mus musculus",
+          "tissue": "spleen"
+        },
+        "split": "cross_tissue_provisional"
+      },
+      "reference": {
+        "label": "eligible",
+        "evidence": [
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "Visium HD spatial transcriptomics",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9855547"
+          }
+        ]
+      }
+    },
+    {
+      "input": {
+        "accession": "GSM8659160",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8659160",
+        "fields": {
+          "Sample_title": [
+            "Spatial transcriptomics of mus musculus: young male brain1 mouse 1"
+          ],
+          "Sample_source_name_ch1": [
+            "Brain"
+          ],
+          "Sample_organism_ch1": [
+            "Mus musculus"
+          ],
+          "Sample_characteristics_ch1": [
+            "tissue: Brain",
+            "strain: C57BL/6JN",
+            "mouse id: 1",
+            "Sex: male",
+            "age: 17 weeks",
+            "slide: V11T16-046",
+            "area: A1",
+            "sequencing primer: SI-TT-F12",
+            "permeabilization time_(minutes): 18",
+            "slice thickness_(um): 16",
+            "cohort: Aging",
+            "technology: 10x Visium",
+            "genotype: Wildtype",
+            "treatment: None",
+            "disease: None",
+            "disease stage: None"
+          ],
+          "Sample_extract_protocol_ch1": [
+            "We followed the standard protocol for fresh frozen tissues (compare document CG000239 - Rev F) using the Visium Spatial Gene Expression (GEX) Slide & Reagent Kits with recommended reagents (10x Genomics, PN-1000193). In brief, after H&E staining and imaging (10x magnification, Axio Imager KMAT - ZEISS), tissues were permeabilized with the previously defined permeabilization time. After reverse transcription on the slide and denaturation, second strand synthesis is performed. For further processing, cDNA is released via denaturation. To determine cycle number for amplification the KAPA SYBER FAST qPCR Master Mix Kit (KAPA Biosystems) is used in a qPCR. All samples in this study were amplified using 14 – 19 PCR cycles. After bead purification using SPRIselect beads (Beckman Coulter, Product No. B233318), cDNA is quantified via 2100 Bioanalyzer using the Bioanalyzer High Sensitivity DNA kit (Agilent, cat.no.:5067-4626).",
+            "For each brain, five 10µm sections (Bregma: –1.7, -2.06, -2.7, -3.52 and -4.72) identical to the Visium cohort were collected and loaded onto the StereoSeq Chip T-Slide according to manufacturer´s protocol. In short, after fixation of the tissue using ice-cold methanol, cell nuclei were stained using the ssDNA Qubit dye (Thermo Fisher) and imaged in 10x resolution in FITC channel. Subsequently, brain tissue was permeabilized for 14 min at 37°C, releasing mRNAs from the cells onto the Chip T-Slide. Reverse transcription of mRNAs was conducted for 3 hours at 42°C generating cDNA with sequence barcodes indicating their unique location on the T-Slide. Afterwards, the tissue was removed using tissue removal buffer for 10 min at 55°C and cDNA was collected from the chip o/n at 55°C. CDNA was then purified, amplified and size distribution was checked using High Sensitivity DNA Bioanalyser Kit (Agilent).",
+            "The library construction was either performed manually or using the MGISP-100 liquid handling system according to the 10x Visium user guide. In short, the following steps were performed: fragmentation, end repair, A-tailing, double sided size selection, adaptor ligation, post ligation cleanup, sample index PCR, double sided size selection; followed by post library construction QC performed using the Bioanalyzer High Sensitivity DNA kit (Agilent, cat.no.:5067-4626) and KAPA Library Quantification Kit (Roche, KK4824). Libraries were pooled in an equimolar fashion with up to 15 samples in one library, pooling only samples originating from the same organ whenever possible. All libraries were sequenced using NovaSeq 6000 (Illumina).",
+            "Library Preparation was performed using Stereo-seq Library Preparation Kit (MGI) using 30ng of cDNA and 13 cycles of amplification following the manufacturer´s protocol. Final quality check of the size distribution of the library was performed using High Sensitivity DNA Bioanalyzer Kit."
+          ],
+          "Sample_description": [
+            "Library name: AGE_1_17_Brain1_GEX18_A1"
+          ],
+          "Sample_data_processing": [
+            "We stitched the image series from the Axio Imager KMAT brightfield microscope using the Zeiss ZEN software (v3.6) and cropped and rotated the resulting high-resolution TIFF files using Fiji. Individual sample images were color corrected where needed to match the other images.",
+            "In the next step, we ran Spaceranger (v2.1) with the demultiplexed FASTQ files and the corresponding TIFF images. In brief, Spaceranger aligns the reads to a reference genome (refdata-gex-mm10-2020-A), detects tissue under spots and the fiducial frame in the image, to create a spot x UMI count matrix. For the infection cohort, we additionally built a custom Spaceranger reference genome combining mouse (GRCm39) and Plasmodium berghei -ANKA genome (PBANKA01). For two samples the alignment of the fiducial frame was manually corrected after the automatic detection had failed initially. For the manual image QC of Visium samples we used the 10x Loupe browser tool (v6.5.0).",
+            "Based on the Spaceranger reports, we either excluded a sample completely from further analysis, or using the 10x Cloupe tool manually selected small spot regions to exclude from downstream analysis where necessary (e.g. removing corners with uneven permeabilization), and further applied criteria-based spot filtering on each sample, to eventually obtain a high-quality data set. To this end, we inspected the variable distributions for the number of UMIs, the number of read counts, mitochondrial content, as well as spot complexity (=log10(Number of features) / log10(Number of counts)) for each tissue separately, and applied the following filtering criteria on the filtered spot count matrix from Spaceranger after loading into Seurat objects: (Maximum percentage of mitochondrial read content; Minimum number of UMIs; Maximum number of UMIs; Minimum number of detected features; Maximum number of detected features; Minimum spot complexity) Brain: (35; 500; 70,000; 300; 10,000; 0.75), Bulb: (35; 500; 70,000; 300; 10,000; 0.75), Heart: (60; 1000; 25,000; 300; 5000; 0.75), Kidney: (30; 1000; 50,000; 300; 8000; 0.75) Liver: (15; 1000; 40,000; 500; 8000; 0.75), Lung: (10; 1000; 30,000; 300; 8000; 0.75) Spleen: (10; 500; 35,000; 300; 8000; 0.75).",
+            "We then rotated the images of the remaining samples to best match the desired orientation for each tissue. We then followed the default Seurat (v4.4) workflow to preprocess each sample by applying NormalizeData, FindVariableFeatures with variance stabilizing transformation for 2000 features, followed by SCTransform (v1), regressing out the percentage of mitochondrial reads and subsetting to 3000 variable features. Subsequently, we performed RunPCA on the SCT assay, FindNeighbors on up to 30 PCs, FindClusters with leiden clustering followed by RunUMAP with up to 30 dimensions. Using the cleaned list of Visium samples, we created one Seurat object for each tissue using the SCT-based integration workflow as follows: set the default assay to SCT, run SelectIntegrationFeatures with 3000 features, then PrepSCTIntegration, and FindIntegrationAnchors followed by IntegrateData, each with “SCT” set as normalization method and up to 30 dimensions. Next, we performed the standard dimension reduction workflow consisting of RunPCA, RunUMAP, FindNeighbors, and FindClusters again with up to 30 dimensions and fixed random seeds.",
+            "In case of the STOmics Stereo-seq samples, images were obtained and stitched with the Zeiss Moticam Pro 500i. Combined QC and primary analysis of sequencing and image data was performed using the STOmics analysis workflow (SAW) v1.0 to obtain quantification matrices for the mouse genome (GRCm38). The SAW pipeline was also used to accumulate DNB spot gene expression counts into the specific area and cell binnings.",
+            "For the STOmics Stereo-seq samples, we first converted the outputs of the Stereo-Seq Analysis Workflow (SAW) pipeline90 into Seurat objects for both bin200 (200x200 Stereo-seq spots) and cell bins. This is done by using the io.stereo_to_anndata function in the Stereopy package91 (v1.1.0), followed by applying the h5ad2rds.R script provided by BGI. Cell bins were obtained using image-based cell segmentation of the corresponding ssDNA-stained images. Filtering was performed using the following criteria: (Maximum percentage of mitochondrial read content; Minimum number of UMIs; Maximum number of UMIs; Minimum number of detected features; Maximum number of detected features; Minimum spot complexity) Brain (bin200): (35; 500; 100,000; 300; 10,000; 0.75), Brain (cell bin): (35; 100; 10,000; 100; 3,000; 0.75).",
+            "In line with the Visium 10x samples we applied a default Seurat preprocessing workflow for each sample. Using the cleaned list of STOmics Stereo-Seq samples, we performed the Harmony-based integration workflow as follows: set the default assay to SCT, run SelectIntegrationFeatures with 5000 features, merge the sample list into one Seurat sample, run RunPCA with 50 components, run RunHarmony on SCT assay and the PCA reduction using Sample_ID and Age as latent variables, run JoinLayers on the RNA assay. Then, we performed the sample dimension reduction workflow as in the Visium samples with up to 50 dimensions.",
+            "Assembly: GRCm39",
+            "Supplementary files format and content: tif image of H&E stained tissue slice on capture area in high resolution",
+            "Supplementary files format and content: jpg image of spaceranger aligned fiducials",
+            "Supplementary files format and content: jpg image of spaceranger detected tissue",
+            "Supplementary files format and content: h5 of filtered spot barcode-to-feature count matrix from spaceranger",
+            "Supplementary files format and content: h5 of raw spot barcode-to-feature count matrix from spaceranger",
+            "Supplementary files format and content: json of spaceranger image scale factors",
+            "Supplementary files format and content: csv of spatial enrichment results for gene features",
+            "Supplementary files format and content: png image of tissue slice on visium capture area in high resolution",
+            "Supplementary files format and content: png image of tissue slice on visium capture area in low resolution",
+            "Supplementary files format and content: csv of spaceranger spot tissue positions",
+            "Supplementary files format and content: tif image of adjacent (before or after) H&E stained tissue slice in high resolution",
+            "Supplementary files format and content: cellbin.gef cellbin feature expression matrix records the information of cells individually, including the centroid coordinate, boundary coordinates, expression of genes, and cell area.",
+            "Supplementary files format and content: gef feature expression matrix includes the whole information over a complete chip region. It only has bin1 expression counts.",
+            "Supplementary files format and content: gem gene expression matrix (GEM) stores gene spatial expression data. SAW generates multiple gene expression matrix files in the workflow, the basic format requires six columns with a header row that shows the column names. The six columns are gene ID, gene name, x coordinate, y coordinate, MID count and exon count. When it comes to cellbin GEM, the seventh column is for cell ID. The header of the expression matrix for the maximum area enclosing rectangle region has several annotation rows starting with \"#\" before the column rows.",
+            "Supplementary files format and content: tissue.gef Feature expression matrix under the tissue coverage region. It is also a visualization GEF that includes expression counts for bin1, 5, 10, 20, 50, 100, 150, 200.",
+            "Supplementary files format and content: tissue.gem gene expression matrix (GEM) stores gene spatial expression data for spots under tissue. SAW generates multiple gene expression matrix files in the workflow, the basic format requires six columns with a header row that shows the column names. The six columns are gene ID, gene name, x coordinate, y coordinate, MID count and exon count. When it comes to cellbin GEM, the seventh column is for cell ID. The header of the expression matrix for the maximum area enclosing rectangle region has several annotation rows starting with \"#\" before the column rows.",
+            "Library strategy: Spatial Transcriptomics"
+          ],
+          "Sample_library_selection": [
+            "other"
+          ],
+          "Sample_library_source": [
+            "transcriptomic"
+          ],
+          "Sample_library_strategy": [
+            "OTHER"
+          ]
+        },
+        "fields_sha256": "a3234d67057e818acb25cfcd0f7599a77d69d5a135e14d5bc58241f1556433ff",
+        "screen_scope": {
+          "organism": "Mus musculus",
+          "tissue": "spleen"
+        },
+        "split": "cross_tissue_provisional"
+      },
+      "reference": {
+        "label": "out_of_scope",
+        "evidence": [
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: Brain",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8659160"
+          }
+        ]
+      }
+    },
+    {
+      "input": {
+        "accession": "GSM8797488",
+        "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8797488",
+        "fields": {
+          "Sample_title": [
+            "RCC_PSMA"
+          ],
+          "Sample_source_name_ch1": [
+            "Kidney cancer"
+          ],
+          "Sample_organism_ch1": [
+            "Homo sapiens"
+          ],
+          "Sample_characteristics_ch1": [
+            "tissue: Kidney cancer",
+            "cell type: Renal Cell Carcinoma"
+          ],
+          "Sample_extract_protocol_ch1": [
+            "Human Kidney cancer tissue FFPE slice gene expression were detected by 10x Visium HD Spatial Gene Expression Slide & Reagents Kit.",
+            "RNA libraries were prepared using Visium HD Reagent Kit (#PN-1000668, 10x Genomics) following the manufacturer’s protocol."
+          ],
+          "Sample_description": [
+            "Library name: RCC_PSMA_20241122"
+          ],
+          "Sample_data_processing": [
+            "Sequencing was performed on NovaSeq 6000 platform in a 43+50-base paired-end mode.",
+            "Raw sequencing data were converted to matrices of expression using Space Ranger (version spaceranger-3.1.1, 10X Genomics).",
+            "Assembly: GRCh38-2020-A",
+            "Supplementary files format and content: filtered_feature_bc_matrix.zip: zipped file of Space Ranger output folder \"filtered_feature_bc_matrix\" in each observation size folder",
+            "Supplementary files format and content: raw_feature_bc_matrix.zip: zipped file of Space Ranger output folder \"raw_feature_bc_matrix\" in each observation size folder",
+            "Supplementary files format and content: spatial.zip:  zipped file of Space Ranger output folder \"spatial\" in each observation size folder",
+            "Library strategy: Spatial Transcriptomics"
+          ],
+          "Sample_library_selection": [
+            "other"
+          ],
+          "Sample_library_source": [
+            "transcriptomic"
+          ],
+          "Sample_library_strategy": [
+            "OTHER"
+          ]
+        },
+        "fields_sha256": "979664070608cfb3a3a35d73c942648af8851f2c6f38d75bb31ed038ef6f2b90",
+        "screen_scope": {
+          "organism": "Homo sapiens",
+          "tissue": "prostate"
+        },
+        "split": "cross_tissue_provisional"
+      },
+      "reference": {
+        "label": "out_of_scope",
+        "evidence": [
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: Kidney cancer",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8797488"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -72,6 +72,17 @@ class AgentWiringTests(unittest.TestCase):
 
 
 class SpatialFileTests(unittest.TestCase):
+    def test_full_matrix_rejects_bad_entries_even_when_header_matches(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            barcodes, positions, *_ = self.files(root, "a,1,0,0,10,20\nb,1,0,1,30,40\n")
+            matrix = root / "matrix.mtx"
+            matrix.write_text("%%MatrixMarket matrix coordinate integer general\n2 2 3\n1 1 4\n2 3 -1\n")
+            report = validate_visium(barcodes, positions, matrix=matrix, full_matrix=True)
+            self.assertEqual(report["matrix_content"]["read_entries"], 2)
+            self.assertEqual(report["matrix_content"]["invalid_entries"], 1)
+            self.assertIn("invalid_matrix_entries_or_entry_count", report["issues"])
+
     def files(self, root, positions):
         (root / "barcodes.tsv").write_text("a\nb\n", encoding="utf-8")
         (root / "positions.csv").write_text(positions, encoding="utf-8")

@@ -103,6 +103,10 @@ def main(argv=None):
                               help="Use captured public 10x catalog records")
     tenx_catalog.add_argument("--10x-interactive", dest="tenx_interactive", action="store_true",
                               help="Allow up to five minutes for you to complete 10x verification in Chrome")
+    tenx_catalog.add_argument("--10x-fallback-snapshot", dest="tenx_fallback_snapshot", type=Path,
+                              help="Use captured catalog records if the live 10x catalog is unavailable")
+    find.add_argument("--geo-assets", type=Path, help="Reuse GEO files under this local directory")
+    find.add_argument("--probe-remote", action="store_true", help="Check missing GEO links with HEAD")
     find.add_argument("--model", help="Optional model for GEO screening; defaults to rules")
     find.add_argument("--max-studies", type=bounded_integer(1, 5), default=2)
     find.add_argument("--samples-per-study", type=bounded_integer(1, 10), default=2)
@@ -170,6 +174,9 @@ def main(argv=None):
     spatial.add_argument("--scalefactors", type=Path)
     spatial.add_argument("--lowres-image", type=Path)
     spatial.add_argument("--matrix", type=Path)
+    spatial.add_argument("--bin-um", type=int, choices=(2, 8, 16, 24))
+    spatial.add_argument("--full-matrix", action="store_true", help="Check every integer Matrix Market entry")
+    spatial.add_argument("--overlay", type=Path, help="Write a new PNG with sampled in-tissue positions")
     spatial.add_argument("--out", type=Path, required=True)
     args = parser.parse_args(argv)
     try:
@@ -237,7 +244,9 @@ def main(argv=None):
                                               max_studies=args.max_studies, samples_per_study=args.samples_per_study,
                                               resume=args.resume, source=args.source,
                                               catalog_snapshot=args.tenx_catalog_snapshot,
-                                              tenx_interactive=args.tenx_interactive))
+                                              tenx_interactive=args.tenx_interactive,
+                                              catalog_fallback=args.tenx_fallback_snapshot,
+                                              geo_assets=args.geo_assets, probe_remote=args.probe_remote))
             print(json.dumps({"status": report["status"], **report["totals"]}))
             if report["status"] != "completed":
                 return 2
@@ -399,7 +408,11 @@ def main(argv=None):
             from .spatial import validate_visium
             if bool(args.scalefactors) != bool(args.lowres_image):
                 raise ValueError("Supply scalefactors and lowres-image together")
-            report = validate_visium(args.barcodes, args.positions, args.scalefactors, args.lowres_image, args.matrix)
+            if args.overlay and args.overlay.resolve() == args.out.resolve():
+                raise ValueError("Overlay and JSON report must have different paths")
+            report = validate_visium(args.barcodes, args.positions, args.scalefactors, args.lowres_image,
+                                     args.matrix, bin_um=args.bin_um, full_matrix=args.full_matrix,
+                                     overlay=args.overlay)
             write_json(args.out, report)
             print(json.dumps(report))
             if report["issues"]:
@@ -409,6 +422,6 @@ def main(argv=None):
             write_json(args.out, asyncio.run(agent_lookup(args.accession)))
             print("Saved unreviewed upstream agent output")
         return 0
-    except (ValueError, OSError, RuntimeError, KeyError, TypeError, subprocess.SubprocessError) as exc:
+    except (ValueError, OSError, EOFError, RuntimeError, KeyError, TypeError, subprocess.SubprocessError) as exc:
         print(f"Error: {exc}", file=sys.stderr)
         return 1

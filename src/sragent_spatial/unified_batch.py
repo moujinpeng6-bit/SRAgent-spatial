@@ -21,6 +21,9 @@ def files_ready(row):
         return True
     if row.get("bins_um"):
         return all(files_ready(item) for item in row["bins_um"].values())
+    if row.get("slices"):
+        return len(row["slices"]) == len(row["slice_candidates"]) and all(
+            files_ready(item) for item in row["slices"].values())
     validation = row.get("validation") or row
     return validation.get("status") in {"mismatch", "validation_error"}
 

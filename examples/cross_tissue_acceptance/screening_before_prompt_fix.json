@@ -1,0 +1,677 @@
+{
+  "reference_status": "assistant_prepared_pending_human_review",
+  "case_count": 6,
+  "method_scopes": {
+    "original_agent": "Pinned upstream NCBI fetch Agent component, not the complete SRAgent hierarchy",
+    "spatial_agent": "Same upstream NCBI Agent plus upstream model factory and two sample-level tools",
+    "sragent": "Complete pinned upstream SRAgent supervisor (Entrez, ncbi_fetch, BigQuery, sequences) plus the same two sample-level tools"
+  },
+  "provider": "deepseek",
+  "model": "deepseek-flash",
+  "results": [
+    {
+      "accession": "GSM9815454",
+      "method": "rules",
+      "reference_label": "eligible",
+      "status": "completed",
+      "prediction": {
+        "accession": "GSM9815454",
+        "label": "eligible",
+        "reason": "Sample metadata matches the requested scope and has a spatial assay signal.",
+        "evidence": [
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: Liver",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9815454"
+          },
+          {
+            "field": "Sample_organism_ch1",
+            "quote": "Homo sapiens",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9815454"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "tissue preparation protocol: The samples were sectioned at 5µm thickness and placed onto Xenium slides. This was followed by deparaffinization, rehydration, and decrosslinking of the tissue sections.",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9815454"
+          }
+        ],
+        "method": "rules-v0.2",
+        "citation_validated": true,
+        "tissue_text": "Liver",
+        "platform_candidates": [
+          "Xenium"
+        ],
+        "scope": "metadata_screen_only_not_spatial_asset_validation"
+      }
+    },
+    {
+      "accession": "GSM9815454",
+      "method": "original_agent",
+      "reference_label": "eligible",
+      "status": "failed",
+      "failure_type": "ValueError",
+      "failure_stage": "model_output_validation",
+      "failure_reason": "Model label or reason is invalid"
+    },
+    {
+      "accession": "GSM9815454",
+      "method": "spatial_agent",
+      "reference_label": "eligible",
+      "status": "failed",
+      "failure_type": "ValueError",
+      "failure_stage": "model_output_validation",
+      "failure_reason": "Model label or reason is invalid"
+    },
+    {
+      "accession": "GSM9815455",
+      "method": "rules",
+      "reference_label": "eligible",
+      "status": "completed",
+      "prediction": {
+        "accession": "GSM9815455",
+        "label": "eligible",
+        "reason": "Sample metadata matches the requested scope and has a spatial assay signal.",
+        "evidence": [
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: Liver",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9815455"
+          },
+          {
+            "field": "Sample_organism_ch1",
+            "quote": "Homo sapiens",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9815455"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "tissue preparation protocol: The samples were sectioned at 5µm thickness and placed onto Xenium slides. This was followed by deparaffinization, rehydration, and decrosslinking of the tissue sections.",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9815455"
+          }
+        ],
+        "method": "rules-v0.2",
+        "citation_validated": true,
+        "tissue_text": "Liver",
+        "platform_candidates": [
+          "Xenium"
+        ],
+        "scope": "metadata_screen_only_not_spatial_asset_validation"
+      }
+    },
+    {
+      "accession": "GSM9815455",
+      "method": "original_agent",
+      "reference_label": "eligible",
+      "status": "failed",
+      "failure_type": "ValueError",
+      "failure_stage": "model_output_validation",
+      "failure_reason": "Model label or reason is invalid"
+    },
+    {
+      "accession": "GSM9815455",
+      "method": "spatial_agent",
+      "reference_label": "eligible",
+      "status": "completed",
+      "prediction": {
+        "accession": "GSM9815455",
+        "label": "eligible",
+        "reason": "Sample is explicitly human liver (FFPE CRLM tumor section) and was profiled with Xenium spatial transcriptomics on a 462-gene panel, matching the requested organism and tissue with a spatial assay.",
+        "evidence": [
+          {
+            "field": "Sample_organism_ch1",
+            "quote": "Homo sapiens",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9815455"
+          },
+          {
+            "field": "Sample_source_name_ch1",
+            "quote": "Liver",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9815455"
+          },
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: Liver",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9815455"
+          },
+          {
+            "field": "Sample_description",
+            "quote": "CRLM tumor tissue section, Xenium spatial transcriptomics performed using a 462-gene panel.",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9815455"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "placed onto Xenium slides",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9815455"
+          }
+        ],
+        "citation_validated": true,
+        "scope": "metadata_screen_only_not_spatial_asset_validation",
+        "method": "spatial_agent",
+        "model": "deepseek-flash",
+        "provider": "deepseek",
+        "elapsed_seconds": 3.031,
+        "invocation_seconds": 3.0,
+        "upstream_commit": "67b60c24a49385d3eed8e5121be58d13c82839cd",
+        "model_call_executed": true,
+        "original_scope": "upstream_ncbi_fetch_agent_component_plus_sample_bound_spatial_tools",
+        "comparison_scope": "same_sample_ids_and_input_packets; upstream agents may fetch additional live public metadata"
+      }
+    },
+    {
+      "accession": "GSM8942293",
+      "method": "rules",
+      "reference_label": "eligible",
+      "status": "completed",
+      "prediction": {
+        "accession": "GSM8942293",
+        "label": "eligible",
+        "reason": "Sample metadata matches the requested scope and has a spatial assay signal.",
+        "evidence": [
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: Spleen",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8942293"
+          },
+          {
+            "field": "Sample_organism_ch1",
+            "quote": "Mus musculus",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8942293"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "Slides were stained, imaged, and then processed using the Visium Spatial Gene Expression for FFPE Kit (10X Genomics #PN-1000338).",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8942293"
+          }
+        ],
+        "method": "rules-v0.2",
+        "citation_validated": true,
+        "tissue_text": "Spleen",
+        "platform_candidates": [
+          "Visium"
+        ],
+        "scope": "metadata_screen_only_not_spatial_asset_validation"
+      }
+    },
+    {
+      "accession": "GSM8942293",
+      "method": "original_agent",
+      "reference_label": "eligible",
+      "status": "failed",
+      "failure_type": "ValueError",
+      "failure_stage": "model_output_validation",
+      "failure_reason": "Model label or reason is invalid"
+    },
+    {
+      "accession": "GSM8942293",
+      "method": "spatial_agent",
+      "reference_label": "eligible",
+      "status": "completed",
+      "prediction": {
+        "accession": "GSM8942293",
+        "label": "eligible",
+        "reason": "Sample explicitly names spleen tissue in Mus musculus and uses a Visium Spatial Gene Expression for FFPE workflow with Space Ranger spatial barcode/image outputs, matching both requested filters.",
+        "evidence": [
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: Spleen",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8942293"
+          },
+          {
+            "field": "Sample_organism_ch1",
+            "quote": "Mus musculus",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8942293"
+          },
+          {
+            "field": "Sample_source_name_ch1",
+            "quote": "Spleen",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8942293"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "Slides were stained, imaged, and then processed using the Visium Spatial Gene Expression for FFPE Kit (10X Genomics #PN-1000338).",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8942293"
+          },
+          {
+            "field": "Sample_data_processing",
+            "quote": "Library strategy: Spatial Transcriptomics",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8942293"
+          }
+        ],
+        "citation_validated": true,
+        "scope": "metadata_screen_only_not_spatial_asset_validation",
+        "method": "spatial_agent",
+        "model": "deepseek-flash",
+        "provider": "deepseek",
+        "elapsed_seconds": 3.14,
+        "invocation_seconds": 3.093,
+        "upstream_commit": "67b60c24a49385d3eed8e5121be58d13c82839cd",
+        "model_call_executed": true,
+        "original_scope": "upstream_ncbi_fetch_agent_component_plus_sample_bound_spatial_tools",
+        "comparison_scope": "same_sample_ids_and_input_packets; upstream agents may fetch additional live public metadata"
+      }
+    },
+    {
+      "accession": "GSM9855547",
+      "method": "rules",
+      "reference_label": "eligible",
+      "status": "completed",
+      "prediction": {
+        "accession": "GSM9855547",
+        "label": "eligible",
+        "reason": "Sample metadata matches the requested scope and has a spatial assay signal.",
+        "evidence": [
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: Spleen",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9855547"
+          },
+          {
+            "field": "Sample_organism_ch1",
+            "quote": "Mus musculus",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9855547"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "Visium HD spatial transcriptomics were performed with paraffin-embedded spleen sections. Two areas per spleen with n = 3 spleens per condition (4 conditions; WT and C3KO; ThPO-late and empty vector control each) were used for the experiment. One area of spleens from one set of conditions was sequenced as one batch (n = 12 spleen areas per batch).",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9855547"
+          }
+        ],
+        "method": "rules-v0.2",
+        "citation_validated": true,
+        "tissue_text": "Spleen",
+        "platform_candidates": [
+          "Visium"
+        ],
+        "scope": "metadata_screen_only_not_spatial_asset_validation"
+      }
+    },
+    {
+      "accession": "GSM9855547",
+      "method": "original_agent",
+      "reference_label": "eligible",
+      "status": "failed",
+      "failure_type": "ValueError",
+      "failure_stage": "model_output_validation",
+      "failure_reason": "Model label or reason is invalid"
+    },
+    {
+      "accession": "GSM9855547",
+      "method": "spatial_agent",
+      "reference_label": "eligible",
+      "status": "completed",
+      "prediction": {
+        "accession": "GSM9855547",
+        "label": "eligible",
+        "reason": "Sample explicitly names spleen tissue in Mus musculus and describes a Visium HD spatial transcriptomics assay on spleen sections, matching both requested filters.",
+        "evidence": [
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: Spleen",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9855547"
+          },
+          {
+            "field": "Sample_organism_ch1",
+            "quote": "Mus musculus",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9855547"
+          },
+          {
+            "field": "Sample_source_name_ch1",
+            "quote": "Spleen",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9855547"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "Visium HD spatial transcriptomics were performed with paraffin-embedded spleen sections.",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9855547"
+          },
+          {
+            "field": "Sample_data_processing",
+            "quote": "Library strategy: Spatial Transcriptomics",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9855547"
+          }
+        ],
+        "citation_validated": true,
+        "scope": "metadata_screen_only_not_spatial_asset_validation",
+        "method": "spatial_agent",
+        "model": "deepseek-flash",
+        "provider": "deepseek",
+        "elapsed_seconds": 2.594,
+        "invocation_seconds": 2.562,
+        "upstream_commit": "67b60c24a49385d3eed8e5121be58d13c82839cd",
+        "model_call_executed": true,
+        "original_scope": "upstream_ncbi_fetch_agent_component_plus_sample_bound_spatial_tools",
+        "comparison_scope": "same_sample_ids_and_input_packets; upstream agents may fetch additional live public metadata"
+      }
+    },
+    {
+      "accession": "GSM8659160",
+      "method": "rules",
+      "reference_label": "out_of_scope",
+      "status": "completed",
+      "prediction": {
+        "accession": "GSM8659160",
+        "label": "mixed",
+        "reason": "Multiple sample platform or organism signals require review.",
+        "evidence": [
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: Brain",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8659160"
+          },
+          {
+            "field": "Sample_organism_ch1",
+            "quote": "Mus musculus",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8659160"
+          },
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "technology: 10x Visium",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8659160"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "Library Preparation was performed using Stereo-seq Library Preparation Kit (MGI) using 30ng of cDNA and 13 cycles of amplification following the manufacturer´s protocol. Final quality check of the size distribution of the library was performed using High Sensitivity DNA Bioanalyzer Kit.",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8659160"
+          }
+        ],
+        "method": "rules-v0.2",
+        "citation_validated": true,
+        "tissue_text": "Brain",
+        "platform_candidates": [
+          "Visium",
+          "Stereo-seq"
+        ],
+        "scope": "metadata_screen_only_not_spatial_asset_validation"
+      }
+    },
+    {
+      "accession": "GSM8659160",
+      "method": "original_agent",
+      "reference_label": "out_of_scope",
+      "status": "completed",
+      "prediction": {
+        "accession": "GSM8659160",
+        "label": "out_of_scope",
+        "reason": "Sample is explicitly mouse brain tissue, not spleen; organism matches but tissue does not.",
+        "evidence": [
+          {
+            "field": "Sample_source_name_ch1",
+            "quote": "Brain",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8659160"
+          },
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: Brain",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8659160"
+          },
+          {
+            "field": "Sample_organism_ch1",
+            "quote": "Mus musculus",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8659160"
+          }
+        ],
+        "citation_validated": true,
+        "scope": "metadata_screen_only_not_spatial_asset_validation",
+        "method": "original_agent",
+        "model": "deepseek-flash",
+        "provider": "deepseek",
+        "elapsed_seconds": 1.609,
+        "invocation_seconds": 1.593,
+        "upstream_commit": "67b60c24a49385d3eed8e5121be58d13c82839cd",
+        "model_call_executed": true,
+        "original_scope": "upstream_ncbi_fetch_agent_component_not_complete_sragent_hierarchy",
+        "comparison_scope": "same_sample_ids_and_input_packets; upstream agents may fetch additional live public metadata"
+      }
+    },
+    {
+      "accession": "GSM8659160",
+      "method": "spatial_agent",
+      "reference_label": "out_of_scope",
+      "status": "completed",
+      "prediction": {
+        "accession": "GSM8659160",
+        "label": "out_of_scope",
+        "reason": "Sample is explicitly mouse brain tissue, not spleen; organism matches but tissue does not.",
+        "evidence": [
+          {
+            "field": "Sample_source_name_ch1",
+            "quote": "Brain",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8659160"
+          },
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: Brain",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8659160"
+          },
+          {
+            "field": "Sample_organism_ch1",
+            "quote": "Mus musculus",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8659160"
+          }
+        ],
+        "citation_validated": true,
+        "scope": "metadata_screen_only_not_spatial_asset_validation",
+        "method": "spatial_agent",
+        "model": "deepseek-flash",
+        "provider": "deepseek",
+        "elapsed_seconds": 1.813,
+        "invocation_seconds": 1.797,
+        "upstream_commit": "67b60c24a49385d3eed8e5121be58d13c82839cd",
+        "model_call_executed": true,
+        "original_scope": "upstream_ncbi_fetch_agent_component_plus_sample_bound_spatial_tools",
+        "comparison_scope": "same_sample_ids_and_input_packets; upstream agents may fetch additional live public metadata"
+      }
+    },
+    {
+      "accession": "GSM8797488",
+      "method": "rules",
+      "reference_label": "out_of_scope",
+      "status": "completed",
+      "prediction": {
+        "accession": "GSM8797488",
+        "label": "unknown",
+        "reason": "Could not confirm the requested sample scope and a spatial assay.",
+        "evidence": [
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: Kidney cancer",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8797488"
+          },
+          {
+            "field": "Sample_organism_ch1",
+            "quote": "Homo sapiens",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8797488"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "Human Kidney cancer tissue FFPE slice gene expression were detected by 10x Visium HD Spatial Gene Expression Slide & Reagents Kit.",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8797488"
+          }
+        ],
+        "method": "rules-v0.2",
+        "citation_validated": true,
+        "tissue_text": "Kidney cancer",
+        "platform_candidates": [
+          "Visium"
+        ],
+        "scope": "metadata_screen_only_not_spatial_asset_validation"
+      }
+    },
+    {
+      "accession": "GSM8797488",
+      "method": "original_agent",
+      "reference_label": "out_of_scope",
+      "status": "completed",
+      "prediction": {
+        "accession": "GSM8797488",
+        "label": "out_of_scope",
+        "reason": "Sample is explicitly kidney cancer (Renal Cell Carcinoma), not prostate tissue, despite being Homo sapiens and using a spatial assay.",
+        "evidence": [
+          {
+            "field": "Sample_source_name_ch1",
+            "quote": "Kidney cancer",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8797488"
+          },
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: Kidney cancer",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8797488"
+          },
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "cell type: Renal Cell Carcinoma",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8797488"
+          },
+          {
+            "field": "Sample_organism_ch1",
+            "quote": "Homo sapiens",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8797488"
+          }
+        ],
+        "citation_validated": true,
+        "scope": "metadata_screen_only_not_spatial_asset_validation",
+        "method": "original_agent",
+        "model": "deepseek-flash",
+        "provider": "deepseek",
+        "elapsed_seconds": 1.437,
+        "invocation_seconds": 1.421,
+        "upstream_commit": "67b60c24a49385d3eed8e5121be58d13c82839cd",
+        "model_call_executed": true,
+        "original_scope": "upstream_ncbi_fetch_agent_component_not_complete_sragent_hierarchy",
+        "comparison_scope": "same_sample_ids_and_input_packets; upstream agents may fetch additional live public metadata"
+      }
+    },
+    {
+      "accession": "GSM8797488",
+      "method": "spatial_agent",
+      "reference_label": "out_of_scope",
+      "status": "completed",
+      "prediction": {
+        "accession": "GSM8797488",
+        "label": "out_of_scope",
+        "reason": "Sample is explicitly human kidney cancer (renal cell carcinoma) profiled with 10x Visium HD spatial transcriptomics; the requested tissue is prostate, so the explicitly different tissue makes this out of scope despite the matching organism and spatial assay.",
+        "evidence": [
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: Kidney cancer",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8797488"
+          },
+          {
+            "field": "Sample_source_name_ch1",
+            "quote": "Kidney cancer",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8797488"
+          },
+          {
+            "field": "Sample_organism_ch1",
+            "quote": "Homo sapiens",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8797488"
+          },
+          {
+            "field": "Sample_extract_protocol_ch1",
+            "quote": "10x Visium HD Spatial Gene Expression Slide & Reagents Kit",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8797488"
+          }
+        ],
+        "citation_validated": true,
+        "scope": "metadata_screen_only_not_spatial_asset_validation",
+        "method": "spatial_agent",
+        "model": "deepseek-flash",
+        "provider": "deepseek",
+        "elapsed_seconds": 2.469,
+        "invocation_seconds": 2.453,
+        "upstream_commit": "67b60c24a49385d3eed8e5121be58d13c82839cd",
+        "model_call_executed": true,
+        "original_scope": "upstream_ncbi_fetch_agent_component_plus_sample_bound_spatial_tools",
+        "comparison_scope": "same_sample_ids_and_input_packets; upstream agents may fetch additional live public metadata"
+      }
+    }
+  ],
+  "summary": {
+    "rules": {
+      "total_cases": 6,
+      "completed": 6,
+      "skipped": 0,
+      "failed": 0,
+      "provisional_reference_agreement": 0.6666666666666666,
+      "agreement_all_requested_cases": 0.6666666666666666,
+      "eligible": {
+        "correct_accepts": 4,
+        "false_accepts": 0,
+        "reference_eligible": 4,
+        "precision": 1.0,
+        "recall_all_requested": 1.0
+      },
+      "confusion": [
+        {
+          "reference": "eligible",
+          "predicted": "eligible",
+          "count": 4
+        },
+        {
+          "reference": "out_of_scope",
+          "predicted": "mixed",
+          "count": 1
+        },
+        {
+          "reference": "out_of_scope",
+          "predicted": "unknown",
+          "count": 1
+        }
+      ]
+    },
+    "original_agent": {
+      "total_cases": 6,
+      "completed": 2,
+      "skipped": 0,
+      "failed": 4,
+      "provisional_reference_agreement": 1.0,
+      "agreement_all_requested_cases": 0.3333333333333333,
+      "eligible": {
+        "correct_accepts": 0,
+        "false_accepts": 0,
+        "reference_eligible": 4,
+        "precision": null,
+        "recall_all_requested": 0.0
+      },
+      "confusion": [
+        {
+          "reference": "out_of_scope",
+          "predicted": "out_of_scope",
+          "count": 2
+        }
+      ]
+    },
+    "spatial_agent": {
+      "total_cases": 6,
+      "completed": 5,
+      "skipped": 0,
+      "failed": 1,
+      "provisional_reference_agreement": 1.0,
+      "agreement_all_requested_cases": 0.8333333333333334,
+      "eligible": {
+        "correct_accepts": 3,
+        "false_accepts": 0,
+        "reference_eligible": 4,
+        "precision": 1.0,
+        "recall_all_requested": 0.75
+      },
+      "confusion": [
+        {
+          "reference": "eligible",
+          "predicted": "eligible",
+          "count": 3
+        },
+        {
+          "reference": "out_of_scope",
+          "predicted": "out_of_scope",
+          "count": 2
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "Development cases, selected nonrandomly; not independent gold labels or held-out generalization.",
+    "This run does not measure retrieval recall or validate spatial assets.",
+    "Same cases/model requested; extended agent has extra tools and may use more calls.",
+    "Original agent may query live metadata; this is not a strictly frozen-source comparison.",
+    "Per-case timeout and recursion limit do not guarantee a total billing cap; token cost not measured."
+  ]
+}

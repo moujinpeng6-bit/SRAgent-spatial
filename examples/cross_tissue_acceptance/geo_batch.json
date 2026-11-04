@@ -1,0 +1,832 @@
+{
+  "scope": "Bounded live GEO searches using organism, tissue and platform; samples selected before file validation.",
+  "retrieval_reference": {
+    "scope": "Two public examples found independently of this workflow; coverage among these examples only.",
+    "studies": [
+      {
+        "tissue": "liver",
+        "accession": "GSE286254",
+        "evidence_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8721780",
+        "returned_within_limit": false
+      },
+      {
+        "tissue": "spleen",
+        "accession": "GSE283283",
+        "evidence_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE283283",
+        "returned_within_limit": true
+      }
+    ]
+  },
+  "tasks": [
+    {
+      "request": {
+        "organism": "Homo sapiens",
+        "tissue": "liver",
+        "platforms": [
+          "Xenium"
+        ],
+        "max_studies": 3,
+        "max_samples_per_study": 2,
+        "max_total_samples": 6,
+        "study": null
+      },
+      "search_query": "\"Homo sapiens\"[Organism] AND \"liver\"[All Fields] AND (\"Xenium\"[All Fields]) AND gse[ETYP]",
+      "studies": [
+        {
+          "accession": "GSE343022",
+          "title": "Coupled MAPK output and lineage identity define modes of osimertinib resistance in EGFR-mutant lung adenocarcinoma",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE343022"
+        },
+        {
+          "accession": "GSE292469",
+          "title": "Coupled MAPK output and lineage identity define modes of osimertinib resistance in EGFR-mutant lung adenocarcinoma [snRNA-seq]",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE292469"
+        },
+        {
+          "accession": "GSE335552",
+          "title": "An Integrated Spatial Multi-Omics Workflow for Sequential RNA and Protein Profiling in FFPE Tumor Tissue",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE335552"
+        }
+      ],
+      "search_status": "completed_with_limits",
+      "totals": {
+        "found": 4,
+        "selected": 2,
+        "files_ready": 0,
+        "passed": 0,
+        "failed": 2,
+        "outcomes": {
+          "missing_files": 2,
+          "not_selected": 2
+        }
+      },
+      "samples": [
+        {
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9815454",
+          "sample_id": "GSM9815454",
+          "platform": "Xenium",
+          "selected": true,
+          "files_ready": false,
+          "status": "missing_files",
+          "stage": "prepare",
+          "listed_asset_count": 6,
+          "remote_probe": {
+            "requested": true,
+            "results": [
+              {
+                "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9815nnn/GSM9815454/suppl/GSM9815454_tumor1_M242T_cell_feature_matrix.h5",
+                "method": "HEAD",
+                "downloaded_bytes": 0,
+                "status": "reachable_metadata_only",
+                "http_status": 200
+              },
+              {
+                "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9815nnn/GSM9815454/suppl/GSM9815454_tumor1_M242T_cell_boundaries.parquet.gz",
+                "method": "HEAD",
+                "downloaded_bytes": 0,
+                "status": "reachable_metadata_only",
+                "http_status": 200
+              },
+              {
+                "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9815nnn/GSM9815454/suppl/GSM9815454_tumor1_M242T_cells.parquet.gz",
+                "method": "HEAD",
+                "downloaded_bytes": 0,
+                "status": "reachable_metadata_only",
+                "http_status": 200
+              },
+              {
+                "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9815nnn/GSM9815454/suppl/GSM9815454_tumor1_M242T_morphology.ome.tif.gz",
+                "method": "HEAD",
+                "downloaded_bytes": 0,
+                "status": "reachable_metadata_only",
+                "http_status": 200
+              }
+            ]
+          },
+          "split_xenium_assets": {
+            "published_roles": {
+              "expression": [
+                "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9815nnn/GSM9815454/suppl/GSM9815454_tumor1_M242T_cell_feature_matrix.h5"
+              ],
+              "cells": [
+                "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9815nnn/GSM9815454/suppl/GSM9815454_tumor1_M242T_cells.parquet.gz"
+              ],
+              "image": [
+                "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9815nnn/GSM9815454/suppl/GSM9815454_tumor1_M242T_morphology.ome.tif.gz"
+              ]
+            },
+            "missing_roles": [
+              "experiment"
+            ],
+            "ambiguous_roles": []
+          }
+        },
+        {
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9815455",
+          "sample_id": "GSM9815455",
+          "platform": "Xenium",
+          "selected": true,
+          "files_ready": false,
+          "status": "missing_files",
+          "stage": "prepare",
+          "listed_asset_count": 6,
+          "remote_probe": {
+            "requested": true,
+            "results": [
+              {
+                "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9815nnn/GSM9815455/suppl/GSM9815455_tumor2_M131T_cell_feature_matrix.h5",
+                "method": "HEAD",
+                "downloaded_bytes": 0,
+                "status": "reachable_metadata_only",
+                "http_status": 200
+              },
+              {
+                "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9815nnn/GSM9815455/suppl/GSM9815455_tumor2_M131T_cell_boundaries.parquet.gz",
+                "method": "HEAD",
+                "downloaded_bytes": 0,
+                "status": "reachable_metadata_only",
+                "http_status": 200
+              },
+              {
+                "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9815nnn/GSM9815455/suppl/GSM9815455_tumor2_M131T_cells.parquet.gz",
+                "method": "HEAD",
+                "downloaded_bytes": 0,
+                "status": "reachable_metadata_only",
+                "http_status": 200
+              },
+              {
+                "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9815nnn/GSM9815455/suppl/GSM9815455_tumor2_M131T_morphology.ome.tif.gz",
+                "method": "HEAD",
+                "downloaded_bytes": 0,
+                "status": "reachable_metadata_only",
+                "http_status": 200
+              }
+            ]
+          },
+          "split_xenium_assets": {
+            "published_roles": {
+              "expression": [
+                "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9815nnn/GSM9815455/suppl/GSM9815455_tumor2_M131T_cell_feature_matrix.h5"
+              ],
+              "cells": [
+                "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9815nnn/GSM9815455/suppl/GSM9815455_tumor2_M131T_cells.parquet.gz"
+              ],
+              "image": [
+                "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9815nnn/GSM9815455/suppl/GSM9815455_tumor2_M131T_morphology.ome.tif.gz"
+              ]
+            },
+            "missing_roles": [
+              "experiment"
+            ],
+            "ambiguous_roles": []
+          }
+        },
+        {
+          "sample_id": "GSM8859587",
+          "platform": "unclassified",
+          "selected": false,
+          "files_ready": false,
+          "status": "not_selected",
+          "screen_status": "completed",
+          "label": "unknown"
+        },
+        {
+          "sample_id": "GSM8859588",
+          "platform": "unclassified",
+          "selected": false,
+          "files_ready": false,
+          "status": "not_selected",
+          "screen_status": "completed",
+          "label": "unknown"
+        }
+      ]
+    },
+    {
+      "request": {
+        "organism": "Mus musculus",
+        "tissue": "spleen",
+        "platforms": [
+          "Visium"
+        ],
+        "max_studies": 3,
+        "max_samples_per_study": 2,
+        "max_total_samples": 6,
+        "study": null
+      },
+      "search_query": "\"Mus musculus\"[Organism] AND \"spleen\"[All Fields] AND (\"Visium\"[All Fields] OR \"10x Visium\"[All Fields] OR \"Visium Spatial Gene Expression\"[All Fields]) AND gse[ETYP]",
+      "studies": [
+        {
+          "accession": "GSE295100",
+          "title": "A Novel CREBBP/p300 Activator, YF2, Enhances Cytotoxic and Immune-Mediated Responses in B-Cell Lymphoma [Spatial Transcriptomics]",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE295100"
+        },
+        {
+          "accession": "GSE283283",
+          "title": "Spatiotemporal transcriptomic niches of complement pathway and serine protease inhibitor activation in aging and infection",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE283283"
+        },
+        {
+          "accession": "GSE337447",
+          "title": "Comprehensive spatial profiling of the spleen in murine myelofibrosis identifies targetable immune-stromal interactions",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE337447"
+        }
+      ],
+      "search_status": "completed_with_limits",
+      "totals": {
+        "found": 6,
+        "selected": 4,
+        "files_ready": 0,
+        "passed": 0,
+        "failed": 4,
+        "outcomes": {
+          "missing_files": 2,
+          "ambiguous_bundle": 2,
+          "not_selected": 2
+        }
+      },
+      "samples": [
+        {
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8942293",
+          "sample_id": "GSM8942293",
+          "platform": "Visium",
+          "selected": true,
+          "files_ready": false,
+          "status": "missing_files",
+          "stage": "validate",
+          "listed_asset_count": 7,
+          "remote_probe": {
+            "requested": true,
+            "results": [
+              {
+                "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM8942nnn/GSM8942293/suppl/GSM8942293_4613-Control-S_matrix.mtx.gz",
+                "method": "HEAD",
+                "downloaded_bytes": 0,
+                "status": "reachable_metadata_only",
+                "http_status": 200
+              },
+              {
+                "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM8942nnn/GSM8942293/suppl/GSM8942293_4613-Control-S_tissue_lowres_image.png.gz",
+                "method": "HEAD",
+                "downloaded_bytes": 0,
+                "status": "reachable_metadata_only",
+                "http_status": 200
+              },
+              {
+                "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM8942nnn/GSM8942293/suppl/GSM8942293_4613-Control-S_barcodes.tsv.gz",
+                "method": "HEAD",
+                "downloaded_bytes": 0,
+                "status": "reachable_metadata_only",
+                "http_status": 200
+              },
+              {
+                "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM8942nnn/GSM8942293/suppl/GSM8942293_4613-Control-S_aligned_fiducials.jpg.gz",
+                "method": "HEAD",
+                "downloaded_bytes": 0,
+                "status": "reachable_metadata_only",
+                "http_status": 200
+              }
+            ]
+          },
+          "unavailable_required_roles": [
+            "positions",
+            "scalefactors"
+          ]
+        },
+        {
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8942294",
+          "sample_id": "GSM8942294",
+          "platform": "Visium",
+          "selected": true,
+          "files_ready": false,
+          "status": "missing_files",
+          "stage": "validate",
+          "listed_asset_count": 7,
+          "remote_probe": {
+            "requested": true,
+            "results": [
+              {
+                "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM8942nnn/GSM8942294/suppl/GSM8942294_4625-YF2-S_matrix.mtx.gz",
+                "method": "HEAD",
+                "downloaded_bytes": 0,
+                "status": "reachable_metadata_only",
+                "http_status": 200
+              },
+              {
+                "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM8942nnn/GSM8942294/suppl/GSM8942294_4625-YF2-S_tissue_lowres_image.png.gz",
+                "method": "HEAD",
+                "downloaded_bytes": 0,
+                "status": "reachable_metadata_only",
+                "http_status": 200
+              },
+              {
+                "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM8942nnn/GSM8942294/suppl/GSM8942294_4625-YF2-S_barcodes.tsv.gz",
+                "method": "HEAD",
+                "downloaded_bytes": 0,
+                "status": "reachable_metadata_only",
+                "http_status": 200
+              },
+              {
+                "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM8942nnn/GSM8942294/suppl/GSM8942294_4625-YF2-S_aligned_fiducials.jpg.gz",
+                "method": "HEAD",
+                "downloaded_bytes": 0,
+                "status": "reachable_metadata_only",
+                "http_status": 200
+              }
+            ]
+          },
+          "unavailable_required_roles": [
+            "positions",
+            "scalefactors"
+          ]
+        },
+        {
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9855547",
+          "sample_id": "GSM9855547",
+          "platform": "Visium HD",
+          "selected": true,
+          "files_ready": false,
+          "status": "ambiguous_bundle",
+          "stage": "prepare",
+          "listed_asset_count": 59,
+          "remote_probe": {
+            "requested": true,
+            "results": [
+              {
+                "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9855nnn/GSM9855547/suppl/GSM9855547_Set1_C3KOEV_X3_filtered_feature_cell_matrix.h5",
+                "method": "HEAD",
+                "downloaded_bytes": 0,
+                "status": "reachable_metadata_only",
+                "http_status": 200
+              },
+              {
+                "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9855nnn/GSM9855547/suppl/GSM9855547_Set1_C3KOEV_X3_matrix.mtx.gz",
+                "method": "HEAD",
+                "downloaded_bytes": 0,
+                "status": "reachable_metadata_only",
+                "http_status": 200
+              },
+              {
+                "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9855nnn/GSM9855547/suppl/GSM9855547_Set1_C3KOEV_X5Y2_filtered_feature_cell_matrix.h5",
+                "method": "HEAD",
+                "downloaded_bytes": 0,
+                "status": "reachable_metadata_only",
+                "http_status": 200
+              },
+              {
+                "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9855nnn/GSM9855547/suppl/GSM9855547_Set1_C3KOEV_X5Y2_matrix.mtx.gz",
+                "method": "HEAD",
+                "downloaded_bytes": 0,
+                "status": "reachable_metadata_only",
+                "http_status": 200
+              }
+            ]
+          },
+          "slice_candidates": {
+            "set1": {
+              "roles": [
+                "image",
+                "scalefactors"
+              ],
+              "missing_roles": [
+                "barcodes",
+                "matrix",
+                "positions"
+              ],
+              "ambiguous_roles": []
+            },
+            "set1_c3koev_x3": {
+              "roles": [
+                "barcodes",
+                "features",
+                "matrix"
+              ],
+              "missing_roles": [
+                "image",
+                "positions",
+                "scalefactors"
+              ],
+              "ambiguous_roles": []
+            },
+            "set1_c3koev_x5y2": {
+              "roles": [
+                "barcodes",
+                "features",
+                "matrix"
+              ],
+              "missing_roles": [
+                "image",
+                "positions",
+                "scalefactors"
+              ],
+              "ambiguous_roles": []
+            },
+            "set1_c3koev_x5y3": {
+              "roles": [
+                "barcodes",
+                "features",
+                "matrix"
+              ],
+              "missing_roles": [
+                "image",
+                "positions",
+                "scalefactors"
+              ],
+              "ambiguous_roles": []
+            },
+            "set1_c3kothpo_x3": {
+              "roles": [
+                "barcodes",
+                "features",
+                "matrix"
+              ],
+              "missing_roles": [
+                "image",
+                "positions",
+                "scalefactors"
+              ],
+              "ambiguous_roles": []
+            },
+            "set1_c3kothpo_x4y3": {
+              "roles": [
+                "barcodes",
+                "features",
+                "matrix"
+              ],
+              "missing_roles": [
+                "image",
+                "positions",
+                "scalefactors"
+              ],
+              "ambiguous_roles": []
+            },
+            "set1_c3kothpo_x4y4": {
+              "roles": [
+                "barcodes",
+                "features",
+                "matrix"
+              ],
+              "missing_roles": [
+                "image",
+                "positions",
+                "scalefactors"
+              ],
+              "ambiguous_roles": []
+            },
+            "set1_wtev_x3": {
+              "roles": [
+                "barcodes",
+                "features",
+                "matrix"
+              ],
+              "missing_roles": [
+                "image",
+                "positions",
+                "scalefactors"
+              ],
+              "ambiguous_roles": []
+            },
+            "set1_wtev_x4": {
+              "roles": [
+                "barcodes",
+                "features",
+                "matrix"
+              ],
+              "missing_roles": [
+                "image",
+                "positions",
+                "scalefactors"
+              ],
+              "ambiguous_roles": []
+            },
+            "set1_wtev_x5": {
+              "roles": [
+                "barcodes",
+                "features",
+                "matrix"
+              ],
+              "missing_roles": [
+                "image",
+                "positions",
+                "scalefactors"
+              ],
+              "ambiguous_roles": []
+            },
+            "set1_wtthpo_x3": {
+              "roles": [
+                "barcodes",
+                "features",
+                "matrix"
+              ],
+              "missing_roles": [
+                "image",
+                "positions",
+                "scalefactors"
+              ],
+              "ambiguous_roles": []
+            },
+            "set1_wtthpo_x4": {
+              "roles": [
+                "barcodes",
+                "features",
+                "matrix"
+              ],
+              "missing_roles": [
+                "image",
+                "positions",
+                "scalefactors"
+              ],
+              "ambiguous_roles": []
+            },
+            "set1_wtthpo_x6": {
+              "roles": [
+                "barcodes",
+                "features",
+                "matrix"
+              ],
+              "missing_roles": [
+                "image",
+                "positions",
+                "scalefactors"
+              ],
+              "ambiguous_roles": []
+            }
+          }
+        },
+        {
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9855548",
+          "sample_id": "GSM9855548",
+          "platform": "Visium HD",
+          "selected": true,
+          "files_ready": false,
+          "status": "ambiguous_bundle",
+          "stage": "prepare",
+          "listed_asset_count": 59,
+          "remote_probe": {
+            "requested": true,
+            "results": [
+              {
+                "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9855nnn/GSM9855548/suppl/GSM9855548_Set2_C3KOEV_X3_filtered_feature_cell_matrix.h5",
+                "method": "HEAD",
+                "downloaded_bytes": 0,
+                "status": "reachable_metadata_only",
+                "http_status": 200
+              },
+              {
+                "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9855nnn/GSM9855548/suppl/GSM9855548_Set2_C3KOEV_X3_matrix.mtx.gz",
+                "method": "HEAD",
+                "downloaded_bytes": 0,
+                "status": "reachable_metadata_only",
+                "http_status": 200
+              },
+              {
+                "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9855nnn/GSM9855548/suppl/GSM9855548_Set2_C3KOEV_X5Y2_filtered_feature_cell_matrix.h5",
+                "method": "HEAD",
+                "downloaded_bytes": 0,
+                "status": "reachable_metadata_only",
+                "http_status": 200
+              },
+              {
+                "url": "https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9855nnn/GSM9855548/suppl/GSM9855548_Set2_C3KOEV_X5Y2_matrix.mtx.gz",
+                "method": "HEAD",
+                "downloaded_bytes": 0,
+                "status": "reachable_metadata_only",
+                "http_status": 200
+              }
+            ]
+          },
+          "slice_candidates": {
+            "set2": {
+              "roles": [
+                "image",
+                "scalefactors"
+              ],
+              "missing_roles": [
+                "barcodes",
+                "matrix",
+                "positions"
+              ],
+              "ambiguous_roles": []
+            },
+            "set2_c3koev_x3": {
+              "roles": [
+                "barcodes",
+                "features",
+                "matrix"
+              ],
+              "missing_roles": [
+                "image",
+                "positions",
+                "scalefactors"
+              ],
+              "ambiguous_roles": []
+            },
+            "set2_c3koev_x5y2": {
+              "roles": [
+                "barcodes",
+                "features",
+                "matrix"
+              ],
+              "missing_roles": [
+                "image",
+                "positions",
+                "scalefactors"
+              ],
+              "ambiguous_roles": []
+            },
+            "set2_c3koev_x5y3": {
+              "roles": [
+                "barcodes",
+                "features",
+                "matrix"
+              ],
+              "missing_roles": [
+                "image",
+                "positions",
+                "scalefactors"
+              ],
+              "ambiguous_roles": []
+            },
+            "set2_c3kothpo_x3": {
+              "roles": [
+                "barcodes",
+                "features",
+                "matrix"
+              ],
+              "missing_roles": [
+                "image",
+                "positions",
+                "scalefactors"
+              ],
+              "ambiguous_roles": []
+            },
+            "set2_c3kothpo_x4y3": {
+              "roles": [
+                "barcodes",
+                "features",
+                "matrix"
+              ],
+              "missing_roles": [
+                "image",
+                "positions",
+                "scalefactors"
+              ],
+              "ambiguous_roles": []
+            },
+            "set2_c3kothpo_x4y4": {
+              "roles": [
+                "barcodes",
+                "features",
+                "matrix"
+              ],
+              "missing_roles": [
+                "image",
+                "positions",
+                "scalefactors"
+              ],
+              "ambiguous_roles": []
+            },
+            "set2_wtev_x3": {
+              "roles": [
+                "barcodes",
+                "features",
+                "matrix"
+              ],
+              "missing_roles": [
+                "image",
+                "positions",
+                "scalefactors"
+              ],
+              "ambiguous_roles": []
+            },
+            "set2_wtev_x4": {
+              "roles": [
+                "barcodes",
+                "features",
+                "matrix"
+              ],
+              "missing_roles": [
+                "image",
+                "positions",
+                "scalefactors"
+              ],
+              "ambiguous_roles": []
+            },
+            "set2_wtev_x5": {
+              "roles": [
+                "barcodes",
+                "features",
+                "matrix"
+              ],
+              "missing_roles": [
+                "image",
+                "positions",
+                "scalefactors"
+              ],
+              "ambiguous_roles": []
+            },
+            "set2_wtthpo_x3": {
+              "roles": [
+                "barcodes",
+                "features",
+                "matrix"
+              ],
+              "missing_roles": [
+                "image",
+                "positions",
+                "scalefactors"
+              ],
+              "ambiguous_roles": []
+            },
+            "set2_wtthpo_x4": {
+              "roles": [
+                "barcodes",
+                "features",
+                "matrix"
+              ],
+              "missing_roles": [
+                "image",
+                "positions",
+                "scalefactors"
+              ],
+              "ambiguous_roles": []
+            },
+            "set2_wtthpo_x6": {
+              "roles": [
+                "barcodes",
+                "features",
+                "matrix"
+              ],
+              "missing_roles": [
+                "image",
+                "positions",
+                "scalefactors"
+              ],
+              "ambiguous_roles": []
+            }
+          }
+        },
+        {
+          "sample_id": "GSM8659160",
+          "platform": "unclassified",
+          "selected": false,
+          "files_ready": false,
+          "status": "not_selected",
+          "screen_status": "completed",
+          "label": "mixed"
+        },
+        {
+          "sample_id": "GSM8659161",
+          "platform": "unclassified",
+          "selected": false,
+          "files_ready": false,
+          "status": "not_selected",
+          "screen_status": "completed",
+          "label": "mixed"
+        }
+      ]
+    },
+    {
+      "request": {
+        "organism": "Homo sapiens",
+        "tissue": "prostate",
+        "platforms": [
+          "Visium HD"
+        ],
+        "max_studies": 3,
+        "max_samples_per_study": 2,
+        "max_total_samples": 6,
+        "study": null
+      },
+      "search_query": "\"Homo sapiens\"[Organism] AND \"prostate\"[All Fields] AND (\"Visium HD\"[All Fields] OR \"VisiumHD\"[All Fields] OR \"Visium CytAssist HD\"[All Fields]) AND gse[ETYP]",
+      "studies": [
+        {
+          "accession": "GSE289717",
+          "title": "Vesicles Secreted by Renal Cell Carcinoma Cells Cause Vascular Endothelial Cells to Express PSMA and Drive Tumor Progression",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE289717"
+        }
+      ],
+      "search_status": "completed",
+      "totals": {
+        "found": 1,
+        "selected": 0,
+        "files_ready": 0,
+        "passed": 0,
+        "failed": 0,
+        "outcomes": {
+          "not_selected": 1
+        }
+      },
+      "samples": [
+        {
+          "sample_id": "GSM8797488",
+          "platform": "Visium HD",
+          "selected": false,
+          "files_ready": false,
+          "status": "not_selected",
+          "screen_status": "completed",
+          "label": "unknown"
+        }
+      ]
+    }
+  ]
+}

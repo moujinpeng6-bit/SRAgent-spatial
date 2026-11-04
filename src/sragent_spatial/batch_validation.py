@@ -15,7 +15,7 @@ from .tenx_batch import checkpoint
 from .hd_archive import audit_hd_geo_archive, audit_prepared_archive, spatial_bin_size, validate_hd_bin
 from .pipeline import PipelineSession
 from .screening import VISIUM_HD
-from .xenium_assets import AmbiguousBundle, DownloadBudgetExceeded, find_archive
+from .xenium_assets import AmbiguousBundle, DownloadBudgetExceeded, find_archive, split_asset_evidence
 
 
 def audit_visium_candidate(row, root, out, download_bytes, *, bin_um=None, remote=None):
@@ -54,7 +54,33 @@ def audit_hd_untagged(row, root, out, download_bytes):
     expression = {"h5"} if "h5" in plan["roles"] else {"barcodes", "matrix"}
     required = expression | {"positions", "scalefactors", "image"}
     if not plan["metadata_bundle_consistent"]:
-        return {"stage": "prepare", "status": "ambiguous_bundle", "bins_um": {}}
+        candidates = {}
+        slices = {}
+        for anchor, roles in sorted(plan["groups"].items()):
+            expected = ({"h5"} if "h5" in roles else {"barcodes", "matrix"}) | {"positions", "scalefactors", "image"}
+            missing = sorted(expected - roles.keys())
+            duplicates = sorted(role for role, items in roles.items() if len(items) != 1)
+            candidates[anchor] = {"roles": sorted(roles), "missing_roles": missing, "ambiguous_roles": duplicates}
+        complete = [anchor for anchor, info in candidates.items()
+                    if anchor and not info["missing_roles"] and not info["ambiguous_roles"]]
+        if not plan["rejected_urls"] and 0 < len(complete) <= 32:
+            for index, anchor in enumerate(complete, 1):
+                assets = [{"url": item["source_url"]}
+                          for items in plan["groups"][anchor].values() for item in items]
+                try:
+                    slices[anchor] = audit_hd_untagged({**row, "assets": assets}, root,
+                        out / f"slice_{index:02d}", download_bytes // len(complete))
+                except (OSError, ValueError, KeyError, ImportError) as exc:
+                    slices[anchor] = {"status": "processing_failed", "error_type": type(exc).__name__}
+        status = "ambiguous_bundle"
+        if slices:
+            status = ("correspondence_passed" if len(slices) == len(candidates) and all(
+                item["status"] == "correspondence_passed" for item in slices.values())
+                      else "completed_with_issues")
+        result = {"stage": "validate" if slices else "prepare", "status": status, "bins_um": {},
+                  "slice_candidates": candidates, "slices": slices}
+        write_json(out / "validation.json", result)
+        return result
     if required - plan["roles"].keys():
         return {"stage": "prepare", "status": "missing_files", "bins_um": {},
                 "missing_roles": sorted(required - plan["roles"].keys())}
@@ -184,7 +210,10 @@ async def validate_candidates(report, archive_root, out, *, download_bytes=0, pr
     batch = (json.loads(path.read_text(encoding="utf8")) if resume and path.exists() else
              {"status": "running", "samples": [], "status_counts": {}})
     checkpoint(path, batch)
-    seen = {row["sample_id"] for row in batch["samples"]}
+    previous = {row["sample_id"]: row for row in batch["samples"]}
+    seen = {sample for sample, row in previous.items() if row["status"] not in {
+        "access_failed", "processing_failed", "missing_files",
+    }}
     for row in report["samples"]:
         if row.get("status") != "completed" or row.get("include_in_catalog") is not True:
             continue
@@ -256,6 +285,9 @@ async def validate_candidates(report, archive_root, out, *, download_bytes=0, pr
                 result["status"] = "ambiguous_bundle"
             except FileNotFoundError as exc:
                 result.update(status="missing_files", error_type=type(exc).__name__)
+                evidence = split_asset_evidence(sample, row.get("assets", []))
+                if evidence["published_roles"]:
+                    result["split_xenium_assets"] = evidence
             except HTTPError as exc:
                 result.update(status="access_failed", http_status=exc.code)
             except (URLError, TimeoutError, PermissionError) as exc:
@@ -270,6 +302,7 @@ async def validate_candidates(report, archive_root, out, *, download_bytes=0, pr
         result["remote_probe"] = {"requested": probe_remote, "results": (
             await asyncio.to_thread(probe_sample_assets, row)
             if probe_remote and result["status"] not in {"correspondence_passed", "unsupported_platform"} else [])}
+        batch["samples"] = [item for item in batch["samples"] if item["sample_id"] != sample]
         batch["samples"].append(result)
         batch["status_counts"] = dict(Counter(item["status"] for item in batch["samples"]))
         checkpoint(path, batch)

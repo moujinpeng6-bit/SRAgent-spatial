@@ -1,0 +1,41 @@
+{
+  "expression_barcode_count": 10615406,
+  "position_count": 11222500,
+  "missing_expression_ids_count": 0,
+  "missing_ids_preview": [],
+  "matrix_columns_checked": 10615406,
+  "image_bounds_check": {
+    "width": 478,
+    "height": 600,
+    "scale": 0.0122202085,
+    "tested_in_tissue_barcodes": 10615406,
+    "out_of_image_count": 0,
+    "overlay": {
+      "filename": "positions_overlay_review.png",
+      "plotted_points": 4000,
+      "sampling_stride": 2654,
+      "review": "assistant_visually_reviewed_low_resolution",
+      "observation": "Sampled positions lie largely over stained tissue in the capture region; the overview cannot resolve local registration error."
+    },
+    "bin_size_um_in_scalefactors": 2.0
+  },
+  "issues": [],
+  "basic_checks_passed": true,
+  "coordinate_convention": "position file full-resolution image pixels; physical micrometre scale not inferred",
+  "not_verified": [
+    "same physical section or donor",
+    "image pixel contents or anatomical registration",
+    "cell segmentation or pathology annotation",
+    "biological validity of counts and feature identities"
+  ],
+  "scope": "barcode/position/optional matrix-header and image-bounds consistency only; full Matrix Market entry verification",
+  "matrix_content": {
+    "declared_entries": 43776546,
+    "read_entries": 43776546,
+    "invalid_entries": 0,
+    "scope": "complete_matrix_market_stream_indices_and_nonnegative_integer_counts"
+  },
+  "source_url": "https://www.10xgenomics.com/datasets/visium-hd-cytassist-6p5mm-human-heart",
+  "matrix_archive_member": "binned_outputs/square_002um/filtered_feature_bc_matrix/matrix.mtx.gz",
+  "matrix_sha256": "e6113fdbaaeeb9539e7085feb1aa39acd6c31880754ce660ae202b314955e236"
+}

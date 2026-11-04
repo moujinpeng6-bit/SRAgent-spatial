@@ -6,10 +6,26 @@ from pathlib import Path
 from unittest.mock import patch
 
 from sragent_spatial.batch_validation import validate_candidates
-from sragent_spatial.find_spatial import cache_samples
+from sragent_spatial.find_spatial import cache_samples, find_spatial
 
 
 class FindSpatialTests(unittest.TestCase):
+    def test_live_catalog_failure_uses_explicit_snapshot_and_freezes_provenance(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            snapshot = root / "snapshot.json"
+            row = {"sample_id": "test-heart", "source_url": "https://www.10xgenomics.com/datasets/test-heart",
+                   "tissue": "Heart", "species": "Human", "platform": "Visium HD", "archives": {}}
+            snapshot.write_text(json.dumps({"samples": [row]}), encoding="utf8")
+            args = ("Homo sapiens", "heart", ["Visium HD"], None, root / "out")
+            with patch("sragent_spatial.tenx_online.discover_10x", side_effect=RuntimeError("HTTP 429")) as live:
+                result = asyncio.run(find_spatial(*args, source="10x", catalog_fallback=snapshot))
+                resumed = asyncio.run(find_spatial(*args, source="10x", catalog_fallback=snapshot, resume=True))
+            self.assertEqual(live.call_count, 1)
+            self.assertEqual(result["samples"][0]["sample_id"], "test-heart")
+            self.assertEqual(resumed["10x_catalog"]["mode"], "fallback_snapshot")
+            self.assertEqual(resumed["10x_catalog"]["live_access_error"], "HTTP 429")
+
     def test_human_tissue_matches_manifest_rows(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)

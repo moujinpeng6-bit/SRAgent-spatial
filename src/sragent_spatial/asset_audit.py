@@ -81,8 +81,14 @@ def file_plan(sample, *, bin_um=None, hd_untagged=False):
     ambiguous = [role for role, values in by_role.items() if len(values) > 1]
     chosen = {role: values[0] for role, values in by_role.items() if len(values) == 1}
     anchors = {value["bundle_anchor"] for value in chosen.values() if value["bundle_anchor"]}
+    groups = {}
+    for role, items in by_role.items():
+        for item in items:
+            anchor = item["bundle_anchor"]
+            groups.setdefault(anchor, {}).setdefault(role, []).append(item)
     return {"roles": chosen, "missing_roles": [role for role in REQUIRED if role not in chosen],
             "ambiguous_roles": ambiguous, "bundle_anchors": sorted(anchors),
+            "groups": groups,
             "metadata_bundle_consistent": not ambiguous and len(anchors) <= 1 and not rejected,
             "rejected_urls": rejected}
 

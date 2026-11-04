@@ -4,6 +4,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import re
 import tarfile
 from pathlib import Path, PurePosixPath
 from urllib.parse import unquote, urlsplit, urlunsplit
@@ -14,10 +15,39 @@ from .xenium_validation import sha256_file
 
 REQUIRED = {"experiment.xenium", "cells.csv.gz", "cell_feature_matrix.h5", "morphology_focus.ome.tif"}
 OPTIONAL = {"cell_boundaries.csv.gz", "nucleus_boundaries.csv.gz"}
+SPLIT_ROLES = {
+    "experiment": r"experiment\.xenium(?:\.gz)?",
+    "cells": r"cells\.(?:csv|parquet)(?:\.gz)?",
+    "expression": r"cell_feature_matrix\.h5(?:\.gz)?",
+    "image": r"morphology(?:_focus)?\.ome\.tiff?(?:\.gz)?",
+}
 
 
 class AmbiguousBundle(ValueError):
     """More than one plausible local or published bundle."""
+
+
+def split_asset_evidence(accession, assets):
+    """Describe independently published Xenium roles without pairing or downloading them."""
+    roles = {}
+    for asset in assets:
+        url = asset["url"]
+        try:
+            parts = urlsplit(url)
+        except ValueError:
+            continue
+        name = unquote(parts.path.rsplit("/", 1)[-1])
+        if (parts.scheme not in {"ftp", "https"} or parts.netloc != "ftp.ncbi.nlm.nih.gov"
+                or parts.query or parts.fragment or f"/{accession}/suppl/" not in parts.path
+                or not name.startswith(accession + "_") or "/" in name or "\\" in name):
+            continue
+        for role, pattern in SPLIT_ROLES.items():
+            if re.search(r"(?:^|_)" + pattern + r"$", name, re.I):
+                urls = roles.setdefault(role, [])
+                if url not in urls:
+                    urls.append(url)
+    return {"published_roles": roles, "missing_roles": sorted(SPLIT_ROLES.keys() - roles.keys()),
+            "ambiguous_roles": sorted(role for role, urls in roles.items() if len(urls) > 1)}
 
 
 def archive_plan(accession, fields):

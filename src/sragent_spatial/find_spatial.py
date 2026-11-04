@@ -1,5 +1,6 @@
 """Search by tissue and platform, then validate the frozen candidates."""
 import asyncio
+import hashlib
 import json
 import re
 from pathlib import Path
@@ -33,7 +34,7 @@ async def rule_predictor(packet, _method, _model):
 
 async def find_spatial(organism, tissue, platforms, cache, out, *, model=None, download_bytes=0,
                        max_studies=2, samples_per_study=2, resume=False, source="geo", catalog_snapshot=None,
-                       tenx_interactive=False):
+                       tenx_interactive=False, catalog_fallback=None, geo_assets=None, probe_remote=False):
     out = Path(out).resolve()
     cache = Path(cache).resolve() if cache else None
     if cache and (not cache.is_dir() or out.is_relative_to(cache)):
@@ -52,6 +53,17 @@ async def find_spatial(organism, tissue, platforms, cache, out, *, model=None, d
         request["tenx_catalog_mode"] = "snapshot"
     if tenx_interactive and (source == "geo" or catalog_snapshot is not None):
         raise ValueError("--10x-interactive requires live 10x discovery (--source 10x or both)")
+    if catalog_fallback is not None:
+        if source == "geo" or catalog_snapshot is not None:
+            raise ValueError("A 10x fallback snapshot requires live 10x discovery")
+        request["tenx_fallback_sha256"] = hashlib.sha256(catalog_fallback.read_bytes()).hexdigest()
+    if geo_assets is not None:
+        geo_assets = Path(geo_assets).resolve()
+        if source == "10x" or not geo_assets.is_dir() or out.is_relative_to(geo_assets):
+            raise ValueError("GEO assets must exist outside the output and require GEO discovery")
+        request["geo_assets"] = str(geo_assets)
+    if probe_remote:
+        request["probe_remote"] = True
     out.mkdir(parents=True, exist_ok=resume)
     with batch_lock(out):
         request_path = out / "request.json"
@@ -68,10 +80,18 @@ async def find_spatial(organism, tissue, platforms, cache, out, *, model=None, d
         reports = []
         for index, query in enumerate(requests, 1):
             frozen = out / f"discovery_{index}.json"
-            if not frozen.exists():
+            report = json.loads(frozen.read_text(encoding="utf8")) if frozen.exists() else None
+            if report is None or (resume and report.get("search_error")):
                 session = DiscoverySession(client, query, out / f"search_{index}", model or "rules",
                                            predictor=None if model else rule_predictor)
-                await session.search()
+                try:
+                    await session.search()
+                except (OSError, ValueError, KeyError) as exc:
+                    report = session.report()
+                    report["search_error"] = {"error_type": type(exc).__name__}
+                    checkpoint(frozen, report)
+                    reports.append(report)
+                    continue
                 for study in session.studies:
                     await session.expand(study)
                     await session.screen(study)
@@ -82,11 +102,12 @@ async def find_spatial(organism, tissue, platforms, cache, out, *, model=None, d
                         if row.get("status") == "completed":
                             row["selection_scope"] = "rules_plus_requested_platform; metadata_only"
                 checkpoint(frozen, report)
-            reports.append(json.loads(frozen.read_text(encoding="utf8")))
-        assets = out / "local_geo_assets"
-        assets.mkdir(exist_ok=True)
+            reports.append(report)
+        assets = geo_assets or out / "local_geo_assets"
+        if geo_assets is None:
+            assets.mkdir(exist_ok=True)
         result = await validate_sources(reports, assets, cache, ids, out / "validation",
-                                        download_bytes=download_bytes, resume=resume)
+                                        download_bytes=download_bytes, resume=resume, probe_remote=probe_remote)
         if source != "geo":
             from .tenx_online import discover_10x, read_catalog_snapshot, validate_online
 
@@ -97,12 +118,22 @@ async def find_spatial(organism, tissue, platforms, cache, out, *, model=None, d
             try:
                 if not catalog.exists():
                     filters = (organism, tissue, platforms, max_studies)
+                    catalog_info = {"mode": mode}
                     if catalog_snapshot is None:
-                        matches = await asyncio.to_thread(discover_10x, *filters, interactive=tenx_interactive)
+                        try:
+                            matches = await asyncio.to_thread(discover_10x, *filters, interactive=tenx_interactive)
+                            if catalog_fallback is not None and matches and all(row.get("catalog_error") for row in matches):
+                                raise RuntimeError("Live 10x dataset detail pages could not be read")
+                        except (ImportError, OSError, RuntimeError) as exc:
+                            if catalog_fallback is None:
+                                raise
+                            matches = read_catalog_snapshot(catalog_fallback, *filters)
+                            catalog_info.update(mode="fallback_snapshot", live_access_error=str(exc))
                     else:
                         matches = read_catalog_snapshot(catalog_snapshot, *filters)
-                    checkpoint(catalog, {"samples": matches})
-                matches = json.loads(catalog.read_text(encoding="utf8"))["samples"]
+                    checkpoint(catalog, {"samples": matches, **catalog_info})
+                catalog_data = json.loads(catalog.read_text(encoding="utf8"))
+                matches = catalog_data["samples"]
                 for row in matches:
                     sample_out = online / row["sample_id"]
                     sample_result = sample_out / "result.json"
@@ -115,7 +146,10 @@ async def find_spatial(organism, tissue, platforms, cache, out, *, model=None, d
                         measured = await asyncio.to_thread(validate_online, row, sample_out, download_bytes)
                         checkpoint(sample_result, measured)
                     result["samples"].append(measured)
-                result["10x_catalog"] = {"status": "completed", "found": len(matches), "mode": mode}
+                result["10x_catalog"] = {"status": "completed", "found": len(matches),
+                                         "mode": catalog_data.get("mode", mode)}
+                if "live_access_error" in catalog_data:
+                    result["10x_catalog"]["live_access_error"] = catalog_data["live_access_error"]
             except (ImportError, OSError, RuntimeError) as exc:
                 result["10x_catalog"] = {"status": "access_failed", "error_type": type(exc).__name__,
                                          "reason": str(exc), "mode": mode}
@@ -126,7 +160,10 @@ async def find_spatial(organism, tissue, platforms, cache, out, *, model=None, d
                 result["status"] = "completed_with_issues"
         result["discovery"] = [{"request": item["request"], "status": item["status"],
                                 "counts": item["counts"], "search": item["search"],
+                                **({"search_error": item["search_error"]} if "search_error" in item else {}),
                                 "screening_mode": item.get("screening_mode", "rules_and_model" if model else "rules_only")} for item in reports]
+        if any(item["status"] == "incomplete" for item in reports):
+            result["status"] = "completed_with_issues"
         result["resumed"] = resume
         checkpoint(out / "batch.json", result)
         return result

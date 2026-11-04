@@ -18,7 +18,7 @@ python run.py find-spatial --organism "Homo sapiens" --tissue kidney --platforms
 
 The command queries GEO separately for each requested platform and screens each sample with the project's metadata rules. Supply `--model deepseek-flash` to require model agreement as well. Search limits default to two studies and two samples per study for each platform. The 10x cache lookup matches human tissue metadata to registered Xenium image rows. The cache path is a source configuration and the command derives the sample IDs automatically.
 
-The output includes the frozen GEO reports, the cache selection and the combined per-sample `batch.json`. Add `--resume` to the same command after an interruption. Completed GEO sample records are reused from their checkpoints. The 10x batch skips successful samples and verifies cached companions before requesting their contents. An unfinished transfer can still require a new download.
+The output includes the frozen GEO reports, the cache selection and the combined per-sample `batch.json`. Add `--geo-assets E:/geo_assets` to reuse exact GEO filenames and `--probe-remote` to check links for samples that could not be validated. A successful HEAD request confirms link availability only. Add `--resume` to the same command after an interruption. GEO reuses final sample results and retries missing files and processing or access failures. Untagged Visium HD attachments with complete matching filename groups are checked by slice. Incomplete or ambiguous groups stay in the report. Split Xenium publications report available and missing companion roles when a sample archive is missing.
 ## 10x public website discovery
 
 Install the browser and HD validation extras and make Google Chrome available.
@@ -30,4 +30,8 @@ python run.py find-spatial --organism "Homo sapiens" --tissue kidney --platforms
 
 Use `--source both` to include GEO. The catalog search matches the public cards by species, tissue and platform, then reads each candidate's output links. The website can require a browser access check. If the browser cannot load the catalog, the report records `access_failed` so it can be distinguished from a successful search with zero matches.
 
+Use `--10x-fallback-snapshot examples/tenx_heart_acceptance/catalog_snapshot.json` to opt in to a saved snapshot if live catalog access fails. The report records the original error and the `fallback_snapshot` mode. Use `--10x-catalog-snapshot` to start directly from saved records. The fallback is reused on resume with the same snapshot checksum.
+
 The public 10x file adapter currently supports a single unambiguous Visium HD binned archive with standard Space Ranger 2 µm paths. The archive is read in bounded HTTP ranges and the validation retains the filtered barcodes, Matrix Market header prefix, positions, scale factors and low-resolution image. The compressed archive may contain large members before these files. `--download-mib` caps the compressed bytes read per candidate. Catalog cards for Xenium and Visium can be discovered, with their online asset validation reported as unsupported.
+
+When you have a complete integer Matrix Market file, `check-visium --full-matrix --matrix matrix.mtx.gz` streams every entry and checks the declared count, bounds and nonnegative integer values. For Visium HD, also supply `--bin-um` with the matching resolution and the Parquet positions file. Use `--scalefactors`, `--lowres-image` and `--overlay positions.png` to generate an image for visual review. The output JSON records how many in-tissue points were plotted.

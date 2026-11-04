@@ -7,12 +7,25 @@ import json
 import os
 from collections import Counter
 
-from .screening import LABELS, screen_sample, validate_packet
+from .screening import LABELS, parse_prediction, screen_sample, validate_packet
 
 
 def failure_details(exc):
     """Expose only allowlisted diagnostics, never provider messages or request bodies."""
     details = {"failure_type": type(exc).__name__}
+    if isinstance(exc, json.JSONDecodeError):
+        details["failure_stage"] = "model_json"
+    elif isinstance(exc, ValueError) and str(exc) in {
+        "Model returned the wrong sample identity",
+        "Model label or reason is invalid",
+        "Non-unknown model labels require sample citations",
+        "Model evidence must cite this exact sample",
+        "Model quote not found in the supplied sample field",
+        "Agent returned no final message",
+        "Agent did not return text JSON",
+    }:
+        details["failure_stage"] = "model_output_validation"
+        details["failure_reason"] = str(exc)
     status = getattr(exc, "status_code", None)
     if type(status) is int and 100 <= status <= 599:
         details["http_status"] = status
@@ -34,14 +47,21 @@ def failure_details(exc):
 
 def load_cases(path):
     dataset = json.loads(path.read_text(encoding="utf-8"))
-    if dataset.get("reference_status") != "assistant_prepared_pending_human_review":
-        raise ValueError("Expected explicitly provisional reference status")
+    status = dataset.get("reference_status")
+    if status not in {"assistant_prepared_pending_human_review", "researcher_reviewed"}:
+        raise ValueError("Reference status must be explicit")
     seen = set()
     for case in dataset["cases"]:
         validate_packet(case["input"])
         acc = case["input"]["accession"]
         if acc in seen or case["reference"]["label"] not in LABELS:
             raise ValueError("Duplicate sample or invalid reference label")
+        if status == "researcher_reviewed":
+            reference = case["reference"]
+            if not all(isinstance(reference.get(key), str) and reference[key].strip()
+                       for key in ("reviewer", "reviewed_on", "reason")) or not reference.get("evidence"):
+                raise ValueError("Reviewed references require reviewer, date, reason and sample evidence")
+            parse_prediction(json.dumps({**reference, "accession": acc}), case["input"])
         seen.add(acc)
     return dataset
 
@@ -50,11 +70,19 @@ def score(rows):
     completed = [r for r in rows if r["status"] == "completed"]
     correct = sum(r["prediction"]["label"] == r["reference_label"] for r in completed)
     confusion = Counter((r["reference_label"], r["prediction"]["label"]) for r in completed)
+    predicted_eligible = sum(r["prediction"]["label"] == "eligible" for r in completed)
+    reference_eligible = sum(r["reference_label"] == "eligible" for r in rows)
+    true_eligible = confusion["eligible", "eligible"]
     return {"total_cases": len(rows), "completed": len(completed),
             "skipped": sum(r["status"].startswith("not_run") for r in rows),
             "failed": sum(r["status"] == "failed" for r in rows),
             "provisional_reference_agreement": correct / len(completed) if completed else None,
             "agreement_all_requested_cases": correct / len(rows) if completed else None,
+            "eligible": {"correct_accepts": true_eligible, "false_accepts": predicted_eligible - true_eligible,
+                         "reference_eligible": reference_eligible,
+                         "precision": true_eligible / predicted_eligible if predicted_eligible else None,
+                         "recall_all_requested": true_eligible / reference_eligible
+                         if completed and reference_eligible else None},
             "confusion": [{"reference": a, "predicted": b, "count": n} for (a, b), n in confusion.items()]}
 
 
@@ -94,7 +122,9 @@ async def benchmark(dataset, methods, model=None, limit=None, timeout=120, predi
                               "sragent": "Complete pinned upstream SRAgent supervisor (Entrez, ncbi_fetch, BigQuery, sequences) plus the same two sample-level tools"},
             "provider": provider(), "model": model, "results": rows,
             "summary": {method: score([r for r in rows if r["method"] == method]) for method in methods},
-            "limitations": ["Development cases, selected nonrandomly; not independent gold labels or held-out generalization.",
+            "limitations": [("Researcher-reviewed sample labels; sampling and generalization depend on the supplied cases."
+                             if dataset["reference_status"] == "researcher_reviewed" else
+                             "Provisional labels awaiting independent researcher review; no generalization claim."),
                             "This run does not measure retrieval recall or validate spatial assets.",
                             "Same cases/model requested; extended agent has extra tools and may use more calls.",
                             "Original agent may query live metadata; this is not a strictly frozen-source comparison.",

@@ -53,7 +53,12 @@ def parquet_positions(path):
         yield from batches(unwrapped)
 
 
-def validate_visium(barcodes: Path, positions: Path, scalefactors=None, image=None, matrix=None, *, bin_um=None):
+def validate_visium(barcodes: Path, positions: Path, scalefactors=None, image=None, matrix=None, *, bin_um=None,
+                    full_matrix=False, overlay=None):
+    if full_matrix and matrix is None:
+        raise ValueError("Full matrix verification requires a Matrix Market file")
+    if overlay is not None and (scalefactors is None or image is None):
+        raise ValueError("An overlay requires scale factors and a low-resolution image")
     barcodes_list = [line.strip().split("\t")[0] for line in text_lines(barcodes, max_rows=32_000_000 if bin_um is not None else 1_000_000) if line.strip()]
     if not barcodes_list:
         raise ValueError("No expression barcodes")
@@ -115,8 +120,9 @@ def validate_visium(barcodes: Path, positions: Path, scalefactors=None, image=No
     if missing:
         issues.append("expression_barcodes_missing_from_positions")
     matrix_columns = None
+    matrix_content = None
     if matrix:
-        lines = text_lines(matrix)
+        lines = text_lines(matrix, max_rows=250_000_010 if full_matrix else 1_000_000)
         magic = next(lines, "")
         if not magic.lower().startswith("%%matrixmarket matrix coordinate"):
             raise ValueError("Expected coordinate Matrix Market matrix")
@@ -127,6 +133,26 @@ def validate_visium(barcodes: Path, positions: Path, scalefactors=None, image=No
         n_genes, matrix_columns, nonzeros = map(int, parts)
         if min(n_genes, matrix_columns, nonzeros) < 0 or matrix_columns != len(barcodes_list):
             issues.append("matrix_column_count_does_not_match_barcodes")
+        if full_matrix:
+            if magic.lower().split() != ["%%matrixmarket", "matrix", "coordinate", "integer", "general"]:
+                raise ValueError("Full verification expects a general integer count matrix")
+            if n_genes <= 0 or matrix_columns <= 0 or not 0 <= nonzeros <= 250_000_000:
+                raise ValueError("Count matrix dimensions exceed the full verification limits")
+            observed = 0
+            invalid = 0
+            for line in lines:
+                if not line.strip() or line.startswith("%"):
+                    continue
+                observed += 1
+                try:
+                    gene, column, count = map(int, line.split())
+                    invalid += not (1 <= gene <= n_genes and 1 <= column <= matrix_columns and count >= 0)
+                except ValueError:
+                    invalid += 1
+            matrix_content = {"declared_entries": nonzeros, "read_entries": observed, "invalid_entries": invalid,
+                              "scope": "complete_matrix_market_stream_indices_and_nonnegative_integer_counts"}
+            if observed != nonzeros or invalid:
+                issues.append("invalid_matrix_entries_or_entry_count")
     image_check = None
     if scalefactors and image:
         text = "".join(text_lines(scalefactors))
@@ -145,17 +171,42 @@ def validate_visium(barcodes: Path, positions: Path, scalefactors=None, image=No
         width, height = struct.unpack(">II", prefix[16:24])
         if not width or not height:
             raise ValueError("Invalid PNG dimensions")
-        selected = [points[key] for key in expression_ids & points.keys() if points[key]["in_tissue"]]
-        outside = sum(not (0 <= p["x"] * scale < width and 0 <= p["y"] * scale < height) for p in selected)
+        selected = 0
+        outside = 0
+        stride = max(1, math.ceil(len(expression_ids) / 4000))
+        sampled = []
+        for key, point in points.items():
+            if key not in expression_ids or not point["in_tissue"]:
+                continue
+            selected += 1
+            x, y = point["x"] * scale, point["y"] * scale
+            if 0 <= x < width and 0 <= y < height:
+                if overlay is not None and (selected - 1) % stride == 0:
+                    sampled.append((x, y))
+            else:
+                outside += 1
         image_check = {"width": width, "height": height, "scale": scale,
-                       "tested_in_tissue_barcodes": len(selected), "out_of_image_count": outside}
+                       "tested_in_tissue_barcodes": selected, "out_of_image_count": outside}
+        if overlay is not None:
+            from PIL import Image, ImageDraw
+
+            with opener(image, "rb") as stream, Image.open(stream) as original:
+                preview = original.convert("RGB")
+            draw = ImageDraw.Draw(preview, "RGBA")
+            for x, y in sampled:
+                draw.ellipse((x - 1, y - 1, x + 1, y + 1), fill=(0, 190, 255, 150))
+            overlay.parent.mkdir(parents=True, exist_ok=True)
+            with overlay.open("xb") as stream:
+                preview.save(stream, format="PNG")
+            image_check["overlay"] = {"filename": overlay.name, "plotted_points": len(sampled),
+                                      "sampling_stride": stride, "review": "pending"}
         if bin_pattern:
             image_check["bin_size_um_in_scalefactors"] = reported_bin_um
         if bin_pattern and not selected:
             issues.append("no_expression_barcodes_in_tissue")
         if outside:
             issues.append("scaled_coordinates_outside_lowres_image")
-    return {"expression_barcode_count": len(barcodes_list), "position_count": position_count if bin_pattern else len(points),
+    result = {"expression_barcode_count": len(barcodes_list), "position_count": position_count if bin_pattern else len(points),
             "missing_expression_ids_count": len(missing), "missing_ids_preview": missing[:10],
             "matrix_columns_checked": matrix_columns, "image_bounds_check": image_check,
             "issues": issues, "basic_checks_passed": not issues,
@@ -163,3 +214,9 @@ def validate_visium(barcodes: Path, positions: Path, scalefactors=None, image=No
             "not_verified": ["same physical section or donor", "matrix values and feature identities",
                              "image pixel contents or anatomical registration", "cell segmentation or pathology annotation"],
             "scope": "barcode/position/optional matrix-header and image-bounds consistency only"}
+    if matrix_content is not None:
+        result["matrix_content"] = matrix_content
+        result["not_verified"].remove("matrix values and feature identities")
+        result["not_verified"].append("biological validity of counts and feature identities")
+        result["scope"] += "; full Matrix Market entry verification"
+    return result
