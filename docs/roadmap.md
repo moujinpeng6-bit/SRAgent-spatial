@@ -1,5 +1,13 @@
 # 开发路线
 
+### 10x 人心脏目录与空间验收（2026-11-04）
+
+使用 `find-spatial --source 10x --10x-interactive` 从 E 盘空目录发起「人类、心脏、Visium HD」实时查询。用户在命令打开的 Chrome 中看到 Vercel「无法验证您的浏览器，代码 10」，页面未提供可操作的验证控件。该次验收在目录访问阶段结束，报告为 `access_failed`，尚未进入下载和空间验证。普通 Chrome 可由用户正常打开目录并看到候选。交互模式保留同一次运行等待人工验证的能力，并对明确的代码 10 返回单独的错误说明。
+
+查阅 10x 公开数据目录和官方命令行文档后，尚未找到可用于实时查询该目录的公开官方 API。Cloud CLI 文档列出的查询与下载用于账户内的项目和分析文件。本次采用官网目录快照记录样本和归档链接。参见 [10x 公开数据目录](https://www.10xgenomics.com/datasets)、[10x Cloud CLI 文档](https://www.10xgenomics.com/support/software/pipeline-runner/latest/tutorials/CA-cloud-cli-documentation-for-windows)。
+
+在 E 盘新目录从快照筛出 1 个健康人心脏 FFPE、6.5 mm 捕获区样本。命令行与同版本分段预取共同完成下载，验证读取 1,090,519,040 字节归档前缀。原生 2 µm 的 10,615,406 个表达条码全部在坐标表中，数量与矩阵头一致，映射到 478 × 600 的低分辨率图像后无越界。仓库记录实时失败报告、快照通过报告与验证文件的 SHA-256。见 [样本与报告](../examples/tenx_heart_acceptance/)。
+
 ### 10x 人扁桃体目录验收（2026-11-04）
 
 独立命令行浏览器访问 10x 官网目录时收到 HTTP 429 浏览器验证页。命令行现在记录明确的访问失败原因。另加目录快照入口 `--10x-catalog-snapshot`，用物种、组织和平台筛选浏览器采集的公开目录记录，仅接受 10x 官方数据集与归档链接。批量报告分别标记 `live` 和 `snapshot`。见 [在线访问结果和目录来源](../examples/tenx_tonsil_acceptance/)。

@@ -3,13 +3,31 @@ import json
 import tarfile
 import tempfile
 import unittest
+from importlib.util import find_spec
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
-from sragent_spatial.tenx_online import ArchiveStream, CatalogAccessError, collect, platform_for, read_catalog_snapshot
+from sragent_spatial.tenx_online import (
+    ArchiveStream, CatalogAccessError, collect, open_catalog_page, platform_for, read_catalog_snapshot,
+)
 
 
 class TenxOnlineTests(unittest.TestCase):
+    @unittest.skipUnless(find_spec("playwright"), "requires the optional tenx-online dependency")
+    def test_interactive_catalog_waits_for_the_user_in_the_same_page(self):
+        page = Mock()
+        page.goto.return_value = Mock(status=429, headers={"x-vercel-mitigated": "challenge"})
+        page.wait_for_function.return_value.json_value.return_value = "loaded"
+        url = "https://www.10xgenomics.com/datasets?search=Tonsil"
+        with patch("sys.stderr", new_callable=io.StringIO) as message:
+            open_catalog_page(page, url, interactive=True)
+        self.assertIn("Chrome window opened by this command", message.getvalue())
+        self.assertEqual(page.wait_for_function.call_args.kwargs, {"arg": url, "timeout": 300_000})
+        self.assertEqual(page.goto.call_count, 1)
+        page.wait_for_function.return_value.json_value.return_value = "denied"
+        with self.assertRaisesRegex(CatalogAccessError, "code 10"):
+            open_catalog_page(page, url)
+
     def test_snapshot_filters_by_metadata_and_rejects_nonofficial_archives(self):
         row = {"species": "Human", "tissue": "Tonsil", "platform": "Visium HD",
                "sample_id": "tonsil", "source_url": "https://www.10xgenomics.com/datasets/tonsil",

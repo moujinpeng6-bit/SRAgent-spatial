@@ -1,0 +1,22 @@
+{
+  "catalog_url": "https://www.10xgenomics.com/datasets?search=Visium+HD+Human+heart&sort=publishedAt+DESC",
+  "captured_on": "2026-11-04",
+  "samples": [
+    {
+      "sample_id": "visium-hd-cytassist-6p5mm-human-heart",
+      "source_url": "https://www.10xgenomics.com/datasets/visium-hd-cytassist-6p5mm-human-heart",
+      "title": "Visium HD Spatial Gene Expression Library, Human Heart (FFPE), 6.5 mm Capture Area",
+      "species": "Human",
+      "tissue": "Heart",
+      "platform": "Visium HD",
+      "archives": {
+        "binned_outputs": [
+          "https://cf.10xgenomics.com/samples/spatial-exp/4.1.0/Visium_HD_6p5mm_Human_Heart/Visium_HD_6p5mm_Human_Heart_binned_outputs.tar.gz"
+        ],
+        "spatial": [
+          "https://cf.10xgenomics.com/samples/spatial-exp/4.1.0/Visium_HD_6p5mm_Human_Heart/Visium_HD_6p5mm_Human_Heart_spatial.tar.gz"
+        ]
+      }
+    }
+  ]
+}

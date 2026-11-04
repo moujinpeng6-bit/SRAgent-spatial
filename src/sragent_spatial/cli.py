@@ -98,8 +98,11 @@ def main(argv=None):
     find.add_argument("--platforms", nargs="+", choices=["Xenium", "Visium", "Visium HD"], required=True)
     find.add_argument("--source", choices=["geo", "10x", "both"], default="geo")
     find.add_argument("--10x-cache", dest="tenx_cache", type=Path)
-    find.add_argument("--10x-catalog-snapshot", dest="tenx_catalog_snapshot", type=Path,
-                      help="Use captured public 10x catalog records")
+    tenx_catalog = find.add_mutually_exclusive_group()
+    tenx_catalog.add_argument("--10x-catalog-snapshot", dest="tenx_catalog_snapshot", type=Path,
+                              help="Use captured public 10x catalog records")
+    tenx_catalog.add_argument("--10x-interactive", dest="tenx_interactive", action="store_true",
+                              help="Allow up to five minutes for you to complete 10x verification in Chrome")
     find.add_argument("--model", help="Optional model for GEO screening; defaults to rules")
     find.add_argument("--max-studies", type=bounded_integer(1, 5), default=2)
     find.add_argument("--samples-per-study", type=bounded_integer(1, 10), default=2)
@@ -233,7 +236,8 @@ def main(argv=None):
                                               args.out, model=args.model, download_bytes=args.download_mib * 1024**2,
                                               max_studies=args.max_studies, samples_per_study=args.samples_per_study,
                                               resume=args.resume, source=args.source,
-                                              catalog_snapshot=args.tenx_catalog_snapshot))
+                                              catalog_snapshot=args.tenx_catalog_snapshot,
+                                              tenx_interactive=args.tenx_interactive))
             print(json.dumps({"status": report["status"], **report["totals"]}))
             if report["status"] != "completed":
                 return 2

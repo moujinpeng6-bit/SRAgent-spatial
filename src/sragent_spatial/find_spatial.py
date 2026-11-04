@@ -32,7 +32,8 @@ async def rule_predictor(packet, _method, _model):
 
 
 async def find_spatial(organism, tissue, platforms, cache, out, *, model=None, download_bytes=0,
-                       max_studies=2, samples_per_study=2, resume=False, source="geo", catalog_snapshot=None):
+                       max_studies=2, samples_per_study=2, resume=False, source="geo", catalog_snapshot=None,
+                       tenx_interactive=False):
     out = Path(out).resolve()
     cache = Path(cache).resolve() if cache else None
     if cache and (not cache.is_dir() or out.is_relative_to(cache)):
@@ -49,6 +50,8 @@ async def find_spatial(organism, tissue, platforms, cache, out, *, model=None, d
         if source == "geo":
             raise ValueError("A 10x catalog snapshot requires --source 10x or both")
         request["tenx_catalog_mode"] = "snapshot"
+    if tenx_interactive and (source == "geo" or catalog_snapshot is not None):
+        raise ValueError("--10x-interactive requires live 10x discovery (--source 10x or both)")
     out.mkdir(parents=True, exist_ok=resume)
     with batch_lock(out):
         request_path = out / "request.json"
@@ -95,7 +98,7 @@ async def find_spatial(organism, tissue, platforms, cache, out, *, model=None, d
                 if not catalog.exists():
                     filters = (organism, tissue, platforms, max_studies)
                     if catalog_snapshot is None:
-                        matches = await asyncio.to_thread(discover_10x, *filters)
+                        matches = await asyncio.to_thread(discover_10x, *filters, interactive=tenx_interactive)
                     else:
                         matches = read_catalog_snapshot(catalog_snapshot, *filters)
                     checkpoint(catalog, {"samples": matches})
@@ -116,6 +119,8 @@ async def find_spatial(organism, tissue, platforms, cache, out, *, model=None, d
             except (ImportError, OSError, RuntimeError) as exc:
                 result["10x_catalog"] = {"status": "access_failed", "error_type": type(exc).__name__,
                                          "reason": str(exc), "mode": mode}
+            if tenx_interactive:
+                result["10x_catalog"]["interactive"] = True
             summarize(result)
             if result["10x_catalog"]["status"] != "completed":
                 result["status"] = "completed_with_issues"

@@ -1,0 +1,14 @@
+{
+  "organism": "Homo sapiens",
+  "tissue": "heart",
+  "platforms": [
+    "Visium HD"
+  ],
+  "model": null,
+  "cache": null,
+  "download_bytes": 2147483648,
+  "max_studies": 1,
+  "samples_per_study": 2,
+  "source": "10x",
+  "tenx_catalog_mode": "snapshot"
+}

@@ -5,6 +5,7 @@ import json
 import os
 import re
 import shutil
+import sys
 import tarfile
 from http.client import HTTPException
 from pathlib import Path
@@ -35,20 +36,42 @@ class CatalogAccessError(RuntimeError):
     pass
 
 
-def open_catalog_page(page, url):
+def open_catalog_page(page, url, *, interactive=False):
     response = page.goto(url, wait_until="domcontentloaded", timeout=45_000)
     if response is None or response.status < 400:
         return
-    if response.status == 429 and response.headers.get("x-vercel-mitigated") == "challenge":
+    if response.status in (403, 429) and response.headers.get("x-vercel-mitigated") == "challenge":
         from playwright.sync_api import TimeoutError
 
+        if interactive:
+            print("10x requests browser verification. Complete it in the Chrome window opened by "
+                  "this command. The command will continue when the 10x page loads (up to 5 minutes).",
+                  file=sys.stderr, flush=True)
         try:
-            page.wait_for_function(
-                "() => document.title && !document.title.includes('Vercel Security Checkpoint')", timeout=15_000
-            )
+            outcome = page.wait_for_function(
+                r"""expectedUrl => {
+                    const expected = new URL(expectedUrl);
+                    if (document.title.includes('Vercel Security Checkpoint')
+                        && /failed to verify your browser|无法验证您的浏览器/i.test(document.body?.innerText ?? '')
+                        && /(?:code|代码)\s*10\b/i.test(document.body?.innerText ?? '')) {
+                        return 'denied';
+                    }
+                    return (location.origin === expected.origin
+                        && location.pathname.replace(/^\/(?:cn|jp)(?=\/)/, '') === expected.pathname
+                        && new URLSearchParams(location.search).get('search') === expected.searchParams.get('search')
+                        && document.title.includes('10x Genomics')
+                        && !document.title.includes('Vercel Security Checkpoint')) ? 'loaded' : false;
+                }""",
+                arg=url,
+                timeout=300_000 if interactive else 15_000,
+            ).json_value()
+            if outcome == "denied":
+                raise CatalogAccessError(f"10x returned HTTP {response.status}; Vercel denied browser verification (code 10)")
             return
         except TimeoutError as exc:
-            raise CatalogAccessError("10x returned HTTP 429 with an unresolved browser verification page") from exc
+            raise CatalogAccessError(
+                f"10x returned HTTP {response.status} with an unresolved browser verification page"
+            ) from exc
     raise CatalogAccessError(f"10x returned HTTP {response.status}")
 
 
@@ -83,16 +106,18 @@ def read_catalog_snapshot(path, organism, tissue, platforms, limit):
         raise CatalogAccessError(f"Invalid 10x catalog snapshot: {exc}") from exc
 
 
-def discover_10x(organism, tissue, platforms, limit):
+def discover_10x(organism, tissue, platforms, limit, *, interactive=False):
     from playwright.sync_api import Error
 
     try:
-        return _discover_10x(organism, tissue, platforms, limit)
+        return _discover_10x(organism, tissue, platforms, limit, interactive=interactive)
     except Error as exc:
-        raise RuntimeError("The 10x catalog browser could not read the public page") from exc
+        raise CatalogAccessError(
+            f"The 10x catalog browser could not read the public page ({type(exc).__name__})"
+        ) from exc
 
 
-def _discover_10x(organism, tissue, platforms, limit):
+def _discover_10x(organism, tissue, platforms, limit, *, interactive=False):
     from playwright.sync_api import sync_playwright
 
     species = SPECIES.get(organism.casefold(), organism)
@@ -102,7 +127,7 @@ def _discover_10x(organism, tissue, platforms, limit):
             page = browser.new_page()
             for platform in platforms:
                 query = urlencode({"search": f"{platform} {species} {tissue}", "sort": "publishedAt DESC"})
-                open_catalog_page(page, f"{CATALOG}?{query}")
+                open_catalog_page(page, f"{CATALOG}?{query}", interactive=interactive)
                 cards = page.locator('a[href^="/datasets/"]').filter(has_text="Sample type")
                 page.wait_for_function("""() =>
                     [...document.querySelectorAll('a[href^="/datasets/"]')].some(a => a.innerText.includes('Sample type'))
@@ -124,7 +149,7 @@ def _discover_10x(organism, tissue, platforms, limit):
                                         "tissue": lines[5], "catalog_query": query})
                 for row in matches[:limit]:
                     try:
-                        open_catalog_page(page, row["source_url"])
+                        open_catalog_page(page, row["source_url"], interactive=interactive)
                         page.get_by_role("button", name="Output and supplemental files").click(timeout=30_000)
                         row["archives"] = {}
                         for link in page.get_by_role("link", name=re.compile("Binned outputs|Spatial outputs", re.I)).all():
@@ -138,6 +163,8 @@ def _discover_10x(organism, tissue, platforms, limit):
                                             row["archives"][kind].append(url)
                     except Exception as exc:
                         row["catalog_error"] = type(exc).__name__
+                        if isinstance(exc, CatalogAccessError):
+                            row["catalog_reason"] = str(exc)
                     results.append(row)
     return results
 

@@ -1,0 +1,23 @@
+{
+  "status": "completed_with_issues",
+  "samples": [],
+  "totals": {
+    "found": 0,
+    "selected": 0,
+    "files_ready": 0,
+    "passed": 0,
+    "failed": 0,
+    "outcomes": {}
+  },
+  "by_source": {},
+  "by_platform": {},
+  "10x_catalog": {
+    "status": "access_failed",
+    "error_type": "CatalogAccessError",
+    "reason": "The 10x catalog browser could not read the public page (TargetClosedError)",
+    "mode": "live",
+    "interactive": true
+  },
+  "discovery": [],
+  "resumed": true
+}
