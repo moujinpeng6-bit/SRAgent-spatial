@@ -1,0 +1,139 @@
+{
+  "samples": [
+    {
+      "source": "BioStudies",
+      "study_id": "S-EPMC12462499",
+      "sample_id": "S-EPMC12462499",
+      "platform": "Visium HD",
+      "found": true,
+      "source_url": "https://www.ebi.ac.uk/biostudies/studies/S-EPMC12462499",
+      "requested_scope": {
+        "organism": "Homo sapiens",
+        "tissue": "kidney"
+      },
+      "metadata_evidence": {
+        "matches": false,
+        "scope": "study_metadata_candidate; sample identity requires file preparation",
+        "checks": {
+          "organism_supported": false,
+          "tissue_supported": false,
+          "platform_supported": false
+        },
+        "organisms": [],
+        "attributes": {
+          "title": [
+            "FUSION: a web-based application for in-depth exploration of multi-omics data with brightfield histology."
+          ],
+          "description": [],
+          "organism": [],
+          "organ": [],
+          "experimental design": []
+        }
+      },
+      "selected": false,
+      "files_ready": false,
+      "status": "not_selected",
+      "reason": "organism_supported, tissue_supported, platform_supported"
+    },
+    {
+      "source": "BioStudies",
+      "study_id": "S-EPMC12638031",
+      "sample_id": "S-EPMC12638031",
+      "platform": "Visium HD",
+      "found": true,
+      "source_url": "https://www.ebi.ac.uk/biostudies/studies/S-EPMC12638031",
+      "requested_scope": {
+        "organism": "Homo sapiens",
+        "tissue": "kidney"
+      },
+      "metadata_evidence": {
+        "matches": false,
+        "scope": "study_metadata_candidate; sample identity requires file preparation",
+        "checks": {
+          "organism_supported": false,
+          "tissue_supported": false,
+          "platform_supported": false
+        },
+        "organisms": [],
+        "attributes": {
+          "title": [
+            "Cell2Spatial is a computational framework that maps single cells to spatial transcriptomic spots to reconstruct tissue architecture."
+          ],
+          "description": [],
+          "organism": [],
+          "organ": [],
+          "experimental design": []
+        }
+      },
+      "selected": false,
+      "files_ready": false,
+      "status": "not_selected",
+      "reason": "organism_supported, tissue_supported, platform_supported"
+    }
+  ],
+  "searches": [
+    {
+      "query": "\"Visium HD\" AND \"kidney\"",
+      "total_hits": 2,
+      "limit": 3,
+      "endpoint": "https://www.ebi.ac.uk/biostudies/api/v1/search?query=%22Visium+HD%22+AND+%22kidney%22&pageSize=3"
+    }
+  ],
+  "source_errors": [],
+  "resumed": true,
+  "totals": {
+    "found": 2,
+    "selected": 0,
+    "files_ready": 0,
+    "passed": 0,
+    "failed": 0,
+    "outcomes": {
+      "not_selected": 2
+    }
+  },
+  "by_source": {
+    "BioStudies": {
+      "found": 2,
+      "selected": 0,
+      "files_ready": 0,
+      "passed": 0,
+      "failed": 0,
+      "outcomes": {
+        "not_selected": 2
+      }
+    }
+  },
+  "by_platform": {
+    "Visium HD": {
+      "found": 2,
+      "selected": 0,
+      "files_ready": 0,
+      "passed": 0,
+      "failed": 0,
+      "outcomes": {
+        "not_selected": 2
+      }
+    }
+  },
+  "status": "no_candidates",
+  "count_scope": "result rows, including study-only outcomes and validated slice rows",
+  "distinct_studies_found": 2,
+  "slice_rows": 0,
+  "requests": [
+    {
+      "url": "https://www.ebi.ac.uk/biostudies/api/v1/search?query=%22Visium+HD%22+AND+%22kidney%22&pageSize=3",
+      "cached": true,
+      "sha256": "d4f5560cbdece85967e137c130fbf15eeeeda97997a0f45652377d0d34592b70"
+    },
+    {
+      "url": "https://www.ebi.ac.uk/biostudies/api/v1/studies/S-EPMC12462499",
+      "cached": true,
+      "sha256": "05e47498ab5bcdd8b680009c4cff14b2610d7be5ed6024aeaeb5ff19ac4e51bf"
+    },
+    {
+      "url": "https://www.ebi.ac.uk/biostudies/api/v1/studies/S-EPMC12638031",
+      "cached": true,
+      "sha256": "e3a173798857e0bc04609d243ae2c3c91420bd4c1cf7846e9beb454ebc7552c4"
+    }
+  ]
+}

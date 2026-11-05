@@ -1,0 +1,5 @@
+﻿study_id,sample_id,sample_directory,source_url,platform,status,selected,files_ready,organism,tissue,evidence_scope,reason,archive_url
+S-BSST1409,S-BSST1409,,https://www.ebi.ac.uk/biostudies/studies/S-BSST1409,Visium,not_selected,False,False,Homo sapiens,lung,study candidate,organism_supported,
+E-MTAB-11265,E-MTAB-11265,,https://www.ebi.ac.uk/biostudies/studies/E-MTAB-11265,Visium,unsupported_bundle,True,False,Homo sapiens,lung,study candidate,,
+S-BSST1410,S-BSST1410--6ee840650637ccc8,V10T03-279-B1,https://www.ebi.ac.uk/biostudies/studies/S-BSST1410,Visium,correspondence_passed,True,True,Homo sapiens,lung,same-directory assets and sample-level species/tissue table,,https://ftp.ebi.ac.uk/biostudies/fire/S-BSST/410/S-BSST1410/Files/hs_visium_spaceranger_output.zip
+S-BSST1410,S-BSST1410--9942bf0a017c310a,V10T03-279-C1,https://www.ebi.ac.uk/biostudies/studies/S-BSST1410,Visium,correspondence_passed,True,True,Homo sapiens,lung,same-directory assets and sample-level species/tissue table,,https://ftp.ebi.ac.uk/biostudies/fire/S-BSST/410/S-BSST1410/Files/hs_visium_spaceranger_output.zip

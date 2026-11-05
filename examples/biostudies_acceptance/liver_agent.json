@@ -1,0 +1,190 @@
+{
+  "samples": [
+    {
+      "source": "BioStudies",
+      "study_id": "S-BIAD2339",
+      "sample_id": "S-BIAD2339",
+      "platform": "Xenium",
+      "found": true,
+      "source_url": "https://www.ebi.ac.uk/biostudies/studies/S-BIAD2339",
+      "requested_scope": {
+        "organism": "Homo sapiens",
+        "tissue": "liver"
+      },
+      "metadata_evidence": {
+        "matches": true,
+        "scope": "study_metadata_candidate; sample identity requires file preparation",
+        "organisms": [
+          "Homo sapiens (human)"
+        ],
+        "attributes": {
+          "title": [
+            "Spatial in situ transcriptomics of post-transplant HCC recurrence using 10x Genomics Xenium\t\t\t\t\t\t\t\t\t\t\t\t"
+          ],
+          "description": [
+            "Post-transplant hepatocellular carcinoma (HCC) recurrence is a devastating disease with an abysmal prognosis and no established treatment or prevention options. We performed spatial analysis to profile the tumor immune microenvironment in primary HCC at liver transplantation and in recurrent HCC at re-hepatectomy and elucidate the molecular mechanisms that drive recurrence under immunosuppression. This analysis offers potential for developing new therapeutic strategies against post-transplant HCC recurrence."
+          ],
+          "organism": [],
+          "organ": [],
+          "experimental design": []
+        }
+      },
+      "selected": true,
+      "files_ready": false,
+      "status": "unsupported_bundle",
+      "reason": "BioStudies preparation currently supports Space Ranger ZIP bundles",
+      "published_files": []
+    },
+    {
+      "source": "BioStudies",
+      "study_id": "S-BIAD2470",
+      "sample_id": "S-BIAD2470",
+      "platform": "Xenium",
+      "found": true,
+      "source_url": "https://www.ebi.ac.uk/biostudies/studies/S-BIAD2470",
+      "requested_scope": {
+        "organism": "Homo sapiens",
+        "tissue": "liver"
+      },
+      "metadata_evidence": {
+        "matches": false,
+        "scope": "study_metadata_candidate; sample identity requires file preparation",
+        "organisms": [
+          "Homo sapiens (human)"
+        ],
+        "attributes": {
+          "title": [
+            "Xenium In Situ Gene and Protein Expression data for FFPE Human Renal Cell Carcinoma (from 10X Genomics) as a SpatialData object"
+          ],
+          "description": [
+            "Test submission of a Xenium v4.0 dataset (gene + protein) from 10X Genomics: https://www.10xgenomics.com/datasets/xenium-protein-ffpe-human-renal-carcinoma \nThe dataset was converted to a SpatialData object with spatialdata_io (v0.5.1)\n\nhttps://s3-us-west-2.amazonaws.com/10x.files/samples/xenium/4.0.0/Xenium_V1_Human_Kidney_FFPE_Protein_updated/Xenium_V1_Human_Kidney_FFPE_Protein_updated_outs.zip"
+          ],
+          "organism": [],
+          "organ": [],
+          "experimental design": []
+        }
+      },
+      "selected": false,
+      "files_ready": false,
+      "status": "not_selected"
+    },
+    {
+      "source": "BioStudies",
+      "study_id": "S-BIAD3448",
+      "sample_id": "S-BIAD3448",
+      "platform": "Xenium",
+      "found": true,
+      "source_url": "https://www.ebi.ac.uk/biostudies/studies/S-BIAD3448",
+      "requested_scope": {
+        "organism": "Homo sapiens",
+        "tissue": "liver"
+      },
+      "metadata_evidence": {
+        "matches": false,
+        "scope": "study_metadata_candidate; sample identity requires file preparation",
+        "organisms": [
+          "Mus musculus domesticus"
+        ],
+        "attributes": {
+          "title": [
+            "Spatial transcriptomic analysis of sex-biased gene expression in the adult mouse liver"
+          ],
+          "description": [
+            "In this dataset, 10x Xenium was used to profile the expression of 100 sex-biased genes and cell type markers in a fresh-frozen tissue microarray consisting of biopsies from five male and five female 12 week old mice. Female biopsies highly express Xist, whereas male biopsies do not."
+          ],
+          "organism": [],
+          "organ": [],
+          "experimental design": []
+        }
+      },
+      "selected": false,
+      "files_ready": false,
+      "status": "not_selected"
+    }
+  ],
+  "searches": [
+    {
+      "query": "\"Xenium\" AND \"liver\"",
+      "total_hits": 7,
+      "limit": 3,
+      "endpoint": "https://www.ebi.ac.uk/biostudies/api/v1/search?query=%22Xenium%22+AND+%22liver%22&pageSize=3"
+    }
+  ],
+  "source_errors": [],
+  "resumed": true,
+  "totals": {
+    "found": 3,
+    "selected": 1,
+    "files_ready": 0,
+    "passed": 0,
+    "failed": 1,
+    "outcomes": {
+      "unsupported_bundle": 1,
+      "not_selected": 2
+    }
+  },
+  "by_source": {
+    "BioStudies": {
+      "found": 3,
+      "selected": 1,
+      "files_ready": 0,
+      "passed": 0,
+      "failed": 1,
+      "outcomes": {
+        "unsupported_bundle": 1,
+        "not_selected": 2
+      }
+    }
+  },
+  "by_platform": {
+    "Xenium": {
+      "found": 3,
+      "selected": 1,
+      "files_ready": 0,
+      "passed": 0,
+      "failed": 1,
+      "outcomes": {
+        "unsupported_bundle": 1,
+        "not_selected": 2
+      }
+    }
+  },
+  "status": "completed_with_issues",
+  "count_scope": "result rows, including study-only outcomes and validated slice rows",
+  "distinct_studies_found": 3,
+  "slice_rows": 0,
+  "requests": [
+    {
+      "url": "https://www.ebi.ac.uk/biostudies/api/v1/search?query=%22Xenium%22+AND+%22liver%22&pageSize=3",
+      "cached": true,
+      "sha256": "9d8d77d1632217b5856d5bb9ff89067ac089ca9e448da2ea1a38c9a713bb09d9"
+    },
+    {
+      "url": "https://www.ebi.ac.uk/biostudies/api/v1/studies/S-BIAD2339",
+      "cached": true,
+      "sha256": "15c6373109c0ffce0d07cee6b967ee38040e94363d98639c25bf0a6316b1aed8"
+    },
+    {
+      "url": "https://www.ebi.ac.uk/biostudies/api/v1/studies/S-BIAD2339/info",
+      "cached": true,
+      "sha256": "22079309e3d7d5f125181832ceb8521264d0e700aeed1f045e01ac916e77a815"
+    },
+    {
+      "url": "https://www.ebi.ac.uk/biostudies/api/v1/studies/S-BIAD2470",
+      "cached": true,
+      "sha256": "e78ae93cd0d19fdcecba32e81afb8c184567a1cce4784dd2cbb13ece8801c565"
+    },
+    {
+      "url": "https://www.ebi.ac.uk/biostudies/api/v1/studies/S-BIAD3448",
+      "cached": true,
+      "sha256": "29fcd4cdf0e8251a64955cef80160094fde6aa623f6467f8c3f0bd323ec458d2"
+    }
+  ],
+  "agent": {
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "tool_calls": 1,
+    "actual_tool_executed": true,
+    "scope": "BioStudies tool only"
+  }
+}

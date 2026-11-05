@@ -1,0 +1,3 @@
+﻿study_id,sample_id,sample_directory,source_url,platform,status,selected,files_ready,organism,tissue,evidence_scope,reason,archive_url
+S-EPMC12462499,S-EPMC12462499,,https://www.ebi.ac.uk/biostudies/studies/S-EPMC12462499,Visium HD,not_selected,False,False,Homo sapiens,kidney,study candidate,"organism_supported, tissue_supported, platform_supported",
+S-EPMC12638031,S-EPMC12638031,,https://www.ebi.ac.uk/biostudies/studies/S-EPMC12638031,Visium HD,not_selected,False,False,Homo sapiens,kidney,study candidate,"organism_supported, tissue_supported, platform_supported",

@@ -1,0 +1,586 @@
+{
+  "samples": [
+    {
+      "source": "BioStudies",
+      "study_id": "S-BSST1409",
+      "sample_id": "S-BSST1409",
+      "platform": "Visium",
+      "found": true,
+      "source_url": "https://www.ebi.ac.uk/biostudies/studies/S-BSST1409",
+      "requested_scope": {
+        "organism": "Homo sapiens",
+        "tissue": "lung"
+      },
+      "metadata_evidence": {
+        "matches": false,
+        "scope": "study_metadata_candidate; sample identity requires file preparation",
+        "organisms": [
+          "Mus musculus (mouse)"
+        ],
+        "attributes": {
+          "title": [
+            "Spatial transcriptomics Visium data for mouse bleomycin model of lung fibrosis"
+          ],
+          "description": [
+            "Visium (10x Genomics) spatially resolved transcriptomics data generated from the mouse model of bleomycin (BLM)-induced lung fibrosis, with lung tissue collected at 7 or 21 days post single-dose BLM (40 \u00b5g/mouse, o.p) or saline vehicle challenge. Data from a total of 24 tissue sections, from 18 unique mouse left lung lobes.\n\nThe mice were all female C57BL/6NCrl, purchased from Charles River (Germany), and were 8 weeks + 5 days old at the time of study initiation. Animal handling conformed to standards established by the Council of Europe ETS123 AppA, the Helsinki Convention for the Use and Care of Animals, Swedish legislation, and AstraZeneca global internal standards. All mouse experiments were approved by the Gothenburg Ethics Committee for Experimental Animals in Sweden and conformed to Directive 2010/63/EU. The present study was approved by the local Ethical committee in Gothenburg (EA000680-2017) and the approved site number is 31-5373/11.\n\nData included in this repository:\n- Visium data in the format of selected Space Ranger output files (\"filtered_feature_bc_matrix.h5\", \"raw_feature_bc_matrix.h5\", \"metrics_summary.csv\", and the \"spatial/\" folder) for each individual section analysed. Zipped into one folder: \"mm_visium_spaceranger_output.zip\"\n- Sample metadata containing information for each sample with linked subject information: \"mm_visium_metadata.tsv\"\n- R objects produced using STUtility and contains the processed data used for downstream analyses, most importantly all spot metadata with assigned data and deconvolution results (NMF, cell2location): \"mm_visium_all_stutility_obj.rds\" (all), \"mm_visium_d7_stutility_obj.rds\n\" (day 7 data), \"mm_visium_d21_stutility_obj.rds\" (day 21 data)\n- Cell2location output files (\"*_spot_cell_abundances_5pc.csv\"), zipped into one folder: \"cell2location_strunz2020.zip\"\n- Full resolution H&E images (\"*.jpg\") of each tissue section that was used as input for spaceranger together with alignment json and sequencing fastq files. Zipped into one folder: \"he_fullres_jpgs.zip\"\n- Spot alignment files (\"*.json\") created in Loupe Browser using the corresponding full resolution H&E image in which spots under the tissue was identified. Zipped into one folder: \"loupe_alignment_jsons.zip\"\n\nSpace Ranger output found within the zipped files in folders named \"V*****-***-*1\". To generate these files, raw FastQ files from the NovaSeq sequencing were processed with the Space Ranger pipeline (v. 1.2.2, 10x Genomics), where the reads were mapped to the mm10 reference genome. Manual spot alignment was performed in the Loupe Browser (v. 6, 10x Genomics) software.\n\nCell type mapping results were obtained using the cell2location (v. 0.1) method, integrating the Space Ranger output data with annotated single cell RNA-seq data produced from mouse BLM injured lungs collected at multiple time points, published by Strunz et al., 2020 (DOI: 10.1038/s41467-020-17358-3, GEO accession: GSE141259).\n\nSeurat/STUtility objects were generated from the Space Ranger output files, using the R packages STUtility (v. 1.1.1) and Seurat (v. 4.1.1) in R (v. 4.0.5). The d7 and d21 subset were derived from the object with all samples processed jointly, and thereafter NMF deconvolution and subsequent clustering (d21) was performed.  \n\nAll R scripts used for the data analyses can be found at https://github.com/lfranzen/spatial-lung-fibrosis.\n\nThe deposited data is presented in the article \"Mapping spatially resolved transcriptomes in human and mouse pulmonary fibrosis\" by Franz\u00e9n L & Olsson Lindvall M, et al. (preprint: \"Translational mapping of spatially resolved transcriptomes in human and mouse pulmonary fibrosis\", bioRxiv, https://doi.org/10.1101/2023.12.21.572330)."
+          ],
+          "organism": [
+            "Mus musculus (mouse)"
+          ],
+          "organ": [
+            "Lung"
+          ],
+          "experimental design": [
+            "Visium",
+            "Mouse model"
+          ]
+        }
+      },
+      "selected": false,
+      "files_ready": false,
+      "status": "not_selected"
+    },
+    {
+      "source": "BioStudies",
+      "study_id": "E-MTAB-11265",
+      "sample_id": "E-MTAB-11265",
+      "platform": "Visium",
+      "found": true,
+      "source_url": "https://www.ebi.ac.uk/biostudies/studies/E-MTAB-11265",
+      "requested_scope": {
+        "organism": "Homo sapiens",
+        "tissue": "lung"
+      },
+      "metadata_evidence": {
+        "matches": true,
+        "scope": "study_metadata_candidate; sample identity requires file preparation",
+        "organisms": [
+          "Homo sapiens"
+        ],
+        "attributes": {
+          "title": [
+            "A high-resolution single-cell multiomic atlas of the human fetal lung - Visium"
+          ],
+          "description": [
+            "Fetal lung samples at 12\u201320 post conception week (pcw) from the HDBR, up to 0.5cm3 in size, were embedded in OCT and flash-frozen in dry-ice cooled isopentane. Twelve-micron cryosections were cut onto Visium slides, haematoxylin and eosin stained and imaged at 20X magnification on a Hamamatsu Nanozoomer 2.0 HT Brightfield. These were then further processed according to the 10X Genomics Visium protocol, using a permeabilization time of 18 min for 12\u201317 pcw samples and 24 min for 19 pcw and older samples. Images were exported as tiled tiffs for analysis. Dual-indexed libraries were prepared as in the 10X Genomics protocol, pooled at 2.25 nM and sequenced in 4 samples per Illumina Novaseq SP flow cell with read lengths of 28 bp for R1, 10 bp for i7 index, 10 bp for i5 index, 90 bp for R2."
+          ],
+          "organism": [
+            "Homo sapiens"
+          ],
+          "organ": [],
+          "experimental design": []
+        }
+      },
+      "selected": true,
+      "files_ready": false,
+      "status": "unsupported_bundle",
+      "published_files": [
+        {
+          "path": "6332STDY10289522.tar.gz",
+          "size": 1907156598
+        },
+        {
+          "path": "V19N20-081_15424-LNG-0-FO-3_C1.tif",
+          "size": 1764962466
+        },
+        {
+          "path": "6332STDY9479169.tar.gz",
+          "size": 509374151
+        },
+        {
+          "path": "V19N20-081_15417-LNG-0-FO-4_D1.tif",
+          "size": 1764962466
+        },
+        {
+          "path": "V19N20-081_Hst5-LNG--FO-1_A1.tif",
+          "size": 1764962466
+        },
+        {
+          "path": "6332STDY9479172.tar.gz",
+          "size": 648391334
+        },
+        {
+          "path": "6332STDY9479167.tar.gz",
+          "size": 314934301
+        },
+        {
+          "path": "6332STDY10289523.tar.gz",
+          "size": 1099301529
+        },
+        {
+          "path": "V10S24-031_A1.jpg",
+          "size": 63284020
+        },
+        {
+          "path": "6332STDY9479171.tar.gz",
+          "size": 315158943
+        },
+        {
+          "path": "V19N20-080_Hst4-LNG--FO-1_A1.tif",
+          "size": 1815478434
+        },
+        {
+          "path": "6332STDY9479166.tar.gz",
+          "size": 295201212
+        },
+        {
+          "path": "6332STDY9479173.tar.gz",
+          "size": 603598699
+        },
+        {
+          "path": "V10S24-031_C1.jpg",
+          "size": 87651577
+        },
+        {
+          "path": "V19N20-080_15415-LNG--FO-2_D1.tif",
+          "size": 1815478434
+        },
+        {
+          "path": "6332STDY10289520.tar.gz",
+          "size": 1349416911
+        },
+        {
+          "path": "V19N20-081_15428-LNG-0-FO-2_B1.tif",
+          "size": 1764962466
+        },
+        {
+          "path": "V19N20-080_15413-LNG--FO-3_C1.tif",
+          "size": 1815478434
+        },
+        {
+          "path": "V10S24-031_B1.jpg",
+          "size": 78238190
+        },
+        {
+          "path": "6332STDY9479168.tar.gz",
+          "size": 750808378
+        },
+        {
+          "path": "6332STDY10289521.tar.gz",
+          "size": 1745602470
+        },
+        {
+          "path": "V19N20-080_Hst7-LNG--FO-2_B1.tif",
+          "size": 1815478434
+        },
+        {
+          "path": "V10S24-031_D1.jpg",
+          "size": 53869681
+        },
+        {
+          "path": "6332STDY9479170.tar.gz",
+          "size": 294103103
+        },
+        {
+          "path": "E-MTAB-11265.idf.txt",
+          "size": 5359
+        },
+        {
+          "path": "E-MTAB-11265.sdrf.txt",
+          "size": 35578
+        }
+      ]
+    },
+    {
+      "source": "BioStudies",
+      "study_id": "S-BSST1410",
+      "sample_id": "S-BSST1410--6ee840650637ccc8",
+      "platform": "Visium",
+      "found": true,
+      "source_url": "https://www.ebi.ac.uk/biostudies/studies/S-BSST1410",
+      "requested_scope": {
+        "organism": "Homo sapiens",
+        "tissue": "lung"
+      },
+      "metadata_evidence": {
+        "matches": true,
+        "scope": "study_metadata_candidate; sample identity requires file preparation",
+        "organisms": [
+          "Homo sapiens (human)"
+        ],
+        "attributes": {
+          "title": [
+            "Spatial transcriptomics Visium data for human IPF and control lungs"
+          ],
+          "description": [
+            "Visium (10x Genomics) spatially resolved transcriptomics data generated from normal and Idiopathic Pulmonary Fibrosis (IPF) lung parenchyma tissues collected from human donors. The fresh-frozen tissues that were analyzed were from four healthy control (HC) subjects and from four IPF patients. For each IPF patient, three different tissues were selected representing areas of mild (\u201cB1\u201d), moderate (\u201cB2\") or severe (\u201cB3\u201d) fibrosis within the same donor, as determined by histological inspection of Hematoxylin and Eosin (H&E)-stained samples. Data from a total of 25 tissue sections, from 16 unique lung tissue blocks.\n\nThe lung tissues were collected post-mortem (HC donors) or during lung transplant/resection (IPF patients) after obtaining informed consent. The study protocols were approved by the local human research ethics committee (HC: Lund, permit number Dnr 2016/317; IPF: Gothenburg, permit number 1026-15) and the samples are anonymized and cannot/should not be traced back to individual donors.\n\nData included in this repository:\n- Visium data in the format of selected Space Ranger output files (\"filtered_feature_bc_matrix.h5\", \"raw_feature_bc_matrix.h5\", \"web_summary.html\", and the \"spatial/\" folder) for each individual section analysed. Zipped into one folder: \"hs_visium_spaceranger_output.zip\"\n- Sample metadata containing information for each sample with linked subject information: \"hs_visium_metadata.tsv\"\n- R object produced using STUtility and contains the processed data used for downstream analyses, most importantly all spot metadata with assigned data and deconvolution results (NMF, cell2location): \"hs_visium_stutility_obj.rds\"\n- Cell2location output files (\"*_spot_cell_abundances_5pc.csv\"), zipped into one folder: \"cell2location_habermann2020.zip\"\n- Full resolution H&E images (\"*.jpg\") of each tissue section that was used as input for spaceranger together with alignment json and sequencing fastq files. Zipped into one folder: \"he_fullres_jpgs.zip\"\n- Spot alignment files (\"*.json\") created in Loupe Browser using the corresponding full resolution H&E image in which spots under the tissue was identified. Zipped into one folder: \"loupe_alignment_jsons.zip\"\n\nSpace Ranger output found within the zipped files in folders named \"V*****-***-*1\". To generate these files, raw FastQ files from the NovaSeq sequencing were processed with the Space Ranger pipeline (v. 1.2.2, 10x Genomics), where the reads were mapped to the GRCh38 reference genome. Manual spot alignment was performed in the Loupe Browser (v. 6, 10x Genomics) software.\n\nCell type mapping results were obtained using the cell2location (v. 0.1) method, integrating the Space Ranger output data with annotated single cell RNA-seq data produced from human IPF lung, published by Habermann et al., 2020 (DOI: 10.1126/sciadv.aba1972, GEO accession: GSE135893).\n\nSeurat/STUtility object was generated from the Space Ranger output files, using the R packages STUtility (v. 1.1.1) and Seurat (v. 4.1.1) in R (v. 4.0.5) . \n\nAll R scripts used for the data analyses can be found at https://github.com/lfranzen/spatial-lung-fibrosis.\n\nThe deposited data is presented in the article \"Mapping spatially resolved transcriptomes in human and mouse pulmonary fibrosis\" by Franz\u00e9n L & Olsson Lindvall M, et al. (preprint: \"Translational mapping of spatially resolved transcriptomes in human and mouse pulmonary fibrosis\", bioRxiv, https://doi.org/10.1101/2023.12.21.572330)."
+          ],
+          "organism": [
+            "Homo sapiens (human)"
+          ],
+          "organ": [
+            "Lung"
+          ],
+          "experimental design": [
+            "Visium"
+          ]
+        }
+      },
+      "selected": true,
+      "validator_version": 2,
+      "files_ready": true,
+      "archive_url": "https://ftp.ebi.ac.uk/biostudies/fire/S-BSST/410/S-BSST1410/Files/hs_visium_spaceranger_output.zip",
+      "sample_directory": "V10T03-279-B1",
+      "unprocessed_slice_directories": [
+        "V10T03-279-D1",
+        "V10T03-280-A1",
+        "V10T03-280-B1",
+        "V10T03-280-C1",
+        "V10T03-280-D1",
+        "V10T03-281-A1",
+        "V10T03-281-B1",
+        "V10T03-281-C1",
+        "V10T03-281-D1",
+        "V10T03-282-A1",
+        "V10T03-282-B1",
+        "V10T31-015-A1",
+        "V10T31-015-B1",
+        "V10T31-015-C1",
+        "V10T31-015-D1",
+        "V10T31-019-A1",
+        "V10T31-051-B1",
+        "V10T31-051-C1",
+        "V10T31-051-D1",
+        "V19S23-092-A1",
+        "V19S23-092-B1",
+        "V19S23-092-C1",
+        "V19S23-092-D1"
+      ],
+      "scope": "same-directory assets and sample-level species/tissue table",
+      "sample_metadata": {
+        "sample_id": "V10T03-279-B1",
+        "species": "human",
+        "tissue": "lung",
+        "source_url": "https://ftp.ebi.ac.uk/biostudies/fire/S-BSST/410/S-BSST1410/Files/hs_visium_metadata.tsv",
+        "sha256": "c5595771a11b44e240cff6638043b7d1b28d0cb922dd333c7ec4b6063983ab7d"
+      },
+      "status": "correspondence_passed",
+      "files": {
+        "h5": {
+          "member": "V10T03-279-B1/filtered_feature_bc_matrix.h5",
+          "bytes": 11953280,
+          "crc32": "651786b0",
+          "reused": true,
+          "sha256": "411872c799ce3efd6b65a966a0cc7e3485ef37fa3842b78e477b47d1e6f629f6"
+        },
+        "positions": {
+          "member": "V10T03-279-B1/spatial/tissue_positions_list.csv",
+          "bytes": 185089,
+          "crc32": "e39599d0",
+          "reused": true,
+          "sha256": "1ad4597323f88e8ce6095d06bfb45242a133c0b7779afb6ba8b2f8a49743783d"
+        },
+        "scalefactors": {
+          "member": "V10T03-279-B1/spatial/scalefactors_json.json",
+          "bytes": 158,
+          "crc32": "94cde381",
+          "reused": true,
+          "sha256": "836a2dbff0e1c2b3aef5ba310362a44de35c0c5ac89f85843f89f11f129bcff9"
+        },
+        "image": {
+          "member": "V10T03-279-B1/spatial/tissue_lowres_image.png",
+          "bytes": 1547370,
+          "crc32": "f714dad9",
+          "reused": false,
+          "sha256": "3aaacc4897ddd4117bffc3a625a418ec20fa8ba5f396fea4742e631cb8adb733"
+        }
+      },
+      "checks": {
+        "barcode_position_image": {
+          "expression_barcode_count": 4034,
+          "position_count": 4992,
+          "missing_expression_ids_count": 0,
+          "missing_ids_preview": [],
+          "matrix_columns_checked": null,
+          "image_bounds_check": {
+            "width": 600,
+            "height": 581,
+            "scale": 0.05,
+            "tested_in_tissue_barcodes": 4034,
+            "out_of_image_count": 0
+          },
+          "issues": [],
+          "basic_checks_passed": true,
+          "coordinate_convention": "position file full-resolution image pixels; physical micrometre scale not inferred",
+          "not_verified": [
+            "same physical section or donor",
+            "image pixel contents or anatomical registration",
+            "cell segmentation or pathology annotation",
+            "biological validity of counts and feature identities"
+          ],
+          "scope": "barcode/position/optional matrix-header and image-bounds consistency only; full HDF5 count-array checks reported separately"
+        },
+        "matrix_dimensions": {
+          "features": 36601,
+          "observations": 4034,
+          "scope": "hdf5_shape_and_barcodes"
+        },
+        "matrix_columns_match_barcodes": true,
+        "image_decode": {
+          "width": 600,
+          "height": 581,
+          "format": "PNG",
+          "pixel_decode_verified": true
+        },
+        "matrix_content": {
+          "features": 36601,
+          "observations": 4034,
+          "entries_checked": 8180705,
+          "scope": "all_CSC_arrays_row_indices_column_pointers_and_integer_counts",
+          "passed": true
+        }
+      },
+      "transfer": {
+        "network_bytes_this_study": 31934000,
+        "cached_range_bytes_this_study": 0,
+        "scope": "shared study totals; do not sum across slice rows"
+      }
+    },
+    {
+      "source": "BioStudies",
+      "study_id": "S-BSST1410",
+      "sample_id": "S-BSST1410--9942bf0a017c310a",
+      "platform": "Visium",
+      "found": true,
+      "source_url": "https://www.ebi.ac.uk/biostudies/studies/S-BSST1410",
+      "requested_scope": {
+        "organism": "Homo sapiens",
+        "tissue": "lung"
+      },
+      "metadata_evidence": {
+        "matches": true,
+        "scope": "study_metadata_candidate; sample identity requires file preparation",
+        "organisms": [
+          "Homo sapiens (human)"
+        ],
+        "attributes": {
+          "title": [
+            "Spatial transcriptomics Visium data for human IPF and control lungs"
+          ],
+          "description": [
+            "Visium (10x Genomics) spatially resolved transcriptomics data generated from normal and Idiopathic Pulmonary Fibrosis (IPF) lung parenchyma tissues collected from human donors. The fresh-frozen tissues that were analyzed were from four healthy control (HC) subjects and from four IPF patients. For each IPF patient, three different tissues were selected representing areas of mild (\u201cB1\u201d), moderate (\u201cB2\") or severe (\u201cB3\u201d) fibrosis within the same donor, as determined by histological inspection of Hematoxylin and Eosin (H&E)-stained samples. Data from a total of 25 tissue sections, from 16 unique lung tissue blocks.\n\nThe lung tissues were collected post-mortem (HC donors) or during lung transplant/resection (IPF patients) after obtaining informed consent. The study protocols were approved by the local human research ethics committee (HC: Lund, permit number Dnr 2016/317; IPF: Gothenburg, permit number 1026-15) and the samples are anonymized and cannot/should not be traced back to individual donors.\n\nData included in this repository:\n- Visium data in the format of selected Space Ranger output files (\"filtered_feature_bc_matrix.h5\", \"raw_feature_bc_matrix.h5\", \"web_summary.html\", and the \"spatial/\" folder) for each individual section analysed. Zipped into one folder: \"hs_visium_spaceranger_output.zip\"\n- Sample metadata containing information for each sample with linked subject information: \"hs_visium_metadata.tsv\"\n- R object produced using STUtility and contains the processed data used for downstream analyses, most importantly all spot metadata with assigned data and deconvolution results (NMF, cell2location): \"hs_visium_stutility_obj.rds\"\n- Cell2location output files (\"*_spot_cell_abundances_5pc.csv\"), zipped into one folder: \"cell2location_habermann2020.zip\"\n- Full resolution H&E images (\"*.jpg\") of each tissue section that was used as input for spaceranger together with alignment json and sequencing fastq files. Zipped into one folder: \"he_fullres_jpgs.zip\"\n- Spot alignment files (\"*.json\") created in Loupe Browser using the corresponding full resolution H&E image in which spots under the tissue was identified. Zipped into one folder: \"loupe_alignment_jsons.zip\"\n\nSpace Ranger output found within the zipped files in folders named \"V*****-***-*1\". To generate these files, raw FastQ files from the NovaSeq sequencing were processed with the Space Ranger pipeline (v. 1.2.2, 10x Genomics), where the reads were mapped to the GRCh38 reference genome. Manual spot alignment was performed in the Loupe Browser (v. 6, 10x Genomics) software.\n\nCell type mapping results were obtained using the cell2location (v. 0.1) method, integrating the Space Ranger output data with annotated single cell RNA-seq data produced from human IPF lung, published by Habermann et al., 2020 (DOI: 10.1126/sciadv.aba1972, GEO accession: GSE135893).\n\nSeurat/STUtility object was generated from the Space Ranger output files, using the R packages STUtility (v. 1.1.1) and Seurat (v. 4.1.1) in R (v. 4.0.5) . \n\nAll R scripts used for the data analyses can be found at https://github.com/lfranzen/spatial-lung-fibrosis.\n\nThe deposited data is presented in the article \"Mapping spatially resolved transcriptomes in human and mouse pulmonary fibrosis\" by Franz\u00e9n L & Olsson Lindvall M, et al. (preprint: \"Translational mapping of spatially resolved transcriptomes in human and mouse pulmonary fibrosis\", bioRxiv, https://doi.org/10.1101/2023.12.21.572330)."
+          ],
+          "organism": [
+            "Homo sapiens (human)"
+          ],
+          "organ": [
+            "Lung"
+          ],
+          "experimental design": [
+            "Visium"
+          ]
+        }
+      },
+      "selected": true,
+      "validator_version": 2,
+      "files_ready": true,
+      "archive_url": "https://ftp.ebi.ac.uk/biostudies/fire/S-BSST/410/S-BSST1410/Files/hs_visium_spaceranger_output.zip",
+      "sample_directory": "V10T03-279-C1",
+      "unprocessed_slice_directories": [
+        "V10T03-279-D1",
+        "V10T03-280-A1",
+        "V10T03-280-B1",
+        "V10T03-280-C1",
+        "V10T03-280-D1",
+        "V10T03-281-A1",
+        "V10T03-281-B1",
+        "V10T03-281-C1",
+        "V10T03-281-D1",
+        "V10T03-282-A1",
+        "V10T03-282-B1",
+        "V10T31-015-A1",
+        "V10T31-015-B1",
+        "V10T31-015-C1",
+        "V10T31-015-D1",
+        "V10T31-019-A1",
+        "V10T31-051-B1",
+        "V10T31-051-C1",
+        "V10T31-051-D1",
+        "V19S23-092-A1",
+        "V19S23-092-B1",
+        "V19S23-092-C1",
+        "V19S23-092-D1"
+      ],
+      "scope": "same-directory assets and sample-level species/tissue table",
+      "sample_metadata": {
+        "sample_id": "V10T03-279-C1",
+        "species": "human",
+        "tissue": "lung",
+        "source_url": "https://ftp.ebi.ac.uk/biostudies/fire/S-BSST/410/S-BSST1410/Files/hs_visium_metadata.tsv",
+        "sha256": "c5595771a11b44e240cff6638043b7d1b28d0cb922dd333c7ec4b6063983ab7d"
+      },
+      "status": "correspondence_passed",
+      "files": {
+        "h5": {
+          "member": "V10T03-279-C1/filtered_feature_bc_matrix.h5",
+          "bytes": 14915817,
+          "crc32": "6b966b58",
+          "reused": false,
+          "sha256": "dec216ee221e266095c8f1a501713a83af843fa8e3378b2ab98cf55b3def83e2"
+        },
+        "positions": {
+          "member": "V10T03-279-C1/spatial/tissue_positions_list.csv",
+          "bytes": 185089,
+          "crc32": "955613a3",
+          "reused": false,
+          "sha256": "002218aed1115e96b90f1ad85bf57a2f12994a3c392ee5d06c0b88ac153274e8"
+        },
+        "scalefactors": {
+          "member": "V10T03-279-C1/spatial/scalefactors_json.json",
+          "bytes": 141,
+          "crc32": "73d191a7",
+          "reused": false,
+          "sha256": "a97b2e14c1b67744a8c1378711f5e9992dd4eb74cde5f767be48c9f8593b294b"
+        },
+        "image": {
+          "member": "V10T03-279-C1/spatial/tissue_lowres_image.png",
+          "bytes": 1715930,
+          "crc32": "7e4305c2",
+          "reused": false,
+          "sha256": "e70bfe6871175aec31b712aed70f6c7e64a2580a686714e6260e8630ad453fba"
+        }
+      },
+      "checks": {
+        "barcode_position_image": {
+          "expression_barcode_count": 4882,
+          "position_count": 4992,
+          "missing_expression_ids_count": 0,
+          "missing_ids_preview": [],
+          "matrix_columns_checked": null,
+          "image_bounds_check": {
+            "width": 600,
+            "height": 581,
+            "scale": 0.05,
+            "tested_in_tissue_barcodes": 4882,
+            "out_of_image_count": 0
+          },
+          "issues": [],
+          "basic_checks_passed": true,
+          "coordinate_convention": "position file full-resolution image pixels; physical micrometre scale not inferred",
+          "not_verified": [
+            "same physical section or donor",
+            "image pixel contents or anatomical registration",
+            "cell segmentation or pathology annotation",
+            "biological validity of counts and feature identities"
+          ],
+          "scope": "barcode/position/optional matrix-header and image-bounds consistency only; full HDF5 count-array checks reported separately"
+        },
+        "matrix_dimensions": {
+          "features": 36601,
+          "observations": 4882,
+          "scope": "hdf5_shape_and_barcodes"
+        },
+        "matrix_columns_match_barcodes": true,
+        "image_decode": {
+          "width": 600,
+          "height": 581,
+          "format": "PNG",
+          "pixel_decode_verified": true
+        },
+        "matrix_content": {
+          "features": 36601,
+          "observations": 4882,
+          "entries_checked": 10281590,
+          "scope": "all_CSC_arrays_row_indices_column_pointers_and_integer_counts",
+          "passed": true
+        }
+      },
+      "transfer": {
+        "network_bytes_this_study": 31934000,
+        "cached_range_bytes_this_study": 0,
+        "scope": "shared study totals; do not sum across slice rows"
+      }
+    }
+  ],
+  "searches": [
+    {
+      "query": "\"Visium\" AND \"lung\"",
+      "total_hits": 34,
+      "limit": 3,
+      "endpoint": "https://www.ebi.ac.uk/biostudies/api/v1/search?query=%22Visium%22+AND+%22lung%22&pageSize=3"
+    }
+  ],
+  "source_errors": [],
+  "resumed": true,
+  "totals": {
+    "found": 4,
+    "selected": 3,
+    "files_ready": 2,
+    "passed": 2,
+    "failed": 1,
+    "outcomes": {
+      "not_selected": 1,
+      "unsupported_bundle": 1,
+      "correspondence_passed": 2
+    }
+  },
+  "by_source": {
+    "BioStudies": {
+      "found": 4,
+      "selected": 3,
+      "files_ready": 2,
+      "passed": 2,
+      "failed": 1,
+      "outcomes": {
+        "not_selected": 1,
+        "unsupported_bundle": 1,
+        "correspondence_passed": 2
+      }
+    }
+  },
+  "by_platform": {
+    "Visium": {
+      "found": 4,
+      "selected": 3,
+      "files_ready": 2,
+      "passed": 2,
+      "failed": 1,
+      "outcomes": {
+        "not_selected": 1,
+        "unsupported_bundle": 1,
+        "correspondence_passed": 2
+      }
+    }
+  },
+  "status": "completed_with_issues",
+  "count_scope": "result rows, including study-only outcomes and validated slice rows",
+  "distinct_studies_found": 3,
+  "slice_rows": 2,
+  "requests": [
+    {
+      "url": "https://www.ebi.ac.uk/biostudies/api/v1/search?query=%22Visium%22+AND+%22lung%22&pageSize=3",
+      "cached": true,
+      "sha256": "e18fef0e6a1949a82982510e8a5022d9dae87f16055e91db2cb549d1b92d8bfd"
+    },
+    {
+      "url": "https://www.ebi.ac.uk/biostudies/api/v1/studies/S-BSST1409",
+      "cached": true,
+      "sha256": "80b8c3c46f9fffe96217a1b4ff56d015853f32b2e545de8a3b32658d014b79e1"
+    },
+    {
+      "url": "https://www.ebi.ac.uk/biostudies/api/v1/studies/E-MTAB-11265",
+      "cached": true,
+      "sha256": "bbb6e3c3cb302bd8d9d39b56c3314943b98fbee088b57c645140f957291f34a8"
+    },
+    {
+      "url": "https://www.ebi.ac.uk/biostudies/api/v1/studies/E-MTAB-11265/info",
+      "cached": true,
+      "sha256": "463ccf97ccf6e9ff769e6734c4d242e00379922e2b3d4dda1ddbb75aa0ac9a55"
+    },
+    {
+      "url": "https://www.ebi.ac.uk/biostudies/api/v1/studies/S-BSST1410",
+      "cached": true,
+      "sha256": "2a034c5ef04ada1677caffd3d68a16ad702df30c423cb32cde130d58b894382d"
+    },
+    {
+      "url": "https://www.ebi.ac.uk/biostudies/api/v1/studies/S-BSST1410/info",
+      "cached": true,
+      "sha256": "63f13e097609eb988695e5f805bce357b810b7c49a2e956c7db4320453648eb0"
+    },
+    {
+      "url": "https://ftp.ebi.ac.uk/biostudies/fire/S-BSST/410/S-BSST1410/Files/hs_visium_metadata.tsv",
+      "cached": true,
+      "sha256": "c5595771a11b44e240cff6638043b7d1b28d0cb922dd333c7ec4b6063983ab7d"
+    }
+  ]
+}

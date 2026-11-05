@@ -1,0 +1,4 @@
+﻿study_id,sample_id,sample_directory,source_url,platform,status,selected,files_ready,organism,tissue,evidence_scope,reason,archive_url
+S-BIAD2339,S-BIAD2339,,https://www.ebi.ac.uk/biostudies/studies/S-BIAD2339,Xenium,unsupported_bundle,True,False,Homo sapiens,liver,study candidate,BioStudies preparation currently supports Space Ranger ZIP bundles,
+S-BIAD2470,S-BIAD2470,,https://www.ebi.ac.uk/biostudies/studies/S-BIAD2470,Xenium,not_selected,False,False,Homo sapiens,liver,study candidate,,
+S-BIAD3448,S-BIAD3448,,https://www.ebi.ac.uk/biostudies/studies/S-BIAD3448,Xenium,not_selected,False,False,Homo sapiens,liver,study candidate,,

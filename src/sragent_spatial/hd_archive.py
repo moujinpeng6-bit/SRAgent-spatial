@@ -122,6 +122,41 @@ def hdf5_barcodes(path, target):
     return {"features": features, "observations": observations, "scope": "hdf5_shape_and_barcodes"}
 
 
+def hdf5_count_integrity(path):
+    """Stream all CSC arrays while bounding memory for a 10x count matrix."""
+    import h5py
+    import numpy as np
+
+    with h5py.File(path, "r") as source:
+        matrix = source["matrix"]
+        shape = matrix["shape"][:]
+        if len(shape) != 2 or any(int(value) <= 0 for value in shape):
+            raise ValueError("Invalid count matrix shape")
+        features, observations = map(int, shape)
+        data, indices, indptr = (matrix[key] for key in ("data", "indices", "indptr"))
+        if (data.ndim != 1 or indices.shape != data.shape or indptr.shape != (observations + 1,)
+                or indptr.dtype.kind not in "iu" or indices.dtype.kind not in "iu"
+                or data.dtype.kind not in "iuf" or data.size > 250_000_000):
+            raise ValueError("Invalid CSC array shapes or data types")
+        if int(indptr[0]) != 0 or int(indptr[-1]) != data.size:
+            raise ValueError("Invalid CSC endpoints")
+        previous = 0
+        for start in range(0, observations + 1, 65536):
+            pointers = indptr[start:start + 65536]
+            if (int(pointers[0]) < previous or np.any(pointers[1:] < pointers[:-1])
+                    or np.any(pointers < 0) or np.any(pointers > data.size)):
+                raise ValueError("Invalid CSC column pointers")
+            previous = int(pointers[-1])
+        for start in range(0, data.size, 65536):
+            values, rows = data[start:start + 65536], indices[start:start + 65536]
+            if (np.any(rows < 0) or np.any(rows >= features) or not np.isfinite(values).all()
+                    or np.any(values < 0) or np.any(values != np.floor(values))):
+                raise ValueError("Invalid row indices or nonnegative integer counts")
+        return {"features": features, "observations": observations, "entries_checked": int(data.size),
+                "scope": "all_CSC_arrays_row_indices_column_pointers_and_integer_counts",
+                "passed": True}
+
+
 def validate_hd_bin(files, out, size):
     required = {"positions", "scalefactors", "image"}
     missing = sorted(required - files.keys())

@@ -24,6 +24,7 @@ downloads/
 outputs/
 .cache/
 .archive-cache/
+.zip-cache/
 *.h5ad
 *.h5
 *.zarr/

@@ -1,0 +1,68 @@
+{
+  "date": "2026-11-06",
+  "source": "Official public BioStudies REST API; no Google Cloud or BigQuery",
+  "lung": {
+    "distinct_studies": 3,
+    "totals": {
+      "found": 4,
+      "selected": 3,
+      "files_ready": 2,
+      "passed": 2,
+      "failed": 1,
+      "outcomes": {
+        "not_selected": 1,
+        "unsupported_bundle": 1,
+        "correspondence_passed": 2
+      }
+    },
+    "tool": {
+      "provider": "deepseek",
+      "model": "deepseek-flash",
+      "tool_calls": 1,
+      "actual_tool_executed": true,
+      "scope": "BioStudies tool only"
+    },
+    "no_manually_supplied_accessions": true
+  },
+  "liver": {
+    "totals": {
+      "found": 3,
+      "selected": 1,
+      "files_ready": 0,
+      "passed": 0,
+      "failed": 1,
+      "outcomes": {
+        "unsupported_bundle": 1,
+        "not_selected": 2
+      }
+    },
+    "tool": {
+      "provider": "deepseek",
+      "model": "deepseek-flash",
+      "tool_calls": 1,
+      "actual_tool_executed": true,
+      "scope": "BioStudies tool only"
+    }
+  },
+  "kidney_hd": {
+    "totals": {
+      "found": 2,
+      "selected": 0,
+      "files_ready": 0,
+      "passed": 0,
+      "failed": 0,
+      "outcomes": {
+        "not_selected": 2
+      }
+    },
+    "scope": "metadata search only; returned paper records not sufficient to select experimental samples"
+  },
+  "resume_evidence": "resume_evidence.json",
+  "test_count": 129,
+  "limits": [
+    "Space Ranger ZIP preparation only for the new source",
+    "No new-source Xenium or Visium HD download success claimed",
+    "Study and slice rows counted separately",
+    "No biological gold-standard accuracy or anatomical registration claimed"
+  ]
+}

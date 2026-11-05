@@ -1,0 +1,88 @@
+{
+  "actual_interruption": {
+    "method": "Windows Stop-Process after first verified matrix download",
+    "captured_at_unix": 1793896685.7366295,
+    "files": [
+      {
+        "path": "S-BSST1410\\Visium\\6ee840650637ccc8\\filtered_feature_bc_matrix.h5",
+        "bytes": 11953280,
+        "mtime_ns": 1793896622197521800,
+        "sha256": "411872c799ce3efd6b65a966a0cc7e3485ef37fa3842b78e477b47d1e6f629f6",
+        "same_sha256_after_resume": true,
+        "same_mtime_after_resume": true
+      }
+    ]
+  },
+  "offline_replay": {
+    "http_attempts": 0,
+    "passed_slices": 2,
+    "metadata_all_cached": true,
+    "assets": [
+      {
+        "path": "S-BSST1410\\Visium\\6ee840650637ccc8\\filtered_feature_bc_matrix.h5",
+        "bytes": 11953280,
+        "mtime_ns": 1793896622197521800,
+        "sha256": "411872c799ce3efd6b65a966a0cc7e3485ef37fa3842b78e477b47d1e6f629f6",
+        "same_sha256_after_resume": true,
+        "same_mtime_after_resume": true
+      },
+      {
+        "path": "S-BSST1410\\Visium\\6ee840650637ccc8\\tissue_positions_list.csv",
+        "bytes": 185089,
+        "mtime_ns": 1793896776498572200,
+        "sha256": "1ad4597323f88e8ce6095d06bfb45242a133c0b7779afb6ba8b2f8a49743783d",
+        "same_sha256_after_resume": true,
+        "same_mtime_after_resume": true
+      },
+      {
+        "path": "S-BSST1410\\Visium\\6ee840650637ccc8\\scalefactors_json.json",
+        "bytes": 158,
+        "mtime_ns": 1793896776514561900,
+        "sha256": "836a2dbff0e1c2b3aef5ba310362a44de35c0c5ac89f85843f89f11f129bcff9",
+        "same_sha256_after_resume": true,
+        "same_mtime_after_resume": true
+      },
+      {
+        "path": "S-BSST1410\\Visium\\6ee840650637ccc8\\tissue_lowres_image.png",
+        "bytes": 1547370,
+        "mtime_ns": 1793897284345493400,
+        "sha256": "3aaacc4897ddd4117bffc3a625a418ec20fa8ba5f396fea4742e631cb8adb733",
+        "same_sha256_after_resume": true,
+        "same_mtime_after_resume": true
+      },
+      {
+        "path": "S-BSST1410\\Visium\\9942bf0a017c310a\\filtered_feature_bc_matrix.h5",
+        "bytes": 14915817,
+        "mtime_ns": 1793897495711465700,
+        "sha256": "dec216ee221e266095c8f1a501713a83af843fa8e3378b2ab98cf55b3def83e2",
+        "same_sha256_after_resume": true,
+        "same_mtime_after_resume": true
+      },
+      {
+        "path": "S-BSST1410\\Visium\\9942bf0a017c310a\\tissue_positions_list.csv",
+        "bytes": 185089,
+        "mtime_ns": 1793897627915106000,
+        "sha256": "002218aed1115e96b90f1ad85bf57a2f12994a3c392ee5d06c0b88ac153274e8",
+        "same_sha256_after_resume": true,
+        "same_mtime_after_resume": true
+      },
+      {
+        "path": "S-BSST1410\\Visium\\9942bf0a017c310a\\scalefactors_json.json",
+        "bytes": 141,
+        "mtime_ns": 1793897627940370000,
+        "sha256": "a97b2e14c1b67744a8c1378711f5e9992dd4eb74cde5f767be48c9f8593b294b",
+        "same_sha256_after_resume": true,
+        "same_mtime_after_resume": true
+      },
+      {
+        "path": "S-BSST1410\\Visium\\9942bf0a017c310a\\tissue_lowres_image.png",
+        "bytes": 1715930,
+        "mtime_ns": 1793897628028631700,
+        "sha256": "e70bfe6871175aec31b712aed70f6c7e64a2580a686714e6260e8630ad453fba",
+        "same_sha256_after_resume": true,
+        "same_mtime_after_resume": true
+      }
+    ],
+    "all_passed_rows_rechecked_sha256": true
+  }
+}

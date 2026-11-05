@@ -1,5 +1,9 @@
 # SRAgent-spatial
 
+v0.12 新增 **BioStudies / ArrayExpress 官方公开接口**：不需要 Google Cloud / BigQuery，输入物种、组织和平台即可查询研究、定位官方附件，并对支持的 Space Ranger ZIP 自动准备同切片文件和执行空间检查。支持逐条状态、CSV、受限下载、哈希校验续跑，以及 DeepSeek 实际调用工具。见 [使用说明与边界](docs/biostudies.md)、[真实验收结果](examples/biostudies_acceptance/) 和 [当前进度](docs/roadmap.md)。
+
+下方各版本是开发历程，不代表所有公开平台、文件格式或研究级效果均已验收。当前状态以开发路线顶部和相应真实报告为准。
+
 v0.11: [开放组织与物种搜索、本地文件复用及原生 16 µm 核查说明](docs/open_scope.md)。
 
 v0.10 增加 Visium HD 原始 GEO 压缩包和无分辨率文件名的 HDF5/空间附件支持。明确 GSE 搜索可回退到按编号读取，并保留样本级筛选。真实人肺原生 2 µm 和从真实表达计数聚合的 16 µm 已通过统一入口。详见 [来源、准备与验证](docs/visium_hd_archive.md)。

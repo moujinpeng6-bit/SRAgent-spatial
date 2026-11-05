@@ -35,6 +35,15 @@ async def rule_predictor(packet, _method, _model):
 async def find_spatial(organism, tissue, platforms, cache, out, *, model=None, download_bytes=0,
                        max_studies=2, samples_per_study=2, resume=False, source="geo", catalog_snapshot=None,
                        tenx_interactive=False, catalog_fallback=None, geo_assets=None, probe_remote=False):
+    if source == "biostudies":
+        if cache is not None or geo_assets is not None or catalog_snapshot is not None or catalog_fallback is not None or tenx_interactive:
+            raise ValueError("BioStudies manages its own metadata and file cache; omit GEO/10x options")
+        from .biostudies import run_biostudies, run_biostudies_agent
+        if model:
+            return await run_biostudies_agent(organism, tissue, platforms, out, model=model,
+                budget=download_bytes, max_studies=max_studies, samples_per_study=samples_per_study, resume=resume)
+        return await asyncio.to_thread(run_biostudies, organism, tissue, platforms, out,
+            budget=download_bytes, max_studies=max_studies, samples_per_study=samples_per_study, resume=resume)
     out = Path(out).resolve()
     cache = Path(cache).resolve() if cache else None
     if cache and (not cache.is_dir() or out.is_relative_to(cache)):
