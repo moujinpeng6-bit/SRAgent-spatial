@@ -1,0 +1,3 @@
+﻿source,study_id,source_sample_id,candidate_id,sample_id,platform,clinical_status,selected,files_ready,status,source_url,matrix_scope,bin_um,reason
+tenx,tenx:Xenium:21_Pancreas,,,tenx:Xenium:21_Pancreas,Xenium,out_of_scope,False,False,not_selected,https://www.10xgenomics.com/datasets/human-pancreas-preview-data-xenium-human-multi-tissue-and-cancer-panel-1-standard,,,
+tenx,tenx:Xenium:08_Pancreas,08_Pancreas,tenx:Xenium:08_Pancreas,tenx:Xenium:08_Pancreas--51f7db94bb8f,Xenium,eligible,True,True,correspondence_passed,https://www.10xgenomics.com/datasets/pancreatic-cancer-with-xenium-human-multi-tissue-and-cancer-panel-1-standard,,,

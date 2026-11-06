@@ -24,6 +24,23 @@ def bounded_integer(low, high):
 def main(argv=None):
     parser = argparse.ArgumentParser(description="Spatial GEO metadata tools; no sequencing/image downloads")
     sub = parser.add_subparsers(dest="command", required=True)
+    research = sub.add_parser('research-spatial', help='Disease-aware multi-source spatial research supervisor')
+    research.add_argument('--task', help='Natural-language research request; interpreted by the configured model')
+    research.add_argument('--organism')
+    research.add_argument('--tissue')
+    research.add_argument('--platforms', nargs='+', choices=['Xenium','Visium','Visium HD'])
+    research.add_argument('--disease', default='')
+    research.add_argument('--sample-state', choices=['any','tumor','normal','adjacent'], default='any')
+    research.add_argument('--sources', nargs='+', choices=['geo','biostudies','tenx'], default=['geo','biostudies','tenx'])
+    research.add_argument('--model', default='deepseek-flash')
+    research.add_argument('--assets', type=Path)
+    research.add_argument('--local-roots', nargs='*', type=Path, default=[])
+    research.add_argument('--10x-cache', dest='tenx_cache', type=Path)
+    research.add_argument('--10x-snapshots', dest='tenx_snapshots', nargs='*', type=Path, default=[])
+    research.add_argument('--download-mib', type=bounded_integer(0,2048), default=128)
+    research.add_argument('--max-studies', type=bounded_integer(1,5), default=2)
+    research.add_argument('--samples-per-study', type=bounded_integer(1,10), default=2)
+    research.add_argument('--out', type=Path, required=True)
     for name in ("lookup", "search"):
         command = sub.add_parser(name)
         command.add_argument("--out", type=Path, required=True)
@@ -233,6 +250,35 @@ def main(argv=None):
                 if report["agent_error"]:
                     print(json.dumps(report["agent_error"]), file=sys.stderr)
                 return 2
+        elif args.command == 'research-spatial':
+            from .research_request import ResearchRequest, parse_request
+            from .research_session import ResearchSession
+            from .multiagent import run_multiagent
+            if os.name == 'nt':
+                import truststore
+                truststore.inject_into_ssl()
+            async def run_research():
+                if args.task:
+                    if args.organism or args.tissue or args.platforms or args.disease or args.sample_state!='any':
+                        raise ValueError('Use either --task or explicit research filters')
+                    request, parsed = await parse_request(args.task,args.model)
+                else:
+                    if not args.organism or not args.tissue or not args.platforms:
+                        raise ValueError('Specify --task or organism/tissue/platforms')
+                    request=ResearchRequest(args.organism,args.tissue,tuple(args.platforms),args.disease,args.sample_state)
+                    parsed={'normalized':request.json(),'parser_model':None}
+                result=await run_multiagent(request.organism,request.tissue,list(request.platforms),args.out,
+                    assets=args.assets or args.out/'assets',model=args.model,budget=args.download_mib*1024**2,
+                    max_studies=args.max_studies,slices=args.samples_per_study,session_class=ResearchSession,
+                    session_options={'request':request,'sources':args.sources,'roots':args.local_roots,
+                                     'tenx_cache':args.tenx_cache,'snapshots':args.tenx_snapshots})
+                from .tenx_batch import checkpoint
+                checkpoint(args.out/'parsed_request.json',parsed)
+                return result
+            report=asyncio.run(run_research())
+            print(json.dumps({'status':report['status'],'workflow_complete':report['workflow_complete'],
+                              **report['totals'],'agent':report['agent']},ensure_ascii=True))
+            return 0 if report['workflow_complete'] and not report['agent']['error'] else 2
         elif args.command == "find-spatial":
             if args.multi_agent:
                 if args.source != "biostudies" or not args.model or args.resume:

@@ -1,0 +1,14 @@
+{
+  "organism": "Homo sapiens",
+  "tissue": "pancreas",
+  "platforms": [
+    "Xenium",
+    "Visium",
+    "Visium HD"
+  ],
+  "assets": "E:\\SRAgent-spatial\\research-pancreas-assets-20261106",
+  "model": "deepseek-flash",
+  "budget": 134217728,
+  "max_studies": 2,
+  "slices": 2
+}

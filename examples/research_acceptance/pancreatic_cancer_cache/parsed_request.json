@@ -1,0 +1,22 @@
+{
+  "input": "\u5bfb\u627e\u4eba\u7c7b\u80f0\u817a\u764c\u7684 Xenium \u7a7a\u95f4\u6570\u636e\uff0c\u4e0d\u8981\u6b63\u5e38\u6216\u764c\u65c1\u7ec4\u7ec7",
+  "normalized": {
+    "organism": "Homo sapiens",
+    "tissue": "pancreas",
+    "platforms": [
+      "Xenium"
+    ],
+    "disease": "pancreatic cancer",
+    "sample_state": "tumor"
+  },
+  "parser_model": "deepseek-flash",
+  "usage": {
+    "input_tokens": 136,
+    "output_tokens": 36,
+    "total_tokens": 172,
+    "input_token_details": {
+      "cache_read": 0
+    },
+    "output_token_details": {}
+  }
+}

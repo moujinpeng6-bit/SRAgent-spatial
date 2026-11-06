@@ -1,0 +1,12 @@
+{
+  "normalized": {
+    "organism": "Homo sapiens",
+    "tissue": "lung",
+    "platforms": [
+      "Visium"
+    ],
+    "disease": "",
+    "sample_state": "any"
+  },
+  "parser_model": null
+}

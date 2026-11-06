@@ -1,0 +1,5 @@
+﻿study_id,sample_id,platform,selected,files_ready,status
+biostudies:Visium:E-MTAB-11265,biostudies:Visium:E-MTAB-11265--fd0c630f7ffc,Visium,True,False,download_budget_exceeded
+biostudies:Visium:S-BSST1410,biostudies:Visium:S-BSST1410--6ee840650637,Visium,True,True,correspondence_passed
+biostudies:Visium:S-BSST1410,biostudies:Visium:S-BSST1410--9942bf0a017c,Visium,True,True,correspondence_passed
+biostudies:Visium:S-BSST1409,biostudies:Visium:S-BSST1409,Visium,False,False,not_selected

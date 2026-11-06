@@ -1,0 +1,405 @@
+{
+  "date": "2026-11-06",
+  "test_count": 144,
+  "runs": {
+    "pancreatic_cancer": {
+      "totals": {
+        "found": 11,
+        "selected": 5,
+        "files_ready": 1,
+        "passed": 1,
+        "failed": 4,
+        "outcomes": {
+          "not_selected": 6,
+          "download_budget_exceeded": 2,
+          "missing_files": 2,
+          "correspondence_passed": 1
+        }
+      },
+      "request": {
+        "organism": "Homo sapiens",
+        "tissue": "pancreas",
+        "platforms": [
+          "Xenium",
+          "Visium",
+          "Visium HD"
+        ],
+        "disease": "pancreatic cancer",
+        "sample_state": "tumor"
+      },
+      "source_errors": [
+        {
+          "source": "tenx",
+          "platform": "Visium",
+          "status": "catalog_not_configured",
+          "reason": "Configured cache/snapshots do not cover this platform; no live search claimed"
+        },
+        {
+          "source": "tenx",
+          "platform": "Visium HD",
+          "status": "catalog_not_configured",
+          "reason": "Configured cache/snapshots do not cover this platform; no live search claimed"
+        }
+      ],
+      "agent": {
+        "provider": "deepseek",
+        "model": "deepseek-flash",
+        "architecture": "supervisor_and_three_child_graphs",
+        "delegations": [
+          "search",
+          "assets",
+          "validation",
+          "assets",
+          "assets",
+          "validation"
+        ],
+        "tool_operations": 50,
+        "error": null
+      },
+      "model_turns_by_role": {
+        "search": 3,
+        "assets": 15,
+        "validation": 4,
+        "supervisor": 5
+      },
+      "clinical_status_counts": {
+        "unknown": 2,
+        "out_of_scope": 2,
+        "eligible": 5,
+        "not_required": 2
+      },
+      "passed_samples": [
+        {
+          "sample_id": "tenx:Xenium:08_Pancreas--51f7db94bb8f",
+          "cells": 190965,
+          "matrix_scope": "validator-specific full arrays",
+          "bin_um": null,
+          "checks": {
+            "unique_cell_ids": true,
+            "unique_matrix_barcodes": true,
+            "cell_id_set_matches_matrix": true,
+            "finite_coordinates": true,
+            "experiment_cell_count_matches": true,
+            "nonnegative_integer_expression": true,
+            "matrix_order_reconciled_by_id": true,
+            "gene_features_present": true,
+            "gene_counts_equal_cells_summary": true,
+            "all_feature_counts_equal_cells_summary": true,
+            "pixel_size_agrees_with_ome": true,
+            "all_centroids_inside_image": true
+          }
+        }
+      ]
+    },
+    "pancreatic_cancer_cache": {
+      "totals": {
+        "found": 2,
+        "selected": 1,
+        "files_ready": 1,
+        "passed": 1,
+        "failed": 0,
+        "outcomes": {
+          "not_selected": 1,
+          "correspondence_passed": 1
+        }
+      },
+      "request": {
+        "organism": "Homo sapiens",
+        "tissue": "pancreas",
+        "platforms": [
+          "Xenium"
+        ],
+        "disease": "pancreatic cancer",
+        "sample_state": "tumor"
+      },
+      "source_errors": [],
+      "agent": {
+        "provider": "deepseek",
+        "model": "deepseek-flash",
+        "architecture": "supervisor_and_three_child_graphs",
+        "delegations": [
+          "search",
+          "assets",
+          "validation"
+        ],
+        "tool_operations": 6,
+        "error": null
+      },
+      "model_turns_by_role": {
+        "search": 3,
+        "assets": 3,
+        "validation": 2,
+        "supervisor": 4
+      },
+      "clinical_status_counts": {
+        "out_of_scope": 1,
+        "eligible": 1
+      },
+      "passed_samples": [
+        {
+          "sample_id": "tenx:Xenium:08_Pancreas--51f7db94bb8f",
+          "cells": 190965,
+          "matrix_scope": "validator-specific full arrays",
+          "bin_um": null,
+          "checks": {
+            "unique_cell_ids": true,
+            "unique_matrix_barcodes": true,
+            "cell_id_set_matches_matrix": true,
+            "finite_coordinates": true,
+            "experiment_cell_count_matches": true,
+            "nonnegative_integer_expression": true,
+            "matrix_order_reconciled_by_id": true,
+            "gene_features_present": true,
+            "gene_counts_equal_cells_summary": true,
+            "all_feature_counts_equal_cells_summary": true,
+            "pixel_size_agrees_with_ome": true,
+            "all_centroids_inside_image": true
+          }
+        }
+      ],
+      "new_asset_network_bytes": 0
+    },
+    "lung_visium": {
+      "totals": {
+        "found": 4,
+        "selected": 3,
+        "files_ready": 2,
+        "passed": 2,
+        "failed": 1,
+        "outcomes": {
+          "download_budget_exceeded": 1,
+          "correspondence_passed": 2,
+          "not_selected": 1
+        }
+      },
+      "request": {
+        "organism": "Homo sapiens",
+        "tissue": "lung",
+        "platforms": [
+          "Visium"
+        ],
+        "disease": "",
+        "sample_state": "any"
+      },
+      "source_errors": [],
+      "agent": {
+        "provider": "deepseek",
+        "model": "deepseek-flash",
+        "architecture": "supervisor_and_three_child_graphs",
+        "delegations": [
+          "search",
+          "assets",
+          "assets",
+          "validation",
+          "assets"
+        ],
+        "tool_operations": 19,
+        "error": null
+      },
+      "model_turns_by_role": {
+        "search": 4,
+        "assets": 10,
+        "validation": 2,
+        "supervisor": 5
+      },
+      "clinical_status_counts": {
+        "not_required": 4
+      },
+      "passed_samples": [
+        {
+          "sample_id": "biostudies:Visium:S-BSST1410--6ee840650637",
+          "cells": null,
+          "matrix_scope": "validator-specific full arrays",
+          "bin_um": null,
+          "checks": {
+            "barcode_position_image": {
+              "expression_barcode_count": 4034,
+              "position_count": 4992,
+              "missing_expression_ids_count": 0,
+              "missing_ids_preview": [],
+              "matrix_columns_checked": null,
+              "image_bounds_check": {
+                "width": 600,
+                "height": 581,
+                "scale": 0.05,
+                "tested_in_tissue_barcodes": 4034,
+                "out_of_image_count": 0
+              },
+              "issues": [],
+              "basic_checks_passed": true,
+              "coordinate_convention": "position file full-resolution image pixels; physical micrometre scale not inferred",
+              "not_verified": [
+                "same physical section or donor",
+                "image pixel contents or anatomical registration",
+                "cell segmentation or pathology annotation",
+                "biological validity of counts and feature identities"
+              ],
+              "scope": "barcode/position/optional matrix-header and image-bounds consistency only; full HDF5 count-array checks reported separately"
+            },
+            "matrix_dimensions": {
+              "features": 36601,
+              "observations": 4034,
+              "scope": "hdf5_shape_and_barcodes"
+            },
+            "matrix_columns_match_barcodes": true,
+            "image_decode": {
+              "width": 600,
+              "height": 581,
+              "format": "PNG",
+              "pixel_decode_verified": true
+            },
+            "matrix_content": {
+              "features": 36601,
+              "observations": 4034,
+              "entries_checked": 8180705,
+              "scope": "all_CSC_arrays_row_indices_column_pointers_and_integer_counts",
+              "passed": true
+            }
+          }
+        },
+        {
+          "sample_id": "biostudies:Visium:S-BSST1410--9942bf0a017c",
+          "cells": null,
+          "matrix_scope": "validator-specific full arrays",
+          "bin_um": null,
+          "checks": {
+            "barcode_position_image": {
+              "expression_barcode_count": 4882,
+              "position_count": 4992,
+              "missing_expression_ids_count": 0,
+              "missing_ids_preview": [],
+              "matrix_columns_checked": null,
+              "image_bounds_check": {
+                "width": 600,
+                "height": 581,
+                "scale": 0.05,
+                "tested_in_tissue_barcodes": 4882,
+                "out_of_image_count": 0
+              },
+              "issues": [],
+              "basic_checks_passed": true,
+              "coordinate_convention": "position file full-resolution image pixels; physical micrometre scale not inferred",
+              "not_verified": [
+                "same physical section or donor",
+                "image pixel contents or anatomical registration",
+                "cell segmentation or pathology annotation",
+                "biological validity of counts and feature identities"
+              ],
+              "scope": "barcode/position/optional matrix-header and image-bounds consistency only; full HDF5 count-array checks reported separately"
+            },
+            "matrix_dimensions": {
+              "features": 36601,
+              "observations": 4882,
+              "scope": "hdf5_shape_and_barcodes"
+            },
+            "matrix_columns_match_barcodes": true,
+            "image_decode": {
+              "width": 600,
+              "height": 581,
+              "format": "PNG",
+              "pixel_decode_verified": true
+            },
+            "matrix_content": {
+              "features": 36601,
+              "observations": 4882,
+              "entries_checked": 10281590,
+              "scope": "all_CSC_arrays_row_indices_column_pointers_and_integer_counts",
+              "passed": true
+            }
+          }
+        }
+      ]
+    },
+    "heart_hd": {
+      "totals": {
+        "found": 1,
+        "selected": 1,
+        "files_ready": 1,
+        "passed": 1,
+        "failed": 0,
+        "outcomes": {
+          "correspondence_passed": 1
+        }
+      },
+      "request": {
+        "organism": "Homo sapiens",
+        "tissue": "heart",
+        "platforms": [
+          "Visium HD"
+        ],
+        "disease": "",
+        "sample_state": "any"
+      },
+      "source_errors": [],
+      "agent": {
+        "provider": "deepseek",
+        "model": "deepseek-flash",
+        "architecture": "supervisor_and_three_child_graphs",
+        "delegations": [
+          "search",
+          "assets",
+          "validation"
+        ],
+        "tool_operations": 5,
+        "error": null
+      },
+      "model_turns_by_role": {
+        "search": 3,
+        "assets": 3,
+        "validation": 2,
+        "supervisor": 4
+      },
+      "clinical_status_counts": {
+        "not_required": 1
+      },
+      "passed_samples": [
+        {
+          "sample_id": "tenx:Visium HD:visium-hd-cytassist-6p5mm-human-heart--06669997a8ab",
+          "cells": null,
+          "matrix_scope": "header_only",
+          "bin_um": 2,
+          "checks": {
+            "barcode_position_image": {
+              "expression_barcode_count": 10615406,
+              "position_count": 11222500,
+              "missing_expression_ids_count": 0,
+              "missing_ids_preview": [],
+              "matrix_columns_checked": null,
+              "image_bounds_check": {
+                "width": 478,
+                "height": 600,
+                "scale": 0.0122202085,
+                "tested_in_tissue_barcodes": 10615406,
+                "out_of_image_count": 0,
+                "bin_size_um_in_scalefactors": 2.0
+              },
+              "issues": [],
+              "basic_checks_passed": true,
+              "coordinate_convention": "position file full-resolution image pixels; physical micrometre scale not inferred",
+              "not_verified": [
+                "same physical section or donor",
+                "matrix values and feature identities",
+                "image pixel contents or anatomical registration",
+                "cell segmentation or pathology annotation"
+              ],
+              "scope": "barcode/position/optional matrix-header and image-bounds consistency only"
+            },
+            "matrix_dimensions": {
+              "features": 18085,
+              "observations": 10615406,
+              "nonzeros": 43776546,
+              "scope": "header_only_not_matrix_values_or_complete_gzip_integrity"
+            },
+            "matrix_columns_match_barcodes": true,
+            "image_decode": {
+              "width": 478,
+              "height": 600,
+              "format": "PNG",
+              "pixel_decode_verified": true
+            }
+          }
+        }
+      ]
+    }
+  }
+}

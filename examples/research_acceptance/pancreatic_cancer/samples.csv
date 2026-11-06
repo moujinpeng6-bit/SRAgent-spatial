@@ -1,0 +1,12 @@
+﻿study_id,sample_id,platform,selected,files_ready,status
+geo:Xenium:GSE343070,geo:Xenium:GSM9945538,Xenium,False,False,not_selected
+geo:Xenium:GSE343070,geo:Xenium:GSM9945539,Xenium,False,False,not_selected
+geo:Visium:GSE327056,geo:Visium:GSM9647219,Visium,False,False,not_selected
+tenx:Xenium:21_Pancreas,tenx:Xenium:21_Pancreas,Xenium,False,False,not_selected
+geo:Xenium:GSE310433,geo:Xenium:GSM9301054--c77bdf76fc9f,Xenium,True,False,download_budget_exceeded
+geo:Xenium:GSE310433,geo:Xenium:GSM9301055--29c38e735e9a,Xenium,True,False,download_budget_exceeded
+geo:Visium:GSE327056,geo:Visium:GSM9647220--5b950e77941d,Visium,True,False,missing_files
+geo:Visium:GSE299970,geo:Visium:GSM9051173--cdb4ee2aea69,Visium,True,False,missing_files
+tenx:Xenium:08_Pancreas,tenx:Xenium:08_Pancreas--51f7db94bb8f,Xenium,True,True,correspondence_passed
+biostudies:Xenium:S-BIAD2146,biostudies:Xenium:S-BIAD2146,Xenium,False,False,not_selected
+biostudies:Visium:S-BIAD3647,biostudies:Visium:S-BIAD3647,Visium,False,False,not_selected

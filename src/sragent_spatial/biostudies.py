@@ -12,6 +12,7 @@ import zipfile
 from pathlib import Path, PurePosixPath
 from urllib.parse import quote, urlencode, urlsplit
 from urllib.request import Request, urlopen
+from urllib.error import HTTPError
 
 from .asset_audit import decode_image
 from .hd_archive import hdf5_barcodes, hdf5_count_integrity, spatial_bin_size
@@ -54,7 +55,7 @@ class BioStudiesClient:
             return body
         for attempt in range(3):
             try:
-                with urlopen(Request(url, headers={"User-Agent": "SRAgent-spatial public metadata client"}), timeout=25) as response:
+                with urlopen(Request(url, headers={"User-Agent": "SRAgent-spatial public metadata client"}), timeout=90 if parts.netloc=='ftp.ebi.ac.uk' else 25) as response:
                     if urlsplit(response.geturl()).netloc != parts.netloc:
                         raise ValueError("Unexpected BioStudies redirect")
                     body = response.read(limit + 1)
@@ -65,7 +66,9 @@ class BioStudiesClient:
                 checkpoint(path, record)
                 self.requests.append({"url": url, "cached": False, "sha256": record["sha256"]})
                 return body
-            except OSError:
+            except OSError as exc:
+                if isinstance(exc,HTTPError) and exc.code in {401,403,404,429}:
+                    raise
                 if attempt == 2:
                     raise
                 time.sleep(attempt + 1)
@@ -106,6 +109,9 @@ def study_files(study):
 
 
 def file_url(info, accession, path):
+    candidate=PurePosixPath(path)
+    if candidate.is_absolute() or '..' in candidate.parts or '\\' in path or ':' in path:
+        raise ValueError('Unsafe official file path')
     base = info["httpLink"].rstrip("/")
     parts = urlsplit(base)
     if (parts.scheme != "https" or parts.netloc != "ftp.ebi.ac.uk"
@@ -129,7 +135,8 @@ def study_evidence(study, organism, tissue, platform):
     species_match = organism == "*" or bool(species) and all(
         re.fullmatch(re.escape(organism) + r"(?:\s*\([^)]*\))?", value, re.I) for value in species)
     tissue_text = "\n".join(attributes["organ"] or attributes["description"] + attributes["title"])
-    tissue_match = tissue == "*" or re.search(r"(?<!\w)" + re.escape(tissue) + r"(?!\w)", tissue_text, re.I)
+    from .research_request import tissue_matches
+    tissue_match = tissue_matches(tissue,tissue_text)
     from .screening import VISIUM_HD
     platform_match = (bool(VISIUM_HD.search(text)) if platform == "Visium HD" else
                       bool(re.search(r"(?<!\w)" + re.escape(platform) + r"(?!\w)", text, re.I)))
@@ -184,7 +191,7 @@ def validate_prepared_files(paths):
             "matrix_columns_match_barcodes": matches, "image_decode": image, "matrix_content": counts}}
 
 
-def validate_zip_study(client, row, study, info, out, budget, limit, resume, *, prepare_only=False):
+def validate_zip_study(client, row, study, info, out, budget, limit, resume, *, prepare_only=False, anchor_filter=None):
     files = study_files(study)
     if row["platform"] not in {"Visium", "Visium HD"}:
         return [{**row, "selected": True, "files_ready": False, "status": "unsupported_bundle",
@@ -218,7 +225,7 @@ def validate_zip_study(client, row, study, info, out, budget, limit, resume, *, 
         remote = RangeZip(url, item["size"], max_bytes=budget, cache=out / ".zip-cache", block_size=4 * MIB, timeout=90)
         with zipfile.ZipFile(remote) as archive:
             groups = zip_groups(archive)
-            chosen = sorted(groups)[:limit]
+            chosen = [anchor for anchor in sorted(groups) if anchor_filter is None or anchor_filter(anchor)][:limit]
             if not chosen:
                 return [{**row, "selected": True, "files_ready": False, "status": "missing_files", "archive_url": url}]
             for anchor in chosen:

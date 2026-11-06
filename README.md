@@ -1,5 +1,7 @@
 # SRAgent-spatial
 
+v0.14 新增 `research-spatial`：自然语言研究条件、样本级疾病/肿瘤状态证据，以及 GEO / BioStudies / 10x 共用的多 Agent 工具入口。统一分派 Xenium、Visium、Visium HD 验证，并增加 TAR、ZIP、独立附件、完整 MTX/gzip 和显式跨包配对。人类胰腺癌任务真实通过 190,965 个细胞的 Xenium 数据，另有 Visium、HD 实测。覆盖范围、受限结果与复现见 [四项改进说明](docs/research_spatial.md)、[真实验收](examples/research_acceptance/)。
+
 v0.13 新增真实 **DeepSeek 总控 + 搜索/文件/验证三个子 Agent**。工具拆为查询、证据读取、文件清单、配套文件准备及空间验证；模型根据结果选择委派、补件和重试。两张真实人肺 Visium 切片通过，受控错误验收记录了模型重试及“验证 → 补件 → 再验证”。见 [架构、命令与边界](docs/multiagent.md)。
 
 v0.12 新增 **BioStudies / ArrayExpress 官方公开接口**：不需要 Google Cloud / BigQuery，输入物种、组织和平台即可查询研究、定位官方附件，并对支持的 Space Ranger ZIP 自动准备同切片文件和执行空间检查。支持逐条状态、CSV、受限下载、哈希校验续跑，以及 DeepSeek 实际调用工具。见 [使用说明与边界](docs/biostudies.md)、[真实验收结果](examples/biostudies_acceptance/) 和 [当前进度](docs/roadmap.md)。

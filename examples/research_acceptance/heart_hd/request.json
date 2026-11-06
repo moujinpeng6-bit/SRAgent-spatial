@@ -1,0 +1,12 @@
+{
+  "organism": "Homo sapiens",
+  "tissue": "heart",
+  "platforms": [
+    "Visium HD"
+  ],
+  "assets": "E:\\SRAgent-spatial\\research-heart-hd-final-20261106\\assets",
+  "model": "deepseek-flash",
+  "budget": 2147483648,
+  "max_studies": 2,
+  "slices": 2
+}

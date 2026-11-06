@@ -177,8 +177,9 @@ def verify_member(path, info):
     return crc == info.CRC
 
 
-def prepare(entry, image, destination):
-    remote = RangeZip(entry["url"], entry["archive_bytes"])
+def prepare(entry, image, destination, *, max_bytes=72*MIB, cache=None):
+    remote = (RangeZip(entry["url"], entry["archive_bytes"]) if cache is None and max_bytes == 72*MIB else
+              RangeZip(entry["url"], entry["archive_bytes"], max_bytes=max_bytes, cache=cache, block_size=4*MIB, timeout=90))
     with zipfile.ZipFile(remote) as archive:
         image_name = entry["member"]
         images = [item for item in archive.infolist() if item.filename == image_name]

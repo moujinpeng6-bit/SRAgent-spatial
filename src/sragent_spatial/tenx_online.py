@@ -84,7 +84,7 @@ def read_catalog_snapshot(path, organism, tissue, platforms, limit):
         matches = []
         seen = set()
         for row in rows:
-            if (row["species"].casefold() != species.casefold() or row["tissue"].casefold() != tissue.casefold()
+            if (organism!='*' and row["species"].casefold() != species.casefold() or tissue!='*' and row["tissue"].casefold() != tissue.casefold()
                     or row["platform"] not in platforms):
                 continue
             slug = row["sample_id"]

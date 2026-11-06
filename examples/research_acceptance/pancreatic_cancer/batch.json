@@ -1,0 +1,1203 @@
+{
+  "samples": [
+    {
+      "source": "geo",
+      "study_id": "geo:Xenium:GSE343070",
+      "sample_id": "geo:Xenium:GSM9945538",
+      "platform": "Xenium",
+      "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9945538",
+      "found": true,
+      "selected": false,
+      "files_ready": false,
+      "clinical_status": "unknown",
+      "condition_evidence": {
+        "status": "unknown",
+        "sample_state": "tumor",
+        "requested_disease": "pancreatic cancer",
+        "requested_state": "tumor",
+        "scope": "sample",
+        "evidence": [
+          {
+            "field": "Sample_title",
+            "quote": "Tumor, Pre-CAC, F_T15",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9945538"
+          }
+        ],
+        "reason": "explicit sample metadata; missing disease evidence is unknown, not negative"
+      },
+      "scope_supported": false,
+      "status": "not_selected",
+      "scope_evidence": [
+        {
+          "field": "Sample_characteristics_ch1",
+          "quote": "tissue: Pancreas",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9945538"
+        },
+        {
+          "field": "Sample_organism_ch1",
+          "quote": "Homo sapiens",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9945538"
+        }
+      ]
+    },
+    {
+      "source": "geo",
+      "study_id": "geo:Xenium:GSE343070",
+      "sample_id": "geo:Xenium:GSM9945539",
+      "platform": "Xenium",
+      "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9945539",
+      "found": true,
+      "selected": false,
+      "files_ready": false,
+      "clinical_status": "unknown",
+      "condition_evidence": {
+        "status": "unknown",
+        "sample_state": "tumor",
+        "requested_disease": "pancreatic cancer",
+        "requested_state": "tumor",
+        "scope": "sample",
+        "evidence": [
+          {
+            "field": "Sample_title",
+            "quote": "Tumor, CAC, F_T24",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9945539"
+          }
+        ],
+        "reason": "explicit sample metadata; missing disease evidence is unknown, not negative"
+      },
+      "scope_supported": false,
+      "status": "not_selected",
+      "scope_evidence": [
+        {
+          "field": "Sample_characteristics_ch1",
+          "quote": "tissue: Pancreas",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9945539"
+        },
+        {
+          "field": "Sample_organism_ch1",
+          "quote": "Homo sapiens",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9945539"
+        }
+      ]
+    },
+    {
+      "source": "geo",
+      "study_id": "geo:Visium:GSE327056",
+      "sample_id": "geo:Visium:GSM9647219",
+      "platform": "Visium",
+      "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9647219",
+      "found": true,
+      "selected": false,
+      "files_ready": false,
+      "clinical_status": "out_of_scope",
+      "condition_evidence": {
+        "status": "out_of_scope",
+        "sample_state": "adjacent",
+        "requested_disease": "pancreatic cancer",
+        "requested_state": "tumor",
+        "scope": "sample",
+        "evidence": [
+          {
+            "field": "Sample_title",
+            "quote": "adjacent tumor tissue",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9647219"
+          },
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: adjacent tumor tissue",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9647219"
+          },
+          {
+            "field": "Sample_description",
+            "quote": "Adjacent non-tumor pancreatic tissue, spatial transcriptomics profiling via 10x Visium",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9647219"
+          }
+        ],
+        "reason": "explicit sample metadata; missing disease evidence is unknown, not negative"
+      },
+      "scope_supported": false,
+      "status": "not_selected",
+      "scope_evidence": [
+        {
+          "field": "Sample_characteristics_ch1",
+          "quote": "tissue: adjacent tumor tissue",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9647219"
+        },
+        {
+          "field": "Sample_organism_ch1",
+          "quote": "Homo sapiens",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9647219"
+        },
+        {
+          "field": "Sample_extract_protocol_ch1",
+          "quote": "Total RNA was extracted from fresh-frozen pancreatic tissue sections using Qiagen RNeasy Mini Kit according to the manufacturer's standard protocol, followed by quality assessment via NanoDrop and Agilent Bioanalyzer to ensure RNA integrity (RIN \u2265 7.0) for 10x Visium library construction.",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9647219"
+        }
+      ]
+    },
+    {
+      "source": "tenx",
+      "study_id": "tenx:Xenium:21_Pancreas",
+      "sample_id": "tenx:Xenium:21_Pancreas",
+      "platform": "Xenium",
+      "source_url": "https://www.10xgenomics.com/datasets/human-pancreas-preview-data-xenium-human-multi-tissue-and-cancer-panel-1-standard",
+      "found": true,
+      "selected": false,
+      "files_ready": false,
+      "clinical_status": "out_of_scope",
+      "condition_evidence": {
+        "status": "out_of_scope",
+        "sample_state": "normal",
+        "requested_disease": "pancreatic cancer",
+        "requested_state": "tumor",
+        "scope": "sample",
+        "evidence": [
+          {
+            "field": "state",
+            "quote": "Healthy",
+            "source_url": "https://www.10xgenomics.com/datasets/human-pancreas-preview-data-xenium-human-multi-tissue-and-cancer-panel-1-standard"
+          }
+        ],
+        "reason": "explicit sample metadata; missing disease evidence is unknown, not negative"
+      },
+      "scope_supported": true,
+      "status": "not_selected",
+      "catalog_mode": "registered_10x_cache_snapshot"
+    },
+    {
+      "source": "geo",
+      "study_id": "geo:Xenium:GSE310433",
+      "sample_id": "geo:Xenium:GSM9301054--c77bdf76fc9f",
+      "platform": "Xenium",
+      "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9301054",
+      "found": true,
+      "selected": true,
+      "files_ready": false,
+      "clinical_status": "eligible",
+      "condition_evidence": {
+        "status": "eligible",
+        "sample_state": "tumor",
+        "requested_disease": "pancreatic cancer",
+        "requested_state": "tumor",
+        "scope": "sample",
+        "evidence": [
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: human pancreatic cancer",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9301054"
+          }
+        ],
+        "reason": "explicit sample metadata; missing disease evidence is unknown, not negative"
+      },
+      "scope_supported": true,
+      "status": "download_budget_exceeded",
+      "scope_evidence": [
+        {
+          "field": "Sample_characteristics_ch1",
+          "quote": "tissue: human pancreatic cancer",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9301054"
+        },
+        {
+          "field": "Sample_organism_ch1",
+          "quote": "Homo sapiens",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9301054"
+        },
+        {
+          "field": "Sample_extract_protocol_ch1",
+          "quote": "The Xenium Analyzer performed iterative rounds of hybridization, washing, and imaging to decode the spatial location and identity of each mRNA molecule",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9301054"
+        }
+      ],
+      "anchor": "GSM9301054",
+      "errors": [
+        {
+          "url": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9301nnn/GSM9301054/suppl/GSM9301054_output-XETG00169_0014524_Region_1_14524_20240405_185817.tar.gz",
+          "error_type": "OverflowError",
+          "reason": "Download exceeds remaining budget"
+        }
+      ],
+      "asset_errors": [
+        {
+          "url": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9301nnn/GSM9301054/suppl/GSM9301054_output-XETG00169_0014524_Region_1_14524_20240405_185817.tar.gz",
+          "error_type": "OverflowError",
+          "reason": "Download exceeds remaining budget"
+        }
+      ],
+      "unsupported_assets": [],
+      "candidate_id": "geo:Xenium:GSM9301054",
+      "source_sample_id": "GSM9301054"
+    },
+    {
+      "source": "geo",
+      "study_id": "geo:Xenium:GSE310433",
+      "sample_id": "geo:Xenium:GSM9301055--29c38e735e9a",
+      "platform": "Xenium",
+      "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9301055",
+      "found": true,
+      "selected": true,
+      "files_ready": false,
+      "clinical_status": "eligible",
+      "condition_evidence": {
+        "status": "eligible",
+        "sample_state": "tumor",
+        "requested_disease": "pancreatic cancer",
+        "requested_state": "tumor",
+        "scope": "sample",
+        "evidence": [
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: human pancreatic cancer",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9301055"
+          }
+        ],
+        "reason": "explicit sample metadata; missing disease evidence is unknown, not negative"
+      },
+      "scope_supported": true,
+      "status": "download_budget_exceeded",
+      "scope_evidence": [
+        {
+          "field": "Sample_characteristics_ch1",
+          "quote": "tissue: human pancreatic cancer",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9301055"
+        },
+        {
+          "field": "Sample_organism_ch1",
+          "quote": "Homo sapiens",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9301055"
+        },
+        {
+          "field": "Sample_extract_protocol_ch1",
+          "quote": "The Xenium Analyzer performed iterative rounds of hybridization, washing, and imaging to decode the spatial location and identity of each mRNA molecule",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9301055"
+        }
+      ],
+      "anchor": "GSM9301055",
+      "errors": [
+        {
+          "url": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9301nnn/GSM9301055/suppl/GSM9301055_output-XETG00169_0014524_Region_2_14524_20240405_185817.tar.gz",
+          "error_type": "OverflowError",
+          "reason": "Download exceeds remaining budget"
+        }
+      ],
+      "asset_errors": [
+        {
+          "url": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9301nnn/GSM9301055/suppl/GSM9301055_output-XETG00169_0014524_Region_2_14524_20240405_185817.tar.gz",
+          "error_type": "OverflowError",
+          "reason": "Download exceeds remaining budget"
+        }
+      ],
+      "unsupported_assets": [],
+      "candidate_id": "geo:Xenium:GSM9301055",
+      "source_sample_id": "GSM9301055"
+    },
+    {
+      "source": "geo",
+      "study_id": "geo:Visium:GSE327056",
+      "sample_id": "geo:Visium:GSM9647220--5b950e77941d",
+      "platform": "Visium",
+      "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9647220",
+      "found": true,
+      "selected": true,
+      "files_ready": false,
+      "clinical_status": "eligible",
+      "condition_evidence": {
+        "status": "eligible",
+        "sample_state": "tumor",
+        "requested_disease": "pancreatic cancer",
+        "requested_state": "tumor",
+        "scope": "sample",
+        "evidence": [
+          {
+            "field": "Sample_title",
+            "quote": "pancreatic cancer tussue",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9647220"
+          },
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: pancreatic cancer tussue",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9647220"
+          },
+          {
+            "field": "Sample_description",
+            "quote": "Pancreatic cancer tissue, spatial transcriptomics profiling via 10x Visium",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9647220"
+          }
+        ],
+        "reason": "explicit sample metadata; missing disease evidence is unknown, not negative"
+      },
+      "scope_supported": true,
+      "status": "missing_files",
+      "scope_evidence": [
+        {
+          "field": "Sample_characteristics_ch1",
+          "quote": "tissue: pancreatic cancer tussue",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9647220"
+        },
+        {
+          "field": "Sample_organism_ch1",
+          "quote": "Homo sapiens",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9647220"
+        },
+        {
+          "field": "Sample_extract_protocol_ch1",
+          "quote": "Total RNA was extracted from fresh-frozen pancreatic tissue sections using Qiagen RNeasy Mini Kit according to the manufacturer's standard protocol, followed by quality assessment via NanoDrop and Agilent Bioanalyzer to ensure RNA integrity (RIN \u2265 7.0) for 10x Visium library construction.",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9647220"
+        }
+      ],
+      "anchor": "B1",
+      "missing_roles": [
+        "image",
+        "positions",
+        "scalefactors"
+      ],
+      "files": {
+        "barcodes": {
+          "path": "E:\\SRAgent-spatial\\research-pancreas-release-20261106\\prepared\\522caaaca0d8c2fe\\groups\\5b950e77941d01cd\\barcodes.tsv.gz",
+          "sha256": "3a15988ea6626c79d9e9f8ecdb370f11694bdcee33be688d3fd64ff2d2a332da",
+          "bytes": 22699,
+          "source_url": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9647nnn/GSM9647220/suppl/GSM9647220_B1_barcodes.tsv.gz"
+        },
+        "features": {
+          "path": "E:\\SRAgent-spatial\\research-pancreas-release-20261106\\prepared\\522caaaca0d8c2fe\\groups\\5b950e77941d01cd\\features.tsv.gz",
+          "sha256": "090985669cc1338f98ce79f1bfeb15c5c7454ea7906e4caf2438ca8cfca2d724",
+          "bytes": 333437,
+          "source_url": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9647nnn/GSM9647220/suppl/GSM9647220_B1_features.tsv.gz"
+        },
+        "matrix": {
+          "path": "E:\\SRAgent-spatial\\research-pancreas-release-20261106\\prepared\\522caaaca0d8c2fe\\groups\\5b950e77941d01cd\\matrix.mtx.gz",
+          "sha256": "fbc65d7f1878d4ef87d95b3b74d534692c10d3a737f22cd0e7245370f22bace1",
+          "bytes": 41136976,
+          "source_url": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9647nnn/GSM9647220/suppl/GSM9647220_B1_matrix.mtx.gz"
+        }
+      },
+      "duplicates": [],
+      "asset_errors": [],
+      "unsupported_assets": [
+        {
+          "url": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9647nnn/GSM9647220/suppl/GSM9647220_B1-2-1.tif.gz",
+          "reason": "not a recognized required spatial asset"
+        },
+        {
+          "url": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9647nnn/GSM9647220/suppl/GSM9647220_B1_aligned_fiducials.jpg.gz",
+          "reason": "not a recognized required spatial asset"
+        },
+        {
+          "url": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9647nnn/GSM9647220/suppl/GSM9647220_B1_metrics_summary.csv.gz",
+          "reason": "not a recognized required spatial asset"
+        },
+        {
+          "url": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9647nnn/GSM9647220/suppl/GSM9647220_B1_scalefactors_json.json.gz",
+          "reason": "not a recognized required spatial asset"
+        },
+        {
+          "url": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9647nnn/GSM9647220/suppl/GSM9647220_B1_tissue_hires_image.png.gz",
+          "reason": "not a recognized required spatial asset"
+        },
+        {
+          "url": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9647nnn/GSM9647220/suppl/GSM9647220_B1_tissue_lowres_image.png.gz",
+          "reason": "not a recognized required spatial asset"
+        },
+        {
+          "url": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9647nnn/GSM9647220/suppl/GSM9647220_B1_tissue_positions.csv.gz",
+          "reason": "not a recognized required spatial asset"
+        }
+      ],
+      "candidate_id": "geo:Visium:GSM9647220",
+      "source_sample_id": "GSM9647220"
+    },
+    {
+      "source": "geo",
+      "study_id": "geo:Visium:GSE299970",
+      "sample_id": "geo:Visium:GSM9051173--cdb4ee2aea69",
+      "platform": "Visium",
+      "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9051173",
+      "found": true,
+      "selected": true,
+      "files_ready": false,
+      "clinical_status": "eligible",
+      "condition_evidence": {
+        "status": "eligible",
+        "sample_state": "tumor",
+        "requested_disease": "pancreatic cancer",
+        "requested_state": "tumor",
+        "scope": "sample",
+        "evidence": [
+          {
+            "field": "Sample_characteristics_ch1",
+            "quote": "tissue: Pancreatic cancer tissue",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9051173"
+          }
+        ],
+        "reason": "explicit sample metadata; missing disease evidence is unknown, not negative"
+      },
+      "scope_supported": true,
+      "status": "missing_files",
+      "scope_evidence": [
+        {
+          "field": "Sample_characteristics_ch1",
+          "quote": "tissue: Pancreatic cancer tissue",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9051173"
+        },
+        {
+          "field": "Sample_organism_ch1",
+          "quote": "Homo sapiens",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9051173"
+        },
+        {
+          "field": "Sample_extract_protocol_ch1",
+          "quote": "Spatial transcriptome sequencing libraries were prepared with 10x Genomics Visium CytAssist Spatial Gene Expression for FFPE kit according to manufacturer's instruction",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9051173"
+        }
+      ],
+      "anchor": ".",
+      "missing_roles": [
+        "image",
+        "positions",
+        "scalefactors"
+      ],
+      "files": {
+        "h5": {
+          "path": "E:\\SRAgent-spatial\\research-pancreas-release-20261106\\prepared\\c82dfd015ab8df55\\groups\\cdb4ee2aea69cc6a\\filtered_feature_bc_matrix.h5",
+          "sha256": "51e669ea6e37d19d6a9d3e0e4321a913af5b84bd1c70783843893e17b372c842",
+          "bytes": 27134844,
+          "source_url": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9051nnn/GSM9051173/suppl/GSM9051173_filtered_feature_bc_matrix.h5"
+        }
+      },
+      "duplicates": [],
+      "asset_errors": [],
+      "unsupported_assets": [
+        {
+          "url": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9051nnn/GSM9051173/suppl/GSM9051173_aligned_fiducials.jpg.gz",
+          "reason": "not a recognized required spatial asset"
+        },
+        {
+          "url": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9051nnn/GSM9051173/suppl/GSM9051173_aligned_tissue_image.jpg.gz",
+          "reason": "not a recognized required spatial asset"
+        },
+        {
+          "url": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9051nnn/GSM9051173/suppl/GSM9051173_cytassist_image.tiff.gz",
+          "reason": "not a recognized required spatial asset"
+        },
+        {
+          "url": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9051nnn/GSM9051173/suppl/GSM9051173_detected_tissue_image.jpg.gz",
+          "reason": "not a recognized required spatial asset"
+        },
+        {
+          "url": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9051nnn/GSM9051173/suppl/GSM9051173_scalefactors_json.json.gz",
+          "reason": "not a recognized required spatial asset"
+        },
+        {
+          "url": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9051nnn/GSM9051173/suppl/GSM9051173_spatial_enrichment.csv.gz",
+          "reason": "not a recognized required spatial asset"
+        },
+        {
+          "url": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9051nnn/GSM9051173/suppl/GSM9051173_tissue_hires_image.png.gz",
+          "reason": "not a recognized required spatial asset"
+        },
+        {
+          "url": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9051nnn/GSM9051173/suppl/GSM9051173_tissue_lowres_image.png.gz",
+          "reason": "not a recognized required spatial asset"
+        },
+        {
+          "url": "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM9051nnn/GSM9051173/suppl/GSM9051173_tissue_positions.csv.gz",
+          "reason": "not a recognized required spatial asset"
+        }
+      ],
+      "candidate_id": "geo:Visium:GSM9051173",
+      "source_sample_id": "GSM9051173"
+    },
+    {
+      "source": "tenx",
+      "study_id": "tenx:Xenium:08_Pancreas",
+      "sample_id": "tenx:Xenium:08_Pancreas--51f7db94bb8f",
+      "platform": "Xenium",
+      "source_url": "https://www.10xgenomics.com/datasets/pancreatic-cancer-with-xenium-human-multi-tissue-and-cancer-panel-1-standard",
+      "found": true,
+      "selected": true,
+      "files_ready": true,
+      "clinical_status": "eligible",
+      "condition_evidence": {
+        "status": "eligible",
+        "sample_state": "tumor",
+        "requested_disease": "pancreatic cancer",
+        "requested_state": "tumor",
+        "scope": "sample",
+        "evidence": [
+          {
+            "field": "state",
+            "quote": "Cancer",
+            "source_url": "https://www.10xgenomics.com/datasets/pancreatic-cancer-with-xenium-human-multi-tissue-and-cancer-panel-1-standard"
+          },
+          {
+            "field": "disease",
+            "quote": "\u80f0\u817a\u817a\u764c\uff1bGrade I\u2013II\uff1b\u7ec4\u7ec7\u7ea6 50% \u80bf\u7624",
+            "source_url": "https://www.10xgenomics.com/datasets/pancreatic-cancer-with-xenium-human-multi-tissue-and-cancer-panel-1-standard"
+          }
+        ],
+        "reason": "explicit sample metadata; missing disease evidence is unknown, not negative"
+      },
+      "scope_supported": true,
+      "status": "correspondence_passed",
+      "catalog_mode": "registered_10x_cache_snapshot",
+      "anchor": "08_Pancreas",
+      "files": {
+        "h5": {
+          "path": "E:\\SRAgent-spatial\\research-pancreas-release-20261106\\prepared\\dd322add8aad4797\\cell_feature_matrix.h5",
+          "sha256": "7d04ac2fbb0cbc9934e7753315c496fddb6f4baf15827cf189815c02f9aa5b22",
+          "bytes": 13107658
+        },
+        "cells": {
+          "path": "E:\\SRAgent-spatial\\research-pancreas-release-20261106\\prepared\\dd322add8aad4797\\cells.csv.gz",
+          "sha256": "2172c4892d926c7985bfb76dcb0d2a5330fe27743f9be6abf4a3e51a8b3e5357",
+          "bytes": 10859220
+        },
+        "experiment": {
+          "path": "E:\\SRAgent-spatial\\research-pancreas-release-20261106\\prepared\\dd322add8aad4797\\experiment.xenium",
+          "sha256": "5fbb5082f254e3e87895822f2712d84a992d52eee3e48a72e972e892709146f4",
+          "bytes": 1758
+        },
+        "image": {
+          "path": "E:\\Xenium\\samples\\08_Pancreas\\morphology_focus.ome.tif",
+          "sha256": "bc740dc926ceea4eb56e5a8c4d4bf01ad535d66d92fcd99cf2e57ba86cc60d0c",
+          "bytes": 401898098
+        }
+      },
+      "provenance": {
+        "status": "prepared",
+        "archive_url": "https://cf.10xgenomics.com/samples/xenium/1.6.0/Xenium_V1_hPancreas_Cancer_Add_on_FFPE/Xenium_V1_hPancreas_Cancer_Add_on_FFPE_outs.zip",
+        "archive_bytes": 7288256844,
+        "image": {
+          "status": "reused_verified",
+          "bytes": 401898098,
+          "crc32": "ff061a4a"
+        },
+        "files": {
+          "experiment.xenium": {
+            "status": "downloaded",
+            "bytes": 1758,
+            "crc32": "52f5fb44"
+          },
+          "cells.csv.gz": {
+            "status": "downloaded",
+            "bytes": 10859220,
+            "crc32": "36999b6e"
+          },
+          "cell_feature_matrix.h5": {
+            "status": "downloaded",
+            "bytes": 13107658,
+            "crc32": "13180fb4"
+          }
+        },
+        "zip_range_bytes": 36305228
+      },
+      "candidate_id": "tenx:Xenium:08_Pancreas",
+      "source_sample_id": "08_Pancreas",
+      "checks": {
+        "unique_cell_ids": true,
+        "unique_matrix_barcodes": true,
+        "cell_id_set_matches_matrix": true,
+        "finite_coordinates": true,
+        "experiment_cell_count_matches": true,
+        "nonnegative_integer_expression": true,
+        "matrix_order_reconciled_by_id": true,
+        "gene_features_present": true,
+        "gene_counts_equal_cells_summary": true,
+        "all_feature_counts_equal_cells_summary": true,
+        "pixel_size_agrees_with_ome": true,
+        "all_centroids_inside_image": true
+      },
+      "cells": 190965,
+      "coordinate_unit": "um",
+      "pixel_size_um": 0.2125
+    },
+    {
+      "source": "biostudies",
+      "study_id": "biostudies:Xenium:S-BIAD2146",
+      "sample_id": "biostudies:Xenium:S-BIAD2146",
+      "platform": "Xenium",
+      "found": true,
+      "selected": false,
+      "files_ready": false,
+      "status": "not_selected",
+      "metadata_evidence": {
+        "matches": false,
+        "scope": "study_metadata_candidate; sample identity requires file preparation",
+        "checks": {
+          "organism_supported": true,
+          "tissue_supported": false,
+          "platform_supported": true
+        },
+        "organisms": [
+          "Homo sapiens (human)"
+        ],
+        "attributes": {
+          "title": [
+            "STHELAR, a multi-tissue dataset linking spatial transcriptomics and histology for cell type annotation"
+          ],
+          "description": [
+            "\nUnderstanding the composition of the tumor microenvironment is critical for cancer research. Spatial transcriptomics profiles gene expressions in spatial context, revealing tissue architecture and cellular heterogeneity, but its cost and technical complexity limit adoption. To address this issue, we introduce a pipeline to build STHELAR, a large-scale dataset that integrates spatial transcriptomics with Hematoxylin and Eosin (H&E) whole slide images for cell type annotation. The dataset comprises 31 human Xenium FFPE sections across 16 tissue types, for 22 cancerous and 9 non-cancerous patients. It contains over 11 million cells, each assigned to one of ten curated cell-type categories designed to accommodate a pan-cancer setting. Annotations were derived through Tangram-based alignment to single-cell reference atlases, followed by slide-specific clustering and differential expression analysis. Co-registered H&E images enabled the extraction of over 500,000 patches with segmentation and classification masks. Quality control steps assessed segmentation accuracy, filtered out low-confidence regions, and verified annotation integrity. STHELAR provides a reference resource for developing models to predict cell-type annotations directly from histological images.\n\nThe following describes the organization of the dataset folder:\n\n\n*** 1. A SpatialData object for each slide in .zarr format ***\n\nIn the 'sdata_slides' folder, a SpatialData object named 'sdata_slide-id.zarr.zip' is provided for each slide with all the information and analyses. The SpatialData format can be manipulated using all the tools in the Scverse ecosystem, making it easy and convenient to use. This SpatialData object includes the following components:\n- 'he' image: H&E slide at several levels (with level 0 corresponding to 40x resolution and level 1 corresponding to 20x resolution), aligned with ST using the Xenium software from 10x Genomics.\n- 'morpho' image: DAPI image at several levels showing each nucleus.\n- 'st' points: Transcripts location on the slide.\n- 'cell_boundaries' shapes: Polygons for cell boundaries with corresponding cell id.\n- 'nucleus_boundaries' shapes: Polygons for nucleus boundaries with same corresponding cell id.\n- 'he_patches' shapes: Coordinates for H&E patches of size 256 px with 64 x overlap at 40x resolution, with metrics (Dice coefficient, Jaccard index, and Panoptic Quality) that compare the given mask with pre-trained CellViT prediction.\n- 'table_cells' table: Table that gives the RNA count for each cell, along with preprocessing layer, cell type annotation, cell id, and clustering.\n- 'table_nuclei' table: Table that gives the RNA count for each nucleus, along with preprocessing layer, cell type annotation, cell id, clustering, and PanNuke label.\n- 'table_combined' table: Table for MFA analysis with RNA count for cytoplasm and for nucleus, along with clustering analysis and cell type annotations.\n- 'features_cellvit' table: Table that gives the nucleus embeddings for each cell using the pre-trained CellViT model as encoder.\n- 'features_phikonv2' table: Table that gives the cell embeddings for each cell using the Phikon-v2 model as encoder.\n- 'features_vit_google' table: Table that gives the cell embeddings for each cell using the ViT based model from Google as encoder.\n- 'table_scvi' table: Table that gives the scVI embeddings for each cell, using scVI model specifically trained for each slide.\n\n\nNOTE: Contents of table_cells and table_nuclei:\nBoth tables are stored as AnnData-like feature tables and share the same internal organization (layers, obs, obsm, obsp). They contain one row per segmented biological cell in the slide, and differ only by the RNA compartment and the presence of an additional Tangram field in table_nuclei. You find in these anndatas:\n\n- 'layers': \n'count' stores the raw integer gene-count matrix; \n'log_norm' stores the library-size-normalized and log-transformed expression used for PCA, kNN graph construction, UMAP, and Leiden clustering.\n\nWarning:\nIn the SpatialData objects (`sdata_final/sdata_{slide_id}.zarr`), RNA count information is stored differently depending on the cell label, for both `table_cells` and `table_nuclei`.\nIf rows corresponding to cells with `final_label == \"Less10\"` are excluded, then:\n* `sdata.tables[name_table].layers[\"count\"]` contains the raw RNA counts.\n* `sdata.tables[name_table].layers[\"log_norm\"]` contains RNA counts processed with `normalize_total` followed by `log1p`.\nFor cells labeled `\"Less10\"`, these layers are not informative, as their values are set to 0 by default. To access RNA counts for these cells, one must look at `.X`, where raw counts are still stored. For all other cells, `.X` instead contains log-normalized RNA counts.\nIn addition, all downstream analyses \u2014 including UMAP embeddings, neighborhood graph construction, clustering, and related computations \u2014 were performed after excluding cells labeled `\"Less10\"`, so information for these cells is again missing below.\n\n- 'Cell-level metadata ('obs')':\n'cell_id' (unique identifier within the slide);\n'final_label' (harmonized cell-type category used throughout STHELAR, categories are \"Epithelial\", \"Blood_vessel\", \"Fibroblast_Myofibroblast\", \"Myeloid\", \"B_Plasma\", \"T_NK\", \"Melanocyte\", \"Glioblastoma\", \"Specialized\", \"Stem_like\", \"Unknown\", and \"Less10\".);\n'label1', 'label2', 'label3' (intermediate, slide-specific curation levels);\n'transcript_counts' (total detected transcripts per cell);\ngraph-clustering labels of the form 'pca_n{N}_pcs{N_pcs}_leiden_res{res_value}' (Leiden cluster IDs computed after PCA on 'log_norm', typically for 'res_value' in {0.2,0.4,0.6};\nhistology-derived unsupervised cluster IDs 'kmeans_clustersHE_cellvit', 'kmeans_clustersHE_phikonv2', and 'kmeans_clustersHE_vit_google' (k-means on H&E encoder embeddings);\nand CellViT/PanNuke-derived nucleus phenotype fields 'PanNuke_label' and 'PanNuke_proba'.\nIn addition, 'table_nuclei' contains 'ct_tangram' (fine-grained Tangram-predicted cell-type label from nucleus RNA counts).\n\n- 'Multi-dimensional embeddings ('obsm')':\n'spatial' stores the 2D coordinates of each cell in the slide reference frame;\n'X_pca' stores PCA coordinates computed from 'log_norm';\n'X_umap' stores the corresponding UMAP embedding.\n\n- 'Cell-cell graphs ('obsp')':\n'pca_n{N}_pcs{N_pcs}_connectivities' and 'pca_n{N}_pcs{N_pcs}_distances' store the weighted kNN graph (connectivities) and neighbor distances used for Leiden clustering and UMAP, matched to the PCA parameterization indicated in the key.\n\n\n*** 2. A table summarizing all information related to cell-type labels ***\n\nTo enable users to easily access all information related to cell type labels, a summary table is provided for each slide ID. This table compiles, for all cell IDs, the nucleus and whole-cell cell type labels, alternative labels, as well as the associated confidence metrics. The table is available for each slide ID at \"summary_all_labels_per_slide/{slide_id}_cell_metadata.parquet\". It contains the following columns:\n\n- 'cell_id': Unique identifier of the biological cell within the given slide.\n    \n- 'nuclei_ct_tangram': Fine-grained cell-type label predicted by Tangram using nucleus RNA counts.\n- 'nuclei_ct_tangram_group': Grouped version of nuclei_ct_tangram, obtained by mapping Tangram\u2019s fine labels to the harmonized label space used in STHELAR.\n\n- 'nuclei_label1': Curated nucleus-derived label assigned after Tangram-guided and marker-gene-driven refinement, level 1 annotation for nuclei (first-stage label used during refinement; slide-specific granularity).\n- 'nuclei_label2': Curated nucleus-derived label assigned after Tangram-guided and marker-gene-driven refinement, level 2 annotation for nuclei (more precise/secondary label level; slide-specific granularity).\n- 'nuclei_label3': Attempt to label \"cancer\" versus \"normal\" cell, level 3 annotation for nuclei.\n    \n- 'nuclei_final_label': nuclei_label1 harmonized across slides. Categories are \"Epithelial\", \"Blood_vessel\", \"Fibroblast_Myofibroblast\", \"Myeloid\", \"B_Plasma\", \"T_NK\", \"Melanocyte\", \"Glioblastoma\", \"Specialized\", \"Stem_like\", \"Unknown\", and \"Less10\".\n- 'nuclei_final_label_group': Grouped  nuclei_final_label labels, where low-information categories are collapsed (\"Less10\", \"Unknown\", \"Stem_like\" to \"Other\").\n\n- 'cells_label1': Curated whole-cell-derived label assigned after Tangram-guided and marker-gene-driven refinement, level 1 annotation for cells (first-stage label used during refinement; slide-specific granularity).\n- 'cells_label2': Curated whole-cell-derived label assigned after Tangram-guided and marker-gene-driven refinement, level 2 annotation for cells (more precise/secondary label level; slide-specific granularity).\n- 'cells_label3': Attempt to label \"cancer\" versus \"normal\" cell, level 3 annotation for cells.\n    \n- 'cells_final_label': cells_label1 harmonized across slides. Categories are \"Epithelial\", \"Blood_vessel\", \"Fibroblast_Myofibroblast\", \"Myeloid\", \"B_Plasma\", \"T_NK\", \"Melanocyte\", \"Glioblastoma\", \"Specialized\", \"Stem_like\", \"Unknown\", and \"Less10\". These are the labels used in the various analyses.\n- 'cells_final_label_group': Grouped  cells_final_label labels, where low-information categories are collapsed (\"Less10\", \"Unknown\", \"Stem_like\" to \"Other\"). These labels were used to construct the patches for CellViT fine-tuning below.\n    \n- 'cells_transcript_counts': Total number of detected transcripts assigned to the whole cell (library size for that cell; used both for QC and as an RNA-depth proxy).\n    \n- 'cells_singleR': Fine-grained reference-based label predicted by SingleR from whole-cell RNA counts.\n- 'cells_singleR_group': Grouped version of cells_singleR, obtained by mapping SingleR\u2019s fine labels to the harmonized label space used in STHELAR.\n    \n- 'cells_final_label_confidence': Neighborhood purity score = 1 - normalized Shannon entropy of the full kNN label distribution induced by connectivities weights ([0,1]; higher = more locally unambiguous). Also named \"ct_confidence\" in the following analysis.\n- 'cells_final_label_prob': Assigned-label agreement = p_i(assigned label), i.e. the connectivity-weighted fraction of neighbor mass matching the cell\u2019s label. Also named \"ct_support\" in the following analysis.\n    \n- 'cells_final_label_alt1': First alternative label according to the kNN-neighborhood label distribution.\n- 'cells_final_label_alt1_prob': Probability/support associated with cells_final_label_alt1 in the kNN-neighborhood label distribution.\n    \n- 'cells_final_label_alt2': Second alternative label according to the kNN-neighborhood label distribution.\n- 'cells_final_label_alt2_prob': Probability/support associated with cells_final_label_alt2.\n    \n- 'cells_final_label_alt3': Third alternative label according to the kNN-neighborhood label distribution.\n- 'cells_final_label_alt3_prob': Probability/support associated with cells_final_label_alt3.\n    \n- 'cells_knn_row_sum': Total kNN-graph connectivity weight for the cell (row-sum of the Scanpy connectivities matrix, equals the cell\u2019s weighted degree/strength in the neighbor graph, after self-edge removal). Low values indicate weak/absent neighborhood connectivity and can make confidence/support undefined (NaN when row-sum is 0).\n    \n- 'cells_rna_depth_log1p': Log-transformed RNA depth proxy computed as log(1+cells_transcript_counts), providing a stabilized per-cell library-size measure.\n- 'cells_rna_depth_quantile': Within-slide rank-based quantile of RNA depth (in[0,1]), enabling comparison of RNA abundance across cells in the same slide independently of panel size and scale.\n\n- 'combined_final_label': Label obtained from the \"table_combined\" (integration of nuclear and cytoplasmic RNA information using MFA analysis).\n\nNOTE: ct_tangram, label_1, label_2, label_3, final_label, and transcript_counts are the same information provided previously in the table_cells and table_nuclei in '1. A SpatialData object for each slide in .zarr format'.\n\nNOTE: 'cells_final_label_group' is the one used to construct the patches for CellViT fine-tuning below.\n\n\n*** 3. H&E patches with corresponding segmentation and classification masks ***\n\nIn the 'data_40x/data' folder, we provide:\n- 'images.zip': H&E patches for all the slides together, using slide-id_patch-id identification.\n- 'masks_slides' folder: Contains a 'masks_slide-id.npz' file for each slide containing segmentation and cell type classification masks, formatted identically to those in PanNuke.\n- 'annot_dicts_ct_1' folder: Contains the 'label2cat.json' dictionary which maps the final cell labels in sdata to categories in the classification masks, the 'cat2color.json' dictionary which maps each category in the masks to a plotting color for visual inspection, and the 'cat2idx.json' dictionary which maps each category to its corresponding index position within the mask.\n- 'masks_cell_ids_nuclei.zip': Segmentation masks for all the slides together, assigning to each pixel the cell ID corresponding to its nucleus.\n- 'pretrained_CellViT_mask_preds' folder: Contains an 'instance_map_predictions_slide-id.h5' file for each slide with the predicted segmentation for each patch using the pre-trained CellViT model.\n\n- 'patches_overview_sthelar40x.parquet': Global patch-level summary file for all slides together. This file enables rapid dataset-level exploration and filtering without loading the images or per-cell metadata, and provides access to each patch\u2019s coordinates on its originating slide. This Parquet table contains one row per H&E patch and provides spatial location, segmentation quality metrics, and cell-type composition.  \nIt includes the following columns:\n* slide_id: Identifier of the originating whole-slide image (e.g., breast_s0).\n* file_name: Patch filename (`{slide_id}_{patch_number}.png`) (e.g., breast_s0_10.png).\n* xmin, ymin, xmax, ymax: Patch coordinates in slide space.\n* Dice, Jaccard, bPQ: Segmentation quality metrics.\n* T_NK, B_Plasma, Myeloid, Blood_vessel, Fibroblast_Myofibroblast, Epithelial, Specialized, Melanocyte, Other: Number of cells present in the patch for each cell-type label.\n\n\n*** 4. Data for CellViT fine-tuning ***\n\nFor the global dataset, the following element can be found in the 'data_40x/data' folder:\n- 'cell_count.csv': Table summarizing, for each patch_id across all slides, the nucleus count per cell type. It follows the same format as the cell_count.csv file provided by the CellViT authors.\n- 'labels.zip': Segmentation and classification masks for all slides. Unlike the previous masks.npz files, this format follows the CellViT convention, which separates the original mask into an instance mask and a cell type mask.\n- 'patch_metrics.csv': Table presenting the evaluation metrics for each mask, using Dice coefficient, Jaccard index, and Panoptic Quality, and comparing with the predicted masks from the pre-trained CellViT model.\n- 'types.csv': Table giving the tissue type for each patch.\n\nTwo fine-tuning have been done with detailed or grouped cell type classes. We provide for each fine-tuning in 'data_40x/finetuning_CellViT_detailed' or 'data_40x/finetuning_CellViT_grouped' folders:\n- 'cell_count_train.csv', 'cell_count_valid.csv', and 'cell_count_test.csv': Split versions of the cell_count file indicating which patch belongs to the train, validation, or test sets.\n- 'dataset_config.yaml' and 'weight_config.yaml': Configuration files required for fine-tuning CellViT.\n\nIMPORTANT NOTE: These splits (i.e.  'cell_count_train.csv', 'cell_count_valid.csv', and 'cell_count_test.csv') are provided to reproduce the 'CellViT fine-tuning' illustrative experiments presented in the 'Technical validation' section. As noted in the paper, this patch-level splitting with overlap can lead to over-optimistic results. We provide full metadata, including slide_id and patch coordinates, to allow users to implement more robust validation strategies, such as slide-level (WSI) splitting or spatial cross-validation.\n\nIMPORTANT NOTE: The label \"Other\" appears both in the article and in several data files, for instance for nuclei_final_label_group and cells_final_label_group in the summary_all_labels_per_slide/{slide_id}_cell_metadata.parquet files, or in the parquet files patches_overview. The label \"Dead\" appears in some other data files, for example in cell_count.csv. In all cases, however, \"Other\" and \"Dead\" are strictly interchangeable and correspond to exactly the same set of cells. The difference is purely in naming, not in the underlying data. In the manuscript, we consistently use the neutral term \"Other\", whereas \"Dead\" appears only in parts of the code or data. The term \"Dead\" reflects an unverified hypothesis about cell state and may be incorrect for some cells, which is why we deliberately avoid it in the article. As a reminder, this category groups \"Less10\", \"Unknown\", \"Stem_like\" from final_label.\n\n\n*** 5. CellViT fine-tuning outputs ***\n\nIn each fine-tuning directory ('data_40x/finetuning_CellViT_detailed' or 'data_40x/finetuning_CellViT_grouped'), the subfolder 'output' contains all results from the fine-tuning and evaluation processes:\n- 'config.yaml': Configuration file used for CellViT fine-tuning.\n- 'logs.log.1\u20135': Log files for fine-tuning.\n- 'checkpoint_n.pth': Checkpoint for the best model with n the corresponding epoch number.\n- 'inference_results.json': File containing inference results on the test set.\n- 'inference.log': Log file for inference.\n\n\n*** 6. Analysis of the fine-tuned CellViT models ***\n\nFor each fine-tuning, the resulting model was applied to all slides. Results can be found in the 'data_40x/finetuning_CellViT_detailed/finetuned_model_analysis' or 'data_40x/finetuning_CellViT_grouped/finetuned_model_analysis'folder, that contains a subfolder for each slide ID with the following files:\n- 'config.yaml': Configuration from the fine-tuning.\n- 'inference_results.json': Prediction results.\n- 'inference.log': Log file for inference.\n- 'inference_instance_map_predictions.h5': Predicted segmentation mask for each patch for all the slides.\n- 'cell_features_cellvit.npy': Nucleus embeddings for each cell using the given fine-tuned CellViT model as encoder.\n- 'pixel_class_gt_mask.pth': The pixel count for each cell type category for each nucleus using Xenium based segmentation mask instead of the predicted one.\n\n\n*** 7. Additional data ***\n\nAll analyses were conducted on H&E patches at 40x resolution. However, 'images.zip', 'labels.zip', 'masks_cell_ids_nuclei.zip', 'instance_map_predictions_all_slides.h5' (segmentation prediction using pre-trained CellViT), 'patches_overview_sthelar20x.parquet', 'patch_metrics.csv', 'cell_count.csv', and 'types.csv' are also provided at 20x resolution in 'data_20x/data' folder for research purposes.\n\n\n*** NB: HuggingFace access ***\n\nTo facilitate access to this dataset for model training tasks, we also extracted a subset containing only the H&E patch images, along with their masks, and uploaded it to HuggingFace in parquet format. The 40x resolution is available at https://huggingface.co/datasets/FelicieGS/STHELAR_40x, and the 20x resolution at https://huggingface.co/datasets/FelicieGS/STHELAR_20x.\n\n\n"
+          ],
+          "organism": [],
+          "organ": [],
+          "experimental design": []
+        }
+      },
+      "source_url": "https://www.ebi.ac.uk/biostudies/studies/S-BIAD2146"
+    },
+    {
+      "source": "biostudies",
+      "study_id": "biostudies:Visium:S-BIAD3647",
+      "sample_id": "biostudies:Visium:S-BIAD3647",
+      "platform": "Visium",
+      "found": true,
+      "selected": false,
+      "files_ready": false,
+      "status": "not_selected",
+      "metadata_evidence": {
+        "matches": false,
+        "scope": "study_metadata_candidate; sample identity requires file preparation",
+        "checks": {
+          "organism_supported": false,
+          "tissue_supported": false,
+          "platform_supported": false
+        },
+        "organisms": [
+          "Mus musculus (mouse)",
+          "Homo sapiens (human)"
+        ],
+        "attributes": {
+          "title": [
+            "CDK8 remodels tumor microenvironment to resist KRASG12D inhibitors and daraxonrasib in PDAC "
+          ],
+          "description": [
+            "Source data for CDK8 remodels tumor microenvironment to resist KRASG12D inhibitors and daraxonrasib in PDAC "
+          ],
+          "organism": [],
+          "organ": [],
+          "experimental design": []
+        }
+      },
+      "source_url": "https://www.ebi.ac.uk/biostudies/studies/S-BIAD3647"
+    }
+  ],
+  "request": {
+    "organism": "Homo sapiens",
+    "tissue": "pancreas",
+    "platforms": [
+      "Xenium",
+      "Visium",
+      "Visium HD"
+    ],
+    "disease": "pancreatic cancer",
+    "sample_state": "tumor"
+  },
+  "sources": [
+    "geo",
+    "biostudies",
+    "tenx"
+  ],
+  "source_modes": {
+    "geo:Xenium": "live_or_verified_metadata_cache",
+    "geo:Visium": "live_or_verified_metadata_cache",
+    "geo:Visium HD": "live_or_verified_metadata_cache",
+    "biostudies:Xenium": "live_or_verified_metadata_cache",
+    "biostudies:Visium": "live_or_verified_metadata_cache",
+    "biostudies:Visium HD": "live_or_verified_metadata_cache",
+    "tenx:Xenium": "explicit_snapshot_or_registered_cache"
+  },
+  "source_errors": [
+    {
+      "source": "tenx",
+      "platform": "Visium",
+      "status": "catalog_not_configured",
+      "reason": "Configured cache/snapshots do not cover this platform; no live search claimed"
+    },
+    {
+      "source": "tenx",
+      "platform": "Visium HD",
+      "status": "catalog_not_configured",
+      "reason": "Configured cache/snapshots do not cover this platform; no live search claimed"
+    }
+  ],
+  "requests": [
+    {
+      "url": "https://www.ebi.ac.uk/biostudies/api/v1/search?query=%22Xenium%22+AND+%22pancreas%22+AND+%22pancreatic+cancer%22&pageSize=2",
+      "cached": true,
+      "sha256": "e37a8592480e10ba3349e6efbff4ce5966f01f0eaa1feeb24755ceb448259a00"
+    },
+    {
+      "url": "https://www.ebi.ac.uk/biostudies/api/v1/search?query=%22Visium%22+AND+%22pancreas%22+AND+%22pancreatic+cancer%22&pageSize=2",
+      "cached": true,
+      "sha256": "4e21c8512a47559408bb2fcb44d91b44ad99fad945a69a4bd7c8373f15d90649"
+    },
+    {
+      "url": "https://www.ebi.ac.uk/biostudies/api/v1/search?query=%22Visium+HD%22+AND+%22pancreas%22+AND+%22pancreatic+cancer%22&pageSize=2",
+      "cached": true,
+      "sha256": "70f4e960ee485405f33a86474989dd40d9b331e16b38cacff35e529253d5a6d6"
+    },
+    {
+      "url": "https://www.ebi.ac.uk/biostudies/api/v1/studies/S-BIAD2146",
+      "cached": true,
+      "sha256": "0b733ddae02104fd44df0b7fb698f53f0ef5e780c5a88a3042fecc33b54eec56"
+    },
+    {
+      "url": "https://www.ebi.ac.uk/biostudies/api/v1/studies/S-BIAD3647",
+      "cached": true,
+      "sha256": "f99a988f525dcc466be137ae9ed7ec1d3b3bef02802a6c36c092d2d7f0ba326b"
+    },
+    {
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gds&term=%22Homo+sapiens%22%5BOrganism%5D+AND+%22pancreas%22%5BAll+Fields%5D+AND+%28%22Xenium%22%5BAll+Fields%5D%29+AND+gse%5BETYP%5D+AND+%22pancreatic+cancer%22%5BAll+Fields%5D&retmode=json&retmax=2",
+      "fetched_at": "2026-11-06T06:00:14.084756+00:00",
+      "sha256": "c68165a909ded46bd5a87d3babab15398286b30c82913eab9ba44ee9c3e5f46b",
+      "transport": "urllib",
+      "cached": true
+    },
+    {
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gds&id=200343070%2C200310433&retmode=json",
+      "fetched_at": "2026-11-06T06:00:15.281163+00:00",
+      "sha256": "89549d070ba8b44adba53c079a284ebe896af8a4df36bd18f87f71b5ea45450a",
+      "transport": "urllib",
+      "cached": true
+    },
+    {
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gds&term=%22Homo+sapiens%22%5BOrganism%5D+AND+%22pancreas%22%5BAll+Fields%5D+AND+%28%22Visium%22%5BAll+Fields%5D+OR+%2210x+Visium%22%5BAll+Fields%5D+OR+%22Visium+Spatial+Gene+Expression%22%5BAll+Fields%5D%29+AND+gse%5BETYP%5D+AND+%22pancreatic+cancer%22%5BAll+Fields%5D&retmode=json&retmax=2",
+      "fetched_at": "2026-11-06T06:00:16.245563+00:00",
+      "sha256": "65f7136751548f499f7b9b7379f26a4a55c119f93d151d22699011605cc0ab88",
+      "transport": "urllib",
+      "cached": true
+    },
+    {
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gds&id=200327056%2C200299970&retmode=json",
+      "fetched_at": "2026-11-06T06:00:17.936303+00:00",
+      "sha256": "41fde9c4ec2ee1ecd14ed7e28fed7795203547221268406de974a8cb3577330d",
+      "transport": "urllib",
+      "cached": true
+    },
+    {
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gds&term=%22Homo+sapiens%22%5BOrganism%5D+AND+%22pancreas%22%5BAll+Fields%5D+AND+%28%22Visium+HD%22%5BAll+Fields%5D+OR+%22VisiumHD%22%5BAll+Fields%5D+OR+%22Visium+CytAssist+HD%22%5BAll+Fields%5D%29+AND+gse%5BETYP%5D+AND+%22pancreatic+cancer%22%5BAll+Fields%5D&retmode=json&retmax=2",
+      "fetched_at": "2026-11-06T06:00:18.894786+00:00",
+      "sha256": "15d6dde1cc0a8832cfda33ef270f435477e8eae9bc992a0bf062d13946f93291",
+      "transport": "urllib",
+      "cached": true
+    },
+    {
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE343070&targ=self&form=text&view=full",
+      "fetched_at": "2026-11-06T06:00:29.959460+00:00",
+      "sha256": "37b27c7bfe577a81fbc7cb91b15cf9dd66779718f6708eafcdc2dc4e58a75d5d",
+      "transport": "urllib",
+      "cached": true
+    },
+    {
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9945538&targ=self&form=text&view=full",
+      "fetched_at": "2026-11-06T06:00:31.143433+00:00",
+      "sha256": "f4fd14777d90012f5da61b35e64930aaedd90eb430f9999d949150fa52df052e",
+      "transport": "urllib",
+      "cached": true
+    },
+    {
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9945539&targ=self&form=text&view=full",
+      "fetched_at": "2026-11-06T06:00:32.110449+00:00",
+      "sha256": "dbaf800c2b9de9c20cabee5a8887e39eebeb647dd623b6b11de80274ff31002d",
+      "transport": "urllib",
+      "cached": true
+    },
+    {
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE310433&targ=self&form=text&view=full",
+      "fetched_at": "2026-11-06T06:00:33.055496+00:00",
+      "sha256": "c54897d6616a3a3e1ca4876fcfa952fad5d8c27f31f79c62fba7b5daf6cfb303",
+      "transport": "urllib",
+      "cached": true
+    },
+    {
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9301054&targ=self&form=text&view=full",
+      "fetched_at": "2026-11-06T06:00:34.105921+00:00",
+      "sha256": "2cdae6d6bbf6210100d62406a527ebf153bc439e057db8d0430e5c0ce3a55852",
+      "transport": "urllib",
+      "cached": true
+    },
+    {
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9301055&targ=self&form=text&view=full",
+      "fetched_at": "2026-11-06T06:00:35.398906+00:00",
+      "sha256": "aab7e15ad8174bb17bc6d400a4bc358dff2745b88f8291ed4a053bb017fdb908",
+      "transport": "urllib",
+      "cached": true
+    },
+    {
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE327056&targ=self&form=text&view=full",
+      "fetched_at": "2026-11-06T06:00:36.550738+00:00",
+      "sha256": "0c35efc5ba68164b233afabe27b486a9db00a09793f559ced96e67587b0e783b",
+      "transport": "urllib",
+      "cached": true
+    },
+    {
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9647219&targ=self&form=text&view=full",
+      "fetched_at": "2026-11-06T06:00:37.960417+00:00",
+      "sha256": "fd5ad31cfced513f7b2f5c8db4b4e11c01720d063b554838bec6634a350b15c3",
+      "transport": "urllib",
+      "cached": true
+    },
+    {
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9647220&targ=self&form=text&view=full",
+      "fetched_at": "2026-11-06T06:00:39.090943+00:00",
+      "sha256": "8d23881ac02d9c56e9984666236c0fe9d06d001bfecae070d1b2fd70028a0b83",
+      "transport": "urllib",
+      "cached": true
+    },
+    {
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE299970&targ=self&form=text&view=full",
+      "fetched_at": "2026-11-06T06:00:40.109710+00:00",
+      "sha256": "1e285adeff7e8f3d0c06e5e85a8e42433d6f3c4216c25c1b3fe6e968203157c9",
+      "transport": "urllib",
+      "cached": true
+    },
+    {
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9051173&targ=self&form=text&view=full",
+      "fetched_at": "2026-11-06T06:00:41.370231+00:00",
+      "sha256": "f02941775575e7cdd269ddedab2b436990da1f15403a099b06cce2ea221c2110",
+      "transport": "urllib",
+      "cached": true
+    }
+  ],
+  "state": {
+    "filters": {
+      "organism": "Homo sapiens",
+      "tissue": "pancreas",
+      "platforms": [
+        "Xenium",
+        "Visium",
+        "Visium HD"
+      ],
+      "disease": "pancreatic cancer",
+      "sample_state": "tumor"
+    },
+    "sources": [
+      "geo",
+      "biostudies",
+      "tenx"
+    ],
+    "searched": [
+      "geo:Xenium",
+      "geo:Visium",
+      "geo:Visium HD",
+      "biostudies:Xenium",
+      "biostudies:Visium",
+      "biostudies:Visium HD",
+      "tenx:Xenium",
+      "tenx:Visium",
+      "tenx:Visium HD"
+    ],
+    "candidates": [
+      {
+        "study_id": "geo:Xenium:GSE343070",
+        "platform": "Xenium",
+        "source": "geo",
+        "reviewed": true,
+        "selected": false,
+        "inspected": false,
+        "prepared": false
+      },
+      {
+        "study_id": "geo:Xenium:GSE310433",
+        "platform": "Xenium",
+        "source": "geo",
+        "reviewed": true,
+        "selected": false,
+        "inspected": false,
+        "prepared": false
+      },
+      {
+        "study_id": "geo:Visium:GSE327056",
+        "platform": "Visium",
+        "source": "geo",
+        "reviewed": true,
+        "selected": false,
+        "inspected": false,
+        "prepared": false
+      },
+      {
+        "study_id": "geo:Visium:GSE299970",
+        "platform": "Visium",
+        "source": "geo",
+        "reviewed": true,
+        "selected": false,
+        "inspected": false,
+        "prepared": false
+      },
+      {
+        "study_id": "biostudies:Xenium:S-BIAD2146",
+        "platform": "Xenium",
+        "source": "biostudies",
+        "reviewed": true,
+        "selected": false,
+        "inspected": false,
+        "prepared": false
+      },
+      {
+        "study_id": "biostudies:Visium:S-BIAD3647",
+        "platform": "Visium",
+        "source": "biostudies",
+        "reviewed": true,
+        "selected": false,
+        "inspected": false,
+        "prepared": false
+      },
+      {
+        "study_id": "tenx:Xenium:08_Pancreas",
+        "platform": "Xenium",
+        "source": "tenx",
+        "reviewed": true,
+        "selected": true,
+        "inspected": true,
+        "prepared": true
+      },
+      {
+        "study_id": "tenx:Xenium:21_Pancreas",
+        "platform": "Xenium",
+        "source": "tenx",
+        "reviewed": true,
+        "selected": false,
+        "inspected": false,
+        "prepared": false
+      },
+      {
+        "study_id": "geo:Xenium:GSM9945538",
+        "platform": "Xenium",
+        "source": "geo",
+        "reviewed": true,
+        "selected": false,
+        "inspected": false,
+        "prepared": false
+      },
+      {
+        "study_id": "geo:Xenium:GSM9945539",
+        "platform": "Xenium",
+        "source": "geo",
+        "reviewed": true,
+        "selected": false,
+        "inspected": false,
+        "prepared": false
+      },
+      {
+        "study_id": "geo:Xenium:GSM9301054",
+        "platform": "Xenium",
+        "source": "geo",
+        "reviewed": true,
+        "selected": true,
+        "inspected": true,
+        "prepared": true
+      },
+      {
+        "study_id": "geo:Xenium:GSM9301055",
+        "platform": "Xenium",
+        "source": "geo",
+        "reviewed": true,
+        "selected": true,
+        "inspected": true,
+        "prepared": true
+      },
+      {
+        "study_id": "geo:Visium:GSM9647219",
+        "platform": "Visium",
+        "source": "geo",
+        "reviewed": true,
+        "selected": false,
+        "inspected": false,
+        "prepared": false
+      },
+      {
+        "study_id": "geo:Visium:GSM9647220",
+        "platform": "Visium",
+        "source": "geo",
+        "reviewed": true,
+        "selected": true,
+        "inspected": true,
+        "prepared": true
+      },
+      {
+        "study_id": "geo:Visium:GSM9051173",
+        "platform": "Visium",
+        "source": "geo",
+        "reviewed": true,
+        "selected": true,
+        "inspected": true,
+        "prepared": true
+      }
+    ],
+    "samples": [
+      {
+        "sample_id": "geo:Xenium:GSM9945538",
+        "study_id": "geo:Xenium:GSE343070",
+        "platform": "Xenium",
+        "status": "not_selected",
+        "clinical_status": "unknown"
+      },
+      {
+        "sample_id": "geo:Xenium:GSM9945539",
+        "study_id": "geo:Xenium:GSE343070",
+        "platform": "Xenium",
+        "status": "not_selected",
+        "clinical_status": "unknown"
+      },
+      {
+        "sample_id": "geo:Visium:GSM9647219",
+        "study_id": "geo:Visium:GSE327056",
+        "platform": "Visium",
+        "status": "not_selected",
+        "clinical_status": "out_of_scope"
+      },
+      {
+        "sample_id": "tenx:Xenium:21_Pancreas",
+        "study_id": "tenx:Xenium:21_Pancreas",
+        "platform": "Xenium",
+        "status": "not_selected",
+        "clinical_status": "out_of_scope"
+      },
+      {
+        "sample_id": "geo:Xenium:GSM9301054--c77bdf76fc9f",
+        "study_id": "geo:Xenium:GSE310433",
+        "platform": "Xenium",
+        "status": "download_budget_exceeded",
+        "clinical_status": "eligible"
+      },
+      {
+        "sample_id": "geo:Xenium:GSM9301055--29c38e735e9a",
+        "study_id": "geo:Xenium:GSE310433",
+        "platform": "Xenium",
+        "status": "download_budget_exceeded",
+        "clinical_status": "eligible"
+      },
+      {
+        "sample_id": "geo:Visium:GSM9647220--5b950e77941d",
+        "study_id": "geo:Visium:GSE327056",
+        "platform": "Visium",
+        "status": "missing_files",
+        "clinical_status": "eligible"
+      },
+      {
+        "sample_id": "geo:Visium:GSM9051173--cdb4ee2aea69",
+        "study_id": "geo:Visium:GSE299970",
+        "platform": "Visium",
+        "status": "missing_files",
+        "clinical_status": "eligible"
+      },
+      {
+        "sample_id": "tenx:Xenium:08_Pancreas--51f7db94bb8f",
+        "study_id": "tenx:Xenium:08_Pancreas",
+        "platform": "Xenium",
+        "status": "correspondence_passed",
+        "clinical_status": "eligible"
+      }
+    ],
+    "source_errors": [
+      {
+        "source": "tenx",
+        "platform": "Visium",
+        "status": "catalog_not_configured",
+        "reason": "Configured cache/snapshots do not cover this platform; no live search claimed"
+      },
+      {
+        "source": "tenx",
+        "platform": "Visium HD",
+        "status": "catalog_not_configured",
+        "reason": "Configured cache/snapshots do not cover this platform; no live search claimed"
+      }
+    ]
+  },
+  "read_limits": {
+    "geo:Xenium:GSE343070": 64,
+    "geo:Xenium:GSE310433": 6,
+    "geo:Visium:GSE327056": 2,
+    "geo:Visium:GSE299970": 0
+  },
+  "totals": {
+    "found": 11,
+    "selected": 5,
+    "files_ready": 1,
+    "passed": 1,
+    "failed": 4,
+    "outcomes": {
+      "not_selected": 6,
+      "download_budget_exceeded": 2,
+      "missing_files": 2,
+      "correspondence_passed": 1
+    }
+  },
+  "by_source": {
+    "biostudies": {
+      "found": 2,
+      "selected": 0,
+      "files_ready": 0,
+      "passed": 0,
+      "failed": 0,
+      "outcomes": {
+        "not_selected": 2
+      }
+    },
+    "geo": {
+      "found": 7,
+      "selected": 4,
+      "files_ready": 0,
+      "passed": 0,
+      "failed": 4,
+      "outcomes": {
+        "not_selected": 3,
+        "download_budget_exceeded": 2,
+        "missing_files": 2
+      }
+    },
+    "tenx": {
+      "found": 2,
+      "selected": 1,
+      "files_ready": 1,
+      "passed": 1,
+      "failed": 0,
+      "outcomes": {
+        "not_selected": 1,
+        "correspondence_passed": 1
+      }
+    }
+  },
+  "by_platform": {
+    "Visium": {
+      "found": 4,
+      "selected": 2,
+      "files_ready": 0,
+      "passed": 0,
+      "failed": 2,
+      "outcomes": {
+        "not_selected": 2,
+        "missing_files": 2
+      }
+    },
+    "Xenium": {
+      "found": 7,
+      "selected": 3,
+      "files_ready": 1,
+      "passed": 1,
+      "failed": 2,
+      "outcomes": {
+        "not_selected": 4,
+        "download_budget_exceeded": 2,
+        "correspondence_passed": 1
+      }
+    }
+  },
+  "status": "completed_with_issues",
+  "workflow_complete": true,
+  "coverage_scope": "bounded candidate/sample limits; source snapshots and local archive identity limitations retained",
+  "agent": {
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "architecture": "supervisor_and_three_child_graphs",
+    "delegations": [
+      "search",
+      "assets",
+      "validation",
+      "assets",
+      "assets",
+      "validation"
+    ],
+    "tool_operations": 50,
+    "error": null
+  }
+}
