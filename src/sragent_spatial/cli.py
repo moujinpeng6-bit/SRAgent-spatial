@@ -108,6 +108,8 @@ def main(argv=None):
     find.add_argument("--geo-assets", type=Path, help="Reuse GEO files under this local directory")
     find.add_argument("--probe-remote", action="store_true", help="Check missing GEO links with HEAD")
     find.add_argument("--model", help="Optional model for GEO screening or a BioStudies tool Agent; defaults to rules")
+    find.add_argument("--multi-agent", action="store_true", help="BioStudies supervisor with three model specialists")
+    find.add_argument("--biostudies-assets", type=Path, help="Explicit existing BioStudies asset/cache directory for multi-agent mode")
     find.add_argument("--max-studies", type=bounded_integer(1, 5), default=2)
     find.add_argument("--samples-per-study", type=bounded_integer(1, 10), default=2)
     find.add_argument("--download-mib", type=bounded_integer(0, 2048), default=128)
@@ -232,6 +234,22 @@ def main(argv=None):
                     print(json.dumps(report["agent_error"]), file=sys.stderr)
                 return 2
         elif args.command == "find-spatial":
+            if args.multi_agent:
+                if args.source != "biostudies" or not args.model or args.resume:
+                    raise ValueError("Multi-agent mode requires --source biostudies --model and a fresh report directory")
+                if args.tenx_cache or args.geo_assets or args.tenx_catalog_snapshot or args.tenx_interactive or args.tenx_fallback_snapshot:
+                    raise ValueError("Multi-agent BioStudies mode cannot use GEO/10x options")
+                from .multiagent import run_multiagent
+                if os.name == "nt":
+                    import truststore
+                    truststore.inject_into_ssl()
+                report = asyncio.run(run_multiagent(args.organism, args.tissue, args.platforms, args.out,
+                    assets=args.biostudies_assets or args.out / 'assets', model=args.model,
+                    budget=args.download_mib * 1024**2, max_studies=args.max_studies, slices=args.samples_per_study))
+                print(json.dumps({"status": report["status"], **report["totals"], "agent": report["agent"]}))
+                return 0 if report["workflow_complete"] and not report["agent"]["error"] else 2
+            if args.biostudies_assets:
+                raise ValueError("--biostudies-assets requires --multi-agent")
             from .agents import credentials_present
             from .find_spatial import find_spatial
             if args.model and not credentials_present():

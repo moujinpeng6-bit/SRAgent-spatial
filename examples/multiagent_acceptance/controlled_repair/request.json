@@ -1,0 +1,12 @@
+{
+  "organism": "Homo sapiens",
+  "tissue": "lung",
+  "platforms": [
+    "Visium"
+  ],
+  "assets": "E:\\SRAgent-spatial\\multiagent-repair-assets-20261106",
+  "model": "deepseek-flash",
+  "budget": 134217728,
+  "max_studies": 3,
+  "slices": 2
+}

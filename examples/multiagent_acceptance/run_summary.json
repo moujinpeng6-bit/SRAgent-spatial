@@ -1,0 +1,84 @@
+{
+  "date": "2026-11-06",
+  "provider": "deepseek",
+  "configured_model": "deepseek-flash",
+  "architecture": "one supervisor plus three independent model graphs",
+  "tests_passed": 132,
+  "runs": {
+    "normal": {
+      "totals": {
+        "found": 4,
+        "selected": 3,
+        "files_ready": 2,
+        "passed": 2,
+        "failed": 1,
+        "outcomes": {
+          "unsupported_bundle": 1,
+          "correspondence_passed": 2,
+          "not_selected": 1
+        }
+      },
+      "agent": {
+        "provider": "deepseek",
+        "model": "deepseek-flash",
+        "architecture": "supervisor_and_three_child_graphs",
+        "delegations": [
+          "search",
+          "assets",
+          "validation"
+        ],
+        "tool_operations": 10,
+        "error": null
+      },
+      "model_responses_by_role": {
+        "search": 3,
+        "assets": 3,
+        "validation": 2,
+        "supervisor": 4
+      },
+      "server_returned_models": [
+        "deepseek-flash"
+      ],
+      "live_metadata_requests": 0,
+      "controlled_faults": false
+    },
+    "controlled_repair": {
+      "totals": {
+        "found": 4,
+        "selected": 3,
+        "files_ready": 2,
+        "passed": 2,
+        "failed": 1,
+        "outcomes": {
+          "unsupported_bundle": 1,
+          "correspondence_passed": 2,
+          "not_selected": 1
+        }
+      },
+      "agent": {
+        "provider": "deepseek",
+        "model": "deepseek-flash",
+        "architecture": "supervisor_and_three_child_graphs",
+        "delegations": [
+          "search",
+          "assets",
+          "validation",
+          "assets",
+          "validation",
+          "validation"
+        ],
+        "tool_operations": 15,
+        "error": null
+      },
+      "model_responses_by_role": {
+        "search": 3,
+        "assets": 7,
+        "validation": 6,
+        "supervisor": 7
+      },
+      "server_returned_models": [],
+      "live_metadata_requests": 7,
+      "controlled_faults": true
+    }
+  }
+}

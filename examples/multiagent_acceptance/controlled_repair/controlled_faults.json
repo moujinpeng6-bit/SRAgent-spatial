@@ -1,0 +1,11 @@
+[
+  {
+    "kind": "transient_prepare_error",
+    "scope": "controlled fault injection, not an observed server failure"
+  },
+  {
+    "kind": "missing_scale_file",
+    "path": "S-BSST1410\\Visium\\6ee840650637ccc8\\scalefactors_json.json",
+    "scope": "controlled deletion of acceptance copy; original E drive files untouched"
+  }
+]

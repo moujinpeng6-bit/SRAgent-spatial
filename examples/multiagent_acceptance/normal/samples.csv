@@ -1,0 +1,5 @@
+﻿study_id,sample_id,platform,selected,files_ready,status
+E-MTAB-11265,E-MTAB-11265,Visium,True,False,unsupported_bundle
+S-BSST1410,S-BSST1410--6ee840650637ccc8,Visium,True,True,correspondence_passed
+S-BSST1410,S-BSST1410--9942bf0a017c310a,Visium,True,True,correspondence_passed
+S-BSST1409,S-BSST1409,Visium,False,False,not_selected

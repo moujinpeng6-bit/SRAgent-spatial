@@ -166,7 +166,25 @@ def zip_groups(archive):
     return groups
 
 
-def validate_zip_study(client, row, study, info, out, budget, limit, resume):
+def validate_prepared_files(paths):
+    with tempfile.TemporaryDirectory() as temporary:
+        dims = hdf5_barcodes(paths["h5"], Path(temporary) / "barcodes.tsv")
+        bin_size = spatial_bin_size(paths["scalefactors"]) if paths["positions"].suffix == ".parquet" else None
+        basic = validate_visium(Path(temporary) / "barcodes.tsv", paths["positions"],
+            paths["scalefactors"], paths["image"], bin_um=bin_size)
+    image = decode_image(paths["image"])
+    counts = hdf5_count_integrity(paths["h5"])
+    basic["not_verified"] = [item for item in basic["not_verified"]
+                             if item != "matrix values and feature identities"]
+    basic["not_verified"].append("biological validity of counts and feature identities")
+    basic["scope"] += "; full HDF5 count-array checks reported separately"
+    matches = dims["observations"] == basic["expression_barcode_count"]
+    return {"status": "correspondence_passed" if matches and not basic["issues"] else "mismatch",
+            "files_ready": True, "checks": {"barcode_position_image": basic, "matrix_dimensions": dims,
+            "matrix_columns_match_barcodes": matches, "image_decode": image, "matrix_content": counts}}
+
+
+def validate_zip_study(client, row, study, info, out, budget, limit, resume, *, prepare_only=False):
     files = study_files(study)
     if row["platform"] not in {"Visium", "Visium HD"}:
         return [{**row, "selected": True, "files_ready": False, "status": "unsupported_bundle",
@@ -206,8 +224,8 @@ def validate_zip_study(client, row, study, info, out, budget, limit, resume):
             for anchor in chosen:
                 identity = hashlib.sha256(anchor.encode()).hexdigest()[:16]
                 sample_out = out / identity
-                saved = sample_out / "result.json"
-                if resume and saved.exists():
+                saved = sample_out / ("prepared.json" if prepare_only else "result.json")
+                if resume and not prepare_only and saved.exists():
                     previous = json.loads(saved.read_text(encoding="utf8"))
                     verified = previous.get("files", {})
                     intact = bool(verified) and all(
@@ -263,23 +281,11 @@ def validate_zip_study(client, row, study, info, out, budget, limit, resume):
                                 "crc32": f"{member.CRC:08x}", "reused": cached,
                                 "sha256": hashlib.sha256(dest.read_bytes()).hexdigest()}
                         phase = "validate"
-                        with tempfile.TemporaryDirectory(dir=sample_out) as temporary:
-                            dims = hdf5_barcodes(paths["h5"], Path(temporary) / "barcodes.tsv")
-                            bin_size = spatial_bin_size(paths["scalefactors"]) if paths["positions"].suffix == ".parquet" else None
-                            basic = validate_visium(Path(temporary) / "barcodes.tsv", paths["positions"],
-                                paths["scalefactors"], paths["image"], bin_um=bin_size)
-                        image = decode_image(paths["image"])
-                        counts = hdf5_count_integrity(paths["h5"])
-                        basic["not_verified"] = [item for item in basic["not_verified"]
-                                                 if item != "matrix values and feature identities"]
-                        basic["not_verified"].append("biological validity of counts and feature identities")
-                        basic["scope"] += "; full HDF5 count-array checks reported separately"
-                        matches = dims["observations"] == basic["expression_barcode_count"]
-                        result.update(status="correspondence_passed" if matches and not basic["issues"] else "mismatch",
-                                      files_ready=True, files=provenance,
-                                      checks={"barcode_position_image": basic, "matrix_dimensions": dims,
-                                              "matrix_columns_match_barcodes": matches, "image_decode": image,
-                                              "matrix_content": counts})
+                        result.update(files=provenance)
+                        if prepare_only:
+                            result.update(status="files_prepared", files_ready=True)
+                        else:
+                            result.update(validate_prepared_files(paths))
                     except (OSError, ValueError, KeyError, ImportError, zipfile.BadZipFile) as exc:
                         status = "access_failed" if phase == "download" and isinstance(exc, OSError) else (
                             "mismatch" if phase == "validate" and isinstance(exc, (ValueError, KeyError)) else "processing_failed")

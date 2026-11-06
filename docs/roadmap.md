@@ -1,5 +1,9 @@
 # 开发路线
 
+### v0.13：总控与三个模型子 Agent（2026-11-06）
+
+已把 BioStudies 大工具拆为查询、研究证据读取、文件清单、准备和验证工具。DeepSeek 总控分别委派搜索、文件、验证子 Agent。普通缓存轮次完成 10 次工具操作；实时元数据与受控故障轮次发生 7 次官方请求、15 次工具操作，总控根据缺件状态返回文件子 Agent 补件，再次验证。两轮均有两张真实肺 Visium 切片通过，一项不支持格式保留失败状态。受控超时和删件在新建副本上执行，来源及日志明确标注。详见 [多 Agent 说明](multiagent.md) 和 [逐项验收](../examples/multiagent_acceptance/)。尚未声称原版全部上游模块已在该总控中在线验收，或已经完成多 Agent 会话断点恢复。
+
 ### v0.12：不用 BigQuery 的官方公共搜索入口（2026-11-06）
 
 新增 BioStudies / ArrayExpress 官方 REST API，接入 `find-spatial --source biostudies`。输入物种、组织和平台即可查询研究，读取物种/组织/平台证据，从官方登记文件定位 Space Ranger ZIP，准备同目录的表达、坐标、比例因子和低分辨率图像，并调用平台验证器。不是 BigQuery SQL 的等价实现，也不依赖 10x 官网浏览器验证。
