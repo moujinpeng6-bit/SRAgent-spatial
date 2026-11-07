@@ -1,0 +1,698 @@
+{
+  "reference_sha256": "f0799e179ec8062c27f4c92bceb31f3a3beb24313c7e27706a23bbf6070277bc",
+  "local_reference_commit": "cfc0f18",
+  "model": "deepseek-flash",
+  "species": "Homo sapiens",
+  "review_status": "source_curated_pending_independent_researcher",
+  "scope": {
+    "source": "geo",
+    "max_studies": 5,
+    "samples_per_study": 4,
+    "download_mib_per_candidate": 96
+  },
+  "aggregate": {
+    "reference_counts": {
+      "true_positive": 1,
+      "false_positive": 0,
+      "true_negative": 3,
+      "false_negative": 8
+    },
+    "sample_totals": {
+      "found": 50,
+      "selected": 20,
+      "files_ready": 0,
+      "passed": 0
+    },
+    "recall_on_frozen_positives": 0.1111,
+    "readiness_among_observed_selected": 0.0,
+    "unlabelled_selected": 19,
+    "estimate_from_recorded_tokens_usd": 0.0517194,
+    "usage_complete_for_all_tasks": false
+  },
+  "queries": [
+    {
+      "query": "ovary_visium",
+      "task": "寻找人类卵巢组织的传统 10x Visium 空间转录组数据。不限疾病状态。",
+      "elapsed_seconds": 1242.26,
+      "exit_code": 4294967295,
+      "normalized_filters": {
+        "organism": "Homo sapiens",
+        "tissue": "ovary",
+        "platforms": [
+          "Visium"
+        ],
+        "disease": "",
+        "sample_state": "any"
+      },
+      "workflow_complete": true,
+      "source_errors": [],
+      "totals": {
+        "found": 20,
+        "selected": 8,
+        "files_ready": 0,
+        "passed": 0,
+        "failed": 8,
+        "outcomes": {
+          "not_selected": 12,
+          "missing_files": 8
+        }
+      },
+      "resume": {
+        "count": 1,
+        "invalidated_samples": [],
+        "replayed_operations": 0
+      },
+      "runtime_measurement": "original process elapsed through interruption, excluding short report rebuild",
+      "recovery_reason": "connection reset after all data steps; rebuilt from checkpoint without new model calls or downloads",
+      "cost": {
+        "input_tokens_recorded": 30027,
+        "output_tokens_recorded": 3180,
+        "reported_usage_calls": 8,
+        "recorded_model_responses": 8,
+        "usage_complete": false,
+        "recorded_tokens_peak_no_cache_estimate_usd": 0.0128241,
+        "pricing_source": "https://api-docs.deepseek.com/quick_start/pricing/"
+      },
+      "evaluation": {
+        "reference_counts": {
+          "true_positive": 0,
+          "false_positive": 0,
+          "true_negative": 1,
+          "false_negative": 3
+        },
+        "reference_samples": [
+          {
+            "sample": "GSM7019835",
+            "reference_eligible": true,
+            "discovered": false,
+            "selected": false,
+            "classification": "false_negative",
+            "states": [],
+            "clinical_states": [],
+            "study": "GSE224335",
+            "reference_series_in_search_results": false,
+            "not_read_due_to_sample_cap": false
+          },
+          {
+            "sample": "GSM7019836",
+            "reference_eligible": true,
+            "discovered": false,
+            "selected": false,
+            "classification": "false_negative",
+            "states": [],
+            "clinical_states": [],
+            "study": "GSE224335",
+            "reference_series_in_search_results": false,
+            "not_read_due_to_sample_cap": false
+          },
+          {
+            "sample": "GSM8207500",
+            "reference_eligible": true,
+            "discovered": false,
+            "selected": false,
+            "classification": "false_negative",
+            "states": [],
+            "clinical_states": [],
+            "study": "GSE263920",
+            "reference_series_in_search_results": false,
+            "not_read_due_to_sample_cap": false
+          },
+          {
+            "sample": "GSM6506106",
+            "reference_eligible": false,
+            "discovered": false,
+            "selected": false,
+            "classification": "true_negative",
+            "states": [],
+            "clinical_states": [],
+            "study": "GSE211956",
+            "reference_series_in_search_results": false,
+            "not_read_due_to_sample_cap": false
+          }
+        ],
+        "precision_among_labelled_selected": null,
+        "recall_on_frozen_positives": 0.0,
+        "selected_unlabelled_sample_ids": [
+          "GSM8292463",
+          "GSM8292464",
+          "GSM8292465",
+          "GSM8292466",
+          "GSM9241518",
+          "GSM9241519",
+          "GSM9241520",
+          "GSM9241521"
+        ],
+        "unkeyed_selected_rows": 0,
+        "observed_selected_samples": 8,
+        "observed_files_ready": 0,
+        "observed_spatial_passed": 0,
+        "readiness_among_observed_selected": 0.0
+      },
+      "selected_samples": [
+        {
+          "sample": "GSM9241518",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9241518",
+          "status": "missing_files",
+          "available_roles": [
+            "h5",
+            "positions",
+            "scalefactors"
+          ],
+          "missing_roles": [
+            "image"
+          ],
+          "asset_error_types": []
+        },
+        {
+          "sample": "GSM9241519",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9241519",
+          "status": "missing_files",
+          "available_roles": [
+            "h5",
+            "positions",
+            "scalefactors"
+          ],
+          "missing_roles": [
+            "image"
+          ],
+          "asset_error_types": []
+        },
+        {
+          "sample": "GSM9241520",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9241520",
+          "status": "missing_files",
+          "available_roles": [
+            "h5",
+            "positions",
+            "scalefactors"
+          ],
+          "missing_roles": [
+            "image"
+          ],
+          "asset_error_types": []
+        },
+        {
+          "sample": "GSM9241521",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9241521",
+          "status": "missing_files",
+          "available_roles": [
+            "h5",
+            "positions",
+            "scalefactors"
+          ],
+          "missing_roles": [
+            "image"
+          ],
+          "asset_error_types": []
+        },
+        {
+          "sample": "GSM8292463",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8292463",
+          "status": "missing_files",
+          "available_roles": [
+            "h5",
+            "positions",
+            "scalefactors"
+          ],
+          "missing_roles": [
+            "image"
+          ],
+          "asset_error_types": []
+        },
+        {
+          "sample": "GSM8292464",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8292464",
+          "status": "missing_files",
+          "available_roles": [
+            "h5",
+            "positions",
+            "scalefactors"
+          ],
+          "missing_roles": [
+            "image"
+          ],
+          "asset_error_types": []
+        },
+        {
+          "sample": "GSM8292465",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8292465",
+          "status": "missing_files",
+          "available_roles": [
+            "h5",
+            "positions",
+            "scalefactors"
+          ],
+          "missing_roles": [
+            "image"
+          ],
+          "asset_error_types": []
+        },
+        {
+          "sample": "GSM8292466",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8292466",
+          "status": "missing_files",
+          "available_roles": [
+            "h5",
+            "positions",
+            "scalefactors"
+          ],
+          "missing_roles": [
+            "image"
+          ],
+          "asset_error_types": []
+        }
+      ]
+    },
+    {
+      "query": "healthy_liver_hd",
+      "task": "寻找健康人类肝脏的 10x Visium HD 空间转录组。只接受健康或明确非患病的肝组织，排除传统 Visium。",
+      "elapsed_seconds": 78.19,
+      "exit_code": 0,
+      "normalized_filters": {
+        "organism": "Homo sapiens",
+        "tissue": "liver",
+        "platforms": [
+          "Visium HD"
+        ],
+        "disease": "",
+        "sample_state": "normal"
+      },
+      "workflow_complete": true,
+      "source_errors": [],
+      "totals": {
+        "found": 10,
+        "selected": 0,
+        "files_ready": 0,
+        "passed": 0,
+        "failed": 0,
+        "outcomes": {
+          "not_selected": 10
+        }
+      },
+      "resume": {
+        "count": 0,
+        "invalidated_samples": [],
+        "replayed_operations": 0
+      },
+      "runtime_measurement": "complete process wall time",
+      "recovery_reason": null,
+      "cost": {
+        "input_tokens_recorded": 55721,
+        "output_tokens_recorded": 6600,
+        "reported_usage_calls": 16,
+        "recorded_model_responses": 16,
+        "usage_complete": true,
+        "recorded_tokens_peak_no_cache_estimate_usd": 0.0246363,
+        "pricing_source": "https://api-docs.deepseek.com/quick_start/pricing/"
+      },
+      "evaluation": {
+        "reference_counts": {
+          "true_positive": 0,
+          "false_positive": 0,
+          "true_negative": 1,
+          "false_negative": 3
+        },
+        "reference_samples": [
+          {
+            "sample": "GSM9324328",
+            "reference_eligible": true,
+            "discovered": true,
+            "selected": false,
+            "classification": "false_negative",
+            "states": [
+              "not_selected"
+            ],
+            "clinical_states": [
+              "unknown"
+            ],
+            "study": "GSE311383",
+            "reference_series_in_search_results": true,
+            "not_read_due_to_sample_cap": false
+          },
+          {
+            "sample": "GSM9324329",
+            "reference_eligible": true,
+            "discovered": true,
+            "selected": false,
+            "classification": "false_negative",
+            "states": [
+              "not_selected"
+            ],
+            "clinical_states": [
+              "unknown"
+            ],
+            "study": "GSE311383",
+            "reference_series_in_search_results": true,
+            "not_read_due_to_sample_cap": false
+          },
+          {
+            "sample": "GSM9324330",
+            "reference_eligible": true,
+            "discovered": true,
+            "selected": false,
+            "classification": "false_negative",
+            "states": [
+              "not_selected"
+            ],
+            "clinical_states": [
+              "unknown"
+            ],
+            "study": "GSE311383",
+            "reference_series_in_search_results": true,
+            "not_read_due_to_sample_cap": false
+          },
+          {
+            "sample": "GSM9554208",
+            "reference_eligible": false,
+            "discovered": false,
+            "selected": false,
+            "classification": "true_negative",
+            "states": [],
+            "clinical_states": [],
+            "study": "GSE322553",
+            "reference_series_in_search_results": false,
+            "not_read_due_to_sample_cap": false
+          }
+        ],
+        "precision_among_labelled_selected": null,
+        "recall_on_frozen_positives": 0.0,
+        "selected_unlabelled_sample_ids": [],
+        "unkeyed_selected_rows": 0,
+        "observed_selected_samples": 0,
+        "observed_files_ready": 0,
+        "observed_spatial_passed": 0,
+        "readiness_among_observed_selected": null
+      },
+      "selected_samples": []
+    },
+    {
+      "query": "kidney_xenium",
+      "task": "寻找人类肾脏组织的 10x Xenium 空间转录组数据。健康对照和患病组织都接受，不限疾病状态。",
+      "elapsed_seconds": 1086.01,
+      "exit_code": 4294967295,
+      "normalized_filters": {
+        "organism": "Homo sapiens",
+        "tissue": "kidney",
+        "platforms": [
+          "Xenium"
+        ],
+        "disease": "",
+        "sample_state": "any"
+      },
+      "workflow_complete": true,
+      "source_errors": [],
+      "totals": {
+        "found": 20,
+        "selected": 12,
+        "files_ready": 0,
+        "passed": 0,
+        "failed": 12,
+        "outcomes": {
+          "not_selected": 8,
+          "missing_files": 12
+        }
+      },
+      "resume": {
+        "count": 1,
+        "invalidated_samples": [],
+        "replayed_operations": 0
+      },
+      "runtime_measurement": "original process elapsed through interruption, excluding short report rebuild",
+      "recovery_reason": "connection reset after all data steps; rebuilt from checkpoint without new model calls or downloads",
+      "cost": {
+        "input_tokens_recorded": 33982,
+        "output_tokens_recorded": 3387,
+        "reported_usage_calls": 7,
+        "recorded_model_responses": 7,
+        "usage_complete": false,
+        "recorded_tokens_peak_no_cache_estimate_usd": 0.014259,
+        "pricing_source": "https://api-docs.deepseek.com/quick_start/pricing/"
+      },
+      "evaluation": {
+        "reference_counts": {
+          "true_positive": 1,
+          "false_positive": 0,
+          "true_negative": 1,
+          "false_negative": 2
+        },
+        "reference_samples": [
+          {
+            "sample": "GSM8933094",
+            "reference_eligible": true,
+            "discovered": false,
+            "selected": false,
+            "classification": "false_negative",
+            "states": [],
+            "clinical_states": [],
+            "study": "GSE294965",
+            "reference_series_in_search_results": false,
+            "not_read_due_to_sample_cap": false
+          },
+          {
+            "sample": "GSM9844161",
+            "reference_eligible": true,
+            "discovered": false,
+            "selected": false,
+            "classification": "false_negative",
+            "states": [],
+            "clinical_states": [],
+            "study": "GSE336890",
+            "reference_series_in_search_results": true,
+            "not_read_due_to_sample_cap": true
+          },
+          {
+            "sample": "GSM9844157",
+            "reference_eligible": true,
+            "discovered": true,
+            "selected": true,
+            "classification": "true_positive",
+            "states": [
+              "missing_files"
+            ],
+            "clinical_states": [
+              "not_required"
+            ],
+            "study": "GSE336890",
+            "reference_series_in_search_results": true,
+            "not_read_due_to_sample_cap": false
+          },
+          {
+            "sample": "GSM9525962",
+            "reference_eligible": false,
+            "discovered": false,
+            "selected": false,
+            "classification": "true_negative",
+            "states": [],
+            "clinical_states": [],
+            "study": "GSE319763",
+            "reference_series_in_search_results": false,
+            "not_read_due_to_sample_cap": false
+          }
+        ],
+        "precision_among_labelled_selected": 1.0,
+        "recall_on_frozen_positives": 0.3333,
+        "selected_unlabelled_sample_ids": [
+          "GSM8720409",
+          "GSM8720410",
+          "GSM8720411",
+          "GSM8720412",
+          "GSM9210725",
+          "GSM9210726",
+          "GSM9210727",
+          "GSM9210728",
+          "GSM9844156",
+          "GSM9844158",
+          "GSM9844159"
+        ],
+        "unkeyed_selected_rows": 0,
+        "observed_selected_samples": 12,
+        "observed_files_ready": 0,
+        "observed_spatial_passed": 0,
+        "readiness_among_observed_selected": 0.0
+      },
+      "selected_samples": [
+        {
+          "sample": "GSM8720409",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8720409",
+          "status": "missing_files",
+          "available_roles": [
+            "barcodes",
+            "cells",
+            "features",
+            "matrix"
+          ],
+          "missing_roles": [
+            "experiment",
+            "h5",
+            "image"
+          ],
+          "asset_error_types": []
+        },
+        {
+          "sample": "GSM8720410",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8720410",
+          "status": "missing_files",
+          "available_roles": [
+            "cells",
+            "features",
+            "matrix"
+          ],
+          "missing_roles": [
+            "experiment",
+            "h5",
+            "image"
+          ],
+          "asset_error_types": [
+            "URLError"
+          ]
+        },
+        {
+          "sample": "GSM8720411",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8720411",
+          "status": "missing_files",
+          "available_roles": [
+            "barcodes",
+            "cells",
+            "features",
+            "matrix"
+          ],
+          "missing_roles": [
+            "experiment",
+            "h5",
+            "image"
+          ],
+          "asset_error_types": []
+        },
+        {
+          "sample": "GSM8720412",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8720412",
+          "status": "missing_files",
+          "available_roles": [
+            "barcodes",
+            "cells",
+            "features",
+            "matrix"
+          ],
+          "missing_roles": [
+            "experiment",
+            "h5",
+            "image"
+          ],
+          "asset_error_types": []
+        },
+        {
+          "sample": "GSM9844156",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9844156",
+          "status": "missing_files",
+          "available_roles": [
+            "h5"
+          ],
+          "missing_roles": [
+            "cells",
+            "experiment",
+            "image"
+          ],
+          "asset_error_types": []
+        },
+        {
+          "sample": "GSM9844157",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9844157",
+          "status": "missing_files",
+          "available_roles": [
+            "h5"
+          ],
+          "missing_roles": [
+            "cells",
+            "experiment",
+            "image"
+          ],
+          "asset_error_types": []
+        },
+        {
+          "sample": "GSM9844158",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9844158",
+          "status": "missing_files",
+          "available_roles": [
+            "h5"
+          ],
+          "missing_roles": [
+            "cells",
+            "experiment",
+            "image"
+          ],
+          "asset_error_types": []
+        },
+        {
+          "sample": "GSM9844159",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9844159",
+          "status": "missing_files",
+          "available_roles": [
+            "h5"
+          ],
+          "missing_roles": [
+            "cells",
+            "experiment",
+            "image"
+          ],
+          "asset_error_types": []
+        },
+        {
+          "sample": "GSM9210725",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9210725",
+          "status": "missing_files",
+          "available_roles": [
+            "h5"
+          ],
+          "missing_roles": [
+            "cells",
+            "experiment",
+            "image"
+          ],
+          "asset_error_types": []
+        },
+        {
+          "sample": "GSM9210726",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9210726",
+          "status": "missing_files",
+          "available_roles": [
+            "h5"
+          ],
+          "missing_roles": [
+            "cells",
+            "experiment",
+            "image"
+          ],
+          "asset_error_types": []
+        },
+        {
+          "sample": "GSM9210727",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9210727",
+          "status": "missing_files",
+          "available_roles": [
+            "h5"
+          ],
+          "missing_roles": [
+            "cells",
+            "experiment",
+            "image"
+          ],
+          "asset_error_types": []
+        },
+        {
+          "sample": "GSM9210728",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9210728",
+          "status": "missing_files",
+          "available_roles": [
+            "h5"
+          ],
+          "missing_roles": [
+            "cells",
+            "experiment",
+            "image"
+          ],
+          "asset_error_types": []
+        }
+      ]
+    }
+  ]
+}

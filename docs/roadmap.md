@@ -2,7 +2,7 @@
 
 ### v0.16 仅人类的评鉴、10x 无人值守发现与本体向量（2026-11-07）
 
-新增仅健康、仅患病及两者均收的样本状态入口，发布者证据和逐样本状态留在结果里。第二轮评鉴只收人类，覆盖卵巢 Visium、健康肝 Visium HD、肾 Xenium。独立研究者签署前，评鉴分数按预先冻结的发布者证据暂定。[盲审任务单](../examples/independent_evaluation/reviewer_task_human.md)
+新增仅健康、仅患病及两者均收的样本状态入口，发布者证据和逐样本状态留在结果里。第二轮评鉴只收人类，覆盖卵巢 Visium、健康肝 Visium HD、肾 Xenium。冻结参考阳性纳入 1/9，全部实际入选 20 条中 0 条配齐。主要原因包括搜索和展开上限、健康证据停在研究级，以及文件格式缺口。独立研究者签署前，分数按冻结的发布者证据暂定。[逐样本评鉴](../examples/independent_evaluation/human_evaluation.md) · [盲审任务单](../examples/independent_evaluation/reviewer_task_human.md)
 
 10x 直连收到 HTTP 429 验证。通过独立网页索引无人值守查找官方人类数据卡，真实健康心脏原生 2 µm 样本复用 E 盘官方归档，新增数据下载 0 字节并通过对应检查；结肠癌卡因缺少可核实链接保留缺件。两项原版本体功能已用公共 OLS4 向量接口完成实际调用，原作者索引仍可显式选择。BigQuery 保持停用。[真实验收](../examples/human_source_acceptance/)
 
