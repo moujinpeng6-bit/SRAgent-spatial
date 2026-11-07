@@ -25,7 +25,13 @@ DeepSeek 显式模型选择通过任务上下文传给嵌套工厂，避免顶�
 | 两个本体向量库 | 已实际检查 HEAD 和单字节 GET | 原版两个 GCS 下载地址均返回 HTTP 403；本机无缓存、OBO 图和 OpenAI embedding 凭证 |
 | BigQuery | 参数/包装器离线验证 | 未配置项目、ADC 或服务账号，用户要求暂缓 |
 
-其余 esearch、efetch、elink、entrez_convert、papers、find_datasets、ncbi_fetch 本次只计入接口层验证；此前的运行记录不能代替这一轮每条路径的在线验证。esearch/find_datasets 的单细胞过滤改写仍属于后续空间适配，本次没有改写原版搜索逻辑。
+这轮的在线验收范围如表所示。后续 v0.15 逐条补测原版入口，见下文。
+
+## v0.15 新增真实模块验收
+
+用 DeepSeek Flash 分别实际调用原版通用 Entrez 检索、记录读取、记录关联、SRA 编号转换及 NCBI 页面读取。论文 Agent 在 DeepSeek 上原先返回 HTTP 400，调整为该接口支持的工具格式后，已实际调用 Entrez 工具，从 SRR26045572 得到论文 DOI `10.7150/thno.90627`。单个在线案例仅证明对应入口和分支曾运行成功。[DeepSeek 接口](https://api-docs.deepseek.com/api/create-chat-completion/) · [PubMed 论文](https://pubmed.ncbi.nlm.nih.gov/38505604/)
+
+原版 `find_datasets` 实际调用了三次 `esearch_scrna`，对公开存在的 GSE176078 未返回匹配。空间研究使用 `research-spatial` 的 GEO / BioStudies / 10x 入口。完整原版本体向量库仍受下述依赖限制，原始序列验收范围见上表。BigQuery 继续停用。[逐模块结果](../examples/research_resume/upstream_audit.json) · [GSE176078](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE176078)
 
 本地原始报告在被 Git 忽略的 `outputs/module_validation/`：`offline_interfaces.json`、`live_sragent.json`、`live_sequences.json`、`dependencies.json`、`ols_tools.json`、`sra_stat_check.json`、`fastq_small_check.json`、`fastq_driver_check.json`。不提交密钥、原始序列或工具二进制。
 

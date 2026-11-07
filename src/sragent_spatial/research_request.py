@@ -7,6 +7,9 @@ from .spatial_search import check_platforms, check_text
 DISEASES = {
     'cancer': ('cancer', 'carcinoma', 'adenocarcinoma', 'malignant', 'malignancy', 'PDAC', '肿瘤', '癌'),
     'pancreatic cancer': ('pancreatic cancer', 'pancreatic ductal adenocarcinoma', 'PDAC', '胰腺癌', '胰腺腺癌'),
+    'colorectal cancer': ('colorectal cancer', 'colon cancer', 'colonic cancer', 'rectal cancer',
+                          'colorectal carcinoma', 'colon carcinoma', 'rectal carcinoma',
+                          'colorectal adenocarcinoma', 'colon adenocarcinoma', '结直肠癌', '结肠癌', '直肠癌'),
     'adenocarcinoma': ('adenocarcinoma', 'PDAC', '腺癌'),
 }
 STATES = {
@@ -14,6 +17,8 @@ STATES = {
     'normal': r'\b(?:normal|healthy|non[- ]?malignant|non[- ]?tumou?r|control)\b|正常|健康',
     'tumor': r'\b(?:tumou?r|cancer|carcinoma|adenocarcinoma|PDAC|malignant)\b|癌|肿瘤',
 }
+POOLED_CONTROL_TITLE = re.compile(r'\b(?:and|with)\s+(?:healthy|normal)\s+controls?\b', re.I)
+BARCODE_GROUPS = re.compile(r'\bsample labels?\b[^\n]*\b(?:each|per)\s+barcode\b', re.I)
 TISSUES = {
     'pancreas': ('pancreas','pancreatic'), 'kidney': ('kidney','renal'),
     'lung': ('lung','lungs','pulmonary'), 'heart': ('heart','cardiac','myocardium'),
@@ -63,6 +68,10 @@ def condition_evidence(fields, request, source_url, *, scope='sample'):
     focused = [(k, v) for k, v in records if any(x in k.casefold() for x in ('disease', 'diagnos', 'condition', 'histolog', 'state'))
                or re.match(r'\s*(?:disease|diagnosis|condition|tumou?r status|tissue type|sample type)\s*:', v, re.I)]
     selected = focused or records
+    pooled_evidence = [(k,v) for k,v in records if 'title' in k.casefold() and POOLED_CONTROL_TITLE.search(v)]
+    barcode_evidence = [(k,v) for k,values in fields.items() if k.casefold()=='sample_data_processing'
+                        for v in (values if isinstance(values,list) else [values])
+                        if isinstance(v,str) and BARCODE_GROUPS.search(v)]
     def clinical_text(value):
         return re.sub(r'\bcancer\s+(?:gene\s+)?panel\b','',value,flags=re.I)
     text = '\n'.join(clinical_text(v) for _, v in selected)
@@ -76,12 +85,19 @@ def condition_evidence(fields, request, source_url, *, scope='sample'):
         state = 'normal' if normal_only else 'mixed'
     else:
         state = next(iter(states)) if len(states) == 1 else 'unknown'
+    if pooled_evidence and barcode_evidence:
+        state = 'mixed'
     terms = DISEASES.get(request.disease.casefold(), (request.disease,)) if request.disease else ()
     def disease_match(value):
         value=clinical_text(value)
         return any(re.search(r'(?<!\w)' + re.escape(term) + r'(?!\w)', value, re.I) for term in terms)
     evidence = [{'field': k, 'quote': v, 'source_url': source_url} for k, v in selected
                 if (terms and disease_match(v)) or any(re.search(pattern, clinical_text(v), re.I) for pattern in STATES.values())]
+    if pooled_evidence and barcode_evidence:
+        for k,v in pooled_evidence + barcode_evidence:
+            item = {'field':k,'quote':v,'source_url':source_url}
+            if item not in evidence:
+                evidence.append(item)
     if not request.disease and request.sample_state == 'any':
         status = 'not_required'
     elif re.search(r'\b(?:no|without|negative for)\s+(?:evidence of\s+)?(?:cancer|carcinoma|malignancy|PDAC)\b', text, re.I):

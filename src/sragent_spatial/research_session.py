@@ -12,6 +12,7 @@ from .biostudies import MIB, file_url, nodes, study_evidence, study_files, valid
 from .geo import MetadataClient, parse_soft, record_from_soft, source_url
 from .research_request import condition_evidence, tissue_matches
 from .research_assets import AssetPreparer, sha256, validate_group, checked_url
+from .research_progress import annotate_catalog, biostudies_publications, files_match, operation_key, publications
 from .spatial_search import build_spatial_query
 from .screening import screen_sample, VISIUM_HD
 from .discovery import sample_packet
@@ -33,14 +34,67 @@ class ResearchSession(SpatialSession):
         self.scope_note = ('Configured sources: ' + json.dumps(self.sources) + '. Fixed research filters: ' + json.dumps(request.json())
             + '. Terminal failures, unsupported formats and unknown clinical evidence are recorded outcomes; do not loop on them.')
         self.operation_limit = 240
+        self.resume_count = 0
+        self.replayed = {}
+        self.invalidated = []
 
     def save(self):
+        state = {name:getattr(self,name) for name in ('hits','entries','samples','groups','usage',
+                 'events','messages','source_errors','source_modes','resume_count','invalidated')}
+        state.update(schema=1,attempts=[[list(key), count] for key,count in self.attempts.items()],
+                     biostudies_requests=self.client.requests, geo_requests=self.geo.requests)
+        checkpoint(self.out/'progress.json',state)
         checkpoint(self.out/'trace.json', {'events':self.events,'messages':self.messages,
             'state':self.overview(),'requests':self.client.requests+self.geo.requests})
 
+    def restore(self):
+        state = json.loads((self.out/'progress.json').read_text(encoding='utf8'))
+        if state.get('schema') != 1:
+            raise ValueError('Unsupported research checkpoint schema')
+        for name in ('hits','entries','samples','groups','usage','events','messages',
+                     'source_errors','source_modes','resume_count','invalidated'):
+            setattr(self,name,state[name])
+        self.client.requests = state['biostudies_requests']
+        self.geo.requests = state['geo_requests']
+        self.attempts = {tuple(key): count for key,count in state['attempts']}
+        self.resume_count += 1
+        affected = set()
+        for token,row in self.samples.items():
+            if row['status'] not in {'files_prepared','correspondence_passed','mismatch'} or files_match(row):
+                continue
+            candidate = row.get('candidate_id',row['study_id'])
+            affected.update((token,candidate))
+            self.invalidated.append(token)
+            row.update(status='missing_or_changed_files',files_ready=False)
+            row.pop('checks',None)
+            entry = self.entries[candidate]
+            entry['prepared'] = False
+            entry.pop('terminal_failure',None)
+        for event in self.events:
+            action, args, result = event.get('action'), event.get('args',{}), event.get('result',{})
+            if not action or 'finished_at_unix' not in event:
+                continue
+            key = operation_key(action,args)
+            if action in {'prepare_files','validate_sample'} and affected.intersection(args.values()):
+                self.attempts.pop(key,None)
+                continue
+            if not result.get('retryable') and result.get('status') not in {'tool_error','access_failed'}:
+                self.replayed[key] = result
+            else:
+                self.replayed.pop(key,None)
+        self.save()
+
     def execute(self, agent, action, **args):
-        result=json.loads(super().execute(agent,action,**args))
-        count=self.attempts[(action,json.dumps(args,sort_keys=True))]
+        key = operation_key(action,args)
+        if key in self.replayed:
+            result = {**self.replayed[key],'reused_checkpoint':True}
+            self.events.append({'sequence':len(self.events)+1,'agent':agent,'action':action,
+                                'args':args,'result':result,'reused_checkpoint':True})
+            self.save()
+            return json.dumps(result)
+        return super().execute(agent,action,**args)
+
+    def finish_operation(self, action, args, count, result):
         if count>=3 and result.get('retryable'):
             result['retryable']=False
             result['retry_limit_reached']=True
@@ -54,11 +108,10 @@ class ResearchSession(SpatialSession):
                     self.samples[token].update(status='access_failed',reason=result.get('reason','preparation retries exhausted'))
         if action=='validate_sample' and result.get('status')=='tool_error' and not result.get('retryable'):
             token=args.get('sample_id')
-            if token in self.samples:
-                self.samples[token].update(status='validation_error',reason=result.get('reason'))
-        self.events[-1]['result']=result
-        self.save()
-        return json.dumps(result)
+            row = self.samples.get(token)
+            if row and row['platform']==args.get('platform') and row['status']=='files_prepared':
+                row.update(status='validation_error',reason=result.get('reason'))
+        return result
 
     def overview(self):
         return {'filters': self.request.json(), 'sources': self.sources, 'searched': list(self.hits),
@@ -176,6 +229,7 @@ class ResearchSession(SpatialSession):
             return entry['row']
         if source=='geo':
             fields = parse_soft(self.geo.soft(acc),acc)
+            entry['publications'] = publications(fields)
             listed = fields.get('Series_sample_id',[])
             children = []
             for sample in listed[:self.slices]:
@@ -211,6 +265,7 @@ class ResearchSession(SpatialSession):
                 raise ValueError('Study identity mismatch')
             evidence = study_evidence(study,self.organism,self.tissue,platform)
             entry.update(study=study,reviewed=True,selected=evidence['matches'],metadata_evidence=evidence)
+            entry['publications'] = biostudies_publications(study)
             # A selected study is only a candidate. Sample diagnosis is checked before preparing it.
             row = {'source':'biostudies','study_id':accession,'sample_id':accession,'platform':platform,
                    'found':True,'selected':False,'files_ready':False,'status':'study_candidate' if evidence['matches'] else 'not_selected',
@@ -228,6 +283,7 @@ class ResearchSession(SpatialSession):
         row = self.record(accession,entry,fields,url,not catalog.get('catalog_error'))
         row['catalog_mode'] = catalog['catalog_mode']
         entry.update(reviewed=True,selected=row['selected'],row=row)
+        entry['publications'] = publications(catalog)
         return row
 
     def metadata_tables(self, entry):
@@ -250,7 +306,7 @@ class ResearchSession(SpatialSession):
                        and re.search(r'sample.?id|sample.?name|source name|array data file|image file|file.?name',k,re.I)}
                 ids.update(unquote(urlsplit(v).path.rsplit('/',1)[-1]) for k,v in record.items()
                     if k and isinstance(v,str) and re.search(r'file',k,re.I) and urlsplit(v).scheme in {'https','ftp'})
-                records.append({'ids':ids,'fields':record,'condition':condition,'source_url':url,'sha256':hashlib.sha256(body).hexdigest()})
+                records.append({'ids':sorted(ids),'fields':record,'condition':condition,'source_url':url,'sha256':hashlib.sha256(body).hexdigest()})
         return records
 
     def inspect_files(self, accession, platform):
@@ -308,7 +364,7 @@ class ResearchSession(SpatialSession):
 
     def anchor_condition(self, entry, anchor):
         identifiers = set(Path(anchor).parts)
-        matches = [r for r in entry.get('clinical_rows',[]) if r['ids'] & identifiers]
+        matches = [r for r in entry.get('clinical_rows',[]) if identifiers.intersection(r['ids'])]
         if len(matches)==1:
             return matches[0]['condition']
         if not self.request.disease and self.request.sample_state=='any':
@@ -424,8 +480,10 @@ class ResearchSession(SpatialSession):
                     row['unsupported_assets']=prepared['unsupported_assets']
                 entry['preparation_errors']=prepared['errors']
                 entry['provenance']=prepared['provenance']
+        prepared_tokens = set()
         for group in rows:
             token = accession + '--' + hashlib.sha256(group['anchor'].encode()).hexdigest()[:12]
+            prepared_tokens.add(token)
             row = {**entry.get('row',{}),**group,'sample_id':token,'study_id':accession,'platform':platform,
                    'source':entry['source'],'found':True,'selected':True,'files_ready':group['status']=='files_prepared'}
             row.update(candidate_id=accession,study_id=entry.get('parent',accession),source_sample_id=entry['accession'])
@@ -435,8 +493,18 @@ class ResearchSession(SpatialSession):
                     'not_required' if not self.request.disease and self.request.sample_state=='any' else 'unknown')
             if group['status']=='condition_unknown':
                 row.update(selected=False,clinical_status='unknown')
+            previous = self.samples.get(token,{})
+            def hashes(sample):
+                return {role:asset.get('sha256') for role,asset in sample.get('files',{}).items()}
+            if (previous.get('status') == 'correspondence_passed' and row['files_ready']
+                    and hashes(previous) == hashes(row)):
+                row = {**previous, **row, 'status':'correspondence_passed'}
             self.samples[token]=row
             self.groups[token]=group
+        for token, row in self.samples.items():
+            if (row.get('candidate_id') == accession and token not in prepared_tokens
+                    and row['status'] == 'missing_or_changed_files'):
+                row.update(status='missing_files',reason='The previous slice was absent from the replacement file groups')
         self.samples.pop(accession,None)
         entry['prepared']=all(r['status'] not in {'access_failed','processing_failed'} for r in rows)
         return {'samples':[{'sample_id':k,'status':r['status']} for k,r in self.samples.items() if r.get('candidate_id',r['study_id'])==accession],
@@ -455,6 +523,10 @@ class ResearchSession(SpatialSession):
             result={'status':'mismatch','reason':str(exc),'files_ready':True}
         checkpoint(target/'result.json',{**row,**result})
         row.update(result)
+        if result['status'] == 'missing_or_changed_files':
+            candidate = row.get('candidate_id',row['study_id'])
+            self.entries[candidate]['prepared'] = False
+            self.replayed.pop(operation_key('prepare_files',{'accession':candidate,'platform':platform}),None)
         return {k:row.get(k) for k in ('sample_id','status','checks','reason','cells','clinical_status')}
 
     def report(self):
@@ -468,6 +540,11 @@ class ResearchSession(SpatialSession):
                 'requests':self.client.requests+self.geo.requests,'state':self.overview(),
                 'read_limits':{k:len(e.get('not_read_due_to_limit',[])) for k,e in self.entries.items() if e.get('expanded')}}
         summarize(report)
+        duplicates = annotate_catalog(rows,self.entries)
+        report['verified_duplicates'] = duplicates
+        report['verified_unique_count'] = report['totals']['passed']-sum(len(group['sample_ids'])-1 for group in duplicates)
+        report['resume'] = {'count':self.resume_count,'invalidated_samples':self.invalidated,
+                            'replayed_operations':sum(bool(e.get('reused_checkpoint')) for e in self.events)}
         searched={source+':'+platform for source in self.sources for platform in self.platforms}
         complete=(set(self.hits)==searched and all(e.get('reviewed') and (not e.get('selected') or e.get('prepared') or e.get('terminal_failure')) for e in self.entries.values())
                   and not any(r['status'] in {'files_prepared','metadata_selected','study_candidate','missing_or_changed_files'} for r in rows))

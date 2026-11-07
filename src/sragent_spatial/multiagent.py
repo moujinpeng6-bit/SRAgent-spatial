@@ -56,8 +56,13 @@ class SpatialSession:
                       'retryable': isinstance(exc, OSError) and count < 3}
             event['result'] = result
         event['finished_at_unix'] = time.time()
+        result = self.finish_operation(action, args, count, result)
+        event['result'] = result
         self.save()
         return json.dumps(result)
+
+    def finish_operation(self, action, args, count, result):
+        return result
 
     def search_catalog(self, platform, source='biostudies'):
         if source != 'biostudies':
@@ -150,11 +155,12 @@ class SpatialSession:
 
 
 async def run_multiagent(organism, tissue, platforms, out, *, assets, model, budget=128*MIB,
-                         max_studies=3, slices=2, session_class=SpatialSession, session_options=None):
+                         max_studies=3, slices=2, session_class=SpatialSession, session_options=None,
+                         resume=False, parsed_request=None):
     from .agents import configure, provider
     _, factory, graph_factory, tool = configure(model)
     out = Path(out).resolve()
-    out.mkdir(parents=True, exist_ok=False)
+    out.mkdir(parents=True, exist_ok=resume)
     session = session_class(organism, tissue, platforms, out, assets, budget, max_studies, slices, **(session_options or {}))
     def build(name, tools, instructions):
         return graph_factory(model=factory(model_name=model, agent_name='ncbi_fetch', max_tokens=4096),
@@ -234,14 +240,26 @@ async def run_multiagent(organism, tissue, platforms, out, *, assets, model, bud
             settings.update(research_filters=session.request.json(),sources=session.sources,
                 tenx_cache=str(session.tenx_cache) if session.tenx_cache else None,
                 snapshots=[str(p) for p in session.snapshots],local_roots=[str(p) for p in session.roots])
-        checkpoint(out / 'request.json', settings)
+        if resume:
+            if not hasattr(session, 'restore') or settings != json.loads((out / 'request.json').read_text(encoding='utf8')):
+                raise ValueError('Resume requires the original research configuration')
+            session.restore()
+        else:
+            checkpoint(out / 'request.json', settings)
+            if parsed_request is not None:
+                checkpoint(out / 'parsed_request.json', parsed_request)
+            session.save()
         error = None
         try:
-            result = await asyncio.wait_for(supervisor.ainvoke({'messages': [('human',
-                f'Find and validate {organism} {tissue}, platforms {platforms}. Use the specialist agents. '
-                + getattr(session, 'scope_note', 'Configured sources: biostudies.'))]},
-                config={'recursion_limit': 80, 'max_concurrency': 1}), timeout=1800)
-            capture('supervisor', result)
+            if not resume or not session.report()['workflow_complete']:
+                task = (f'Find and validate {organism} {tissue}, platforms {platforms}. Use the specialist agents. '
+                        + getattr(session, 'scope_note', 'Configured sources: biostudies.'))
+                if resume:
+                    task += (' Continue only pending work from this persisted state. Existing successful operations '
+                             'can be reused. Do not restart the search. ' + json.dumps(session.overview()))
+                result = await asyncio.wait_for(supervisor.ainvoke({'messages': [('human', task)]},
+                    config={'recursion_limit': 80, 'max_concurrency': 1}), timeout=1800)
+                capture('supervisor', result)
         except Exception as exc:
             error = {'type': type(exc).__name__, 'reason': str(exc)}
         report = session.report()
@@ -253,7 +271,8 @@ async def run_multiagent(organism, tissue, platforms, out, *, assets, model, bud
         checkpoint(out / 'batch.json', report)
         with (out / 'samples.csv').open('w', encoding='utf-8-sig', newline='') as stream:
             fields = ('source','study_id','source_sample_id','candidate_id','sample_id','platform',
-                      'clinical_status','selected','files_ready','status','source_url','matrix_scope','bin_um','reason')
+                      'clinical_status','selected','files_ready','status','source_url','matrix_scope','bin_um',
+                      'availability','canonical_sample_id','reason')
             writer = csv.DictWriter(stream, fieldnames=fields)
             writer.writeheader()
             for row in report['samples']:

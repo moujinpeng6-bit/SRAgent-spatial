@@ -100,6 +100,11 @@ def build(model_name=None, *, temperature=None, max_tokens=None, timeout=None, m
     """
     from langchain_openai import ChatOpenAI
 
+    class DeepSeekChat(ChatOpenAI):
+        def with_structured_output(self, schema=None, *, method="function_calling", **kwargs):
+            # The upstream graph defaults to OpenAI's Chat Completions JSON Schema format.
+            return super().with_structured_output(schema, method=method, **kwargs)
+
     key = api_key()
     if not key:
         raise RuntimeError(
@@ -126,7 +131,7 @@ def build(model_name=None, *, temperature=None, max_tokens=None, timeout=None, m
         kwargs["max_tokens"] = int(max_tokens)
     if timeout:
         kwargs["timeout"] = float(timeout)
-    return ChatOpenAI(**kwargs)
+    return DeepSeekChat(**kwargs)
 
 
 def set_model(

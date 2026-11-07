@@ -1,0 +1,67 @@
+{
+  "scope": "metadata-only regression against cached baseline source records; not a fresh holdout score",
+  "results": [
+    {
+      "sample": "GSM8594564",
+      "status": "eligible",
+      "source": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8594564"
+    },
+    {
+      "sample": "GSM8594565",
+      "status": "eligible",
+      "source": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8594565"
+    },
+    {
+      "sample": "GSM8594566",
+      "status": "eligible",
+      "source": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8594566"
+    },
+    {
+      "sample": "GSM9083960",
+      "status": "mixed",
+      "source": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9083960"
+    }
+  ],
+  "declared_images": [
+    {
+      "sample": "GSM10144987",
+      "images": [
+        {
+          "role": "microscope image",
+          "source_url": "https://www.ebi.ac.uk/biostudies/files/S-BIAD3080/images/he/aligned_images/visium/P01_Vis.ome.tif",
+          "field": "Sample_characteristics_ch1"
+        }
+      ]
+    },
+    {
+      "sample": "GSM10144988",
+      "images": [
+        {
+          "role": "microscope image",
+          "source_url": "https://www.ebi.ac.uk/biostudies/files/S-BIAD3080/images/he/aligned_images/visium/P02_Vis.ome.tif",
+          "field": "Sample_characteristics_ch1"
+        }
+      ]
+    },
+    {
+      "sample": "GSM10144989",
+      "images": [
+        {
+          "role": "microscope image",
+          "source_url": "https://www.ebi.ac.uk/biostudies/files/S-BIAD3080/images/he/aligned_images/visium/P03_Vis.ome.tif",
+          "field": "Sample_characteristics_ch1"
+        }
+      ]
+    },
+    {
+      "sample": "GSM10144990",
+      "images": [
+        {
+          "role": "microscope image",
+          "source_url": "https://www.ebi.ac.uk/biostudies/files/S-BIAD3080/images/he/aligned_images/visium/P04_Vis.ome.tif",
+          "field": "Sample_characteristics_ch1"
+        }
+      ]
+    }
+  ]
+}

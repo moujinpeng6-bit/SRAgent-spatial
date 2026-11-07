@@ -41,6 +41,7 @@ def main(argv=None):
     research.add_argument('--max-studies', type=bounded_integer(1,5), default=2)
     research.add_argument('--samples-per-study', type=bounded_integer(1,10), default=2)
     research.add_argument('--out', type=Path, required=True)
+    research.add_argument('--resume', action='store_true', help='Resume a saved research-spatial run using its original settings')
     for name in ("lookup", "search"):
         command = sub.add_parser(name)
         command.add_argument("--out", type=Path, required=True)
@@ -258,6 +259,18 @@ def main(argv=None):
                 import truststore
                 truststore.inject_into_ssl()
             async def run_research():
+                if args.resume:
+                    raw_args = argv if argv is not None else sys.argv[1:]
+                    allowed = {'--resume', '--out'}
+                    if any(item.split('=', 1)[0] not in allowed for item in raw_args[1:] if item.startswith('--')):
+                        raise ValueError('Resume uses only --resume and --out')
+                    config = json.loads((args.out/'request.json').read_text(encoding='utf8'))
+                    request = ResearchRequest(**config['research_filters'])
+                    return await run_multiagent(request.organism, request.tissue, list(request.platforms), args.out,
+                        assets=config['assets'],model=config['model'],budget=config['budget'],
+                        max_studies=config['max_studies'],slices=config['slices'],session_class=ResearchSession,
+                        session_options={'request':request,'sources':config['sources'],'roots':config['local_roots'],
+                                         'tenx_cache':config['tenx_cache'],'snapshots':config['snapshots']},resume=True)
                 if args.task:
                     if args.organism or args.tissue or args.platforms or args.disease or args.sample_state!='any':
                         raise ValueError('Use either --task or explicit research filters')
@@ -267,14 +280,11 @@ def main(argv=None):
                         raise ValueError('Specify --task or organism/tissue/platforms')
                     request=ResearchRequest(args.organism,args.tissue,tuple(args.platforms),args.disease,args.sample_state)
                     parsed={'normalized':request.json(),'parser_model':None}
-                result=await run_multiagent(request.organism,request.tissue,list(request.platforms),args.out,
+                return await run_multiagent(request.organism,request.tissue,list(request.platforms),args.out,
                     assets=args.assets or args.out/'assets',model=args.model,budget=args.download_mib*1024**2,
                     max_studies=args.max_studies,slices=args.samples_per_study,session_class=ResearchSession,
                     session_options={'request':request,'sources':args.sources,'roots':args.local_roots,
-                                     'tenx_cache':args.tenx_cache,'snapshots':args.tenx_snapshots})
-                from .tenx_batch import checkpoint
-                checkpoint(args.out/'parsed_request.json',parsed)
-                return result
+                                     'tenx_cache':args.tenx_cache,'snapshots':args.tenx_snapshots},parsed_request=parsed)
             report=asyncio.run(run_research())
             print(json.dumps({'status':report['status'],'workflow_complete':report['workflow_complete'],
                               **report['totals'],'agent':report['agent']},ensure_ascii=True))

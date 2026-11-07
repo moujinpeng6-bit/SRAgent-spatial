@@ -1,0 +1,108 @@
+{
+  "controlled_process_interruption": true,
+  "checkpoint_passed": [
+    "biostudies:Visium:S-BSST1410--6ee840650637"
+  ],
+  "checkpoint_pending": [
+    "biostudies:Visium:S-BSST1410--9942bf0a017c"
+  ],
+  "resumed_exit_code": 0,
+  "resume": {
+    "count": 1,
+    "invalidated_samples": [],
+    "replayed_operations": 2
+  },
+  "workflow_complete": true,
+  "totals": {
+    "found": 4,
+    "selected": 3,
+    "files_ready": 2,
+    "passed": 2,
+    "failed": 1,
+    "outcomes": {
+      "download_budget_exceeded": 1,
+      "correspondence_passed": 2,
+      "not_selected": 1
+    }
+  },
+  "new_executed_operations": [
+    {
+      "action": "inspect_files",
+      "args": {
+        "accession": "E-MTAB-11265",
+        "platform": "Visium"
+      },
+      "status": "tool_error"
+    },
+    {
+      "action": "prepare_files",
+      "args": {
+        "accession": "E-MTAB-11265",
+        "platform": "Visium"
+      },
+      "status": "tool_error"
+    },
+    {
+      "action": "inspect_files",
+      "args": {
+        "accession": "biostudies:Visium:E-MTAB-11265--fd0c630f7ffc",
+        "platform": "Visium"
+      },
+      "status": "tool_error"
+    },
+    {
+      "action": "validate_sample",
+      "args": {
+        "sample_id": "biostudies:Visium:S-BSST1410--9942bf0a017c",
+        "platform": "Visium"
+      },
+      "status": "correspondence_passed"
+    }
+  ],
+  "completed_asset_mtimes_unchanged": true,
+  "new_source_requests": 0,
+  "verified_sample_lineage": [
+    {
+      "sample_id": "biostudies:Visium:S-BSST1410--6ee840650637",
+      "study_id": "biostudies:Visium:S-BSST1410",
+      "source_sample_id": "V10T03-279-B1",
+      "source_url": "https://www.ebi.ac.uk/biostudies/studies/S-BSST1410",
+      "publications": [
+        {
+          "id": "10.1101/2023.12.21.572330",
+          "url": "https://www.biorxiv.org/content/10.1101/2023.12.21.572330v1",
+          "field": "BioStudies study publication link"
+        }
+      ],
+      "image": {
+        "sha256": "3aaacc4897ddd4117bffc3a625a418ec20fa8ba5f396fea4742e631cb8adb733",
+        "member": "V10T03-279-B1/spatial/tissue_lowres_image.png"
+      },
+      "declared_images": []
+    },
+    {
+      "sample_id": "biostudies:Visium:S-BSST1410--9942bf0a017c",
+      "study_id": "biostudies:Visium:S-BSST1410",
+      "source_sample_id": "V10T03-279-C1",
+      "source_url": "https://www.ebi.ac.uk/biostudies/studies/S-BSST1410",
+      "publications": [
+        {
+          "id": "10.1101/2023.12.21.572330",
+          "url": "https://www.biorxiv.org/content/10.1101/2023.12.21.572330v1",
+          "field": "BioStudies study publication link"
+        }
+      ],
+      "image": {
+        "sha256": "e70bfe6871175aec31b712aed70f6c7e64a2580a686714e6260e8630ad453fba",
+        "member": "V10T03-279-C1/spatial/tissue_lowres_image.png"
+      },
+      "declared_images": []
+    }
+  ],
+  "completed_report_rebuild": {
+    "model_trace_messages_added": 0,
+    "tool_events_added": 0,
+    "source_requests_added": 0,
+    "passed": 2
+  }
+}

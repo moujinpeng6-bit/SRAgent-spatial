@@ -1,0 +1,118 @@
+{
+  "model": "deepseek-flash",
+  "scope": "selected public sample cases; tool entry traces are not end-to-end coverage",
+  "bigquery_used": false,
+  "results": [
+    {
+      "module": "esearch",
+      "status": "expected_result_returned",
+      "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE243022",
+      "result_checked": "200243022",
+      "elapsed_seconds": 8.531,
+      "called_tools": [
+        "invoke_esearch_agent",
+        "esearch"
+      ]
+    },
+    {
+      "module": "efetch",
+      "status": "expected_result_returned",
+      "source_url": "https://pubmed.ncbi.nlm.nih.gov/38505604/",
+      "result_checked": "10.7150/thno.90627",
+      "elapsed_seconds": 7.265,
+      "called_tools": [
+        "invoke_efetch_agent",
+        "efetch"
+      ]
+    },
+    {
+      "module": "elink",
+      "status": "expected_result_returned",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10945331/",
+      "result_checked": "10945331",
+      "elapsed_seconds": 9.157,
+      "called_tools": [
+        "invoke_elink_agent",
+        "elink"
+      ]
+    },
+    {
+      "module": "entrez_convert",
+      "status": "expected_result_returned",
+      "source_url": "https://www.ncbi.nlm.nih.gov/sra/SRR390728",
+      "result_checked": "SRX079566",
+      "elapsed_seconds": 28.36,
+      "called_tools": [
+        "invoke_entrez_convert_agent",
+        "fetch_ncbi_record",
+        "invoke_esummary_agent",
+        "esummary",
+        "which_entrez_databases",
+        "invoke_esearch_agent",
+        "esearch"
+      ]
+    },
+    {
+      "module": "ncbi_fetch",
+      "status": "expected_result_returned",
+      "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM7777521",
+      "result_checked": "Breast cancer lesion",
+      "elapsed_seconds": 20.0,
+      "called_tools": [
+        "invoke_ncbi_fetch_agent",
+        "fetch_geo_record",
+        "fetch_ncbi_record",
+        "fetch_geo_record",
+        "fetch_ncbi_record",
+        "fetch_biosample_record"
+      ]
+    },
+    {
+      "module": "find_datasets",
+      "status": "ran_no_match_for_existing_accession",
+      "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE176078",
+      "elapsed_seconds": 12.922,
+      "called_tools": [
+        "invoke_find_datasets_agent",
+        "esearch_scrna",
+        "esearch_scrna",
+        "esearch_scrna"
+      ]
+    },
+    {
+      "module": "papers",
+      "initial_http_status": 400,
+      "initial_reason": "Chat Completions response_format unsupported",
+      "retests": [
+        {
+          "accession": "SRR26045572",
+          "status": "returned",
+          "doi_output": "10.7150/thno.90627",
+          "elapsed_seconds": 22.688,
+          "tools": [
+            "invoke_papers_agent",
+            "invoke_esearch_agent",
+            "esearch",
+            "invoke_elink_agent",
+            "elink",
+            "invoke_efetch_agent",
+            "efetch"
+          ]
+        },
+        {
+          "accession": "SRR390728",
+          "status": "returned",
+          "doi_output": "",
+          "elapsed_seconds": 12.484,
+          "tools": [
+            "invoke_papers_agent",
+            "invoke_esearch_agent",
+            "esearch",
+            "invoke_elink_agent",
+            "elink"
+          ]
+        }
+      ]
+    }
+  ]
+}

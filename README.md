@@ -1,5 +1,7 @@
 # SRAgent-spatial
 
+v0.15 给 `research-spatial` 增加整个研究任务的断点续跑、样本与图像来源记录，以及严格的跨来源文件去重。实际终止进程后恢复，两张 BioStudies 肺切片都通过。另用冻结的 12 个 GEO 样本做了初次独立留出评鉴，并记录漏收、误收与文件限额。见 [续跑与验收](docs/research_spatial.md)、[逐样本评鉴](examples/independent_evaluation/)。
+
 v0.14 新增 `research-spatial`：自然语言研究条件、样本级疾病/肿瘤状态证据，以及 GEO / BioStudies / 10x 共用的多 Agent 工具入口。统一分派 Xenium、Visium、Visium HD 验证，并增加 TAR、ZIP、独立附件、完整 MTX/gzip 和显式跨包配对。人类胰腺癌任务真实通过 190,965 个细胞的 Xenium 数据，另有 Visium、HD 实测。覆盖范围、受限结果与复现见 [四项改进说明](docs/research_spatial.md)、[真实验收](examples/research_acceptance/)。
 
 v0.13 新增真实 **DeepSeek 总控 + 搜索/文件/验证三个子 Agent**。工具拆为查询、证据读取、文件清单、配套文件准备及空间验证；模型根据结果选择委派、补件和重试。两张真实人肺 Visium 切片通过，受控错误验收记录了模型重试及“验证 → 补件 → 再验证”。见 [架构、命令与边界](docs/multiagent.md)。

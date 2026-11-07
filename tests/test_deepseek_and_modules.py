@@ -39,7 +39,7 @@ class DeepSeekModelTests(unittest.TestCase):
 
     def test_client_targets_deepseek_base_url(self):
         with patch.dict(os.environ, {"DEEPSEEK_API_KEY": "offline-test-key"}, clear=True), \
-                patch("langchain_openai.ChatOpenAI") as client:
+                patch("langchain_openai.ChatOpenAI.__init__", return_value=None) as client:
             deepseek_model.build("deepseek-chat", temperature=0.1, max_tokens=64)
         self.assertEqual(client.call_args.kwargs["model"], "deepseek-chat")
         self.assertEqual(client.call_args.kwargs["base_url"], deepseek_model.DEFAULT_BASE_URL)
@@ -47,14 +47,21 @@ class DeepSeekModelTests(unittest.TestCase):
 
     def test_thinking_is_disabled_by_default_and_opt_in(self):
         with patch.dict(os.environ, {"DEEPSEEK_API_KEY": "k"}, clear=True), \
-                patch("langchain_openai.ChatOpenAI") as client:
+                patch("langchain_openai.ChatOpenAI.__init__", return_value=None) as client:
             deepseek_model.build("deepseek-flash")
             self.assertEqual(client.call_args.kwargs["extra_body"], {"thinking": {"type": "disabled"}})
         with patch.dict(os.environ, {"DEEPSEEK_API_KEY": "k",
                                      "SPATIAL_DEEPSEEK_THINKING": "enabled"}, clear=True), \
-                patch("langchain_openai.ChatOpenAI") as client:
+                patch("langchain_openai.ChatOpenAI.__init__", return_value=None) as client:
             deepseek_model.build("deepseek-flash")
         self.assertNotIn("extra_body", client.call_args.kwargs)
+
+    def test_structured_output_uses_tool_schema_for_deepseek(self):
+        with patch.dict(os.environ, {"DEEPSEEK_API_KEY": "k"}, clear=True), \
+                patch("langchain_openai.ChatOpenAI.with_structured_output") as structured:
+            model = deepseek_model.build("deepseek-flash")
+            model.with_structured_output({"type": "object"})
+        structured.assert_called_once_with({"type": "object"}, method="function_calling")
 
     def test_install_patches_upstream_factory_before_agent_imports(self):
         fake_utils = types.ModuleType("SRAgent.agents.utils")

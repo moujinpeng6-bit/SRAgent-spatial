@@ -1,0 +1,448 @@
+{
+  "reference_sha256": "3b19102c042d1f88d73627918cb56569928799ba02ed816b15c156ab82c0faf7",
+  "review_status": "source_curated_pending_independent_researcher",
+  "reference_policy": "Curated from sample and series primary records before execution. Provisional until an independent researcher signs off. Labels describe eligibility, not file availability.",
+  "scope": {
+    "source": "geo",
+    "max_studies": 5,
+    "samples_per_study": 4,
+    "download_mib_per_candidate": 16
+  },
+  "queries": [
+    {
+      "query": "breast_visium",
+      "task": "寻找人类乳腺癌的传统 Visium 空间转录组。只接受肿瘤组织，排除正常和癌旁。",
+      "elapsed_seconds": 146.84,
+      "exit_code": 0,
+      "workflow_complete": true,
+      "agent_error": null,
+      "source_errors": [],
+      "normalized_filters": {
+        "organism": "Homo sapiens",
+        "tissue": "breast",
+        "platforms": [
+          "Visium"
+        ],
+        "disease": "breast cancer",
+        "sample_state": "tumor"
+      },
+      "totals": {
+        "found": 16,
+        "selected": 4,
+        "files_ready": 0,
+        "passed": 0,
+        "failed": 4,
+        "outcomes": {
+          "not_selected": 12,
+          "validation_error": 4
+        }
+      },
+      "cost": {
+        "input_tokens_recorded": 132573,
+        "output_tokens_recorded": 7814,
+        "reported_usage_calls": 27,
+        "recorded_model_responses": 27,
+        "usage_complete": true,
+        "recorded_tokens_peak_no_cache_estimate_usd": 0.0491487,
+        "pricing_source": "https://api-docs.deepseek.com/quick_start/pricing/"
+      },
+      "evaluation": {
+        "reference_counts": {
+          "true_positive": 0,
+          "false_positive": 0,
+          "true_negative": 2,
+          "false_negative": 3
+        },
+        "reference_samples": [
+          {
+            "sample": "GSM7777520",
+            "reference_eligible": true,
+            "discovered": false,
+            "selected": false,
+            "classification": "false_negative",
+            "states": [],
+            "clinical_states": []
+          },
+          {
+            "sample": "GSM7777521",
+            "reference_eligible": true,
+            "discovered": false,
+            "selected": false,
+            "classification": "false_negative",
+            "states": [],
+            "clinical_states": []
+          },
+          {
+            "sample": "GSM7777522",
+            "reference_eligible": true,
+            "discovered": false,
+            "selected": false,
+            "classification": "false_negative",
+            "states": [],
+            "clinical_states": []
+          },
+          {
+            "sample": "GSM7475112",
+            "reference_eligible": false,
+            "discovered": false,
+            "selected": false,
+            "classification": "true_negative",
+            "states": [],
+            "clinical_states": []
+          },
+          {
+            "sample": "GSM6592054",
+            "reference_eligible": false,
+            "discovered": false,
+            "selected": false,
+            "classification": "true_negative",
+            "states": [],
+            "clinical_states": []
+          }
+        ],
+        "precision_among_labelled_selected": null,
+        "recall_on_frozen_positives": 0.0,
+        "selected_unlabelled_sample_ids": [
+          "GSM10144987",
+          "GSM10144988",
+          "GSM10144989",
+          "GSM10144990"
+        ],
+        "unkeyed_selected_rows": 0,
+        "observed_selected_samples": 4,
+        "observed_files_ready": 0,
+        "observed_spatial_passed": 0,
+        "readiness_among_observed_selected": 0.0
+      },
+      "selected_samples": [
+        {
+          "sample": "GSM10144987",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM10144987",
+          "status_at_run": "validation_error",
+          "available_roles": [
+            "image",
+            "positions",
+            "scalefactors"
+          ],
+          "publications": [],
+          "asset_error_types": [
+            "OverflowError"
+          ]
+        },
+        {
+          "sample": "GSM10144988",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM10144988",
+          "status_at_run": "validation_error",
+          "available_roles": [
+            "image",
+            "positions",
+            "scalefactors"
+          ],
+          "publications": [],
+          "asset_error_types": [
+            "OverflowError"
+          ]
+        },
+        {
+          "sample": "GSM10144989",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM10144989",
+          "status_at_run": "validation_error",
+          "available_roles": [
+            "image",
+            "positions",
+            "scalefactors"
+          ],
+          "publications": [],
+          "asset_error_types": [
+            "OverflowError"
+          ]
+        },
+        {
+          "sample": "GSM10144990",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM10144990",
+          "status_at_run": "validation_error",
+          "available_roles": [
+            "image",
+            "positions",
+            "scalefactors"
+          ],
+          "publications": [],
+          "asset_error_types": [
+            "OverflowError"
+          ]
+        }
+      ]
+    },
+    {
+      "query": "skin_hd",
+      "task": "寻找健康人类皮肤的 Visium HD 空间转录组，只接受健康组织和 Visium HD 平台。",
+      "elapsed_seconds": 410.56,
+      "exit_code": 0,
+      "workflow_complete": true,
+      "agent_error": null,
+      "source_errors": [],
+      "normalized_filters": {
+        "organism": "Homo sapiens",
+        "tissue": "skin",
+        "platforms": [
+          "Visium HD"
+        ],
+        "disease": "",
+        "sample_state": "normal"
+      },
+      "totals": {
+        "found": 13,
+        "selected": 3,
+        "files_ready": 0,
+        "passed": 0,
+        "failed": 3,
+        "outcomes": {
+          "not_selected": 10,
+          "validation_error": 3
+        }
+      },
+      "cost": {
+        "input_tokens_recorded": 105400,
+        "output_tokens_recorded": 8562,
+        "reported_usage_calls": 27,
+        "recorded_model_responses": 27,
+        "usage_complete": true,
+        "recorded_tokens_peak_no_cache_estimate_usd": 0.0418944,
+        "pricing_source": "https://api-docs.deepseek.com/quick_start/pricing/"
+      },
+      "evaluation": {
+        "reference_counts": {
+          "true_positive": 2,
+          "false_positive": 0,
+          "true_negative": 1,
+          "false_negative": 0
+        },
+        "reference_samples": [
+          {
+            "sample": "GSM9256395",
+            "reference_eligible": true,
+            "discovered": true,
+            "selected": true,
+            "classification": "true_positive",
+            "states": [
+              "validation_error"
+            ],
+            "clinical_states": [
+              "eligible"
+            ]
+          },
+          {
+            "sample": "GSM9256396",
+            "reference_eligible": true,
+            "discovered": true,
+            "selected": true,
+            "classification": "true_positive",
+            "states": [
+              "validation_error"
+            ],
+            "clinical_states": [
+              "eligible"
+            ]
+          },
+          {
+            "sample": "GSM6086615",
+            "reference_eligible": false,
+            "discovered": false,
+            "selected": false,
+            "classification": "true_negative",
+            "states": [],
+            "clinical_states": []
+          }
+        ],
+        "precision_among_labelled_selected": 1.0,
+        "recall_on_frozen_positives": 1.0,
+        "selected_unlabelled_sample_ids": [
+          "GSM9083960"
+        ],
+        "unkeyed_selected_rows": 0,
+        "observed_selected_samples": 3,
+        "observed_files_ready": 0,
+        "observed_spatial_passed": 0,
+        "readiness_among_observed_selected": 0.0
+      },
+      "selected_samples": [
+        {
+          "sample": "GSM9256395",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9256395",
+          "status_at_run": "validation_error",
+          "available_roles": [
+            "barcodes",
+            "features",
+            "image",
+            "positions",
+            "scalefactors"
+          ],
+          "publications": [],
+          "asset_error_types": [
+            "OverflowError"
+          ]
+        },
+        {
+          "sample": "GSM9256396",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9256396",
+          "status_at_run": "validation_error",
+          "available_roles": [
+            "barcodes",
+            "features",
+            "image",
+            "positions",
+            "scalefactors"
+          ],
+          "publications": [],
+          "asset_error_types": [
+            "OverflowError"
+          ]
+        },
+        {
+          "sample": "GSM9083960",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9083960",
+          "status_at_run": "validation_error",
+          "available_roles": [
+            "barcodes",
+            "features",
+            "image",
+            "positions",
+            "scalefactors"
+          ],
+          "publications": [
+            {
+              "id": "40758889",
+              "url": "https://pubmed.ncbi.nlm.nih.gov/40758889/",
+              "field": "Series_pubmed_id"
+            }
+          ],
+          "asset_error_types": [
+            "OverflowError"
+          ]
+        }
+      ]
+    },
+    {
+      "query": "colon_xenium",
+      "task": "寻找人类结肠癌的 Xenium 空间转录组，只接受肿瘤组织，排除正常组织和炎症病例。",
+      "elapsed_seconds": 75.77,
+      "exit_code": 0,
+      "workflow_complete": true,
+      "agent_error": null,
+      "source_errors": [],
+      "normalized_filters": {
+        "organism": "Homo sapiens",
+        "tissue": "colon",
+        "platforms": [
+          "Xenium"
+        ],
+        "disease": "colorectal cancer",
+        "sample_state": "tumor"
+      },
+      "totals": {
+        "found": 11,
+        "selected": 0,
+        "files_ready": 0,
+        "passed": 0,
+        "failed": 0,
+        "outcomes": {
+          "not_selected": 11
+        }
+      },
+      "cost": {
+        "input_tokens_recorded": 50718,
+        "output_tokens_recorded": 4947,
+        "reported_usage_calls": 19,
+        "recorded_model_responses": 19,
+        "usage_complete": true,
+        "recorded_tokens_peak_no_cache_estimate_usd": 0.0211518,
+        "pricing_source": "https://api-docs.deepseek.com/quick_start/pricing/"
+      },
+      "evaluation": {
+        "reference_counts": {
+          "true_positive": 0,
+          "false_positive": 0,
+          "true_negative": 1,
+          "false_negative": 3
+        },
+        "reference_samples": [
+          {
+            "sample": "GSM8594564",
+            "reference_eligible": true,
+            "discovered": true,
+            "selected": false,
+            "classification": "false_negative",
+            "states": [
+              "not_selected"
+            ],
+            "clinical_states": [
+              "unknown"
+            ]
+          },
+          {
+            "sample": "GSM8594565",
+            "reference_eligible": true,
+            "discovered": true,
+            "selected": false,
+            "classification": "false_negative",
+            "states": [
+              "not_selected"
+            ],
+            "clinical_states": [
+              "unknown"
+            ]
+          },
+          {
+            "sample": "GSM8594566",
+            "reference_eligible": true,
+            "discovered": true,
+            "selected": false,
+            "classification": "false_negative",
+            "states": [
+              "not_selected"
+            ],
+            "clinical_states": [
+              "unknown"
+            ]
+          },
+          {
+            "sample": "GSM9345502",
+            "reference_eligible": false,
+            "discovered": false,
+            "selected": false,
+            "classification": "true_negative",
+            "states": [],
+            "clinical_states": []
+          }
+        ],
+        "precision_among_labelled_selected": null,
+        "recall_on_frozen_positives": 0.0,
+        "selected_unlabelled_sample_ids": [],
+        "unkeyed_selected_rows": 0,
+        "observed_selected_samples": 0,
+        "observed_files_ready": 0,
+        "observed_spatial_passed": 0,
+        "readiness_among_observed_selected": null
+      },
+      "selected_samples": []
+    }
+  ],
+  "model": "deepseek-flash",
+  "reference_commit": "c88b7b7",
+  "aggregate": {
+    "reference_counts": {
+      "true_positive": 2,
+      "false_positive": 0,
+      "true_negative": 4,
+      "false_negative": 6
+    },
+    "sample_totals": {
+      "found": 40,
+      "selected": 7,
+      "files_ready": 0,
+      "passed": 0
+    },
+    "elapsed_seconds_summed": 633.17,
+    "estimated_usd_peak_uncached": 0.1121949
+  }
+}
