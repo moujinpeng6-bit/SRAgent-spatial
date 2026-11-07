@@ -175,9 +175,10 @@ class ArchiveBudgetExceeded(ValueError):
 
 class ArchiveStream(io.RawIOBase):
     """Read a bounded sequential prefix using verified HTTP ranges."""
-    def __init__(self, url, budget, cache):
+    def __init__(self, url, budget, cache, *, max_network_bytes=None):
         self.url = url
         self.budget = budget
+        self.max_network_bytes = max_network_bytes
         self.offset = 0
         self.size = None
         self.pending = memoryview(b"")
@@ -204,6 +205,8 @@ class ArchiveStream(io.RawIOBase):
                 return data
         except (OSError, ValueError, TypeError, IndexError, KeyError, AttributeError):
             pass
+        if self.max_network_bytes is not None and self.downloaded + end - self.offset + 1 > self.max_network_bytes:
+            raise ArchiveBudgetExceeded("10x archive needs a new range beyond the download budget")
         span = f"{self.offset}-{end}"
         sources = (self.identity[0],) if self.identity else (mirror, self.url)
         for url in sources:

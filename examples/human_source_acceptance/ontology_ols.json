@@ -1,0 +1,295 @@
+[
+  {
+    "module": "tissue_ontology",
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "elapsed_seconds": 17.547,
+    "message": "human pancreas",
+    "id": "UBERON:0001264",
+    "ontology_backend": "ols",
+    "scope": "term_selected_from_ols_evidence",
+    "tools": [
+      "invoke_ols_ontology",
+      "search_ontology_terms"
+    ],
+    "lookups": [
+      {
+        "query": "pancreas",
+        "backend": "embL_ebi_ols4",
+        "ontology": "uberon",
+        "vector_model": "llama-embed-nemotron-8b_pca512",
+        "vector_status": "ok",
+        "vector_error": null,
+        "exact_error": null,
+        "source_url": "https://www.ebi.ac.uk/ols4/mcp",
+        "terms": [
+          {
+            "id": "UBERON:0001264",
+            "label": "pancreas",
+            "iri": "http://purl.obolibrary.org/obo/UBERON_0001264",
+            "method": "exact_label_or_synonym"
+          },
+          {
+            "id": "UBERON:0007324",
+            "label": "pancreatic lobule",
+            "iri": "http://purl.obolibrary.org/obo/UBERON_0007324",
+            "method": "vector",
+            "vector_rank": 1,
+            "parents": [
+              {
+                "iri": "http://purl.obolibrary.org/obo/UBERON_0000064",
+                "label": "organ part"
+              }
+            ]
+          },
+          {
+            "id": "UBERON:0000006",
+            "label": "islet of Langerhans",
+            "iri": "http://purl.obolibrary.org/obo/UBERON_0000006",
+            "method": "vector",
+            "vector_rank": 2,
+            "parents": [
+              {
+                "iri": "http://purl.obolibrary.org/obo/UBERON_0034922",
+                "label": "cell cluster"
+              }
+            ]
+          },
+          {
+            "id": "UBERON:0004795",
+            "label": "pancreas secretion",
+            "iri": "http://purl.obolibrary.org/obo/UBERON_0004795",
+            "method": "vector",
+            "vector_rank": 3,
+            "parents": [
+              {
+                "iri": "http://purl.obolibrary.org/obo/UBERON_0000456",
+                "label": "secretion of exocrine gland"
+              }
+            ]
+          },
+          {
+            "id": "UBERON:0007329",
+            "label": "pancreatic duct",
+            "iri": "http://purl.obolibrary.org/obo/UBERON_0007329",
+            "method": "vector",
+            "vector_rank": 4,
+            "parents": [
+              {
+                "iri": "http://purl.obolibrary.org/obo/UBERON_0004119",
+                "label": "endoderm-derived structure"
+              }
+            ]
+          },
+          {
+            "id": "UBERON:0001263",
+            "label": "pancreatic acinus",
+            "iri": "http://purl.obolibrary.org/obo/UBERON_0001263",
+            "method": "vector",
+            "vector_rank": 5,
+            "parents": [
+              {
+                "iri": "http://purl.obolibrary.org/obo/UBERON_0013232",
+                "label": "serous acinus"
+              }
+            ]
+          },
+          {
+            "id": "UBERON:0001150",
+            "label": "body of pancreas",
+            "iri": "http://purl.obolibrary.org/obo/UBERON_0001150",
+            "method": "vector",
+            "vector_rank": 6,
+            "parents": [
+              {
+                "iri": "http://purl.obolibrary.org/obo/UBERON_0000064",
+                "label": "organ part"
+              }
+            ]
+          },
+          {
+            "id": "UBERON:0001151",
+            "label": "tail of pancreas",
+            "iri": "http://purl.obolibrary.org/obo/UBERON_0001151",
+            "method": "vector",
+            "vector_rank": 7,
+            "parents": [
+              {
+                "iri": "http://purl.obolibrary.org/obo/UBERON_0000064",
+                "label": "organ part"
+              }
+            ]
+          },
+          {
+            "id": "UBERON:2001371",
+            "label": "pancreatic system",
+            "iri": "http://purl.obolibrary.org/obo/UBERON_2001371",
+            "method": "vector",
+            "vector_rank": 8,
+            "parents": [
+              {
+                "iri": "http://purl.obolibrary.org/obo/UBERON_0000467",
+                "label": "anatomical system"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "module": "disease_ontology",
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "elapsed_seconds": 27.219,
+    "message": "Human pancreatic ductal adenocarcinoma",
+    "id": "MONDO:0005184",
+    "ontology_backend": "ols",
+    "scope": "term_selected_from_ols_evidence",
+    "tools": [
+      "invoke_ols_ontology",
+      "search_ontology_terms",
+      "search_ontology_terms"
+    ],
+    "lookups": [
+      {
+        "query": "pancreatic ductal adenocarcinoma",
+        "backend": "embl_ebi_ols4",
+        "ontology": "mondo",
+        "vector_model": "llama-embed-nemotron-8b_pca512",
+        "vector_status": "ok",
+        "vector_error": null,
+        "exact_error": null,
+        "source_url": "https://www.ebi.ac.uk/ols4/mcp",
+        "terms": [
+          {
+            "id": "MONDO:0005184",
+            "label": "pancreatic ductal adenocarcinoma",
+            "iri": "http://purl.obolibrary.org/obo/MONDO_0005184",
+            "method": "exact_label_or_synonym",
+            "vector_rank": 1,
+            "parents": []
+          },
+          {
+            "id": "MONDO:0006047",
+            "label": "pancreatic adenocarcinoma",
+            "iri": "http://purl.obolibrary.org/obo/MONDO_0006047",
+            "method": "vector",
+            "vector_rank": 3,
+            "parents": []
+          },
+          {
+            "id": "MONDO:0005614",
+            "label": "pancreatic adenosquamous carcinoma",
+            "iri": "http://purl.obolibrary.org/obo/MONDO_0005614",
+            "method": "vector",
+            "vector_rank": 4,
+            "parents": [
+              {
+                "iri": "http://purl.obolibrary.org/obo/MONDO_0018521",
+                "label": "squamous cell carcinoma of pancreas"
+              }
+            ]
+          },
+          {
+            "id": "MONDO:0002666",
+            "label": "pancreatic signet ring cell adenocarcinoma",
+            "iri": "http://purl.obolibrary.org/obo/MONDO_0002666",
+            "method": "vector",
+            "vector_rank": 5,
+            "parents": []
+          },
+          {
+            "id": "MONDO:0006346",
+            "label": "pancreatic acinar cell carcinoma",
+            "iri": "http://purl.obolibrary.org/obo/MONDO_0006346",
+            "method": "vector",
+            "vector_rank": 6,
+            "parents": []
+          },
+          {
+            "id": "MONDO:0004481",
+            "label": "pancreatic intraductal papillary-mucinous neoplasm with an associated invasive carcinoma",
+            "iri": "http://purl.obolibrary.org/obo/MONDO_0004481",
+            "method": "vector",
+            "vector_rank": 7,
+            "parents": []
+          },
+          {
+            "id": "MONDO:0004287",
+            "label": "pancreatic foamy gland adenocarcinoma",
+            "iri": "http://purl.obolibrary.org/obo/MONDO_0004287",
+            "method": "vector",
+            "vector_rank": 8,
+            "parents": []
+          }
+        ]
+      },
+      {
+        "query": "pancreatic ductal carcinoma",
+        "backend": "embl_ebi_ols4",
+        "ontology": "mondo",
+        "vector_model": "llama-embed-nemotron-8b_pca512",
+        "vector_status": "ok",
+        "vector_error": null,
+        "exact_error": null,
+        "source_url": "https://www.ebi.ac.uk/ols4/mcp",
+        "terms": [
+          {
+            "id": "MONDO:0005184",
+            "label": "pancreatic ductal adenocarcinoma",
+            "iri": "http://purl.obolibrary.org/obo/MONDO_0005184",
+            "method": "vector",
+            "vector_rank": 1,
+            "parents": []
+          },
+          {
+            "id": "MONDO:0006047",
+            "label": "pancreatic adenocarcinoma",
+            "iri": "http://purl.obolibrary.org/obo/MONDO_0006047",
+            "method": "vector",
+            "vector_rank": 2,
+            "parents": []
+          },
+          {
+            "id": "MONDO:0015278",
+            "label": "familial pancreatic carcinoma",
+            "iri": "http://purl.obolibrary.org/obo/MONDO_0015278",
+            "method": "vector",
+            "vector_rank": 4,
+            "parents": [
+              {
+                "iri": "http://purl.obolibrary.org/obo/MONDO_0003847",
+                "label": "hereditary disease"
+              }
+            ]
+          },
+          {
+            "id": "MONDO:0002666",
+            "label": "pancreatic signet ring cell adenocarcinoma",
+            "iri": "http://purl.obolibrary.org/obo/MONDO_0002666",
+            "method": "vector",
+            "vector_rank": 5,
+            "parents": []
+          },
+          {
+            "id": "MONDO:0044727",
+            "label": "pancreatic carcinoma with mixed differentiation",
+            "iri": "http://purl.obolibrary.org/obo/MONDO_0044727",
+            "method": "vector",
+            "vector_rank": 6,
+            "parents": []
+          },
+          {
+            "id": "MONDO:0004481",
+            "label": "pancreatic intraductal papillary-mucinous neoplasm with an associated invasive carcinoma",
+            "iri": "http://purl.obolibrary.org/obo/MONDO_0004481",
+            "method": "vector",
+            "vector_rank": 7,
+            "parents": []
+          }
+        ]
+      }
+    ]
+  }
+]

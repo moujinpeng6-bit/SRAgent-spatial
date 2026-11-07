@@ -15,6 +15,12 @@ from sragent_spatial.research_session import ResearchSession
 URL='https://ftp.ncbi.nlm.nih.gov/geo/samples/GSM999nnn/GSM999001/suppl/'
 
 class ConditionTests(unittest.TestCase):
+    def test_diseased_accepts_sample_diagnosis_and_tumors_only(self):
+        request = ResearchRequest('Homo sapiens','kidney',('Xenium',),sample_state='diseased')
+        for label, status in [('AIN','eligible'),('carcinoma','eligible'),('non-diseased','out_of_scope'),('N/A','unknown')]:
+            result = condition_evidence({'Sample_characteristics_ch1':['disease: '+label]},request,URL)
+            self.assertEqual(result['status'],status)
+
     def test_tumor_normal_adjacent_mixed_unknown_and_study_scope(self):
         request=ResearchRequest('Homo sapiens','pancreas',('Xenium',),'pancreatic cancer','tumor')
         cases=[({'diagnosis':['PDAC']},'eligible'),({'state':['Healthy'],'Sample_title':['pancreatic cancer cohort']},'out_of_scope'),

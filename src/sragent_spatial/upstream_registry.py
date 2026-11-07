@@ -78,6 +78,7 @@ MODULES: tuple[Module, ...] = (
 )
 
 BY_KEY = {module.key: module for module in MODULES}
+ONTOLOGY_MODULES = {"tissue_ontology": "uberon", "disease_ontology": "mondo"}
 
 #: Modules that answer questions about public metadata without credentials or new tooling.
 READ_ONLY = ("esearch", "esummary", "efetch", "elink", "entrez", "entrez_convert",
@@ -110,9 +111,11 @@ def describe() -> list[dict]:
         row["setup_ready"] = _probe(module.setup)
         row["read_only"] = module.key in READ_ONLY
         row["setup_scope"] = "local_requirements_only_not_live_validation"
-        if module.key in {"tissue_ontology", "disease_ontology"}:
+        if module.key in ONTOLOGY_MODULES:
             from .dependencies import dependency_report
-            row["setup_ready"] = dependency_report()[module.key]["requirements_detected"]
+            row["upstream_setup_ready"] = dependency_report()[module.key]["requirements_detected"]
+            row["default_backend"] = "ols"
+            row["setup_scope"] = "ols_public_endpoint_not_probed"
         if row["spatial_status"] == "blocked" and row["setup_ready"]:
             row["spatial_status"] = "direct"
         rows.append(row)
@@ -128,7 +131,7 @@ def summary() -> dict:
             "not_ready": [r["key"] for r in rows if r["setup_ready"] is False]}
 
 
-def load(key: str, model: str | None = None, *, provider: str | None = None):
+def load(key: str, model: str | None = None, *, provider: str | None = None, ontology_backend: str = "ols"):
     """Import and build one upstream agent tool, installing DeepSeek routing first."""
     if key not in BY_KEY:
         raise ValueError(f"Unknown SRAgent module {key!r}; expected one of {', '.join(BY_KEY)}")
@@ -143,6 +146,10 @@ def load(key: str, model: str | None = None, *, provider: str | None = None):
         from .deepseek_model import install, is_installed
         if not is_installed():
             install()
+    if key in ONTOLOGY_MODULES and ontology_backend == "ols":
+        from SRAgent.agents.utils import set_model
+        from .ontology_ols import create_agent
+        return create_agent(ONTOLOGY_MODULES[key], set_model(model_name=model, agent_name=key))
     module = BY_KEY[key]
     try:
         imported = importlib.import_module(module.module)
@@ -202,7 +209,7 @@ def as_text(result) -> str:
 
 
 async def invoke(key: str, message: str, model: str | None = None, *, timeout: float = 120.0,
-                 provider: str | None = None) -> dict:
+                 provider: str | None = None, ontology_backend: str = "ols") -> dict:
     """Run one upstream module as a tool and return text plus provenance."""
     started = time.monotonic()
     from langchain_core.callbacks import BaseCallbackHandler
@@ -221,15 +228,27 @@ async def invoke(key: str, message: str, model: str | None = None, *, timeout: f
 
     if os.getenv("GCP_PROJECT_ID") and not os.getenv("GOOGLE_CLOUD_PROJECT"):
         os.environ["GOOGLE_CLOUD_PROJECT"] = os.environ["GCP_PROJECT_ID"]
-    tool = load(key, model, provider=provider)
+    if ontology_backend not in {"ols", "upstream"}:
+        raise ValueError("Unknown ontology backend")
+    if key not in ONTOLOGY_MODULES and ontology_backend != "ols":
+        raise ValueError("Select an ontology module before choosing an ontology backend")
+    backend = {"ontology_backend": ontology_backend} if key in ONTOLOGY_MODULES else {}
+    tool = load(key, model, provider=provider, **backend)
     config = {"callbacks": [Trace()], "recursion_limit": 16, "max_concurrency": 1}
     chosen_provider = provider or os.getenv("SPATIAL_PROVIDER") or ("deepseek" if os.getenv("DEEPSEEK_API_KEY") else "openai")
     from .deepseek_model import model_context
     with model_context(model) if chosen_provider == "deepseek" and model else nullcontext():
         result = await asyncio.wait_for(tool.ainvoke(payload_for(tool, message), config=config), timeout=timeout)
-    return {"module": key, "provider": provider or os.getenv("SPATIAL_PROVIDER") or "auto",
+    response = {"module": key, "provider": provider or os.getenv("SPATIAL_PROVIDER") or "auto",
             "model": model, "elapsed_seconds": round(time.monotonic() - started, 3),
             "message": message, "output": as_text(result),
             "tool_trace": events,
             "trace_scope": "tool entry/return, no arguments or results; return does not prove data correctness",
             "scope": "upstream_agent_output_not_verified_metadata"}
+    if key in ONTOLOGY_MODULES:
+        response["ontology_backend"] = ontology_backend
+        if isinstance(result, dict) and "ontology_evidence" in result:
+            response.update(result)
+            response["output"] = result["id"] or "No verified term selected"
+            response["scope"] = "term_selected_from_ols_evidence"
+    return response

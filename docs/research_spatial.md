@@ -83,4 +83,10 @@ BioStudies 官方条目明确声明的 JSON 文件清单，可以解析受支持
 
 真实进程中断和恢复记录见 [双切片验收](../examples/research_resume/acceptance.json)。首次留出集覆盖 GEO 的三项真实检索，见 [逐样本结果与研究者复核表](../examples/independent_evaluation/)。10x 无人值守实时目录仍受官网访问验证限制。BigQuery 保持停用。
 
+## 仅检索人类的器官和疾病状态
+
+显式条件使用 `--organism "Homo sapiens"`、`--tissue <器官英文>` 和 `--platforms Xenium Visium "Visium HD"`。健康和患病都接受时用 `--sample-state any`。仅收健康或正常对照用 `normal`，仅收有明确样本诊断的患病组织用 `diseased`，仅收肿瘤用 `tumor`。输出另有 `observed_sample_state`，在 `any` 模式也会记录来源明确标注的状态。未知和混合保留独立状态。
+
+人类任务已接入不需要浏览器的 10x 公开索引入口。没有显式 10x 缓存或目录快照且已配置 DeepSeek 时，系统查找官方 10x 数据卡，并为有可信官方归档链接的记录继续准备文件。没有链接的候选保留缺件。官网直连的访问状态另行记录。[10x 和本体实测](../examples/human_source_acceptance/)
+
 [逐样本报告、来源模式与调用日志](../examples/research_acceptance/)。TAR、跨包配对、外部清单、gzip、完整 MTX 和 HD 多分辨率的格式测试，见 `tests/test_research.py`；其中合成文件测试与真实在线运行分开记录。

@@ -1,0 +1,226 @@
+[
+  {
+    "request": {
+      "organism": "Homo sapiens",
+      "tissue": "heart",
+      "platforms": [
+        "Visium HD"
+      ],
+      "disease": "",
+      "sample_state": "normal"
+    },
+    "source_modes": {
+      "tenx:Visium HD": "indexed_official_10x_cards"
+    },
+    "source_errors": [
+      {
+        "source": "tenx",
+        "platform": "Visium HD",
+        "mode": "direct_official_catalog_probe",
+        "source_url": "https://www.10xgenomics.com/datasets",
+        "status": "access_failed",
+        "http_status": 429,
+        "browser_challenge": true
+      }
+    ],
+    "status": "completed_with_issues",
+    "workflow_complete": true,
+    "totals": {
+      "found": 1,
+      "selected": 1,
+      "files_ready": 1,
+      "passed": 1,
+      "failed": 0,
+      "outcomes": {
+        "correspondence_passed": 1
+      }
+    },
+    "agent": {
+      "provider": "deepseek",
+      "model": "deepseek-flash",
+      "architecture": "supervisor_and_three_child_graphs",
+      "delegations": [
+        "search",
+        "assets",
+        "validation"
+      ],
+      "tool_operations": 5,
+      "error": null
+    },
+    "case": "healthy_heart",
+    "samples": [
+      {
+        "sample_id": "tenx:Visium HD:visium-hd-cytassist-6p5mm-human-heart--06669997a8ab",
+        "source_sample_id": "visium-hd-cytassist-6p5mm-human-heart",
+        "source_url": "https://www.10xgenomics.com/datasets/visium-hd-cytassist-6p5mm-human-heart",
+        "status": "correspondence_passed",
+        "condition_evidence": {
+          "status": "eligible",
+          "sample_state": "normal",
+          "requested_disease": "",
+          "requested_state": "normal",
+          "scope": "sample",
+          "evidence": [
+            {
+              "field": "disease",
+              "quote": "Healthy",
+              "source_url": "https://www.10xgenomics.com/datasets/visium-hd-cytassist-6p5mm-human-heart"
+            },
+            {
+              "field": "state",
+              "quote": "healthy",
+              "source_url": "https://www.10xgenomics.com/datasets/visium-hd-cytassist-6p5mm-human-heart"
+            }
+          ],
+          "reason": "explicit sample metadata; missing disease evidence is unknown, not negative"
+        },
+        "catalog_evidence": {
+          "indexed_url": "https://www.10xgenomics.com/datasets/visium-hd-cytassist-6p5mm-human-heart",
+          "metadata_evidence": {
+            "Product": "HD Spatial Gene Expression",
+            "Species": "Human",
+            "Anatomical Entity": "Heart",
+            "Disease State": "Healthy",
+            "Date Published": "2026-04-28"
+          },
+          "asset_evidence": {
+            "mode": "previously_verified_official_download_link",
+            "recorded_on": "2026-11-04"
+          }
+        },
+        "catalog_mode": "indexed_official_10x_cards",
+        "availability": "correspondence_checked_matrix_header",
+        "downloaded_bytes": 0,
+        "reused_bytes": 1090519040,
+        "matrix_scope": "header_only",
+        "bin_um": 2,
+        "checks": {
+          "barcode_position_image": {
+            "expression_barcode_count": 10615406,
+            "position_count": 11222500,
+            "missing_expression_ids_count": 0,
+            "missing_ids_preview": [],
+            "matrix_columns_checked": null,
+            "image_bounds_check": {
+              "width": 478,
+              "height": 600,
+              "scale": 0.0122202085,
+              "tested_in_tissue_barcodes": 10615406,
+              "out_of_image_count": 0,
+              "bin_size_um_in_scalefactors": 2.0
+            },
+            "issues": [],
+            "basic_checks_passed": true,
+            "coordinate_convention": "position file full-resolution image pixels; physical micrometre scale not inferred",
+            "not_verified": [
+              "same physical section or donor",
+              "matrix values and feature identities",
+              "image pixel contents or anatomical registration",
+              "cell segmentation or pathology annotation"
+            ],
+            "scope": "barcode/position/optional matrix-header and image-bounds consistency only"
+          },
+          "matrix_dimensions": {
+            "features": 18085,
+            "observations": 10615406,
+            "nonzeros": 43776546,
+            "scope": "header_only_not_matrix_values_or_complete_gzip_integrity"
+          },
+          "matrix_columns_match_barcodes": true,
+          "image_decode": {
+            "width": 478,
+            "height": 600,
+            "format": "PNG",
+            "pixel_decode_verified": true
+          }
+        }
+      }
+    ]
+  },
+  {
+    "request": {
+      "organism": "Homo sapiens",
+      "tissue": "colon",
+      "platforms": [
+        "Visium HD"
+      ],
+      "disease": "",
+      "sample_state": "any"
+    },
+    "source_modes": {
+      "tenx:Visium HD": "indexed_official_10x_cards"
+    },
+    "source_errors": [
+      {
+        "source": "tenx",
+        "platform": "Visium HD",
+        "mode": "direct_official_catalog_probe",
+        "source_url": "https://www.10xgenomics.com/datasets",
+        "status": "access_failed",
+        "http_status": 429,
+        "browser_challenge": true
+      }
+    ],
+    "status": "completed_with_issues",
+    "workflow_complete": true,
+    "totals": {
+      "found": 1,
+      "selected": 1,
+      "files_ready": 0,
+      "passed": 0,
+      "failed": 1,
+      "outcomes": {
+        "missing_files": 1
+      }
+    },
+    "agent": {
+      "provider": "deepseek",
+      "model": "deepseek-flash",
+      "architecture": "supervisor_and_three_child_graphs",
+      "delegations": [
+        "search",
+        "assets",
+        "assets",
+        "assets",
+        "validation"
+      ],
+      "tool_operations": 9,
+      "error": null
+    },
+    "case": "colon",
+    "samples": [
+      {
+        "sample_id": "tenx:Visium HD:visium-hd-cytassist-11mm-human-colon-cancer-HE--ee46716775e6",
+        "source_sample_id": "visium-hd-cytassist-11mm-human-colon-cancer-HE",
+        "source_url": "https://www.10xgenomics.com/datasets/visium-hd-cytassist-11mm-human-colon-cancer-HE",
+        "status": "missing_files",
+        "condition_evidence": {
+          "status": "not_required",
+          "sample_state": "tumor",
+          "requested_disease": "",
+          "requested_state": "any",
+          "scope": "sample",
+          "evidence": [
+            {
+              "field": "title",
+              "quote": "Visium HD Spatial Gene Expression Library, Human Colon Cancer (FF), 11 mm Capture Area",
+              "source_url": "https://www.10xgenomics.com/datasets/visium-hd-cytassist-11mm-human-colon-cancer-HE"
+            },
+            {
+              "field": "Sample_title",
+              "quote": "Visium HD Spatial Gene Expression Library, Human Colon Cancer (FF), 11 mm Capture Area",
+              "source_url": "https://www.10xgenomics.com/datasets/visium-hd-cytassist-11mm-human-colon-cancer-HE"
+            }
+          ],
+          "reason": "explicit sample metadata; missing disease evidence is unknown, not negative"
+        },
+        "catalog_evidence": {
+          "indexed_url": "https://www.10xgenomics.com/datasets/visium-hd-cytassist-11mm-human-colon-cancer-HE",
+          "metadata_evidence": {}
+        },
+        "catalog_mode": "indexed_official_10x_cards",
+        "availability": "metadata_only"
+      }
+    ]
+  }
+]

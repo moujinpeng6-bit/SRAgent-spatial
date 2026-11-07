@@ -271,7 +271,7 @@ async def run_multiagent(organism, tissue, platforms, out, *, assets, model, bud
         checkpoint(out / 'batch.json', report)
         with (out / 'samples.csv').open('w', encoding='utf-8-sig', newline='') as stream:
             fields = ('source','study_id','source_sample_id','candidate_id','sample_id','platform',
-                      'clinical_status','selected','files_ready','status','source_url','matrix_scope','bin_um',
+                      'clinical_status','observed_sample_state','selected','files_ready','status','source_url','matrix_scope','bin_um',
                       'availability','canonical_sample_id','reason')
             writer = csv.DictWriter(stream, fieldnames=fields)
             writer.writeheader()

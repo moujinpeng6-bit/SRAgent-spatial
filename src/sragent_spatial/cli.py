@@ -10,6 +10,7 @@ from pathlib import Path
 
 from .geo import MetadataClient, export_records, lookup, search, write_json
 from .local import compare_sources, inspect_local
+from .research_request import SAMPLE_STATES
 
 
 def bounded_integer(low, high):
@@ -30,7 +31,7 @@ def main(argv=None):
     research.add_argument('--tissue')
     research.add_argument('--platforms', nargs='+', choices=['Xenium','Visium','Visium HD'])
     research.add_argument('--disease', default='')
-    research.add_argument('--sample-state', choices=['any','tumor','normal','adjacent'], default='any')
+    research.add_argument('--sample-state', choices=SAMPLE_STATES, default='any')
     research.add_argument('--sources', nargs='+', choices=['geo','biostudies','tenx'], default=['geo','biostudies','tenx'])
     research.add_argument('--model', default='deepseek-flash')
     research.add_argument('--assets', type=Path)
@@ -187,6 +188,8 @@ def main(argv=None):
     search_agent.add_argument("--message", required=True)
     search_agent.add_argument("--model", default=os.getenv("SPATIAL_MODEL"))
     search_agent.add_argument("--timeout", type=bounded_integer(10, 600), default=120)
+    search_agent.add_argument("--ontology-backend", choices=("ols","upstream"), default="ols",
+                              help="Ontology modules use public OLS vectors by default; choose upstream for the original index")
     search_agent.add_argument("--out", type=Path, required=True)
     spatial = sub.add_parser("check-visium", help="Basic barcode/coordinate and optional low-resolution bounds checks")
     spatial.add_argument("--barcodes", type=Path, required=True)
@@ -468,7 +471,8 @@ def main(argv=None):
                 truststore.inject_into_ssl()
             try:
                 result = asyncio.run(invoke(args.module, args.message, args.model,
-                                            timeout=args.timeout, provider=provider()))
+                                            timeout=args.timeout, provider=provider(),
+                                            ontology_backend=args.ontology_backend))
             except Exception as exc:
                 from .evaluation import failure_details
                 failure = {"module": args.module, "status": "failed", **failure_details(exc)}

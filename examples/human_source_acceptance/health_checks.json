@@ -1,0 +1,74 @@
+[
+  {
+    "sample": "GSM9844157",
+    "tissue": "kidney",
+    "platform": "Xenium",
+    "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9844157",
+    "condition": {
+      "status": "out_of_scope",
+      "sample_state": "diseased",
+      "requested_disease": "",
+      "requested_state": "normal",
+      "scope": "sample",
+      "evidence": [
+        {
+          "field": "Sample_characteristics_ch1",
+          "quote": "disease: AIN",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9844157"
+        }
+      ],
+      "reason": "explicit sample metadata; missing disease evidence is unknown, not negative"
+    }
+  },
+  {
+    "sample": "GSM9844157",
+    "tissue": "kidney",
+    "platform": "Xenium",
+    "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9844157",
+    "condition": {
+      "status": "eligible",
+      "sample_state": "diseased",
+      "requested_disease": "",
+      "requested_state": "diseased",
+      "scope": "sample",
+      "evidence": [
+        {
+          "field": "Sample_characteristics_ch1",
+          "quote": "disease: AIN",
+          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9844157"
+        }
+      ],
+      "reason": "explicit sample metadata; missing disease evidence is unknown, not negative"
+    }
+  },
+  {
+    "sample": "GSM9324328",
+    "tissue": "liver",
+    "platform": "Visium HD",
+    "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9324328",
+    "condition": {
+      "status": "unknown",
+      "sample_state": "unknown",
+      "requested_disease": "",
+      "requested_state": "normal",
+      "scope": "sample",
+      "evidence": [],
+      "reason": "explicit sample metadata; missing disease evidence is unknown, not negative"
+    }
+  },
+  {
+    "sample": "GSM9324328",
+    "tissue": "liver",
+    "platform": "Visium HD",
+    "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9324328",
+    "condition": {
+      "status": "unknown",
+      "sample_state": "unknown",
+      "requested_disease": "",
+      "requested_state": "diseased",
+      "scope": "sample",
+      "evidence": [],
+      "reason": "explicit sample metadata; missing disease evidence is unknown, not negative"
+    }
+  }
+]

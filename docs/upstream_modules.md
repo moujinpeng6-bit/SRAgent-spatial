@@ -51,6 +51,8 @@ DeepSeek 显式模型选择通过任务上下文传给嵌套工厂，避免顶�
 
 ## 本体模块剩余条件
 
+v0.16 的 `search-agent --module tissue_ontology` 和 `--module disease_ontology` 默认走 EMBL-EBI OLS4 的公开向量检索，返回向量模型、标准编号、候选证据及部分直接上位术语。已有 DeepSeek 聊天凭证可用于 Agent 调度，OLS 端不要求配置 OpenAI embedding 凭证。显式指定 `--ontology-backend upstream` 可使用以下原版路径。[真实调用](../examples/human_source_acceptance/ontology_ols.json) · [OLS4 向量工具](https://www.ebi.ac.uk/ols4/mcp)
+
 原版向量库使用 OpenAI `text-embedding-3-small`，DeepSeek 聊天凭证不能替代这项 embedding。需有与原版兼容的 Uberon / MONDO Chroma 数据，以及同一 embedding 模型的可用凭证；不能用不同 embedding 生成的向量直接查询原索引。
 
 原版公开地址：

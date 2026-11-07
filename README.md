@@ -1,5 +1,7 @@
 # SRAgent-spatial
 
+v0.16 新增人类 10x 官方数据卡的无人值守索引搜索、健康与患病筛选，以及 EMBL-EBI 的 Uberon / MONDO 向量检索。已实际查找并验证健康人心脏，原生 2 µm 空间对应与矩阵头通过。另提供仅含人类组织的第二轮独立评鉴和研究者盲审任务单。[数据源与本体验收](examples/human_source_acceptance/) · [评鉴与任务单](examples/independent_evaluation/)
+
 v0.15 给 `research-spatial` 增加整个研究任务的断点续跑、样本与图像来源记录，以及严格的跨来源文件去重。实际终止进程后恢复，两张 BioStudies 肺切片都通过。另用冻结的 12 个 GEO 样本做了初次独立留出评鉴，并记录漏收、误收与文件限额。见 [续跑与验收](docs/research_spatial.md)、[逐样本评鉴](examples/independent_evaluation/)。
 
 v0.14 新增 `research-spatial`：自然语言研究条件、样本级疾病/肿瘤状态证据，以及 GEO / BioStudies / 10x 共用的多 Agent 工具入口。统一分派 Xenium、Visium、Visium HD 验证，并增加 TAR、ZIP、独立附件、完整 MTX/gzip 和显式跨包配对。人类胰腺癌任务真实通过 190,965 个细胞的 Xenium 数据，另有 Visium、HD 实测。覆盖范围、受限结果与复现见 [四项改进说明](docs/research_spatial.md)、[真实验收](examples/research_acceptance/)。

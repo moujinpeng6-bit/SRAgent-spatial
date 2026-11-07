@@ -94,6 +94,7 @@ def annotate_catalog(rows, entries):
     groups = defaultdict(list)
     for row in rows:
         row.pop('canonical_sample_id',None)
+        row['observed_sample_state'] = (row.get('condition_evidence') or {}).get('sample_state','unknown')
         candidate = entries.get(row.get('candidate_id', row['sample_id']), {})
         parent = entries.get(candidate.get('parent'), {})
         papers = candidate.get('publications') or parent.get('publications') or []

@@ -8,7 +8,7 @@ from pathlib import Path
 from unittest.mock import Mock, patch
 
 from sragent_spatial.tenx_online import (
-    ArchiveStream, CatalogAccessError, collect, open_catalog_page, platform_for, read_catalog_snapshot,
+    ArchiveBudgetExceeded, ArchiveStream, CatalogAccessError, collect, open_catalog_page, platform_for, read_catalog_snapshot,
 )
 
 
@@ -59,6 +59,11 @@ class TenxOnlineTests(unittest.TestCase):
         ]) as get:
             cache = Path(folder)
             self.assertEqual(ArchiveStream(url, 6, cache).read(4), b"abcd")
+            cached_only = ArchiveStream(url, 6, cache, max_network_bytes=0)
+            self.assertEqual(cached_only.read(4), b"abcd")
+            with self.assertRaises(ArchiveBudgetExceeded):
+                cached_only.read(2)
+            self.assertEqual(get.call_count,1)
             resumed = ArchiveStream(url, 6, cache)
             self.assertEqual(resumed.read(6), b"abcdef")
             self.assertEqual((resumed.reused, resumed.downloaded), (4, 2))

@@ -155,7 +155,10 @@ class ResearchSession(SpatialSession):
                         ids.append(self.add(source,platform,hit['accession']))
             else:
                 from .tenx_online import read_catalog_snapshot, discover_10x
+                from .deepseek_model import api_key
+                from .tenx_index import MODE as INDEX_MODE, discover_indexed_human, official_catalog_status
                 rows = []
+                catalog_mode = 'explicit_snapshot_or_registered_cache'
                 coverage = bool(self.tenx_cache and platform=='Xenium')
                 if self.tenx_cache and platform == 'Xenium':
                     records = json.loads((self.tenx_cache/'sample_metadata.json').read_text(encoding='utf-8-sig'))['samples']
@@ -178,8 +181,17 @@ class ResearchSession(SpatialSession):
                     rows.extend({**r,'catalog_mode':'explicit_catalog_snapshot'} for r in
                         read_catalog_snapshot(path,self.organism,self.tissue,[platform],self.max_studies))
                 if not self.tenx_cache and not self.snapshots:
-                    rows = discover_10x(self.organism,self.tissue,[platform],self.max_studies)
-                    rows = [{**r,'catalog_mode':'live'} for r in rows]
+                    if self.organism.casefold() in {'homo sapiens','human'} and api_key():
+                        direct = official_catalog_status()
+                        if direct['status']=='access_failed':
+                            self.source_errors.append({'source':'tenx','platform':platform,
+                                'mode':'direct_official_catalog_probe',**direct})
+                        rows = discover_indexed_human(self.tissue,platform,self.max_studies,disease=self.request.disease)
+                        catalog_mode = INDEX_MODE
+                    else:
+                        rows = discover_10x(self.organism,self.tissue,[platform],self.max_studies)
+                        rows = [{**r,'catalog_mode':'live'} for r in rows]
+                        catalog_mode = 'live'
                 elif not coverage:
                     self.hits[search_key]=[]
                     error={'source':'tenx','platform':platform,'status':'catalog_not_configured',
@@ -196,8 +208,7 @@ class ResearchSession(SpatialSession):
                         break
                 query = {'organism':self.organism,'tissue':self.tissue,'platform':platform}
             self.hits[search_key] = ids
-            self.source_modes[search_key] = ('live_or_verified_metadata_cache' if source!='tenx' else
-                'explicit_snapshot_or_registered_cache' if self.tenx_cache or self.snapshots else 'live')
+            self.source_modes[search_key] = 'live_or_verified_metadata_cache' if source!='tenx' else catalog_mode
             return {'source':source,'query':query,'candidates':ids,'limit':self.max_studies,
                     'source_modes':[self.entries[key].get('catalog',{}).get('catalog_mode') for key in ids]}
         except (OSError,ValueError,KeyError,RuntimeError,ImportError) as exc:
@@ -282,6 +293,9 @@ class ResearchSession(SpatialSession):
         fields['Sample_title'] = [catalog.get('dataset',catalog.get('title',''))]
         row = self.record(accession,entry,fields,url,not catalog.get('catalog_error'))
         row['catalog_mode'] = catalog['catalog_mode']
+        if catalog.get('indexed_url'):
+            row['catalog_evidence'] = {k:catalog[k] for k in
+                ('indexed_url','metadata_evidence','asset_evidence') if k in catalog}
         entry.update(reviewed=True,selected=row['selected'],row=row)
         entry['publications'] = publications(catalog)
         return row
@@ -413,7 +427,7 @@ class ResearchSession(SpatialSession):
             self.usage[accession] = self.usage.get(accession,0)+provenance['zip_range_bytes']
             rows = [{'anchor':entry['accession'],'status':'files_prepared','files':files,'provenance':provenance}]
         elif entry['source']=='tenx' and platform=='Visium HD':
-            from .tenx_online import ArchiveStream, collect
+            from .tenx_online import ArchiveBudgetExceeded, ArchiveStream, collect
             urls=entry['catalog'].get('archives',{}).get('binned_outputs',[])
             if len(urls)!=1:
                 rows=[{'anchor':entry['accession'],'status':'ambiguous_bundle' if urls else 'missing_files'}]
@@ -425,14 +439,19 @@ class ResearchSession(SpatialSession):
                     if matches:
                         cache=matches[0]
                         break
-                stream=ArchiveStream(urls[0],remaining,cache)
-                files=collect(stream,target)
-                mapping={role:{'path':str(item['path']),'sha256':sha256(item['path']),
-                    'bytes':item['path'].stat().st_size,'member':item['member'],'source_url':urls[0]} for role,item in files.items()}
-                self.usage[accession]=self.usage.get(accession,0)+stream.downloaded
-                rows=[{'anchor':entry['accession']+'/square_002um','files':mapping,
-                    'status':'files_prepared' if {'barcodes','matrix','positions','scalefactors','image'}<=mapping.keys() else 'missing_files',
-                    'matrix_scope':'header_only','bin_um':2,'downloaded_bytes':stream.downloaded,'reused_bytes':stream.reused,
+                stream=ArchiveStream(urls[0],2048*MIB,cache,max_network_bytes=remaining)
+                try:
+                    files=collect(stream,target)
+                    mapping={role:{'path':str(item['path']),'sha256':sha256(item['path']),
+                        'bytes':item['path'].stat().st_size,'member':item['member'],'source_url':urls[0]} for role,item in files.items()}
+                    result={'files':mapping,'matrix_scope':'header_only',
+                        'status':'files_prepared' if {'barcodes','matrix','positions','scalefactors','image'}<=mapping.keys() else 'missing_files'}
+                except ArchiveBudgetExceeded as exc:
+                    result={'status':'download_budget_exceeded','reason':str(exc)}
+                finally:
+                    self.usage[accession]=self.usage.get(accession,0)+stream.downloaded
+                rows=[{'anchor':entry['accession']+'/square_002um',**result,
+                    'bin_um':2,'downloaded_bytes':stream.downloaded,'reused_bytes':stream.reused,
                     'resolutions_not_processed_um':[8,16]}]
         elif entry['source']=='biostudies' and any(re.search(r'space_?ranger.*\.zip$',a['url'],re.I) for a in entry['assets']):
             raw = entry['accession']
