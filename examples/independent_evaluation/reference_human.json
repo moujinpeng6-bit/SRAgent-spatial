@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "frozen_date": "2026-11-07",
+  "development_commit_checked": "9e4f426",
+  "label_policy": "New Homo sapiens studies and samples outside the v1 benchmark. Provisional publisher-evidence labels frozen before the human-only run. The reviewer packet omits labels and predictions.",
+  "source": "geo",
+  "max_studies": 5,
+  "samples_per_study": 4,
+  "download_mib_per_candidate": 96,
+  "queries": [
+    {"id":"ovary_visium","task":"寻找人类卵巢组织的传统 10x Visium 空间转录组数据。不限疾病状态。"},
+    {"id":"healthy_liver_hd","task":"寻找健康人类肝脏的 10x Visium HD 空间转录组。只接受健康或明确非患病的肝组织，排除传统 Visium。"},
+    {"id":"kidney_xenium","task":"寻找人类肾脏组织的 10x Xenium 空间转录组数据。健康对照和患病组织都接受，不限疾病状态。"}
+  ],
+  "cases": [
+    {"query":"ovary_visium","sample":"GSM7019835","study":"GSE224335","eligible":true,"evidence":"Human OCCR2 Visium specimen from an ovarian clear cell carcinoma subseries; GSM labels the tissue OCCC tumor."},
+    {"query":"ovary_visium","sample":"GSM7019836","study":"GSE224335","eligible":true,"evidence":"Human OCCS3 Visium specimen from an ovarian clear cell carcinoma subseries; GSM labels the tissue OCCC tumor."},
+    {"query":"ovary_visium","sample":"GSM8207500","study":"GSE263920","eligible":true,"evidence":"Homo sapiens, high-grade serous ovarian cancer tissue and Visium Spatial Gene Expression protocol."},
+    {"query":"ovary_visium","sample":"GSM6506106","study":"GSE211956","eligible":false,"evidence":"Individual title is scRNA-seq sample Y3 and its outputs are Cell Ranger gene-by-cell counts, despite a shared protocol mentioning Visium."},
+    {"query":"healthy_liver_hd","sample":"GSM9324328","study":"GSE311383","eligible":true,"evidence":"Human liver caudate C107. The study explicitly states that all three donors provided healthy human liver for Visium HD.", "paper_url":"https://pmc.ncbi.nlm.nih.gov/articles/PMC13658214/"},
+    {"query":"healthy_liver_hd","sample":"GSM9324329","study":"GSE311383","eligible":true,"evidence":"Human liver caudate C95. The study explicitly states that all three donors provided healthy human liver for Visium HD.", "paper_url":"https://pmc.ncbi.nlm.nih.gov/articles/PMC13658214/"},
+    {"query":"healthy_liver_hd","sample":"GSM9324330","study":"GSE311383","eligible":true,"evidence":"Human liver right lobe C113. The study explicitly states that all three donors provided healthy human liver for Visium HD.", "paper_url":"https://pmc.ncbi.nlm.nih.gov/articles/PMC13658214/"},
+    {"query":"healthy_liver_hd","sample":"GSM9554208","study":"GSE322553","eligible":false,"evidence":"Human liver cancer capture HCC_204_1 on the conventional Visium FFPE slide."},
+    {"query":"kidney_xenium","sample":"GSM8933094","study":"GSE294965","eligible":true,"evidence":"Human kidney specimen, individual sample title explicitly names Xenium In Situ Spatial Gene Expression."},
+    {"query":"kidney_xenium","sample":"GSM9844161","study":"GSE336890","eligible":true,"evidence":"Human kidney biopsy Xenium Region09; the sample disease is acute interstitial nephritis (AIN)."},
+    {"query":"kidney_xenium","sample":"GSM9844157","study":"GSE336890","eligible":true,"evidence":"Human kidney biopsy Xenium Region02; sample disease is acute interstitial nephritis (AIN)."},
+    {"query":"kidney_xenium","sample":"GSM9525962","study":"GSE319763","eligible":false,"evidence":"Human Xenium sample, but the GEO title and tissue identify healthy lung."}
+  ]
+}

@@ -74,11 +74,12 @@ def grade(reference, report):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--out', type=Path, required=True)
+    parser.add_argument('--reference', type=Path, default=HERE/'reference.json')
     parser.add_argument('--parallel', type=int, choices=(1,2,3), default=1)
     args = parser.parse_args()
     out = args.out.resolve()
     out.mkdir(parents=True,exist_ok=False)
-    body = (HERE/'reference.json').read_bytes()
+    body = args.reference.read_bytes()
     plan = json.loads(body)
 
     def execute(query):
