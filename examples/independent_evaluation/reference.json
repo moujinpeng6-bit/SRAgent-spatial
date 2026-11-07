@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "frozen_date": "2026-11-07",
+  "development_commit_checked": "5af2471",
+  "label_policy": "Curated from sample and series primary records before execution. Provisional until an independent researcher signs off. Labels describe eligibility, not file availability.",
+  "source": "geo",
+  "max_studies": 5,
+  "samples_per_study": 4,
+  "download_mib_per_candidate": 16,
+  "queries": [
+    {"id":"breast_visium","task":"寻找人类乳腺癌的传统 Visium 空间转录组。只接受肿瘤组织，排除正常和癌旁。"},
+    {"id":"skin_hd","task":"寻找健康人类皮肤的 Visium HD 空间转录组，只接受健康组织和 Visium HD 平台。"},
+    {"id":"colon_xenium","task":"寻找人类结肠癌的 Xenium 空间转录组，只接受肿瘤组织，排除正常组织和炎症病例。"}
+  ],
+  "cases": [
+    {"query":"breast_visium","sample":"GSM7777520","study":"GSE243022","eligible":true,"evidence":"The sample identifies a breast cancer lesion and Visium assay.","paper_pmid":"38505604"},
+    {"query":"breast_visium","sample":"GSM7777521","study":"GSE243022","eligible":true,"evidence":"The sample identifies a breast cancer lesion and Visium assay.","paper_pmid":"38505604"},
+    {"query":"breast_visium","sample":"GSM7777522","study":"GSE243022","eligible":true,"evidence":"The sample identifies a breast cancer lesion and Visium assay.","paper_pmid":"38505604"},
+    {"query":"breast_visium","sample":"GSM7475112","study":"GSE234814","eligible":false,"evidence":"The series is an atlas of normal adult breast and the sample is registered there as Visium.","paper_pmid":"37380767"},
+    {"query":"breast_visium","sample":"GSM6592054","study":"GSE213688","eligible":false,"evidence":"The individual sample field labels the tissue as Normal despite the cancer study title.","paper_pmid":"37813278"},
+    {"query":"skin_hd","sample":"GSM9256395","study":"GSE308929","eligible":true,"evidence":"Section D2. The sample disease state is Healthy and the series specifies Visium HD."},
+    {"query":"skin_hd","sample":"GSM9256396","study":"GSE308929","eligible":true,"evidence":"Section D1. The sample disease state is Healthy and the series specifies Visium HD."},
+    {"query":"skin_hd","sample":"GSM6086615","study":"GSE202011","eligible":false,"evidence":"The sample identifies lesional psoriasis and the published protocol is traditional Visium.","paper_pmid":"37267384"},
+    {"query":"colon_xenium","sample":"GSM8594564","study":"GSE280314","eligible":true,"evidence":"The sample is human colon cancer and the subseries identifies Xenium.","paper_pmid":"40473992"},
+    {"query":"colon_xenium","sample":"GSM8594565","study":"GSE280314","eligible":true,"evidence":"The sample is human colon cancer and the subseries identifies Xenium.","paper_pmid":"40473992"},
+    {"query":"colon_xenium","sample":"GSM8594566","study":"GSE280314","eligible":true,"evidence":"The sample is human colon cancer and the subseries identifies Xenium.","paper_pmid":"40473992"},
+    {"query":"colon_xenium","sample":"GSM9345502","study":"GSE312420","eligible":false,"evidence":"The sample is rectal tissue from an ulcerative colitis case, outside this colon cancer query.","paper_pmid":"42049732"}
+  ]
+}
